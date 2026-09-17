@@ -1,0 +1,18 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Colors" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-colors" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-colors" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-colors" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-colors)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="40.0" y="46" width="14" height="14" rx="5" fill="var(--highlight-gray)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="62.0" y="46" width="14" height="14" rx="5" fill="var(--highlight-slate)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="84.0" y="46" width="14" height="14" rx="5" fill="var(--highlight-yellow)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="106.0" y="46" width="14" height="14" rx="5" fill="var(--highlight-green)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="40.0" y="66" width="14" height="14" rx="5" fill="var(--highlight-blue)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="62.0" y="66" width="14" height="14" rx="5" fill="var(--highlight-red)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="84.0" y="66" width="14" height="14" rx="5" fill="var(--highlight-cyan)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="106.0" y="66" width="14" height="14" rx="5" fill="var(--highlight-purple)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="40.0" y="86" width="14" height="14" rx="5" fill="var(--highlight-indigo)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="62.0" y="86" width="14" height="14" rx="5" fill="var(--highlight-acid)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="84.0" y="86" width="14" height="14" rx="5" fill="var(--highlight-salmon)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="106.0" y="86" width="14" height="14" rx="5" fill="var(--highlight-magenta)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="64.0" y="108.0" width="32.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="56.0" y="116.5" width="48.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+<g filter="url(#lift-foundation-colors)"><rect x="48.0" y="18.0" width="64.0" height="22.0" rx="8.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="57" y="23" width="12" height="12" rx="4" fill="var(--highlight-green)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="75.0" y="26.7" width="28.0" height="4.6" rx="2.30" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

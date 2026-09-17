@@ -1,0 +1,15 @@
+---
+title: Dialogs
+description: Modal interruption layers — bottom sheets for focused tasks and toasts for transient, non-blocking feedback.
+---
+
+Dialogs interrupt the current page without navigation. Dialog is a compound bottom sheet — trigger, sheet, close, and optional app-shell indent parts — for confirmations, short forms, and swipe-friendly flows. Toast is the non-blocking side: transient announcements, undo windows, and contextual feedback anchored to the control that fired them. Your agent reaches for Dialog when the user must focus before continuing, and Toast when a quick acknowledgment is enough.
+
+- [Dialog](/components/dialogs/dialog)
+- [Toast](/components/dialogs/toast)
+
+## Ask your agent
+
+```text tab="Delete + toast"
+Wire delete confirmation on this settings screen: a sheet that blocks focus until the user decides, then a toast on success with Undo. Do not use toasts for validation errors that block the form.
+```

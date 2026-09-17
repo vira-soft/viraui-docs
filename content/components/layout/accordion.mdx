@@ -1,0 +1,18 @@
+---
+title: Accordion
+description: Expandable sections — single or multiple open panels with optional Surface islands.
+---
+
+`Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack) — each `Accordion.Item` pairs a trigger header with collapsible content, and `value` / `onValueChange` control which panels stay open. Set `multiple` when more than one section can be expanded at once; leave it off for exclusive disclosure patterns like FAQs. Items can render on [`Surface`](/components/layout/surface) hosts — `islands` toggles separated cards versus a single attached block with corner radius only on the first and last rows. Keyboard and aria behavior come from Base UI; you compose items and copy in JSX.
+
+## Common examples
+
+An FAQ block with exclusive open panels and Surface islands is the default disclosure pattern.
+
+<PreviewSlot label="Accordion preview" />
+
+## Ask your agent
+
+```text tab="FAQ accordion"
+Build an FAQ accordion — billing, shipping, returns — one section open at a time. Each question is a heading; each answer is body copy.
+```

@@ -1,0 +1,18 @@
+---
+title: Switch
+description: Toggle control for immediate on/off settings with label and helper copy.
+---
+
+`Switch` maps a boolean setting to a sliding toggle — checked state, disabled, and change handlers pass through Base UI `Switch`, while label, description, and error copy use the same field row layout as `Checkbox` and `Radio`. Prefer `Switch` when the change applies immediately (feature flags, dark mode, notification mute) rather than on form submit; use `Checkbox` when the value is part of a larger form batch or when multiple independent options can be on at once. Wrap in `Field.Root` when validation or naming is required.
+
+## Common examples
+
+A settings panel with three labeled immediate-toggle rows stacked on Surface is the default Switch layout.
+
+<PreviewSlot label="Switch preview" />
+
+## Ask your agent
+
+```text tab="Switch settings"
+Build a settings panel with three toggles: Push notifications, Email digests, and Marketing. Each row gets a label and muted description in a card layout.
+```

@@ -1,0 +1,41 @@
+---
+description: AI-centric consumer voice for public MDX — how ViraUI works + agent prompts, not study guides
+globs: content/**/*.mdx
+alwaysApply: false
+---
+
+# Docs voice (consumer)
+
+Public MDX under `content/` is AI-centric. Humans read it to review agent work and to copy prompts. It is **not** a study guide where a person must learn the system by hand before shipping.
+
+## Do
+
+- Explain **how this ViraUI part works** in its own context (contract, wiring, behavior) — speak to the reader with “you” when natural, but prefer mechanism over imperative chore lists
+- Lead with copy-ready **configuration / compose prompts** (titled or tabbed fences) so the agent does the work; keep manual steps only when strictly necessary and secondary
+- Write **prompt examples as consumer intents**: the result the person wants in plain language. Skills and published specs teach the agent the ViraUI mechanics — the pasted prompt should not require memorizing token names, prop APIs, package paths, or skill internals
+- Write discursive paragraphs: connected prose, not stacks of short consecutive sentences
+- Cross-link when another topic owns the detail; stay on this page’s job
+- Em-dashes sparingly, always with spaces: ` — `
+
+## Do not
+
+- Tutorialize as if the consumer must perform every step by hand (prefer prompt + how-it-works)
+- Dump technical internals useless to a ViraUI consumer (package plumbing trivia, exhaustive prop dumps)
+- Put ViraUI internals into **example prompts**: token names (`--duration-*`, `--global-*`), compound part APIs, `Read @viraui/react/specs…`, import-order recipes, or “Use viraui-design” openers — unless the page’s job is naming a skill (Skills) or wiring MCP tools (MCP)
+- Abuse em-dashes or write telegraph-style sentence stacks
+- Digress into other products or adjacent topics when a link would do
+- Add “What’s next”, “Next steps”, or similar outbound tour sections
+- Meta / editorial asides about the page itself: “Keep this page for…”, “This page covers…”, “not documented here”, “out of scope on this page”, “we only document…”
+- Talk to the author or agent about content boundaries inside consumer copy (put that in specs/contracts/rules)
+- “Readers should…” / “Developers will…” when “you” or direct mechanism works
+
+## Examples
+
+| Avoid | Prefer |
+| --- | --- |
+| Keep this page for ViraUI-custom helpers only. | These helpers are ViraUI-specific. The agent adds them when the app needs that behavior. |
+| Follow these five manual steps to install… | Install the skills pack, reload the editor, then paste the setup prompt. Manual wiring stays below only if you must do it by hand. |
+| Short. Punchy. One idea each. | Connected paragraphs that explain the contract, then a titled prompt fence for the agent. |
+| What’s next: Themes → Skills → … | Link Themes or Skills inline where the mechanism needs them. |
+| Add hover with `--duration-fast` and `--easing-standard`; include `prefers-reduced-motion`. | Add a subtle hover animation on this custom card — not too fast — and respect reduced-motion settings. |
+| Use viraui-design. Read @viraui/react/specs for Button… | Add a footer with Save, Cancel, and Delete — Save primary, Delete destructive, show loading on Save while it runs. |

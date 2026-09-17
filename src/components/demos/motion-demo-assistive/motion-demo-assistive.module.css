@@ -1,0 +1,65 @@
+.Panel {
+  inline-size: 100%;
+  max-inline-size: 20rem;
+}
+
+.Fields {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--space-s);
+  max-inline-size: 10.5rem;
+
+  &[data-shake="true"] {
+    animation: FieldsShake var(--duration-normal) linear;
+  }
+}
+
+.Digit {
+  inline-size: 2.75rem;
+  text-align: center;
+}
+
+.Error {
+  min-block-size: 1.25rem;
+}
+
+@keyframes FieldsShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  15% {
+    transform: translateX(-0.4rem);
+  }
+
+  30% {
+    transform: translateX(0.4rem);
+  }
+
+  45% {
+    transform: translateX(-0.3rem);
+  }
+
+  60% {
+    transform: translateX(0.3rem);
+  }
+
+  75% {
+    transform: translateX(-0.15rem);
+  }
+
+  90% {
+    transform: translateX(0.1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Fields {
+    &[data-shake="true"] {
+      animation: none;
+    }
+  }
+}

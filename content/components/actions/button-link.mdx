@@ -1,0 +1,18 @@
+---
+title: ButtonLink
+description: Link that shares Button visual chrome — href, framework Link render, addon, pill, and loading without button semantics.
+---
+
+ButtonLink looks like Button but navigates. It defaults to a native `<a>` and accepts `render` when your stack needs a framework `Link` (Next.js, React Router, and similar). The same `size`, `variant`, `addon`, `pill`, and `loading` chrome apply, but there is no `disabled` prop — loading surfaces `aria-disabled` and `aria-busy` on the link chrome only. Your agent picks ButtonLink whenever the affordance is navigation or an external URL, not an in-page command.
+
+## Common examples
+
+Primary and secondary navigation links with optional addon and loading state cover the main ButtonLink shapes.
+
+<PreviewSlot label="ButtonLink preview" />
+
+## Ask your agent
+
+```text tab="Nav buttons"
+Replace the plain text links in this header with styled navigation buttons. One should open external docs; another should route inside the app. Match the existing visual hierarchy and add a trailing icon on one link if it helps.
+```

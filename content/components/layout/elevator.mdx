@@ -1,0 +1,18 @@
+---
+title: Elevator
+description: Apply resting and hover elevation hooks to child roots — no wrapper element.
+---
+
+`Elevator` is a renderless helper — it walks valid element children and merges [elevation](/foundation/elevation) data attributes (`data-elevation`, `data-elevation-hover`, `data-elevation-direction`) onto each child's root so preflight shadow styles activate without a wrapping `div`. Set `resting` for the default level and optional `hover` for pointer elevation; `direction` controls which edge casts the shadow. Invalid nodes pass through unchanged. Popup lists in [`Select`](/components/inputs/select) and [`Autocomplete`](/components/inputs/autocomplete) already sit on elevated surfaces — use `Elevator` when a custom child needs the same shadow contract.
+
+## Common examples
+
+A Surface card with resting and hover elevation on the child root shows the renderless shadow contract.
+
+<PreviewSlot label="Elevator preview" />
+
+## Ask your agent
+
+```text tab="Hover-lift card"
+Make this card lift slightly on hover — subtle shadow increase toward the bottom. One wrapper around the card, no extra divs.
+```

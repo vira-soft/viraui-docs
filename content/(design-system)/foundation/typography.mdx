@@ -1,0 +1,66 @@
+---
+title: Typography
+icon: Typography
+description: Titles and body text keep separate typescales — size is visual; heading tags are semantic. Type is fluid by default.
+---
+
+ViraUI splits type into two lanes: **titles** and **text**. `Title` consumes the heading typescale; `Text` consumes the body scale — separate token families on the [theme](/get-started/theming/what-is-a-theme), so a brand font change updates display and running copy together without per-screen CSS. Pick the component by role, then set `size` for appearance.
+
+On `Title`, **visual size and HTML semantics are independent**. `size` is the look; `render` is the real element (`h1`–`h6`, or another root). Default root is `span`, so lines that belong in the document outline need an explicit `render`.
+
+## Compose with Title and Text
+
+Paste a typography prompt when you add headings, hero copy, or body blocks. Prefer `Title` for display and outline structure; `Text` for paragraphs, labels, and helpers. Keep the heading outline sequential — change `size` instead of skipping levels.
+
+```text tab="Page hero"
+Build a page hero: one main heading at the top of the outline with supporting paragraph text below. Keep heading levels sequential.
+```
+```text tab="Quiet heading"
+Add a subsection with a visually quiet second-level heading and body copy underneath. It should still be a real heading in the document outline.
+```
+
+```tsx
+import { Stack,Text, Title } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Title size="2" render={<h2 />}>
+    Section heading
+  </Title>
+  <Text size="2xl">Supporting paragraph under that heading.</Text>
+</Stack>
+```
+
+## Size vs semantic tag
+
+That split is intentional: size is aesthetics; the tag drives accessibility, screen-reader structure, and indexing. Pair them for ordinary headings. Mismatch only when you mean it — a visually large `h3`, or a quiet `h1` that must stay the page title.
+
+```tsx
+{/* Looks like size 3; still an h1 for outline + SEO */}
+<Title size="3" render={<h1 />}>
+  Product name
+</Title>
+
+{/* Visually quiet subsection that must stay h2 in the outline */}
+<Title size="5" render={<h2 />}>
+  Details
+</Title>
+```
+
+## Fluid by default
+
+Type is **fluid** by default — as the container narrows, `Title` and `Text` interpolate font-size between the current step and the next-smaller one, without hand-written breakpoints. At the narrow end of the range, a line lands on the size of the **previous** level; widen again and it grows toward its own `--font-scale-*` token, so a medium body step eases down toward small and hierarchy stays coherent across viewports. Opt out at the theme root with `--effect-fluid-typography: initial` — that locks every fluid step to its theme scale token (fixed; same size as full fluid progress). The smallest body step (`Text` `size="xs"`) stays fixed either way. For everyday UI, leave fluid on and compose with `size` + `render`.
+
+<TypographyFluidDemo />
+
+## Tune
+
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape type: tweak families and step sizes on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — `Title` and `Text` keep the same roles; only the scale changes.
+
+Without Studio, paste a prompt into your agent or edit the typography tokens on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). Install the Fontsource packages named in `--font-family-*` the same way you would for any custom sheet.
+
+```text tab="Brand fonts"
+Switch the app to our brand fonts for headings and body. Keep the existing size hierarchy — just change the families.
+```
+```text tab="Larger body"
+Bump body text up a notch across the app so dense screens stay readable. Leave display headings as they are.
+```

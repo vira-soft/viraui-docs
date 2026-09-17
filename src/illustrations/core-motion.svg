@@ -1,0 +1,38 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bezier easing — sample the curve over time" class="il">
+  <defs>
+    <linearGradient id="panelG-core-motion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-core-motion" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-core-motion" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-core-motion)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <path d="M40 116L40 68" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-linecap="round"/>
+  <path d="M120 62L92 62" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-linecap="round"/>
+  <path d="M40 116C40 68 92 62 120 62" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-linecap="round"/>
+  <circle cx="40" cy="68" r="3.4" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="92" cy="62" r="3.4" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="40" cy="116" r="3.8" fill="var(--il-fill, #DCD6CE)"/>
+  <circle cx="120" cy="62" r="3.8" fill="var(--il-accent, #3E9077)"/>
+  <g filter="url(#liftL-core-motion)">
+    <rect x="28" y="16" width="104" height="26" rx="9" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <circle cx="48.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.12"/>
+  <circle cx="55.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.22"/>
+  <circle cx="62.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.32"/>
+  <circle cx="69.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.41"/>
+  <circle cx="76.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.51"/>
+  <circle cx="83.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.61"/>
+  <circle cx="90.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.7"/>
+  <circle cx="97.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.8"/>
+  <circle cx="104.5" cy="29" r="4.4" fill="var(--il-fill, #DCD6CE)" opacity="0.9"/>
+  <circle cx="111.5" cy="29" r="4.4" fill="var(--il-accent, #3E9077)"/>
+</svg>

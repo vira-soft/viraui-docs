@@ -1,0 +1,18 @@
+---
+title: AvatarGroup
+description: Overlapping avatars from a data array with optional max-visible truncation and overflow pill.
+---
+
+AvatarGroup renders a row or column of [Avatar](/components/widgets/avatar) instances from an `avatars` array — each entry carries the same `src`, `alt`, and `fallback` props a lone avatar would, while `size` and `direction` apply uniformly. Avatars overlap along the inline or block axis so collaborators read as one cluster instead of a spaced list. When the list is longer than you want to show, set `maxVisible` to a positive count and pass `overflowText` (for example `+3`) to append a pill that matches the avatar corner radius. Omit `maxVisible` or leave overflow text unset when every face should render. The group root is a plain `div`; put names, counts, or actions beside it in layout primitives rather than inside the group.
+
+## Common examples
+
+Horizontal overlap with an overflow pill is the default collaboration pattern.
+
+<PreviewSlot label="AvatarGroup preview" />
+
+## Ask your agent
+
+```text tab="Collaborators"
+Show up to three collaborator avatars beside the project title, then a +N overflow for the rest.
+```

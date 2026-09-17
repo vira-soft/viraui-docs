@@ -1,0 +1,14 @@
+{
+  "title": "Widgets",
+  "pages": [
+    "index",
+    "annotate",
+    "avatar",
+    "avatar-group",
+    "badge",
+    "chip",
+    "meter"
+  ],
+  "defaultOpen": false,
+  "icon": "PuzzlePiece"
+}

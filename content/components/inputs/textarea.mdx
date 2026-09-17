@@ -1,0 +1,18 @@
+---
+title: Textarea
+description: Multi-line text input with label, helper copy, and validation through Field.
+---
+
+`Textarea` renders a native `<textarea>` through Base UI `Field.Control` inside the same Stack field layout as `Textfield` — label, description, and error slots share typography and spacing tokens so long-form copy fields look like the rest of your form without custom CSS. Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation and dirty-state errors flow through `Field` the same way as single-line inputs. Reach for `Textarea` when the value spans multiple lines — profile bios, notes, message bodies — and keep `Textfield` for single-line identifiers.
+
+## Common examples
+
+A feedback form with labeled message body rows and Field error wiring is the baseline long-form input.
+
+<PreviewSlot label="Textarea preview" />
+
+## Ask your agent
+
+```text tab="Feedback form"
+Add a feedback section with subject line, message body (about four rows tall), and submit. Show validation errors after the user edits a field.
+```

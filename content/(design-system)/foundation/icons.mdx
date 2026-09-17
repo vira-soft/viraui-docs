@@ -1,0 +1,53 @@
+---
+title: Icons
+icon: Shapes
+description: Icon slots accept any ReactNode — your library, SVG, or sprite — while built-in chrome ships inside the package.
+---
+
+Icons in ViraUI are not a single bundled set you must adopt. Content slots on controls and surfaces take `ReactNode`, so your agent passes whatever you already use — `lucide-react`, `@phosphor-icons/react`, a custom SVG component, or a sprite `<use>` glyph — and components render that node beside label text or as the sole affordance. Built-in chrome (chevrons, checks, close marks) ships as private SVGs inside `@viraui/react`; you do not need a separate icon package for those defaults.
+
+## Pass icons through slots
+
+Addon and icon props render the element you supply. Inherit color with `currentColor` (or stroke/fill that follows the control tone) so icons track theme and state without per-glyph hex values.
+
+```text tab="Control icons"
+Add icons to the buttons on this screen using our Lucide set. Icons should pick up the button color automatically.
+```
+
+```tsx
+import { Button, IconButton } from '@viraui/react';
+import { Inbox } from 'lucide-react';
+import { UsersThree } from '@phosphor-icons/react';
+
+<Button addon={<Inbox />}>Inbox</Button>
+<IconButton aria-label="Team" icon={<UsersThree />} />
+```
+
+Sprites and inline SVG follow the same contract — pass the element into the slot.
+
+```tsx
+import { Button } from '@viraui/react';
+
+<Button
+  addon={
+    <svg aria-hidden>
+      {/* SVG content */}
+    </svg>
+  }
+>
+  Folder
+</Button>
+```
+
+## Use any icon library
+
+The demo below runs the same empty-state layout three ways — different `ReactNode` sources, one composition pattern. Pick one primary library for product UI so stroke weight and metaphor stay consistent; reach for a second set only when a glyph is missing.
+
+<IconsEmptyStatesDemo />
+
+```text tab="Empty inbox"
+Build an empty inbox state: centered icon above a heading, muted supporting copy below, with comfortable padding and spacing that matches the rest of the app.
+```
+```text tab="Sprite chip"
+Add our SVG sprite icon to this chip. The glyph should follow the chip's text color.
+```

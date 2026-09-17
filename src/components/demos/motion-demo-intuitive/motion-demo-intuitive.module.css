@@ -1,0 +1,84 @@
+.Stage {
+  position: relative;
+  inline-size: min(100%, 22rem);
+}
+
+.Dashed {
+  border: 1px dashed var(--border-neutral-subtle);
+  border-radius: 1.25rem;
+}
+
+.Invite {
+  transition:
+    translate var(--duration-instant) var(--easing-elastic),
+    background var(--duration-fast) var(--easing-standard);
+
+  &[data-demo-hover="true"] {
+    --vui-button-background: oklab(from var(--global-primary) calc(l + 0.05) a b);
+  }
+
+  &[data-demo-pressed="true"] {
+    translate: 0 1px;
+  }
+}
+
+.Cursor {
+  position: absolute;
+  inset-block-start: 88%;
+  inset-inline-start: 78%;
+  inline-size: 18px;
+  block-size: 22px;
+  max-inline-size: 18px;
+  max-block-size: 22px;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1.5px oklab(from var(--global-foreground) l a b / 25%));
+  transition:
+    inset-block-start var(--duration-normal) var(--easing-standard),
+    inset-inline-start var(--duration-normal) var(--easing-standard),
+    opacity var(--duration-fast) var(--easing-standard);
+  will-change: inset-block-start, inset-inline-start, opacity;
+
+  &[data-phase="approach"] {
+    opacity: 1;
+    inset-block-start: 88%;
+    inset-inline-start: 78%;
+  }
+
+  &[data-phase="hover"] {
+    opacity: 1;
+    inset-block-start: 72%;
+    inset-inline-start: 46%;
+  }
+
+  &[data-phase="press"] {
+    opacity: 1;
+    inset-block-start: 74%;
+    inset-inline-start: 46%;
+  }
+
+  &[data-phase="retreat"] {
+    opacity: 0;
+    inset-block-start: 88%;
+    inset-inline-start: 78%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Cursor {
+    transition: none;
+    opacity: 1;
+    inset-block-start: 72%;
+    inset-inline-start: 46%;
+  }
+
+  .Invite {
+    transition: none;
+
+    &[data-demo-pressed="true"] {
+      translate: 0;
+    }
+  }
+}

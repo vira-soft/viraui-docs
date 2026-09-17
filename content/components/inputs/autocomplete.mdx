@@ -1,0 +1,18 @@
+---
+title: Autocomplete
+description: Combobox with filterable suggestions, field chrome, and an elevated option list.
+---
+
+`Autocomplete` combines a text input with a filterable popup — type to narrow `items`, pick a row, or accept free text depending on `mode` and filter settings from Base UI `Autocomplete`. Field label, description, error copy, and `startAddon` / `endAddon` chrome match `Textfield`; options render as `Autocomplete.Item` rows on an elevated `Surface` like [`Select`](/components/inputs/select). Use it when the option set is large enough that scanning a closed dropdown is awkward but the value still comes from a known list — assignees, tags, airports. For a fixed short list with no typing, prefer `Select`.
+
+## Common examples
+
+A filterable assignee combobox with search addon and elevated option list is the baseline picker.
+
+<PreviewSlot label="Autocomplete preview" />
+
+## Ask your agent
+
+```text tab="Assignee picker"
+Add an assignee picker labeled "Assignee" with ten sample names, search-as-you-type filtering, and at most six visible rows in the dropdown.
+```

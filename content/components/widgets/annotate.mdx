@@ -1,0 +1,18 @@
+---
+title: Annotate
+description: Decorative arrow and note beside wrapped content — optional highlighter mark, side placement, and offset tuning.
+---
+
+Annotate wraps inline content with an optional callout arrow and handwritten-style note. Set `note` to show the label; `side` places the arrow on any of eight compass positions around the child. `color` maps to a highlight token for the arrow, label, and optional `mark` highlighter behind the child. Fine-tuning uses CSS custom properties — `targetGap` and `labelGap` for spacing, `rotate` for label tilt, `arrowOffsetX` / `arrowOffsetY` and `textOffsetX` / `textOffsetY` for nudges, `labelMaxWidth` and `textAlign` for long copy. The note and arrow are `aria-hidden` presentational spans, so never put information that only exists in `note` — duplicate anything critical in visible, announced copy nearby. Reach for [Tooltip](/components/overlays/tooltip) or [Popover](/components/overlays/popover) when the callout must be hoverable, focusable, or dismissible; Annotate is for static marketing or editorial emphasis.
+
+## Common examples
+
+A top-side note with optional `mark` shows the default editorial treatment.
+
+<PreviewSlot label="Annotate preview" />
+
+## Ask your agent
+
+```text tab="Pricing highlight"
+Highlight the words "unlimited storage" in this pricing copy with a short note "Best value" above. Repeat the benefit in surrounding body text so screen readers are not relying on the decorative note alone.
+```

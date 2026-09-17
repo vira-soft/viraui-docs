@@ -1,0 +1,58 @@
+/*
+  Docs chrome = Tailwind + fumadocs. Full Vira theme+preflight live only in
+  ViraSandbox (iframe). Root gets a thin bridge (`viraDocsBridgeCss` in
+  press.config meta.root): `--global-*` / `--highlight-*` only — no
+  `--radius-*` / `--color-*` (those clash with Tailwind @theme).
+*/
+@import "tailwindcss";
+@import "fumadocs-ui/css/generated/glass.css";
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+@import "fumapress/css/preset.css";
+
+/*
+  Spotkit tokens — cool neutrals bound to fumadocs black + Vira accent.
+  Not the warm cream spotkit preset (clashes with docs / ViraUI).
+  `--global-*` / `--highlight-*` come from the docs bridge, not vira.css.
+*/
+:root {
+  --color-fd-muted-foreground: var(--global-muted);
+  /* Root-tab icon colors (sidebar selector) — fumadocs.dev pattern */
+  --design-system-color: var(--highlight-green);
+  --components-color: var(--highlight-purple);
+  --il-canvas: var(--color-fd-muted);
+  --il-ghost: color-mix(in oklab, var(--color-fd-muted) 88%, var(--color-fd-foreground) 6%);
+  --il-panel: var(--color-fd-secondary);
+  --il-panel-top: color-mix(in oklab, var(--color-fd-secondary) 55%, var(--color-fd-card) 45%);
+  --il-line: color-mix(in oklab, var(--color-fd-foreground) 16%, transparent);
+  --il-surface: var(--color-fd-card);
+  --il-stroke: var(--color-fd-foreground);
+  --il-stroke-soft: var(--color-fd-muted-foreground);
+  --il-fill: color-mix(in oklab, var(--color-fd-foreground) 12%, transparent);
+  --il-fill-soft: color-mix(in oklab, var(--color-fd-foreground) 7%, transparent);
+  /* Vira foundation base-4 ≈ oklch(0.52 0.066 178) */
+  --il-accent: var(--global-primary);
+  --il-shadow-c: #000000;
+  --il-shadow-o: 0.1;
+}
+
+.dark {
+  --il-canvas: var(--color-fd-background);
+  --il-ghost: var(--color-fd-muted);
+  --il-panel: var(--color-fd-secondary);
+  --il-panel-top: color-mix(in oklab, var(--color-fd-secondary) 75%, white 8%);
+  --il-line: color-mix(in oklab, var(--color-fd-foreground) 20%, transparent);
+  --il-surface: color-mix(in oklab, var(--color-fd-card) 70%, white 10%);
+  --il-stroke: var(--color-fd-foreground);
+  --il-stroke-soft: var(--color-fd-muted-foreground);
+  --il-fill: color-mix(in oklab, var(--color-fd-foreground) 20%, transparent);
+  --il-fill-soft: color-mix(in oklab, var(--color-fd-foreground) 12%, transparent);
+  --il-accent: var(--global-primary);
+  --il-shadow-c: #000000;
+  --il-shadow-o: 0.45;
+}
+
+@theme {
+  --font-mono: "JetBrains Mono", monospace;
+  --default-font-family: "Geist", sans-serif;
+}

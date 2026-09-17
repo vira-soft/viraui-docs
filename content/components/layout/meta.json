@@ -1,0 +1,17 @@
+{
+  "title": "Layout",
+  "pages": [
+    "index",
+    "accordion",
+    "bleed",
+    "breakpoints",
+    "elevator",
+    "grid",
+    "masonry",
+    "separator",
+    "stack",
+    "surface"
+  ],
+  "defaultOpen": false,
+  "icon": "GridLayoutCols3"
+}

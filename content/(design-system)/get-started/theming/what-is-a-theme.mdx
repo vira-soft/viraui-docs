@@ -1,0 +1,37 @@
+---
+title: What is a theme
+description: How ViraUI theme CSS, tokens, and data-mode turn one stylesheet into your app’s look.
+---
+
+A theme is one stylesheet of `--*` design tokens. Swap the import and the same `@viraui/react` components pick up a different brand — a [built-in preset](/get-started/theming/built-in-themes) from `@viraui/foundation`, or a [custom sheet](/get-started/theming/custom-themes). How that sheet lands in the app (import order, fonts, preflight) is covered in [Setup](/get-started/setup); what the tokens mean by name is in [Foundation](/foundation).
+
+## Light and dark
+
+Light and dark are not separate themes — they are two modes of the same theme. Built-in presets pair both in one sheet with CSS [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark) — for example `--global-background: light-dark(…light…, …dark…)`. **Preflight** maps `data-mode` on the document root to `color-scheme`, so flipping the attribute resolves every paired token without swapping stylesheets.
+
+`data-mode` accepts `light`, `dark`, or `inverted`. Use `light` or `dark` on the root for the active scheme; use `inverted` on a nested island when that subtree should flip against its parent. Preflight ignores `system` and `auto`, so the app (or a theme library) must always write `light` or `dark` into the attribute. Brand is which theme stylesheet you imported; mode is which side of that sheet’s `light-dark()` pairs resolves.
+
+```tsx title="Mode on the document root"
+<html lang="en" data-mode="light">
+```
+
+### Custom themes
+
+A custom theme only needs `light-dark()` when it must support both modes. If the brand is single-mode, assign a normal CSS value to each token and skip the pairing. When both modes matter, put `light-dark()` on tokens that change with scheme (`--global-*`, `--highlight-*`, `--base-*`); mode-invariant tokens (space, radius, type scale, motion) can stay plain. Other pairing strategies work if every semantic token still resolves — just do not treat a second dark stylesheet as the brand swap. How to author and wire a custom sheet is on [Custom themes](/get-started/theming/custom-themes).
+
+## Wire mode in your app
+
+Point any theme manager at `data-mode` with theme names `light` / `dark`. Paste the prompt for your stack:
+
+```md tab="Next.js (next-themes)"
+Add light and dark mode to this Next.js App Router app with next-themes.
+The document root should use data-mode="light" or data-mode="dark" — not system or auto as the attribute value. System preference can drive the choice, but the DOM must settle on light or dark. Do not swap theme CSS when the mode changes; the same stylesheet should work for both. Add a simple light/dark/system toggle. Report what you changed.
+```
+```md tab="Remix (remix-themes)"
+Add light and dark mode to this Remix app with remix-themes.
+Set data-mode="light" or data-mode="dark" on <html> — never system or auto as the attribute value. Persist the user's choice; when following system preference, still write light or dark to the DOM. Avoid a flash of the wrong mode on first paint. Do not swap theme CSS for mode changes. Add a light/dark/system toggle. Report what you changed.
+```
+```md tab="Astro (astro-themes)"
+Add light and dark mode to this Astro app with astro-themes.
+Keep data-mode="light" or data-mode="dark" on <html> in sync with the theme choice — never system or auto as the attribute value. Support system preference and a user toggle. Avoid flash on first paint. Do not swap theme CSS for mode changes. Report what you changed.
+```

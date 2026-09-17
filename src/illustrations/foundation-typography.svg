@@ -1,0 +1,18 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Typography" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-typography" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-typography" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-typography" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-typography)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+<g filter="url(#liftL-foundation-typography)"><rect x="30.0" y="40.5" width="100.0" height="79.1" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="42.0" y="50.5" width="58.0" height="7.0" rx="3.50" fill="var(--il-fill, #DCD6CE)"/><rect x="42.0" y="62.5" width="46.0" height="5.2" rx="2.60" fill="var(--il-fill, #DCD6CE)"/><rect x="42.0" y="71.7" width="30.0" height="4.0" rx="2.00" fill="var(--il-fill, #DCD6CE)"/><rect x="42.0" y="81.65" width="76.0" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.55"/><rect x="42.0" y="89.2" width="40.0" height="3.8" rx="1.90" fill="var(--il-fill, #DCD6CE)"/><rect x="42.0" y="97.5" width="74.0" height="3.8" rx="1.90" fill="var(--il-fill, #DCD6CE)"/><rect x="42.0" y="105.8" width="62.0" height="3.8" rx="1.90" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

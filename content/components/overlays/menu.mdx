@@ -1,0 +1,38 @@
+---
+title: Menu
+description: Command menu anchored to a trigger — items, groups, submenus, and built-in portal plus keyboard roving.
+---
+
+Menu surfaces a list of actions or choices from a trigger click (or equivalent activation). The compound bundles portal mounting, collision-aware positioning, typeahead, and roving keyboard focus — compose `Menu.Trigger` with `Menu.Popup` and the item parts you need rather than nesting another overlay. Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; mutually exclusive choices use `Menu.RadioGroup` with `Menu.RadioItem`; persistent toggles use `Menu.CheckboxItem`. `Menu.Group` adds section labels, `Menu.Separator` divides blocks, and `Menu.Submenu` nests another popup on hover or keyboard — including deep trees with link rows and destructive `sentiment` on individual items.
+
+Triggers accept any control through `render`, including custom chrome such as a [Surface](/components/layout/surface) account chip. Static header content may sit inside `Menu.Popup` beside items when it stays non-interactive so roving focus remains on menu rows. Detached triggers share one menu through `Menu.createHandle()`. Do not wrap Menu in [Popover](/components/overlays/popover) — Menu already owns the floating surface contract.
+
+## Common examples
+
+A compact action menu with a separator between primary and secondary commands.
+
+<PreviewSlot label="Menu preview" />
+
+```text tab="Actions menu"
+Add an Actions menu on a button with Edit, Duplicate, and Archive separated from each other. Keep it small — no submenu on the first pass.
+```
+
+```tsx
+import { Button, Menu } from '@viraui/react';
+
+<Menu>
+  <Menu.Trigger render={<Button>Actions</Button>} />
+  <Menu.Popup>
+    <Menu.Item>Edit</Menu.Item>
+    <Menu.Item>Duplicate</Menu.Item>
+    <Menu.Separator />
+    <Menu.Item>Archive</Menu.Item>
+  </Menu.Popup>
+</Menu>
+```
+
+## Ask your agent
+
+```text tab="Sort menu"
+Add a Sort menu with Ascending and Descending choices that stay selected while the menu is open. Match toolbar button style to neighbors.
+```

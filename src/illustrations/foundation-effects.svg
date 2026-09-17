@@ -1,0 +1,25 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Effects — Glow border ring hugging a card" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-effects" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-effects" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-effects" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <mask id="glowRing-foundation-effects" maskUnits="userSpaceOnUse" x="0" y="0" width="160" height="160">
+      <rect x="34.0" y="47.0" width="92.0" height="56.0" rx="18.0" fill="#fff"/>
+      <rect x="41.0" y="54.0" width="78.0" height="42.0" rx="11.0" fill="#000"/>
+    </mask>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-effects)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+<rect x="34.0" y="47.0" width="92.0" height="56.0" rx="18.0" fill="var(--il-accent, #3E9077)" opacity="0.45" mask="url(#glowRing-foundation-effects)"/>
+<circle cx="108.0" cy="51.0" r="4.5" fill="var(--il-accent, #3E9077)"/>
+<g filter="url(#liftL-foundation-effects)"><rect x="41.0" y="54.0" width="78.0" height="42.0" rx="11.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g>
+<rect x="64.0" y="66.0" width="32.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="58.0" y="76.0" width="44.0" height="4.8" rx="2.40" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

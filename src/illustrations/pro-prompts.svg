@@ -1,0 +1,56 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prompt directory — copy a prompt, generate premium UI" class="il">
+  <defs>
+    <linearGradient id="panelG-pro-prompts" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-pro-prompts" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-pro-prompts" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-pro-prompts)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <g transform="translate(32 66) scale(0.04688)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/>
+  </g>
+  <rect x="50" y="66.6" width="30" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="50" y="73.6" width="54" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <g transform="translate(117 66) scale(0.04688)" fill="var(--il-fill, #DCD6CE)">
+    <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+  </g>
+  <rect x="31" y="82" width="98" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.5"/>
+  <g transform="translate(32 86) scale(0.04688)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/>
+  </g>
+  <rect x="50" y="86.6" width="30" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="50" y="93.6" width="54" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <g transform="translate(117 86) scale(0.04688)" fill="var(--il-fill, #DCD6CE)">
+    <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+  </g>
+  <rect x="31" y="102" width="98" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.5"/>
+  <g transform="translate(32 106) scale(0.04688)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/>
+  </g>
+  <rect x="50" y="106.6" width="30" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="50" y="113.6" width="54" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <g transform="translate(117 106) scale(0.04688)" fill="var(--il-fill, #DCD6CE)">
+    <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+  </g>
+  <g filter="url(#liftL-pro-prompts)">
+    <rect x="22" y="18" width="116" height="26" rx="9" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(32 23) scale(0.06250)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"/>
+  </g>
+  <rect x="54" y="23.8" width="30" height="4.8" rx="2.4" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="54" y="32.2" width="56" height="6" rx="3" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="120" y="24.5" width="26" height="13" rx="6.5" fill="var(--il-accent, #3E9077)"/>
+  <g transform="translate(127.5 25.5) scale(0.04297)" fill="var(--il-surface, #FFFFFF)">
+    <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+---
+description: Run tokensave sync at session start and end to refresh the code graph DB
+alwaysApply: true
+---
+
+# TokenSave sync
+
+Keep TokenSave index fresh for **this** repo only.
+
+## Session start
+
+1. First tool action (before code search / edits): run in repo root:
+
+```bash
+tokensave sync
+```
+
+2. Then proceed with task (prefer TokenSave MCP after sync).
+
+## Session end
+
+When work done / user ends session / about to stop:
+
+```bash
+tokensave sync
+```
+
+Run once more so last edits land in DB.
+
+## Rules
+
+- Cwd = this repo root (or `tokensave sync` with this repo path).
+- Skip if `tokensave` missing / project not initialized — say so, don't invent steps.
+- Do not use `--force` unless user asks or sync reports corrupt/stale index.
+- Do **not** sync sibling repos; each project owns its own index.
+- MCP `tokensave_session_start` / `tokensave_session_end` = health baseline, **not** a substitute for CLI `tokensave sync`.

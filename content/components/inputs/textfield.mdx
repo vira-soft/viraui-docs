@@ -1,0 +1,18 @@
+---
+title: Textfield
+description: Single-line text input with label, helper copy, validation, and optional addons.
+---
+
+`Textfield` wraps a native input in Vira's shared field layout — label, description, and error copy render through the same `FieldLabel` and `FieldHelperCopy` pattern as other inputs, and optional `startAddon` / `endAddon` slots sit beside the control without becoming second fields. Value, placeholder, disabled state, and validation pass through Base UI `Field` and `Input`; you declare the whole row in JSX instead of hand-wiring `aria-labelledby` and error regions. Use addons for prefix text or trailing icon buttons — buttons inside `endAddon` must use `type="button"` so they do not submit parent forms.
+
+## Common examples
+
+A labeled field with helper copy and an end-addon icon shows the standard input row.
+
+<PreviewSlot label="Textfield preview" />
+
+## Ask your agent
+
+```text tab="Sign-in form"
+Build a sign-in form with email and password fields, a "Remember me" checkbox, and a primary submit button. Add labels and short helper copy; show validation errors inline.
+```

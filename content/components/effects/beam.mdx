@@ -1,0 +1,20 @@
+---
+title: Beam
+description: Animated border shell — rotating edge, traveling line, or pulse glow around a child Surface.
+---
+
+Beam is a transparent [Surface](/components/layout/surface) shell that paints motion around whatever you put inside — typically another Surface with `radius="auto"` so the card and the beam share one corner curve. Pick `variant` for the family: `border` spins a conic highlight around the edge, `line` runs a glow along the bottom, and `pulse-outside` / `pulse-inside` breathe radial bloom without a full border trace. `color` maps to theme tokens (`primary`, a highlight name, or `colorful` for a multi-stop palette); tune `duration`, `strength`, `brightness`, and `saturation` when the default read feels too loud or too quiet.
+
+`animate` toggles the effect with a fade rather than an abrupt cut — `onActivate` and `onDeactivate` fire when those fades finish. Off-screen beams pause through an intersection observer so background tabs do not keep spinning. Pulse variants share a single rAF driver per element; `pulse-outside` scales bloom to the measured child size. Set `fitContent` when the shell should shrink-wrap the card instead of stretching full width.
+
+## Common examples
+
+A featured card with a rotating primary border is the usual Beam composition.
+
+<PreviewSlot label="Beam preview" />
+
+## Ask your agent
+
+```text tab="Promo beam"
+Highlight the featured promo card with an animated border glow. Keep the card copy and padding unchanged — the effect should hug the card, not overpower it on small screens.
+```

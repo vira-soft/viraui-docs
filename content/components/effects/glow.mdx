@@ -1,0 +1,20 @@
+---
+title: Glow
+description: Pointer-following border highlight — proximity, spread, and optional rainbow or global gradient attachment.
+---
+
+Glow wraps content the same way [Beam](/components/effects/beam) does: a transparent [Surface](/components/layout/surface) shell with `radius`, and the visible card as a child Surface with `radius="auto"`. A document-level tracker reads pointer position relative to each registered root and writes a continuous highlight angle — `angleLag` controls how softly the arc follows (set `0` for instant snap). `proximity` is the distance from the edge where the glow reaches full strength; `spread` sets the arc width in degrees. Resting `opacity` keeps a faint rim visible when the pointer is far away.
+
+`borderWidth`, `borderColor`, and `borderOffset` shape the masked ring under the gradient. `glowColor` overrides the theme conic highlight; `rainbowColors` switches to a multi-stop palette and disables shared attachment. `globalHighlight` keeps one fixed gradient across cards when several Glow instances sit on the same page — turn it off when each card should feel independent. `fitContent` shrink-wraps the shell to the child.
+
+## Common examples
+
+A grid of pricing cards with pointer-reactive rims is the baseline Glow pattern.
+
+<PreviewSlot label="Glow preview" />
+
+## Ask your agent
+
+```text tab="Pointer glow to feature"
+Add a pointer-following glow to each feature card in this grid — shared highlight across the row on hover. One hero card can use a distinct rainbow treatment. Glow only on hover unless the design asks for a faint idle rim.
+```

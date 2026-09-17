@@ -1,0 +1,19 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elevation" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-elevation" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-elevation" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-elevation" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-elevation)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+<g opacity="0.4"><g><rect x="46.0" y="77.0" width="78.0" height="34.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="71.0" y="87.0" width="28.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="65.0" y="95.5" width="40.0" height="4.8" rx="2.40" fill="var(--il-fill, #DCD6CE)"/></g><g opacity="0.65"><g><rect x="41.0" y="63.0" width="78.0" height="34.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="66.0" y="73.0" width="28.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="60.0" y="81.5" width="40.0" height="4.8" rx="2.40" fill="var(--il-fill, #DCD6CE)"/></g>
+<g filter="url(#liftL-foundation-elevation)"><rect x="36.0" y="49.0" width="78.0" height="34.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="61.0" y="59.0" width="28.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="55.0" y="67.5" width="40.0" height="4.8" rx="2.40" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

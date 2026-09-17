@@ -1,0 +1,6 @@
+{
+  "title": "Theming",
+  "pages": ["what-is-a-theme", "built-in-themes", "custom-themes"],
+  "defaultOpen": false,
+  "icon": "ColorPalette2"
+}

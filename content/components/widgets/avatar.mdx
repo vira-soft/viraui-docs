@@ -1,0 +1,18 @@
+---
+title: Avatar
+description: Circular identity image with required fallback initials or node when the photo is missing or fails to load.
+---
+
+Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` when a photo exists; always supply `fallback` — initials or a short node — because Base UI's avatar primitive renders that layer when `src` is omitted or the image errors. `size` picks the footprint (`xs` through `l`) and scales the fallback label through the shared [Text](/components/typography/text) sizing map. The root is a non-growing `span` (`data-grow="false"`) so avatars stay stable inside toolbars and list rows. Pair a single avatar with a name in [Stack](/components/layout/stack); use [AvatarGroup](/components/widgets/avatar-group) when several identities overlap on one line.
+
+## Common examples
+
+Size steps and image-vs-fallback behavior are the usual starting points.
+
+<PreviewSlot label="Avatar preview" />
+
+## Ask your agent
+
+```text tab="Member list avatars"
+Show an avatar before each name in this member list. Use profile photos when URLs exist; otherwise initials. Keep avatars non-interactive — navigation belongs on the row or a separate button.
+```

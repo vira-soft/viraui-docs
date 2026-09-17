@@ -1,0 +1,37 @@
+---
+title: Spinner
+description: Inline busy indicator — theme variants and sizes; wrap with status semantics when the wait matters.
+---
+
+Spinner is a compact animated indicator for short waits where a full skeleton layout would be heavier than the task. It renders as an SVG with `variant` choices (`bars`, `dot-grid`, `dots`) and `size` steps (`s`, `m`, `l`) that inherit theme motion tokens. Decorative spinners inside buttons or beside labels can stay `aria-hidden` when surrounding copy already conveys the state.
+
+When the spinner **is** the primary status signal, wrap it in an element with `role="status"` and an accessible name — for example `aria-label="Loading content"` on a wrapper div — so screen readers announce the wait. Pair with visible text when the delay may run long; spinners alone do not explain what is loading. For determinate or indeterminate progress along a track, use [LinearProgress](/components/loading/linear-progress) instead.
+
+## Common examples
+
+A centered status region is the usual pattern when content is fetching.
+
+<PreviewSlot label="Spinner preview" />
+
+```text tab="Centered loader"
+Center a loading indicator in this panel with muted supporting text below: "Fetching latest data." Announce the wait to screen readers.
+```
+
+```tsx
+import { Spinner, Stack, Text } from '@viraui/react';
+
+<Stack rowGap="s" hAlign="center" vPadding="l">
+  <div aria-label="Loading content" role="status">
+    <Spinner size="l" variant="bars" />
+  </div>
+  <Text tone="muted" size="s" align="center">
+    Fetching latest data
+  </Text>
+</Stack>
+```
+
+## Ask your agent
+
+```text tab="Submit spinner"
+While this form submits, show a spinner on the Save button and disable it until the request finishes. Keep the label Submit — add visible delay copy if the wait runs long.
+```

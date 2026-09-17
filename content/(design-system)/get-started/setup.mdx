@@ -1,0 +1,46 @@
+---
+title: Setup
+icon: CubeSettings
+description: Install ViraUI skills, reload the editor, then bootstrap the React app with an agent prompt.
+pageActions: false
+---
+
+ViraUI bootstrap wires a React app to the design system: packages and peers, a theme choice, global styles in a fixed order, and one root shell for overlays. The agent does that through `viraui-setup`, so install the skills pack and reload the editor before any bootstrap prompt.
+
+## Requirements
+
+- A React app with React and React DOM as platform peers
+- A Node-capable package manager
+- A coding agent that can edit the repo and run installs
+- [Base UI](https://base-ui.com) (`@base-ui/react`) as the only required peer beyond React / React DOM
+- `@viraui/foundation` only when you pick a [built-in theme](/get-started/theming/built-in-themes).
+
+## Setup
+
+<Steps>
+<Step>
+
+### Install skills
+
+Skills are playbooks the agent loads from the project. Install the pack **before** any bootstrap prompt, then **reload the editor** (or restart the agent session) so `viraui-setup` registers. What each playbook governs lives on [Skills](/get-started/skills).
+
+```sh title="Install the skills pack"
+npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP
+```
+
+</Step>
+<Step>
+
+### Bootstrap with your agent
+
+Paste the Setup prompt after skills are loaded. The agent asks for a [built-in preset](/get-started/theming/built-in-themes) or a [custom theme](/get-started/theming/custom-themes) before it installs foundation or fonts. Use Verify when wiring finishes so the agent smoke-checks the same outcomes you would look for by hand.
+
+```text tab="Setup"
+Set up ViraUI in this project using viraui-setup skill. Ask which brand look I want if I haven't said yet, then wire the app so it looks themed, fonts load, overlays (dialogs, tooltips, toasts) work, and a simple sample control shows the design system styling.
+```
+```text tab="Verify"
+Check that ViraUI bootstrap in this project actually works: the app looks themed (not unstyled), light/dark mode resolves if wired, overlays open and dismiss, and a sample button or layout looks right. Report anything broken and fix it.
+```
+
+</Step>
+</Steps>

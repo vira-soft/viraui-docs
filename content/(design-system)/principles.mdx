@@ -1,0 +1,35 @@
+---
+title: Principles
+icon: ListCheckbox
+description: ViraUI puts code at the center. One truth, browser as canvas, everyone in the loop.
+pageActions: false
+---
+
+A design system is a shared language inside product — tokens, foundations, components, patterns, and the rules that keep them coherent. Split that language across tools with no single source and every change becomes reconciliation. ViraUI does the opposite: one coherent system for agents and humans, held together by three ideas that shape how composition should work.
+
+<Steps>
+<Step>
+
+### One truth beats five surfaces
+
+A Figma library plus a style guide plus separate code is several copies of the same system. Drift is what you get when truth lives in five places — and asking AI to keep those copies aligned does not fix the model, it multiplies it. ViraUI does not bolt agents onto that old workflow of static design tools as the system of record. It takes a full-AI path: compose against one living truth in code, not a chain of exports that the model must reconcile. Static tools stay fine for disposable sketches and low-fi mockups, including as input for an LLM to build with ViraUI — they must not be where truth lives. A static file is a proposal; the running interface is the product.
+
+</Step>
+<Step>
+
+### The browser is the canvas
+
+The browser can render interface code visually — like a freeform design canvas — while the same artifact stays editable as implementation. Designers stay in the loop: with an agent they render and change real components in the browser instead of maintaining a parallel mock. The same code stays editable in the repo while the browser shows it live. With ViraUI, that code is the source of truth, and AI works well because it reads and writes one structured object, not five divergent copies.
+
+That worldview only holds with a real foundation underneath — distribution, versioning, tokens, and a toolchain where canvas and code stay the same conversation. [Layers](/layers) is where that stack is spelled out.
+
+</Step>
+<Step>
+
+### Accessibility built into the loop
+
+Accessibility is not polish after the pixels look right. ViraUI builds interaction practices into the system from the [W3C ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/). Those practices reach agents through [Skills](/get-started/skills) as well as humans through docs, so composition stays APG-aligned by default instead of becoming a late audit.
+
+</Step>
+</Steps>
+

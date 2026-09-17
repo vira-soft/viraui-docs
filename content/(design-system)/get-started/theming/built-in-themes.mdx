@@ -1,0 +1,78 @@
+---
+title: Built-in themes
+description: Wire Vira, Vira Condensed, Sunburst, or Cinder — one preset CSS sheet plus matching Fontsource.
+---
+
+`@viraui/foundation` ships each built-in brand as one CSS entry (plus JSON and TypeScript for tooling). It does **not** ship font files — presets only name families in `--font-family-*`, so you install the matching [Fontsource](https://fontsource.org/) packages yourself following the best practices you want.
+
+Add foundation when you want a built-in brand and skip it if you want to use a [custom theme](/get-started/theming/custom-themes).
+
+## How a preset wires in
+
+Each preset is a single stylesheet: load that one file in the app, then the Fontsource packages it names, then `@viraui/react/preflight.css`, in that order — how you import them (JS side effects, CSS, or your bundler’s usual path) is up to the project, as long as all three end up on the page in sequence. Switching brands is swapping that theme import (and its fonts) for another, not stacking sheets. Light and dark already live inside the sheet as `light-dark()` pairs; [What is a theme](/get-started/theming/what-is-a-theme#light-and-dark) explains how `data-mode` picks which side resolves.
+
+During [Setup](/get-started/setup), `viraui-setup` stops at the theme gate before it installs foundation or fonts. Paste this anytime you need to wire or switch a built-in brand:
+
+```text tab="Built-in brand"
+Switch this app to a built-in ViraUI brand. Ask which one I want if I haven't said. Wire it so the whole UI picks up that look — one brand at a time, not stacked themes.
+```
+
+## Presets
+
+<Callout type="success" title="Already bootstrapped?">
+If [Setup](/get-started/setup) ran through the agent and you picked a built-in brand, foundation, fonts, and import order are already wired — nothing left to do here unless you want to switch presets. Prefer starting with **Vira** so you learn the system on a known brand; when you are ready to own the look, move on to a [custom theme](/get-started/theming/custom-themes).
+</Callout>
+
+Each built-in brand pairs one foundation stylesheet with specific Fontsource packages — install those families and import their `wght.css` files **after** the theme CSS and **before** preflight. The tabs below show the exact packages and import paths per preset.
+
+```sh title="Install foundation"
+pnpm add @viraui/foundation
+```
+
+Fonts for the preset you pick:
+
+```sh tab="Vira" tab-group="built-in-theme"
+pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
+```
+
+```sh tab="Vira Condensed"
+pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
+```
+
+```sh tab="Sunburst"
+pnpm add @fontsource-variable/merriweather
+```
+
+```sh tab="Cinder"
+pnpm add @fontsource-variable/oxanium
+```
+
+CSS imports at the app root (theme → fonts → preflight):
+
+```tsx tab="Vira" tab-group="built-in-theme"
+import '@viraui/foundation/vira.css';
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/geist-mono/wght.css';
+import '@viraui/react/preflight.css';
+```
+
+```tsx tab="Vira Condensed"
+import '@viraui/foundation/vira-condensed.css';
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/geist-mono/wght.css';
+import '@viraui/react/preflight.css';
+```
+
+```tsx tab="Sunburst"
+import '@viraui/foundation/sunburst.css';
+import '@fontsource-variable/merriweather/wght.css';
+import '@viraui/react/preflight.css';
+```
+
+```tsx tab="Cinder"
+import '@viraui/foundation/cinder.css';
+import '@fontsource-variable/oxanium/wght.css';
+import '@viraui/react/preflight.css';
+```
+
+For a brand you own instead of these presets, see [Custom themes](/get-started/theming/custom-themes).

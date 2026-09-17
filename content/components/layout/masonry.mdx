@@ -1,0 +1,18 @@
+---
+title: Masonry
+description: Multi-column masonry layout — responsive column counts from breakpoint map.
+---
+
+`Masonry` distributes children into a variable-height column grid — each child is a `Masonry.Item`, and the root measures its inline size to pick a column count from `breakpointCols`. The default map steps from one column on narrow viewports up to six on very wide screens; pass your own `breakpointCols` object to replace that schedule — keys are min-width pixel thresholds, and the largest matching breakpoint wins. Layout runs in the client after mount; prefer [`Grid`](/components/layout/grid) when every row shares the same height. Masonry fits image galleries, tag clouds, and card feeds where tile height varies.
+
+## Common examples
+
+A responsive image gallery with variable-height tiles on Surface hosts is the baseline Masonry layout.
+
+<PreviewSlot label="Masonry preview" />
+
+## Ask your agent
+
+```text tab="Image gallery"
+Build an image gallery with eight placeholder tiles in a masonry layout.
+```

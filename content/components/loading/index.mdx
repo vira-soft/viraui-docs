@@ -1,0 +1,16 @@
+---
+title: Loading
+description: Hold layout stable while data arrives — skeleton placeholders, spinners, and linear progress.
+---
+
+Loading components answer two jobs while async work runs: preserve layout so the screen does not jump, and signal that work is still in flight. **Skeleton** blocks and overlays match upcoming content shape — fixed rectangles or `Skeleton.Overlay` sized to real children. **Spinner** marks a compact busy state inline. **LinearProgress** communicates measurable or unknown forward progress through an accessible `progressbar`. Pick skeletons when structure is predictable; spinners for short opaque waits; linear progress when percent complete or indeterminate sync matters.
+
+- [LinearProgress](/components/loading/linear-progress)
+- [Skeleton](/components/loading/skeleton)
+- [Spinner](/components/loading/spinner)
+
+## Ask your agent
+
+```text tab="Loading states to a data"
+While this account card fetches, show placeholder shapes for the headline and metric rows. Use a small inline spinner only on the save button during a quick refresh.
+```

@@ -1,0 +1,18 @@
+---
+title: ToggleButton
+description: Icon-only two-state toggle with resting and pressed icons, variant shift on press, and optional crossfade.
+---
+
+ToggleButton is an icon-only control with a persistent pressed state. `restingIcon` is required; `pressedIcon` swaps in when pressed (falls back to resting when omitted). `variant` defaults to flat at rest; optional `pressedVariant` shifts the treatment while pressed. `interpolateIcons` opts into a stacked crossfade and rotate between icons — otherwise the swap is instant. Your agent picks it for toolbar pin, favorite, mute, or copy-feedback toggles where IconButton would lose the pressed affordance.
+
+## Common examples
+
+A toolbar pin toggle with resting and pressed icons and optional crossfade is the default two-state pattern.
+
+<PreviewSlot label="ToggleButton preview" />
+
+## Ask your agent
+
+```text tab="Pin / copy toggles"
+Add a pin toggle and a copy toggle to this note card toolbar. Pin should look pressed when active. Copy should briefly show a check after the user taps it. Label each control for screen readers.
+```

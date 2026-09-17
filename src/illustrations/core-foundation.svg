@@ -1,0 +1,36 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tokens at the center, brands at the edges" class="il">
+  <defs>
+    <linearGradient id="panelG-core-foundation" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-core-foundation" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-core-foundation" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-core-foundation)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <path d="M44 56C53.5 56 53.5 77 63 77" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-dasharray="2.4 3" stroke-linecap="round"/>
+  <rect x="28" y="48" width="16" height="16" rx="5" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="36" cy="56" r="3.2" fill="var(--il-accent, #3E9077)"/>
+  <path d="M112 56C104.5 56 104.5 77 97 77" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-dasharray="2.4 3" stroke-linecap="round"/>
+  <rect x="112" y="48" width="16" height="16" rx="5" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="120" cy="56" r="3.2" fill="#5C82CE"/>
+  <path d="M44 104C53.5 104 53.5 77 63 77" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-dasharray="2.4 3" stroke-linecap="round"/>
+  <rect x="28" y="96" width="16" height="16" rx="5" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="36" cy="104" r="3.2" fill="#8A6BC0"/>
+  <path d="M112 104C104.5 104 104.5 77 97 77" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-dasharray="2.4 3" stroke-linecap="round"/>
+  <rect x="112" y="96" width="16" height="16" rx="5" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="120" cy="104" r="3.2" fill="#B08A3E"/>
+  <g filter="url(#lift-core-foundation)">
+    <rect x="59" y="56" width="42" height="42" rx="11" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(71 68) scale(0.07031)" fill="var(--il-stroke, #35322D)">
+    <path d="M88,180a12,12,0,1,1-12-12A12,12,0,0,1,88,180Zm152-23.81V208a16,16,0,0,1-16,16H76a46.36,46.36,0,0,1-7.94-.68,44,44,0,0,1-35.43-50.95l25-143.13a15.94,15.94,0,0,1,18.47-13L130.84,26a16,16,0,0,1,12.92,18.52l-12.08,69L199.49,89a16,16,0,0,1,20.45,9.52L239,150.69A18.35,18.35,0,0,1,240,156.19ZM103,184.87,128,41.74,73.46,32l-25,143.1A28,28,0,0,0,70.9,207.57,27.29,27.29,0,0,0,91.46,203,27.84,27.84,0,0,0,103,184.87ZM116.78,195,224,156.11,204.92,104,128.5,131.7l-9.78,55.92A44.63,44.63,0,0,1,116.78,195ZM224,173.12,127.74,208H224Z"/>
+  </g>
+</svg>

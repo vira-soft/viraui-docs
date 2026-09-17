@@ -1,0 +1,18 @@
+---
+title: Separator
+description: Horizontal or vertical divider — thickness, orientation, and optional Stack padding.
+---
+
+`Separator` draws a themed line between blocks — `orientation` picks horizontal versus vertical, `size` maps to line thickness (`s`, `m`, `l`), and optional padding props inset the line within a [`Stack`](/components/layout/stack) wrapper when the divider should not span the full content width. Pass `render` to replace the default `hr` root with a custom element while keeping Vira line styles. Use `Separator` inside stacks and toolbars where grouped content needs a visual break; prefer border props on [`Surface`](/components/layout/surface) when the edge belongs to a panel outline instead of inline content.
+
+## Common examples
+
+A settings list with horizontal dividers between stacked rows is the usual separator placement.
+
+<PreviewSlot label="Separator preview" />
+
+## Ask your agent
+
+```text tab="Settings list"
+Build a settings list inside a card — three text rows with thin dividers between each.
+```

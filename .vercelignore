@@ -1,0 +1,7 @@
+# Keep CLI uploads under Vercel's 15k file limit (local `dist` is gitignored but
+# `vercel --prebuilt` / accidental includes still hurt).
+dist
+.node-version
+.tokensave
+.pnpm-store
+*.log

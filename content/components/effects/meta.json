@@ -1,0 +1,13 @@
+{
+  "title": "Effects",
+  "pages": [
+    "index",
+    "beam",
+    "glow",
+    "progressive-blur",
+    "static-noise",
+    "typewriter"
+  ],
+  "defaultOpen": false,
+  "icon": "Sparkle"
+}

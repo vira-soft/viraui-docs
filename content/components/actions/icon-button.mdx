@@ -1,0 +1,18 @@
+---
+title: IconButton
+description: Icon-only button sharing Button size, variant, and loading — requires an accessible name on every instance.
+---
+
+IconButton wraps Button for compact, icon-only actions. Pass the glyph through `icon`; size, variant, `pill`, and `loading` follow the same model as Button. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`. Loading sets `aria-busy` and keeps the accessible name stable while the Spinner stays decorative. Reach for ToggleButton when the control needs a persistent pressed state or icon swap after interaction, and IconButtonLink when the action navigates.
+
+## Common examples
+
+Variant and size rows of icon-only actions with aria-label naming cover the main IconButton shapes.
+
+<PreviewSlot label="IconButton preview" />
+
+## Ask your agent
+
+```text tab="Icon toolbar"
+Add a compact icon toolbar to this panel — settings, share, and delete. Label each icon button for screen readers. Show loading on one button during a short async action.
+```

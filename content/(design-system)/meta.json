@@ -1,0 +1,16 @@
+{
+  "title": "Design System",
+  "description": "Get started and foundation.",
+  "icon": "Nodes",
+  "root": "docs",
+  "pages": [
+    "index",
+    "why",
+    "principles",
+    "layers",
+    "---Get started---",
+    "...get-started",
+    "---Foundation---",
+    "...foundation"
+  ]
+}

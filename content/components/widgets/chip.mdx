@@ -1,0 +1,18 @@
+---
+title: Chip
+description: Compact label pill with primary, secondary, outline, or highlight variants and optional decorative addon.
+---
+
+Chip is a small, non-submitting label for tags, filters, and metadata. Children render as the label through [Text](/components/typography/text); `variant` selects primary, secondary, outline, or a foundation highlight name. An optional `addon` slot accepts an icon or other node on the `start` or `end` side — the slot is `aria-hidden` because the label text should carry meaning. Base UI `render` can swap the root element when the chip should look like a pill but behave as a link. Chips on filled [Button](/components/actions/button) surfaces often need `data-mode="inverted"` so contrast holds against the button fill. Prefer Chip over Button when the control is informational or removable in place; reach for Button or [ToggleButton](/components/actions/toggle-button) when activation should commit work.
+
+## Common examples
+
+Variant rows and addon placement cover most chip compositions.
+
+<PreviewSlot label="Chip preview" />
+
+## Ask your agent
+
+```text tab="Status chips"
+Add a status chip on each invoice row — Paid, Pending, or Overdue. Keep labels to one word; use strong red only for overdue.
+```

@@ -1,0 +1,18 @@
+---
+title: Fieldset
+description: Groups related radios or checkboxes with a legend and optional group helper copy.
+---
+
+`Fieldset` wraps Base UI `Fieldset.Root` and `Legend` with Vira legend typography and optional group-level description and error slots — use it whenever a cluster of [`Radio`](/components/inputs/radio) or [`Checkbox`](/components/inputs/checkbox) options needs a visible group name and shared helper copy. Pass `render` to merge the fieldset root with `RadioGroup` or `CheckboxGroup` so the group and legend stay one accessible unit. Group validation and `name` still live on `Field.Root` above the fieldset; individual options keep their own labels.
+
+## Common examples
+
+A shipping method block with legend, group description, and RadioGroup options is the baseline field grouping.
+
+<PreviewSlot label="Fieldset preview" />
+
+## Ask your agent
+
+```text tab="Shipping options"
+Build a shipping method block: heading "Delivery", helper "Choose one option", three radio choices for delivery speed.
+```

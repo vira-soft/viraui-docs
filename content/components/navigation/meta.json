@@ -1,0 +1,9 @@
+{
+  "title": "Navigation",
+  "pages": [
+    "index",
+    "tabs"
+  ],
+  "defaultOpen": false,
+  "icon": "Compass"
+}

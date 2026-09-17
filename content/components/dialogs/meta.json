@@ -1,0 +1,10 @@
+{
+  "title": "Dialogs",
+  "pages": [
+    "index",
+    "dialog",
+    "toast"
+  ],
+  "defaultOpen": false,
+  "icon": "ChatBubble"
+}

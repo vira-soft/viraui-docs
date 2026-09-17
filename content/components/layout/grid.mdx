@@ -1,0 +1,18 @@
+---
+title: Grid
+description: CSS Grid host — fixed columns, auto-fill tracks, and token gap and padding.
+---
+
+`Grid` lays out children on a CSS Grid with Vira-owned props instead of hand-written `grid-template` rules. Set `columns` for a fixed track count, or use `filling` with `colMinWidth` for responsive auto-fill; `Grid.Item` spans rows and columns when a cell needs to break the default 1×1 placement. Gap and padding props read the same [spacing](/foundation/spacing) tokens as [`Stack`](/components/layout/stack). Pass `render` when the grid root should be a semantic element. Reach for `Grid` when two-dimensional placement matters — dashboards, form columns, media tiles — and `Stack` when a single flex axis is enough.
+
+## Common examples
+
+A two-column grid with token gap and a spanning Grid.Item covers the default placement pattern.
+
+<PreviewSlot label="Grid preview" />
+
+## Ask your agent
+
+```text tab="Settings grid"
+Build a two-column settings page: form fields on the left, live preview card on the right.
+```

@@ -1,0 +1,6 @@
+.Stage {
+  display: flex;
+  min-block-size: 17.5rem;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,83 @@
+.Stage {
+  inline-size: min(100%, 22rem);
+}
+
+.Card {
+  overflow: hidden;
+}
+
+.Icon {
+  transform-origin: center center;
+  transition:
+    transform var(--duration-slow) var(--easing-elastic),
+    opacity var(--duration-normal) var(--easing-entrance),
+    filter var(--duration-normal) var(--easing-entrance);
+
+  &[data-visible="false"] {
+    opacity: 0;
+    transform: scale(0.55) rotate(-12deg);
+    filter: blur(4px);
+    transition-delay: var(--duration-fast);
+    transition-timing-function: var(--easing-exit);
+    transition-duration: var(--duration-fast);
+  }
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+    transition-delay: 0s;
+  }
+}
+
+.Copy {
+  transition:
+    transform var(--duration-normal) var(--easing-entrance),
+    opacity var(--duration-normal) var(--easing-entrance);
+
+  &[data-visible="false"] {
+    opacity: 0;
+    transform: translateY(0.45rem);
+    transition-delay: calc(var(--duration-instant));
+    transition-timing-function: var(--easing-exit);
+    transition-duration: var(--duration-fast);
+  }
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--duration-fast);
+  }
+}
+
+.Action {
+  transition:
+    transform var(--duration-normal) var(--easing-entrance),
+    opacity var(--duration-normal) var(--easing-entrance);
+
+  &[data-visible="false"] {
+    opacity: 0;
+    transform: translateY(0.4rem) scale(0.96);
+    transition-delay: 0s;
+    transition-timing-function: var(--easing-exit);
+    transition-duration: var(--duration-fast);
+  }
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: calc(var(--duration-fast) + var(--duration-instant));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Icon,
+  .Copy,
+  .Action {
+    transition: none;
+    transition-delay: 0s;
+    filter: none;
+    transform: none;
+    opacity: 1;
+  }
+}

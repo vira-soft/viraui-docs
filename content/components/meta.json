@@ -1,0 +1,19 @@
+{
+  "title": "Components",
+  "description": "ViraUI react components.",
+  "icon": "Bricks",
+  "root": "docs",
+  "pages": [
+    "index",
+    "actions",
+    "dialogs",
+    "effects",
+    "inputs",
+    "layout",
+    "loading",
+    "navigation",
+    "overlays",
+    "typography",
+    "widgets"
+  ]
+}

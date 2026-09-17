@@ -1,0 +1,20 @@
+---
+title: StaticNoise
+description: SVG grain overlay — turbulence filter with optional animated seed cycling and blend-mode control.
+---
+
+StaticNoise renders a full-bleed decorative grain layer as a `figure` with an internal SVG turbulence filter. It is always `aria-hidden` — use it to add texture on top of photography, gradients, or [Surface](/components/layout/surface) fills, not to convey information. `opacity` and `mixBlendMode` (default `difference`) control how strongly the grain reads against what's underneath; `baseFrequency` adjusts the noise scale.
+
+Set `animate` to cycle `feTurbulence` seed values for living static — leave it off for a fixed grain plate. Because the filter id is scoped with `useId`, multiple instances on one screen stay isolated. Position the figure absolutely over the target region and keep interactive content in a sibling layer above the noise.
+
+## Common examples
+
+A hero panel with a subtle animated grain wash over a gradient background.
+
+<PreviewSlot label="StaticNoise preview" />
+
+## Ask your agent
+
+```text tab="Layer grain on a hero"
+Layer subtle film grain on the hero background behind the headline. Keep text on top and treat the grain as decorative only.
+```

@@ -1,0 +1,20 @@
+---
+title: ProgressiveBlur
+description: Multi-layer edge blur — fades from full backdrop blur at one edge to clear at the opposite side.
+---
+
+ProgressiveBlur stacks several masked `backdrop-filter` layers so blur strength ramps along one edge — `direction` picks which edge starts at full blur (`top`, `right`, `bottom`, or `left`). `blur` sets the maximum radius at that edge; `easing` and optional `steps` control how the internal layers distribute the falloff (exponential is the default curve). The root is `aria-hidden` — it is a visual scrim, not interactive content.
+
+Mount it at the edge of a scroll region or over media when content should fade under a soft veil instead of a hard clip. Parent needs something to blur through — a photo, gradient, or scrolling list behind the overlay. Tune `steps` only when banding shows at the default layer count for your chosen easing.
+
+## Common examples
+
+A bottom-edge blur over a scrolling feed so the last items dissolve under a footer action.
+
+<PreviewSlot label="ProgressiveBlur preview" />
+
+## Ask your agent
+
+```text tab="Scroll blur"
+Soften the bottom edge of this scrollable list so items fade as they scroll under the sticky footer. Keep list content and the footer above the fade layer.
+```

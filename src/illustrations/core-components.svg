@@ -1,0 +1,43 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Building blocks packaged as typed React" class="il">
+  <defs>
+    <linearGradient id="panelG-core-components" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-core-components" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-core-components" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-core-components)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <g>
+    <rect x="26" y="68" width="44" height="44" rx="9" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(40 76) scale(0.06250)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"/>
+  </g>
+  <rect x="36" y="96" width="24" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34" y="104" width="28" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <g>
+    <rect x="90" y="68" width="44" height="44" rx="9" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(104 76) scale(0.06250)" fill="var(--il-stroke-soft, #9B948A)">
+    <path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/>
+  </g>
+  <rect x="100" y="96" width="24" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="98" y="104" width="28" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <g filter="url(#liftL-core-components)">
+    <rect x="55" y="36" width="50" height="56" rx="11" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(72 44) scale(0.06250)" fill="var(--il-stroke, #35322D)">
+    <path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/>
+  </g>
+  <rect x="67" y="66" width="26" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="65" y="74.2" width="30" height="4.2" rx="2.1" fill="var(--il-fill, #DCD6CE)"/>
+  <circle cx="80" cy="83" r="2.8" fill="var(--il-accent, #3E9077)"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Space" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-space" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-space" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-space" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-space)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+<g filter="url(#liftL-foundation-space)"><rect x="28.0" y="36.5" width="104.0" height="87.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="77.0" y="49.5" width="6.0" height="3.0" rx="1.50" fill="var(--il-fill-soft, #E9E4DC)"/><rect x="67.0" y="47.5" width="7.0" height="7.0" rx="2.3" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="86.0" y="47.5" width="7.0" height="7.0" rx="2.3" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="72.0" y="65.5" width="16.0" height="3.0" rx="1.50" fill="var(--il-fill-soft, #E9E4DC)"/><rect x="60.0" y="62.5" width="9.0" height="9.0" rx="3.0" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="91.0" y="62.5" width="9.0" height="9.0" rx="3.0" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="66.0" y="83.5" width="28.0" height="3.0" rx="1.50" fill="var(--il-fill-soft, #E9E4DC)"/><rect x="52.0" y="79.5" width="11.0" height="11.0" rx="3.7" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="97.0" y="79.5" width="11.0" height="11.0" rx="3.7" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="59.0" y="104.0" width="42.0" height="3.0" rx="1.50" fill="var(--il-accent, #3E9077)"/><rect x="42.0" y="98.5" width="14.0" height="14.0" rx="4.0" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="104.0" y="98.5" width="14.0" height="14.0" rx="4.0" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+</svg>

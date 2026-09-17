@@ -1,0 +1,21 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radius" class="il">
+  <defs>
+    <linearGradient id="panelG-foundation-radius" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-foundation-radius" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-foundation-radius" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <clipPath id="zoom-foundation-radius">
+      <rect x="30.0" y="38.0" width="100.0" height="84.0" rx="10.0"/>
+    </clipPath>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-foundation-radius)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+<g filter="url(#liftL-foundation-radius)"><rect x="30.0" y="38.0" width="100.0" height="84.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><g clip-path="url(#zoom-foundation-radius)"><rect x="40.0" y="48.0" width="120.0" height="104.0" rx="31.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="51.0" y="59.0" width="98.0" height="82.0" rx="20.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="62.0" y="70.0" width="76.0" height="60.0" rx="9.0" fill="var(--il-fill, #DCD6CE)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><path d="M71.0 48.0 A31.0 31.0 0 0 0 40.0 79.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" opacity="1.0"/><path d="M60.0 48.0 A20.0 20.0 0 0 0 40.0 68.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" opacity="0.85"/><path d="M49.0 48.0 A9.0 9.0 0 0 0 40.0 57.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" opacity="0.7"/><path d="M71.6 48.0 A31.6 31.6 0 0 0 40.0 79.6 L40.0 76.8 A28.8 28.8 0 0 1 68.8 48.0 Z" fill="var(--il-accent, #3E9077)"/><circle cx="40.0" cy="48.0" r="2.4" fill="var(--il-accent, #3E9077)"/><path d="M42.6 50.6 L45.9 53.9" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-linecap="round"/><circle cx="44.2" cy="52.2" r="1.5" fill="var(--il-fill, #DCD6CE)"/><path d="M45.9 53.9 L49.1 57.1" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5" stroke-linecap="round"/><circle cx="47.5" cy="55.5" r="1.5" fill="var(--il-fill, #DCD6CE)"/></g>
+</svg>

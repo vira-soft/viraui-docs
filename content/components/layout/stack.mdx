@@ -1,0 +1,18 @@
+---
+title: Stack
+description: Flex layout host — direction, gap, alignment, and padding through theme tokens.
+---
+
+`Stack` is the default flex container for ViraUI screens — children flow in a row or column with `direction`, `rowGap` and `columnGap` mapped to [spacing](/foundation/spacing) tokens, and `hAlign` / `vAlign` for cross-axis alignment. Padding props accept the same step names as `Surface` and `Grid`; pass `render` to replace the root element when the stack should be a `nav`, `section`, or other semantic host. Prefer `Stack` over raw flex CSS so gap and padding stay on the theme scale and your agent can reshape layouts through props instead of one-off stylesheets.
+
+## Common examples
+
+A vertical card list with token gap and nested stacks is the usual layout pattern.
+
+<PreviewSlot label="Stack preview" />
+
+## Ask your agent
+
+```text tab="Card list"
+Build a vertical card list with comfortable spacing — each card has a title and body paragraph.
+```

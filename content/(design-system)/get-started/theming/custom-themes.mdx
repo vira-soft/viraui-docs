@@ -1,0 +1,64 @@
+---
+title: Custom themes
+description: One compatible theme CSS sheet — Studio export, agent-built, or base plus overrides.
+---
+
+A custom brand uses the same contract as a [built-in preset](/get-started/theming/built-in-themes): **one** theme CSS file that keeps the semantic variable names and swaps in your values. You do not need `@viraui/foundation` — load your sheet, then the fonts named in `--font-family-*`, then preflight. Keep light and dark in that same file with `light-dark()` on scheme-sensitive tokens; [Light and dark](/get-started/theming/what-is-a-theme#light-and-dark) covers the pairing pattern and how `data-mode` resolves it.
+
+## App Studio (ViraUI Pro)
+
+Hand-editing a full theme means forking a large CSS dump, keeping every semantic name stable, balancing light/dark pairs, and checking that components still look right. **App Studio** in [ViraUI Pro](https://viraui.dev/#pro) is the preferred path for a new brand: tune colors, type, space, and effects on a live ViraUI canvas, share the theme with the team, export CSS that is already compatible, then drop it into the app.
+
+Studio workflow: shape the brand on the canvas → export `theme.css` (ZIP or paste) into the app (e.g. `src/vira-theme.css`) → install `@fontsource-variable/*` for the families in `--font-family-*` and strip temporary Studio CDN `@font-face` blocks once npm fonts are wired → import theme → fonts → preflight. Do **not** also install `@viraui/foundation`.
+
+<Callout type="info" title="Coming later this year">
+ViraUI Pro sits on top of Core. Join the waitlist on [viraui.dev](https://viraui.dev) for launch pricing.
+</Callout>
+
+## Ask an agent
+
+When Studio is not an option, paste a prompt for a ViraUI-compatible brand sheet wired like any other custom theme — theme → fonts → preflight at the app root. Describe the product look in plain language; the agent should produce a **complete** theme CSS with `light-dark()` pairs on scheme-sensitive tokens, not a partial token dump.
+
+```text tab="Custom theme"
+Create a custom ViraUI look for this project and wire it at the app root. I want: [describe brand — colors, mood, typography, density]. Light and dark should both work from one theme file. Save the theme in the app and make sure components render with the new brand end to end.
+```
+
+A wired custom sheet looks like this once the agent (or Studio export) has produced it:
+
+```tsx title="Custom theme.css"
+import './vira-theme.css';
+import '@fontsource-variable/geist/wght.css'; // match families in your theme
+import '@viraui/react/preflight.css';
+```
+
+```css title="vira-theme.css — pair scheme-sensitive tokens"
+:root {
+  --global-background: light-dark(oklch(98% 0.01 250), oklch(18% 0.02 250));
+  --global-foreground: light-dark(oklch(22% 0.02 250), oklch(96% 0.01 250));
+  --global-primary: light-dark(oklch(55% 0.14 250), oklch(72% 0.12 250));
+  /* space, radius, type scale… can stay unpaired */
+}
+```
+
+Only after a **complete** theme is already loaded, you may layer a few semantic overrides:
+
+```tsx title="Base theme + partial overrides"
+import '@viraui/foundation/vira.css'; // or your full custom sheet
+import './brand-overrides.css'; // only the tokens you change
+import '@fontsource-variable/geist/wght.css';
+import '@viraui/react/preflight.css';
+```
+
+```css title="brand-overrides.css — never alone"
+:root {
+  /* Prefer light-dark() so data-mode flips keep working */
+  --global-primary: light-dark(oklch(55% 0.14 250), oklch(72% 0.12 250));
+  --space-m: 0.875rem;
+}
+```
+
+Scoped wrappers work the same way when only a subtree should rebrand. Full brand swaps replace the complete theme CSS import — not `data-mode`.
+
+<Callout type="warn" title="Load a complete theme">
+Components expect **every** semantic token from the theme contract — not a handful of overrides alone. Ship a **full** theme CSS (Studio export, agent-built sheet, or a [built-in preset](/get-started/theming/built-in-themes)), **or** import a base theme first and only then layer partial `:root` overrides. A partial sheet with no base theme leaves missing variables and broken UI.
+</Callout>

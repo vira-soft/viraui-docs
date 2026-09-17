@@ -1,0 +1,57 @@
+---
+title: Colors
+icon: Palette2
+description: Semantic color tokens on the theme — retune globals and highlights and product UI follows.
+---
+
+Color ships as CSS custom properties on your [theme](/get-started/theming/what-is-a-theme). Product CSS and components read **semantic** names (`--global-*`, `--highlight-*`) so chrome and status stay meaningful when the brand or light/dark mode changes. Stepped primitives (`--color-*`) exist for theme authoring — wire them into semantics on a [custom theme](/get-started/theming/custom-themes), not for everyday product surfaces.
+
+`@viraui/react` already binds to these tokens. Retune the theme and backgrounds, actions, status, and chrome follow — no per-component color chase.
+
+## Global
+
+App chrome: page background, body text, primary actions, muted copy, disabled states, borders. Reach for these in product CSS when you build a custom surface — not to restyle page chrome or ViraUI actions that already bind to them.
+
+<GlobalColorTokens />
+
+```css title="Custom surface"
+.feature-callout {
+  border-left: 3px solid var(--global-primary);
+  background: oklab(from var(--global-primary) l a b / 8%);
+}
+```
+
+## Highlight
+
+Named status and accent colors — success, danger, tags, decorative badges. Components such as `Badge`, `Chip`, `Text` tones, and `Beam` map prop colors onto these tokens (`red` → `--highlight-red`, and so on). Pick a highlight when the color carries **meaning**, not generic chrome.
+
+<HighlightColorTokens />
+
+```css title="Status with a highlight"
+.invoice-overdue-banner {
+  color: var(--highlight-red);
+  background: oklab(from var(--highlight-red) l a b / 12%);
+}
+```
+
+## Primitives
+
+`--color-{palette}-{step}` are the stepped ramps themes wire into semantics (steps `0`–`70` by tens). Values stay fixed across light and dark — they do not flip with `data-mode`. Built-in themes ship a set of named palettes; browse the ramps below when you author or extend a sheet. Prefer promoting one-offs to `--global-*` or `--highlight-*` so components stay on the semantic contract.
+
+<PrimitiveColorTokens />
+
+## Tune
+
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape color: tweak globals and highlights on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — components keep reading `--global-*` / `--highlight-*` and adapt.
+
+Without Studio, paste a prompt into your agent or edit those semantics on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). Wire primitives into semantics on the sheet when you author a brand — not as one-off product CSS.
+
+```text tab="Brand primary"
+Make the primary color closer to our brand blue. Light and dark mode should both still look good.
+```
+```text tab="Add warning"
+Add a warning color to the theme and use it for warning badges.
+```
+```text tab="Warmer neutrals"
+Warm up the neutral grays and backgrounds. Don't change success, danger, or other status colors.
+```

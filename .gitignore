@@ -1,0 +1,17 @@
+.DS_Store
+/node_modules/
+
+.env
+.env.local
+dist
+.source
+src/pages.gen.ts
+.vercel/
+*.log
+.env.*
+!.env.example
+.vercel
+
+# TokenSave local MCP pin (absolute -p); machine-specific
+.cursor/mcp.json
+.cursor/hooks.json

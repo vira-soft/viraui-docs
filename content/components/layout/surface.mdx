@@ -1,0 +1,18 @@
+---
+title: Surface
+description: Themed container — color ramp, radius, border sides, and padding on one host.
+---
+
+`Surface` is the primary panel host in ViraUI — `color` maps onto the theme base ramp (`1`–`3` or named tokens), `radius` reads [radius](/foundation/radius) steps, and `border` picks which sides get a contrast edge. Horizontal and vertical padding use the spacing scale; nested surfaces can set `radius="auto"` so inner corners stay [concentric](/foundation/radius) with the parent's padding and rounding. `Surface` also publishes radius context descendants consume — menus, nested cards, and glow shells rely on it. Use `Surface` wherever a region needs a distinct background plane instead of bare page chrome.
+
+## Common examples
+
+A nested card stack with color ramp, radius auto, and token padding shows the default panel composition.
+
+<PreviewSlot label="Surface preview" />
+
+## Ask your agent
+
+```text tab="Nested surfaces"
+Build a nested card: outer container with border and generous padding, inner inset area with a button inside.
+```

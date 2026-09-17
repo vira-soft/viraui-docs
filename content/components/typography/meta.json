@@ -1,0 +1,13 @@
+{
+  "title": "Typography",
+  "pages": [
+    "index",
+    "clamp-text",
+    "fit-text",
+    "shimmer",
+    "text",
+    "title"
+  ],
+  "defaultOpen": false,
+  "icon": "Typography"
+}

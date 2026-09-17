@@ -1,0 +1,35 @@
+---
+description: Avoid 1:1 inventories of ViraUI parts in human docs — examples OK, catalogs drift
+globs: content/**/*.mdx
+alwaysApply: false
+---
+
+# Docs: no surface catalogs
+
+Human MDX explains how the part works and gives agent prompts. **Do not** maintain 1:1 inventories of ViraUI parts (token lists, “the N effects are…”, “these components are…”) unless the page’s job is literally a browser (e.g. color swatches).
+
+## Why
+
+Complete inventories become a second source of truth. When the DS adds or renames something, the docs drift. Skills, `@viraui/react/specs`, and theme sheets already own the live surface.
+
+## Do
+
+- Teach the **pattern** (gates, polarity, where to set, what to prefer)
+- Name concrete tokens / props **inside examples** and short usage prose
+- Point agents at skills / specs for the live set
+- Soften defaults: “built-in brands pick a default per gate — check the theme”
+
+## Do not
+
+- Count the set (“four effects”, “eight layers”) when a count is not the teaching point
+- Open with “ViraUI includes X, Y, Z…” as a checklist of what exists
+- Add a section per item just to catalog the family (use examples or one “in practice” block instead)
+- Promise completeness (“all `--effect-*` tokens are…”)
+
+## Examples
+
+| Avoid | Prefer |
+| --- | --- |
+| Four CSS custom properties — `--effect-vibrancy`, `--effect-corner-shape`, … | `--effect-*` custom properties decide whether whole treatments can run. |
+| The effects are vibrancy, corner shape, holofoil, and shadows. | Show those names in a `:root` / JSX example; prose explains how gates work. |
+| Built-in brands leave vibrancy, corner shape, and shadows on… | Built-in brands pick a default per gate — check the theme sheet. |

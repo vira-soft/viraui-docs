@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "skills": {
+    "authoring-css": {
+      "source": "equinusocio/skills",
+      "sourceType": "github",
+      "skillPath": "skills/authoring-css/SKILL.md",
+      "computedHash": "b5bd127d1683d0dc9419c7c6716d98321cc7196032a08b9d252760c4075ab1b8"
+    },
+    "authoring-react": {
+      "source": "equinusocio/skills",
+      "sourceType": "github",
+      "skillPath": "skills/authoring-react/SKILL.md",
+      "computedHash": "2d95cb5b6bf1eeba389c7b2d15ba6119046270a66578b6e91ed3374fca3b37c4"
+    },
+    "viraui-a11y": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/IQZPjm9biEMkAZOP",
+      "sourceType": "well-known",
+      "computedHash": "964eaab75ccbb91198565fc7442c5df86b619ef8b816e3de265201eaf5998714",
+      "wellKnownDigest": "sha256:ffc39152b4d0e535f279783d2318fe621b051bf931988ce60ce868dfbb69d930"
+    },
+    "viraui-design": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/IQZPjm9biEMkAZOP",
+      "sourceType": "well-known",
+      "computedHash": "47d77a364030a270a5b851b4e6a05eb4bfb37180f81f44810ea8432126ddfd86",
+      "wellKnownDigest": "sha256:a6ac0de0038beefd5691383b75bd201baf8feb567d7c63ddef4499195e7e6bb8"
+    },
+    "viraui-motion": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/IQZPjm9biEMkAZOP",
+      "sourceType": "well-known",
+      "computedHash": "fd26a990d538e80db327575c969b432b2bf91608da96c9d3fded0dcbd5e965b0",
+      "wellKnownDigest": "sha256:d121abb6a16f7af646e362b68c362c2e0b047156adae144049682139a86cf105"
+    },
+    "viraui-setup": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/IQZPjm9biEMkAZOP",
+      "sourceType": "well-known",
+      "computedHash": "69d0fcdab42dfd918784303d7edc52e2d6f5d990569d75994136689731e46fc6",
+      "wellKnownDigest": "sha256:290ccd538ec16bf881bee40eb0374226b48bd675e821fd506b8c5c962efae362"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+---
+title: Shimmer
+description: Moving highlight sweep across text — duration, spread, and angle tuned through CSS custom properties.
+---
+
+Shimmer wraps inline copy in a `span` that animates a gradient highlight across the glyphs — useful for loading placeholders, emphasis lines, or "generating" states where the string is already known but should feel in motion. `duration`, `spread`, and `angle` map to `--vui-shimmer-*` variables; defaults pull from foundation [motion](/foundation/motion) and spacing tokens. `highlightColor` overrides the default lightness boost derived from `currentColor`.
+
+Because the effect is decorative motion, pair Shimmer with visible status copy or an `aria-busy` region when the shimmer marks a loading state — the sweep alone does not explain what is loading. Respect `prefers-reduced-motion` in surrounding layout: swap to static muted [Text](/components/typography/text) when reduced motion is requested and the shimmer would distract. Do not nest Shimmer inside [ClampText](/components/typography/clamp-text) unless you accept the clip interacting with the moving gradient.
+
+## Common examples
+
+A single-line "Summarizing…" label with shimmer while an agent response streams.
+
+<PreviewSlot label="Shimmer preview" />
+
+## Ask your agent
+
+```text tab="AI shimmer label"
+While this assistant panel waits, show a shimmering "Summarizing your request…" label and a static muted line explaining the wait. Replace with normal answer text when content arrives.
+```

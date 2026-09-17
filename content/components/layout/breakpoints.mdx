@@ -1,0 +1,18 @@
+---
+title: Breakpoints
+description: BreakpointsProvider — named min-width match flags for viewport-conditional React trees.
+---
+
+`BreakpointsProvider` owns a map of breakpoint names to CSS lengths and subscribes to `window.matchMedia` for each `(min-width: …)` query. Descendants call `useBreakpoints` to read which names currently match — pass one name for a boolean, or call with no argument for the full record. Mount the provider once in a client subtree (`'use client'` in Next.js); hooks throw outside that boundary. Passing `breakpoints` **replaces** the entire default map — it does not merge. Prefer CSS `@media` for layout-only shifts; branch the React tree only when markup or behavior must change. See [useBreakpoints](/get-started/utilities/use-breakpoints) for the consumer hook and default threshold table in `@viraui/react` specs.
+
+## Common examples
+
+A nav row that flips Stack direction when a named breakpoint matches shows the provider hook in action.
+
+<PreviewSlot label="Breakpoints preview" />
+
+## Ask your agent
+
+```text tab="Responsive nav"
+Make this nav stack vertically on small screens and horizontally on larger ones. Mount breakpoint detection high enough that every screen that needs it sits underneath.
+```

@@ -1,0 +1,20 @@
+---
+title: Typewriter
+description: Inline typing animation — single phrase or cycling texts with caret styles and reduced-motion fallback.
+---
+
+Typewriter animates copy inside a `span` by writing characters into a typed layer while an `aria-live` region holds the full phrase for screen readers. Pass string `children` for one line, or `texts` to cycle multiple phrases with type, pause, delete, and loop timing controlled by `speed`, `deleteSpeed`, `pause`, and `delay`. `caret` selects block, underscore, pipe, or none; `caretColor` overrides the default `currentColor` caret.
+
+When `prefers-reduced-motion: reduce` is active, the animation skips straight to the full phrase — do not rely on the typing effect alone to reveal critical information. `preserveSpace` reserves the final layout width and height from first paint so surrounding flex rows do not jump while letters appear; use it for hero lines next to buttons or badges.
+
+## Common examples
+
+A hero subtitle that cycles product taglines with a pipe caret.
+
+<PreviewSlot label="Typewriter preview" />
+
+## Ask your agent
+
+```text tab="Cycling tagline"
+Replace the static hero subtitle with cycling lines: "Ship faster.", "Stay on brand.", "Let the agent compose." Keep the first phrase available as plain text for users who need it without animation.
+```

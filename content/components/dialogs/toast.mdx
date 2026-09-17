@@ -1,0 +1,18 @@
+---
+title: Toast
+description: Non-blocking transient notifications with stacked placement, Banner API, and optional action buttons.
+---
+
+Toast is a compound namespace for short-lived feedback — save confirmations, undo windows, and contextual messages anchored to the control that triggered them. Queue toasts through `toastManager.add` with `title` and `description` strings so high-priority announcements reach screen readers. `Toast.Banner` is the high-level surface; its children must be `Toast.Action` only. Your agent picks Toast for reversible or informational outcomes, not blocking validation errors (inline field errors or Dialog own those).
+
+## Common examples
+
+A save confirmation with title, description, and optional undo action is the default transient feedback pattern.
+
+<PreviewSlot label="Toast preview" />
+
+## Ask your agent
+
+```text tab="Save toast"
+After this form saves successfully, show a short toast with title and description. Include Undo to reverse the change. Keep copy brief. Do not use toasts for validation errors that block the task.
+```

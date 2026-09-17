@@ -1,0 +1,45 @@
+---
+title: Overview
+icon: Eye
+description: Shared design tokens and brandable primitives — how ViraUI's look compiles from one substrate.
+pageActions: false
+---
+
+Foundation is the shared visual substrate of ViraUI: design tokens and brandable primitives for color, type, space, elevation, motion, and the rest of the contract. Change the substrate to shape a brand; the same `@viraui/react` components stay on top and read the new values.
+
+## How it works
+
+A [theme](/get-started/theming/what-is-a-theme) compiles those primitives into CSS custom properties on one stylesheet your app loads once. Each topic below is a facet of that substrate — not a separate mini system. Components and your own CSS consume the same `--*` names, so you retune the theme instead of inventing local visual rules. Edit `--global-primary`, `--duration-fast`, or `--radius-l` on the sheet and the UI follows without a per-component chase.
+
+## Tune
+
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape the brand: tweak foundation values on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — colors, type, space, motion, and the rest stay on one sheet.
+
+Without Studio, paste a brand prompt into your agent or edit the theme CSS by hand (or switch a [built-in preset](/get-started/theming/built-in-themes)). Keep every semantic name stable — components read those names, not your local CSS inventiveness. Each foundation topic below has its own Tune section for the tokens that facet owns.
+
+<Cards>
+  <Card title="Colors" href="/foundation/colors">
+    <SpotIllustration name="foundation-colors" />
+  </Card>
+  <Card title="Motion" href="/foundation/motion">
+    <SpotIllustration name="foundation-motion" />
+  </Card>
+  <Card title="Elevation" href="/foundation/elevation">
+    <SpotIllustration name="foundation-elevation" />
+  </Card>
+  <Card title="Effects" href="/foundation/effects">
+    <SpotIllustration name="foundation-effects" />
+  </Card>
+  <Card title="Typography" href="/foundation/typography">
+    <SpotIllustration name="foundation-typography" />
+  </Card>
+  <Card title="Spacing" href="/foundation/spacing">
+    <SpotIllustration name="foundation-space" />
+  </Card>
+  <Card title="Radius" href="/foundation/radius">
+    <SpotIllustration name="foundation-radius" />
+  </Card>
+  <Card title="Icons" href="/foundation/icons">
+    <SpotIllustration name="foundation-icons" />
+  </Card>
+</Cards>

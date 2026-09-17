@@ -1,0 +1,48 @@
+---
+title: MCP
+icon: PlugSparkle
+description: Ground your coding agent in live ViraUI docs via MCP.
+---
+
+The ViraUI docs MCP exposes this site to your coding agent over Streamable HTTP. Connect the client to `https://docs.viraui.dev/mcp` (no auth) and the agent reads published documentation instead of guessing from training data — `search` for full-text queries with snippets, `get_page` to load one page by path (such as `/principles` or `/get-started/setup`), and `list_pages` to map the index before opening detail. Use those tools together when you want answers grounded in what is live here.
+
+## Configuration
+
+One-click shortcuts for Cursor or Kiro:
+
+<Cards>
+  <Card
+    title="Add to Cursor"
+    href="cursor://anysphere.cursor-deeplink/mcp/install?name=viraui-docs&config=eyJ1cmwiOiJodHRwczovL2RvY3MudmlyYXVpLmRldi9tY3AifQ=="
+    icon={<CursorLogo />}
+  >
+    Opens Cursor and prompts to add the docs MCP.
+  </Card>
+  <Card
+    title="Add to Kiro"
+    href="https://kiro.dev/launch/mcp/add?name=viraui-docs&config=%7B%22url%22%3A%22https%3A%2F%2Fdocs.viraui.dev%2Fmcp%22%2C%22disabled%22%3Afalse%2C%22autoApprove%22%3A%5B%5D%7D"
+    icon={<KiroLogo />}
+  >
+    Opens Kiro and prompts to confirm the docs MCP.
+  </Card>
+</Cards>
+
+For any MCP-capable client, paste this:
+
+```markdown tab="Configure MCP"
+Add the ViraUI docs MCP to this client as viraui-docs. Use Streamable HTTP at https://docs.viraui.dev/mcp — no auth. Prefer the client's native MCP config or CLI (merge into existing servers; do not wipe other entries). Confirm the server connects and that search, get_page, and list_pages are available.
+```
+
+## Check connection
+
+After the server shows as connected, run one of these checks to confirm the tools respond:
+
+```text tab="Search docs"
+Search the ViraUI docs for Stack layout guidance and summarize the first few hits with links.
+```
+```text tab="Fetch a page"
+Open the Principles page from the docs and quote the three principles in order.
+```
+```text tab="Browse the index"
+Browse the docs index, then open the Get started and Foundation pages most helpful for setting up a new app.
+```

@@ -1,0 +1,59 @@
+---
+title: useBreakpoints
+description: Optional viewport match helpers when the React tree must branch — prefer CSS for layout-only shifts.
+---
+
+`BreakpointsProvider` and `useBreakpoints` let the React tree **branch** at named min-width thresholds — swap markup, mount different components, or drive props CSS cannot express alone. Prefer CSS `@media` or container queries when the same elements can just shift with styles. The required overlay shell from [Setup](/get-started/setup) does not include these helpers; add them only when you need that kind of branch.
+
+Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider. Passing `breakpoints` on the provider **replaces** the default map entirely — it does not merge. Defaults are em-based names from `extra-small` through `extra-large` (the example below uses `small` at `48em`); the full table lives in `@viraui/react/specs` → `breakpoints`.
+
+## Ask an agent
+
+Paste a need like this when CSS alone cannot express the layout change:
+
+```text tab="Responsive header"
+On this page: primary nav stacks vertically on phones and sits in a row on larger screens. The feature grid below is one column by default and three columns from tablet size up. On large screens, make the main CTA bigger and show a secondary text link beside it — hide that link on smaller screens. Prefer CSS for style-only changes; branch the React tree only where layout or markup must change.
+```
+
+```tsx title="ResponsiveNav.tsx"
+'use client';
+
+import { Stack, BreakpointsProvider, useBreakpoints } from '@viraui/react';
+
+function ResponsiveNav() {
+  // `small` matches at min-width 48em and above
+  const largeScreen = useBreakpoints('small');
+
+  return (
+    <Stack
+      render={<nav aria-label="Primary" />}
+      direction={largeScreen ? 'row' : 'column'}
+    >
+      <a href="/">Home</a>
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+    </Stack>
+  );
+}
+
+export function App({ children }: { children: React.ReactNode }) {
+  return (
+    <BreakpointsProvider>
+      <ResponsiveNav />
+      {children}
+    </BreakpointsProvider>
+  );
+}
+```
+
+Custom names replace the defaults entirely — there is no partial merge:
+
+```tsx title="Custom breakpoints"
+<BreakpointsProvider breakpoints={{ compact: '20em', wide: '50em' }}>
+  {children}
+</BreakpointsProvider>
+```
+
+## Base UI utilities
+
+ViraUI builds on [Base UI](https://base-ui.com). For direction, focus management, portals, and similar built-ins, use [Base UI's docs](https://base-ui.com).

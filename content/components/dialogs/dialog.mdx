@@ -1,0 +1,18 @@
+---
+title: Dialog
+description: Compound bottom sheet with trigger, sheet, close, and optional app-shell indent for focused tasks.
+---
+
+Dialog is a compound drawer sheet built from `Dialog.Trigger`, `Dialog.Sheet`, and `Dialog.Close`, with pass-through parts for `Dialog.Provider`, `Dialog.Indent`, and `Dialog.IndentBackground` when the app shell should indent behind an open sheet. Pass `title` for assistive technologies; add `description` when the heading alone is thin. Snap points and swipe dismissal live on `Dialog` when a bottom sheet should drag between heights. Nest another `Dialog` inside `Dialog.Sheet` for drill-down settings flows. Reach for Popover or Menu when the content is a small anchored hint, not a page-level interruption.
+
+## Common examples
+
+A confirmation sheet with trigger, titled sheet, and footer actions is the default interruption pattern.
+
+<PreviewSlot label="Dialog preview" />
+
+## Ask your agent
+
+```text tab="Delete confirm"
+Add a delete confirmation flow on this settings screen. The danger zone opens a bottom sheet with title, short description, Cancel, and Confirm delete. Screen readers need the same context as sighted users.
+```

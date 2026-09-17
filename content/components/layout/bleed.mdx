@@ -1,0 +1,18 @@
+---
+title: Bleed
+description: Pull content past parent padding — token amount or full viewport edge bleed.
+---
+
+`Bleed` applies negative inline margin so children escape a padded parent without reworking the outer layout — set `amount` to a [spacing](/foundation/spacing) token for a controlled pull, or `full` to reach the viewport edges and ignore `amount`. Typical uses include edge-to-edge hero media inside a padded [`Stack`](/components/layout/stack), carousels that should kiss the screen sides, and full-bleed dividers under inset content. The wrapper is a plain `div`; it does not change child sizing — only the offset from the parent's content box.
+
+## Common examples
+
+A padded section with full-bleed hero media breaking past inline margins is the baseline pull pattern.
+
+<PreviewSlot label="Bleed preview" />
+
+## Ask your agent
+
+```text tab="Full-bleed hero"
+Build a page section with padded content and a hero image that bleeds edge to edge while the rest of the section keeps normal margins.
+```

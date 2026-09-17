@@ -1,0 +1,20 @@
+---
+title: FitText
+description: Container-filling display type — scales font size to the available width with an optional max cap.
+---
+
+FitText shrinks or grows headline copy to fill its container width using a reference layer that measures the untransformed text and a display layer that applies the fitted font size. Drop it inside a hero band, stat callout, or narrow sidebar where a fixed `Title` `size` would either overflow or leave dead space. `maxFontSize` caps how large the fit algorithm may grow — without it, short strings in wide containers can become enormous.
+
+Children are plain text or inline nodes; pair with [Title](/components/typography/title) semantics separately if the line also belongs in the document outline (FitText root is a `div`, not a heading tag). Give the parent a defined width — flex children need `min-width: 0` or an explicit width constraint or the measurement pass cannot resolve. For ordinary paragraphs, stay on Text with fluid foundation sizing instead of FitText.
+
+## Common examples
+
+A dashboard stat label that fills the tile width without manual font-size tweaks.
+
+<PreviewSlot label="FitText preview" />
+
+## Ask your agent
+
+```text tab="Fit KPI number"
+Make the KPI number in this tile scale down to fit the width while the unit suffix stays small muted text below.
+```

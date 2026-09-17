@@ -1,0 +1,68 @@
+---
+title: Radius
+icon: CircleDashed
+description: Theme `--radius-*` tokens and component radius props — nested surfaces stay concentric with radius auto.
+---
+
+Corner rounding on a [theme](/get-started/theming/what-is-a-theme) is a named step scale compiled to `--radius-*` custom properties. Components that round corners — `Surface`, buttons, skeletons, and similar hosts — map their `radius` prop onto those names so you set rounding in JSX instead of hand-writing `border-radius` CSS. When the brand needs softer or sharper corners, you retune the scale on the theme sheet; every prop and every `var(--radius-…)` reference follows.
+
+## Set radius on components
+
+The `radius` prop accepts the same step names the theme defines (`m`, `l`, `2xl`, and so on — check the active theme for the live set). Paste a prompt when you need a rounded panel or control.
+
+```text tab="Rounded panel"
+Wrap this content in a rounded panel with a subtle border and comfortable padding. Use the theme's corner rounding — no custom border-radius CSS.
+```
+
+```tsx
+import { Surface, Text } from '@viraui/react';
+
+<Surface color={1} radius="l" hPadding="m" vPadding="m" border="all">
+  <Text>Rounded panel</Text>
+</Surface>
+```
+
+Custom radius CSS is the escape hatch for hosts props cannot reach — raw wrappers, third-party chrome, and one-off shells. Use `var(--radius-…)` so theme edits still apply.
+
+```css title="Custom shell that still follows the theme"
+.media-frame {
+  border-radius: var(--radius-l);
+}
+```
+
+## Concentric corners
+
+Nested surfaces inside a padded, rounded parent need a smaller arc so each corner shares the same curvature — copying the parent's token leaves a visible mismatch. Set `radius="auto"` on the nested host: it reads the nearest ancestor `Surface` radius and padding through React context and subtracts so the inner corner stays concentric — no layout measurement in JavaScript.
+
+Toggle the demo below: equal radii reuse the outer token and look wrong at the corners; `auto` keeps the arcs aligned.
+
+<RadiusConcentricDemo />
+
+```text tab="Nested corners"
+Nest a padded inner panel inside a large rounded outer panel. Inner corners should stay concentric with the outer curve — don't just copy the same corner size.
+```
+
+```tsx
+import { Button, Surface } from '@viraui/react';
+
+<Surface color={1} radius="2xl" hPadding="l" vPadding="l" border="all">
+  <Surface color={2} radius="auto" hPadding="l" vPadding="l" border="all">
+    <Button variant="secondary">Use radius auto</Button>
+  </Surface>
+</Surface>
+```
+
+Outermost surfaces still need an explicit step — `auto` only resolves when an ancestor provides radius context. Nested menus, select options, and glow shells already lean on this pattern; prefer `auto` over duplicating the parent token.
+
+## Tune
+
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape corner rounding: tweak `--radius-*` on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — prop names stay the same; only the lengths change.
+
+Without Studio, paste a prompt into your agent or edit `--radius-*` on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). Nested `radius="auto"` keeps working against the new outer steps.
+
+```text tab="Softer corners"
+Soften corner rounding across the app for a friendlier feel — especially on panels and cards.
+```
+```text tab="Sharper corners"
+Sharpen corner rounding for a tighter, more product-dense look.
+```

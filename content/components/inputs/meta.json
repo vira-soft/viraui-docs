@@ -1,0 +1,17 @@
+{
+  "title": "Inputs",
+  "pages": [
+    "index",
+    "autocomplete",
+    "checkbox",
+    "fieldset",
+    "radio",
+    "select",
+    "slider",
+    "switch",
+    "textarea",
+    "textfield"
+  ],
+  "defaultOpen": false,
+  "icon": "TextInput"
+}
