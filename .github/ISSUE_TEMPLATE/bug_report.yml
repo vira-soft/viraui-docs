@@ -1,0 +1,130 @@
+name: Bug report
+description: Something broken in the docs site or a ViraUI consumer repro tied to these docs.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        File a **bug** here. Questions, feature ideas, and requests → **Discussions**, not issues.
+  - type: dropdown
+    id: bug_type
+    attributes:
+      label: Bug type
+      description: What kind of failure is this?
+      options:
+        - Visual
+        - Performance
+        - Functional / behavior
+        - Content / docs accuracy
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong in one or two sentences.
+      placeholder: e.g. Button hover flash on dark mode; Setup page 404
+    validations:
+      required: true
+  - type: textarea
+    id: message
+    attributes:
+      label: Error note / message
+      description: Exact console error, toast, build log line, or on-screen note. Paste verbatim when possible.
+      placeholder: |
+        TypeError: Cannot read properties of undefined (reading '…')
+        or: layout shift when opening Tabs
+    validations:
+      required: false
+  - type: textarea
+    id: packages
+    attributes:
+      label: Package versions
+      description: Relevant `@viraui/*` (and peers) from `package.json` / lockfile. Paste versions, not ranges alone.
+      placeholder: |
+        @viraui/react: 0.x.y
+        @viraui/foundation: 0.x.y
+        react: 19.2.x
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      description: Output of `node -v` (or N/A if browser-only on docs.viraui.dev).
+      placeholder: v24.15.0
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Where it fails. Pick **All browsers** if every browser you tried shows it.
+      options:
+        - All browsers
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: browser_version
+    attributes:
+      label: Browser version
+      description: Required when not "All browsers" (Help → About, or `chrome://version`).
+      placeholder: e.g. Chrome 131.0.6778.85 / Safari 18.2
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happens now.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps so someone else can hit the same bug.
+      placeholder: |
+        1. Open …
+        2. Click …
+        3. See …
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page / URL
+      description: Full URL or path (docs page or local app route).
+      placeholder: https://docs.viraui.dev/...
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra context
+      description: Screenshots, screen recording, OS, related PRs — optional.
+    validations:
+      required: false
+  - type: checkboxes
+    id: duplicate_search
+    attributes:
+      label: Duplicate check
+      description: Duplicate issues are closed. Search [open and closed issues](https://github.com/vira-soft/viraui-docs/issues?q=is%3Aissue) before filing.
+      options:
+        - label: I searched existing issues and did not find a duplicate of this bug.
+          required: true

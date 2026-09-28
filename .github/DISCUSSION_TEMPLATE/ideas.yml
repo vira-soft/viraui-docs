@@ -1,0 +1,28 @@
+title: "[idea]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Feature / docs request** only. Bugs → [Bug report issue](https://github.com/vira-soft/viraui-docs/issues/new/choose). Questions → **Q&A**.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Request
+      description: What should we add or change?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: Problem this solves or who it helps.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra notes
+      description: Examples, mockups, related pages — optional.
+    validations:
+      required: false

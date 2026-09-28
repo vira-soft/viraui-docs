@@ -160,8 +160,7 @@ const config = defineConfig({
     },
   },
   defaultLayoutProps: {
-    // empty string blocks auto-inject from site.git (nullish would still add the icon)
-    githubUrl: "",
+    githubUrl: "https://github.com/vira-soft/viraui-docs",
     nav: {
       title: <ViraLogo />,
       transparentMode: 'top'

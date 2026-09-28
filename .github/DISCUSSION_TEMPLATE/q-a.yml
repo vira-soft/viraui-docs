@@ -1,0 +1,21 @@
+title: "[q]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Questions & help** only. Bugs → [Bug report issue](https://github.com/vira-soft/viraui-docs/issues/new/choose). Feature / docs requests → **Ideas**.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help with?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What you already tried, links, package versions if relevant.
+    validations:
+      required: false

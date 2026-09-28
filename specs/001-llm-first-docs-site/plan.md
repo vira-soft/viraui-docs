@@ -77,7 +77,8 @@ viraui-docs/
 ├── vite.config.ts
 ├── package.json
 ├── .gitignore
-└── README.md
+├── README.md          # consumer face (logo + docs link)
+└── CONTRIBUTING.md    # local / build / deploy
 ```
 
 **Structure Decision**: Single Fumapress app at repo root (not monorepo). Content-first layout per Fumapress basics; shared UI helpers under `src/components` for PreviewSlot; prompts use titled fenced code blocks.

@@ -14,7 +14,7 @@ Update when durable map/gotchas change. No WIP, no contract copies, no page inve
 - Sibling website (shared cover art) — optional; TokenSave peers via sibling MCP when needed
 - Tooling `pnpm@10.28`, Node `24.15` (`.node-version`), TypeScript `7`, React `19.2`, Fumapress `1.3` / Fumadocs, Vite `8`, Tailwind `4`
 - Dev `pnpm dev` → Fumapress; build `pnpm build` → `dist/public` + `dist/server` (MCP `/mcp`)
-- No root `AGENTS.md` yet — Spec Kit under `specs/` + README
+- No root `AGENTS.md` yet — Spec Kit under `specs/`; consumer `README.md` (logo + docs link); local/dev/deploy in `CONTRIBUTING.md`
 
 ## Spec router (open one)
 
@@ -33,7 +33,7 @@ Update when durable map/gotchas change. No WIP, no contract copies, no page inve
 | Foundation overview hub | `specs/007-foundation-docs/` (+ `contracts/foundation-page.md`) |
 | Spec Kit skills | `.agents/skills/speckit-*` |
 
-README summarizes; specs win. Constitution stub in `.specify/memory/` — not filled.
+Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`. Specs win. Constitution stub in `.specify/memory/` — not filled.
 
 ## Paths
 
@@ -47,6 +47,8 @@ README summarizes; specs win. Constitution stub in `.specify/memory/` — not fi
 | Shared cover | `public/cover.jpg` → OG / Twitter |
 | Feature specs | `specs/001-llm-first-docs-site/` … `specs/007-foundation-docs/` |
 | Deploy workflow | `.github/workflows/` (`release.yml` prod on `main`; `pr-quality.yml`) |
+| Issue templates | `.github/ISSUE_TEMPLATE/` — bug only; blank issues off; Q&A / Ideas / General → Discussions |
+| Discussion forms | `.github/DISCUSSION_TEMPLATE/{q-a,ideas}.yml` — match category slugs `q-a`, `ideas` |
 | Vercel project link (local only) | `.vercel/project.json` — never commit |
 
 ## Product model
@@ -68,9 +70,10 @@ README summarizes; specs win. Constitution stub in `.specify/memory/` — not fi
 
 ## Durable gotchas
 
+- Issues: only bug template; `blank_issues_enabled: false`; questions / feature requests → Discussions (`q-a`, `ideas`)
 - `mode: "default"` (not static) — need server for MCP `/mcp` + link-validation plugin
 - Ask AI **off** — needs paid model provider; MCP stays
-- `githubUrl: ""` in `defaultLayoutProps` — empty string blocks GitHub icon auto-inject from `site.git` (nullish still adds it)
+- `githubUrl: "https://github.com/vira-soft/viraui-docs"` in `defaultLayoutProps` — nav GitHub icon (private repo; `site.git` also set)
 - Page actions: Copy Markdown + `OpenWithPopover` only; frontmatter `pageActions: false` hides both
 - Nav icons: `@viraui/icons` via `viraIconsPlugin` + shared `<Icon name="…" />` — sync duo barrel; avoid `import.meta.glob` over full icon set
 - Do **not** link Vercel project to GitHub — deploy via GH Actions secrets `VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID`

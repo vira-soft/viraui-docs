@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Q&A
+    url: https://github.com/vira-soft/viraui-docs/discussions/new?category=q-a
+    about: Questions & help — ask how something works. Bugs → Issues (Bug report).
+  - name: Ideas
+    url: https://github.com/vira-soft/viraui-docs/discussions/new?category=ideas
+    about: Feature / docs request — propose new pages, coverage, or site features.
+  - name: General
+    url: https://github.com/vira-soft/viraui-docs/discussions/new?category=general
+    about: General discussion — not Q&A, not Ideas, not bugs.
