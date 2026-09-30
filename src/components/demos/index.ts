@@ -45,3 +45,4 @@ export {
   ToastStackedDemo,
   ToastUndoDemo,
 } from "./toast-demo";
+export { BeamBorderDemo, BeamLineDemo, BeamPulseDemo } from "./beam-demo";

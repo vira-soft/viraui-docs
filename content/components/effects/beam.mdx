@@ -3,18 +3,116 @@ title: Beam
 description: Animated border shell — rotating edge, traveling line, or pulse glow around a child Surface.
 ---
 
-Beam is a transparent [Surface](/components/layout/surface) shell that paints motion around whatever you put inside — typically another Surface with `radius="auto"` so the card and the beam share one corner curve. Pick `variant` for the family: `border` spins a conic highlight around the edge, `line` runs a glow along the bottom, and `pulse-outside` / `pulse-inside` breathe radial bloom without a full border trace. `color` maps to theme tokens (`primary`, a highlight name, or `colorful` for a multi-stop palette); tune `duration`, `strength`, `brightness`, and `saturation` when the default read feels too loud or too quiet.
+Beam paints motion around whatever you put inside — a featured promo card, a secondary CTA, or an empty-state icon. The root is a transparent [Surface](/components/layout/surface) that only sets `radius`; nest the real card as a child Surface with `radius="auto"` so both share one corner curve. Pick `variant` for the family: `border` spins a highlight around the edge, `line` runs a glow along the bottom, and `pulse-outside` / `pulse-inside` breathe a radial bloom. `color` maps to theme tokens (`primary`, a highlight name, or `colorful` for a multi-stop palette); tune `duration`, `strength`, `brightness`, and `saturation` when the default read feels too loud or too quiet.
 
-`animate` toggles the effect with a fade rather than an abrupt cut — `onActivate` and `onDeactivate` fire when those fades finish. Off-screen beams pause through an intersection observer so background tabs do not keep spinning. Pulse variants share a single rAF driver per element; `pulse-outside` scales bloom to the measured child size. Set `fitContent` when the shell should shrink-wrap the card instead of stretching full width.
+`animate` toggles the effect with a fade rather than an abrupt cut — `onActivate` and `onDeactivate` fire when those fades finish. Off-screen beams pause so background tabs do not keep spinning. Set `fitContent` when the shell should shrink-wrap the card instead of stretching full width. Prefer Beam for rare focal accents; pointer-following highlights belong on [Glow](/components/effects/glow).
+
+<Callout type="warn" title="Performance cost">
+Beam keeps continuous motion on screen and can be heavy on CPU and memory. Prefer one focal instance per view. Do not wrap every card in a grid — reserve it for a single hero or CTA moment.
+</Callout>
 
 ## Common examples
 
-A featured card with a rotating primary border is the usual Beam composition.
+### Featured border
 
-<PreviewSlot label="Beam preview" />
+A featured card with a rotating colorful border is the usual Beam composition. `fitContent` keeps the shell tight to the card; `radius="auto"` on the inner Surface matches the Beam corners.
+
+<BeamBorderDemo />
+
+```tsx
+import { Beam, Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Beam color="colorful" fitContent radius="l" variant="border">
+  <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
+    <Stack maxWidth="18rem" rowGap="m">
+      <Stack rowGap="s">
+        <Title render={<h3 />} size="4">
+          ViraUI Pro
+        </Title>
+        <Text render={<p />} size="s" tone="muted">
+          Unlock advanced components and priority support for your team.
+        </Text>
+      </Stack>
+      <Button>Upgrade</Button>
+    </Stack>
+  </Surface>
+</Beam>
+```
+
+`size="s"` tightens the border beam for compact chrome; other variants ignore `size`.
+
+### Line under a CTA
+
+Wrap only the secondary action when a traveling bottom edge should call attention without a full border spin.
+
+<BeamLineDemo />
+
+```tsx
+import { Beam, Button, ButtonLink, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" vAlign="center">
+  <Button>Send magic link</Button>
+  <Text render={<span />} size="s" tone="muted">
+    or
+  </Text>
+  <Beam duration="5s" radius="m" strength={0.8} variant="line">
+    <ButtonLink href="/pro" variant="secondary">
+      Get ViraUI Pro
+    </ButtonLink>
+  </Beam>
+</Stack>
+```
+
+### Pulse accent
+
+`pulse-outside` breathes a bloom around the child — useful for empty-state icons and quiet focal marks. `pulse-inside` keeps the bloom clipped to the shell.
+
+<BeamPulseDemo />
+
+```tsx
+import { Sparkle } from '@phosphor-icons/react';
+import { Beam, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Stack hAlign="center" rowGap="l" vAlign="center">
+  <Beam color="primary" fitContent radius="full" variant="pulse-outside">
+    <Surface
+      aria-hidden
+      border="all"
+      color={1}
+      hPadding="m"
+      radius="full"
+      vPadding="m"
+    >
+      <Sparkle size={24} />
+    </Surface>
+  </Beam>
+  <Stack hAlign="center" maxWidth="28ch" rowGap="s">
+    <Title align="center" render={<h3 />} size="4">
+      No prompts yet
+    </Title>
+    <Text align="center" render={<p />} size="s" tone="muted">
+      Generate or import a prompt to get started.
+    </Text>
+  </Stack>
+</Stack>
+```
+
+Beam is decorative only — accessible names and status live on the content inside, not on the shell.
 
 ## Ask your agent
 
 ```text tab="Promo beam"
 Highlight the featured promo card with an animated border glow. Keep the card copy and padding unchanged — the effect should hug the card, not overpower it on small screens.
+```
+
+```text tab="Secondary CTA line"
+Add a subtle traveling line under the Get Pro link next to the primary Sign in button so the upgrade path stands out without competing with the main action.
+```
+
+```text tab="Empty-state pulse"
+Surround the empty-state icon with a soft breathing glow so the blank screen still has a quiet focal point. Keep the heading and helper text unchanged.
+```
+
+```text tab="Tone down"
+The beam around this card feels too loud — soften the strength and switch to the primary brand color instead of the colorful palette.
 ```
