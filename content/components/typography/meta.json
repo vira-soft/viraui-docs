@@ -1,7 +1,6 @@
 {
   "title": "Typography",
   "pages": [
-    "index",
     "clamp-text",
     "fit-text",
     "shimmer",

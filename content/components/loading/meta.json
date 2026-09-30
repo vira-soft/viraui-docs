@@ -1,7 +1,6 @@
 {
   "title": "Loading",
   "pages": [
-    "index",
     "linear-progress",
     "skeleton",
     "spinner"

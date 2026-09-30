@@ -1,7 +1,6 @@
 {
   "title": "Dialogs",
   "pages": [
-    "index",
     "dialog",
     "toast"
   ],

@@ -1,7 +1,6 @@
 {
   "title": "Actions",
   "pages": [
-    "index",
     "button",
     "button-link",
     "icon-button",

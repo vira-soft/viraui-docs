@@ -1,7 +1,6 @@
 {
   "title": "Overlays",
   "pages": [
-    "index",
     "menu",
     "popover",
     "tooltip"

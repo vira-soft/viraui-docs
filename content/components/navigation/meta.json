@@ -1,7 +1,6 @@
 {
   "title": "Navigation",
   "pages": [
-    "index",
     "tabs"
   ],
   "defaultOpen": false,

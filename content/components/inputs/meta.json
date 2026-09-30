@@ -1,7 +1,6 @@
 {
   "title": "Inputs",
   "pages": [
-    "index",
     "autocomplete",
     "checkbox",
     "fieldset",

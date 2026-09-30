@@ -1,58 +1,51 @@
 ---
 title: Overview
 icon: Bricks
-description: Typed React building blocks grouped by Storybook category — narrative, live previews, and agent prompts instead of mirrored prop tables.
+description: Composable UI components for screens you ship — actions, fields, overlays, and the rest, grouped by the job they do.
 ---
 
-The components layer is where `@viraui/react` turns foundation tokens into composable UI.
-
-## Categories
-
-- **Actions** commit work
-- **Dialogs** interrupt for focused tasks or transient feedback
-- **Effects** add decorative motion and atmosphere
-- **Inputs** collect data
-- **Layout** structure pages and spacing
-- **Loading** hold space while data arrives
-- **Navigation** navigate content in place
-- **Overlays** show interactive and contextual actions
-- **Typography** set body, headings, and text treatments
-- **Widgets** show compact status at a glance
-
-Component pages cover wiring, live previews, and copy-ready prompts against package specs and consumer skills. Prop detail stays in `@viraui/react` source and specs; these pages teach the contract so you can review agent output without memorizing every export or property.
-
-Each component belong to a specific category so your agent can map a screen to the right family:
+`@viraui/react` turns foundation tokens into the pieces you put on a screen: buttons that commit work, fields that collect data, overlays that float beside a trigger, and the rest of the catalog. Each category groups those pieces by job so your agent can map a settings form, a toolbar, or a dialog to the right family without guessing across the whole surface.
 
 <Cards>
-  <Card title="Actions" href="/components/actions">
+  <Card title="Actions" href="/components/actions/button">
     <SpotIllustration name="components-actions" />
+    Controls that commit work on the page — labeled buttons, link-shaped actions, icon-only triggers, and toggles that keep the right semantics.
   </Card>
-  <Card title="Dialogs" href="/components/dialogs">
+  <Card title="Dialogs" href="/components/dialogs/dialog">
     <SpotIllustration name="components-dialogs" />
+    Interrupt the flow for focused tasks or transient feedback — bottom sheets, modals, and toasts that claim attention without owning the route.
   </Card>
-  <Card title="Effects" href="/components/effects">
+  <Card title="Effects" href="/components/effects/beam">
     <SpotIllustration name="components-effects" />
+    Decorative motion and atmosphere layered on real content — beams, glow, blur, grain, and typewriter lines that stay ornamental.
   </Card>
-  <Card title="Inputs" href="/components/inputs">
+  <Card title="Inputs" href="/components/inputs/autocomplete">
     <SpotIllustration name="components-inputs" />
+    Collect typed values and choices — text fields, selects, switches, and grouped options that share field chrome for labels and errors.
   </Card>
-  <Card title="Layout" href="/components/layout">
+  <Card title="Layout" href="/components/layout/accordion">
     <SpotIllustration name="components-layout" />
+    Structure pages and spacing — stacks, grids, surfaces, and bleed so rhythm stays on the theme scale instead of ad hoc CSS.
   </Card>
-  <Card title="Loading" href="/components/loading">
+  <Card title="Loading" href="/components/loading/linear-progress">
     <SpotIllustration name="components-loading" />
+    Hold space while data arrives — skeletons, spinners, and progress bars that keep layout stable during fetch.
   </Card>
-  <Card title="Navigation" href="/components/navigation">
+  <Card title="Navigation" href="/components/navigation/tabs">
     <SpotIllustration name="components-navigation" />
+    Move through content in place — tab lists and related patterns that switch views without leaving the page.
   </Card>
-  <Card title="Overlays" href="/components/overlays">
+  <Card title="Overlays" href="/components/overlays/menu">
     <SpotIllustration name="components-overlays" />
+    Surface interactive and contextual actions — menus, popovers, and tooltips that float beside a trigger.
   </Card>
-  <Card title="Typography" href="/components/typography">
+  <Card title="Typography" href="/components/typography/clamp-text">
     <SpotIllustration name="components-typography" />
+    Set body, headings, and text treatments — fluid type, clamps, fit lines, and shimmer for readable hierarchy.
   </Card>
-  <Card title="Widgets" href="/components/widgets">
+  <Card title="Widgets" href="/components/widgets/annotate">
     <SpotIllustration name="components-widgets" />
+    Compact status at a glance — avatars, badges, chips, and meters that sit beside content without stealing focus.
   </Card>
 </Cards>
 

@@ -1,7 +1,6 @@
 {
   "title": "Layout",
   "pages": [
-    "index",
     "accordion",
     "bleed",
     "breakpoints",

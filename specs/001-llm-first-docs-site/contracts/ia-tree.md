@@ -26,9 +26,8 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 /foundation/spacing
 /foundation/radius
 /foundation/icons
-/components                → components overview
-/components/{category}/    → category index (expandable in nav)
-/components/{category}/{component}
+/components                → components overview (category cards → first component page)
+/components/{category}/{component}  → component page (category folders expandable in nav; no category index)
 ```
 
 Sidebar roots (Fumadocs root type `"docs"` — dropdown under search, not version numbers):
@@ -42,7 +41,7 @@ Sidebar footer (both roots, below the page tree): **Get ViraUI Pro** → `https:
 
 **Design System** sidebar: intro pages at first level; **Get started** and **Foundation** separator titles with extracted children (Get started order: setup → Theming group → skills → mcp → Utilities group). No Components separator here.
 
-**Components** sidebar: category folders only (overview first; nested, `defaultOpen: false`) — no **Components** separator/title in the tree (the root dropdown label covers it).
+**Components** sidebar: category folders only (nested component pages, `defaultOpen: false`; no category index) — no **Components** separator/title in the tree (the root dropdown label covers it). Overview lives at `/components` only.
 
 Theming and Utilities are expandable folders (`defaultOpen: false`) with child pages. Theming children: `what-is-a-theme`, `built-in-themes`, `custom-themes`. Utilities children: currently `use-breakpoints`. Nav icons are `@viraui/icons` names via local `viraIconsPlugin` + shared `<Icon name="…" />` (sync duo barrel — same file-count tradeoff as Lucide plugin; avoid `import.meta.glob` over the full set).
 

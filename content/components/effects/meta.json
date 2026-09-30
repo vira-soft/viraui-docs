@@ -1,7 +1,6 @@
 {
   "title": "Effects",
   "pages": [
-    "index",
     "beam",
     "glow",
     "progressive-blur",
