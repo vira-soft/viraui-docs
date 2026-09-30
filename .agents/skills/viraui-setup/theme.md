@@ -65,7 +65,7 @@ Also: `vira-condensed.css`, `sunburst.css`, `cinder.css` — [foundation-exports
 | `--radius-*` | Keep scale and relative ratios            |
 | `--space-*`  | Keep scale and relative ratios            |
 
-Targeted single-step tweaks (e.g. only `--space-m`) are fine.
+Targeted single-step tweaks (e.g. only `--space-medium`) are fine.
 
 **Base / neutral color edits (only when requested):** prefer OKLCH chroma/saturation shifts; keep lightness aligned with Vira's ramp unless they ask to lighten/darken. If they did not ask for base changes, leave `--base-*` as in `vira.css`.
 
@@ -83,7 +83,7 @@ After a full compatible sheet:
 ```css
 :root {
   --global-primary: oklch(55% 0.2 250);
-  --space-m: 1rem;
+  --space-medium: 1rem;
 }
 ```
 
