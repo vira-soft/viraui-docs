@@ -2,9 +2,7 @@
   "title": "Actions",
   "pages": [
     "button",
-    "button-link",
     "icon-button",
-    "icon-button-link",
     "toggle-button",
     "toggle-group"
   ],

@@ -1,19 +1,21 @@
 ---
 title: Button
-description: Primary labeled action with size, variant, optional addon, loading state, and pill shape.
+description: Labeled action and its link twin — size, variant, addon, pill, loading; ButtonLink for navigation with the same chrome.
 ---
 
-Button is the default **labeled** action control. Visible text children name what happens when you activate it; the control stays a real button for keyboard and assistive tech. Reach for [IconButton](/components/actions/icon-button) when there is no visible label, and [ButtonLink](/components/actions/button-link) when the affordance should navigate with link semantics — do not force `render={<a />}` on Button.
+Button is the default **labeled** action control. Visible text children name what happens when you activate it; the control stays a real button for keyboard and assistive tech. Reach for [IconButton](/components/actions/icon-button) when there is no visible label.
 
-Treatments follow intent, not decoration. Use the filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Size steps denser or roomier rows; `pill` rounds the control into a capsule when that shape fits the layout.
+When the affordance should navigate — in-app route or external URL — use **ButtonLink** instead. It shares the same visual chrome (`size`, `variant`, `addon`, `pill`, `loading`) but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on Button; Base UI keeps button semantics there.
 
-Optional `addon` slots accept a leading or trailing icon (or a small Chip / Avatar). Button CSS sizes SVG descendants — glyph size comes from the button, not per-icon CSS. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the label while async work runs.
+Variants follow intent, not decoration. Use the filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Size steps denser or roomier rows; `pill` rounds the control into a capsule when that shape fits the layout.
+
+Optional `addon` slots accept a leading or trailing icon (or a small Chip / Avatar). Button CSS sizes SVG descendants — glyph size comes from the button, not per-icon CSS. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the label. On Button, loading also blocks activation; on ButtonLink there is no `disabled` prop — loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
 
 ## Common examples
 
-### Treatments
+### Variants
 
-Pick the treatment from what the action means on that surface. A bare Button is already primary; reach for another treatment when the action is not the commit.
+Pick the variant from what the action means on that surface. A bare Button is already primary; reach for another variant when the action is not the commit.
 
 <ButtonVariantsDemo />
 
@@ -70,7 +72,7 @@ import { Button, Stack } from '@viraui/react';
 </Stack>
 ```
 
-Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. Loading also disables activation until you clear the flag.
+Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. On Button, loading also disables activation until you clear the flag.
 
 ### Action rows
 
@@ -89,6 +91,52 @@ import { Button, Stack } from '@viraui/react';
 </Stack>
 ```
 
+### As a link
+
+Use ButtonLink when activation should navigate. Same chrome as Button; different element — a native `<a>`, or a framework `Link` via `render`.
+
+<ButtonLinkDemo />
+
+```tsx
+import { ArrowRight, ArrowSquareOut, BookOpen } from '@phosphor-icons/react';
+import { ButtonLink, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ButtonLink href="/docs" addon={<BookOpen />}>
+    Documentation
+  </ButtonLink>
+  <ButtonLink
+    href="/next"
+    addon={<ArrowRight />}
+    addonPosition="end"
+    variant="secondary"
+  >
+    Continue
+  </ButtonLink>
+  <ButtonLink
+    href="https://docs.viraui.dev"
+    addon={<ArrowSquareOut />}
+    addonPosition="end"
+    rel="noreferrer"
+    target="_blank"
+    variant="flat"
+  >
+    External docs
+  </ButtonLink>
+</Stack>
+```
+
+Pass `href` for native or external URLs (`target` / `rel` when needed). Trailing addons suit “continue” and external destinations.
+
+```tsx
+import Link from 'next/link';
+import { ButtonLink } from '@viraui/react';
+
+<ButtonLink render={<Link href="/docs" />}>Documentation</ButtonLink>
+```
+
+Pass `render` for in-app framework routing. Icon-only navigation belongs on [IconButton](/components/actions/icon-button) (`IconButtonLink`).
+
 
 ## Ask your agent
 
@@ -102,4 +150,12 @@ Add a flat button in this toolbar that opens the advanced options panel. Keep it
 
 ```text tab="Download with icon"
 Add a Download button with a leading download icon. Use a pill shape so it matches the filter chips in the same row.
+```
+
+```text tab="Nav buttons"
+Replace the plain text links in this header with styled navigation buttons. One should open external docs; another should route inside the app. Match the existing visual hierarchy and add a trailing icon on one link if it helps.
+```
+
+```text tab="External docs"
+Add a flat pill link that opens the product docs in a new tab, with a trailing external-link icon.
 ```

@@ -16,11 +16,7 @@ export { TypographyFluidDemo } from "./typography-fluid-demo";
 export {
   ButtonActionRowDemo,
   ButtonAddonDemo,
+  ButtonLinkDemo,
   ButtonLoadingDemo,
   ButtonVariantsDemo,
 } from "./button-demo";
-export {
-  ButtonLinkAddonDemo,
-  ButtonLinkLoadingDemo,
-  ButtonLinkVariantsDemo,
-} from "./button-link-demo";

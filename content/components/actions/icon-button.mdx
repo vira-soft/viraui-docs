@@ -1,13 +1,15 @@
 ---
 title: IconButton
-description: Icon-only button sharing Button size, variant, and loading — requires an accessible name on every instance.
+description: Icon-only button and its link twin — size, variant, pill, loading; IconButtonLink for navigation. Requires an accessible name on every instance.
 ---
 
-IconButton wraps Button for compact, icon-only actions. Pass the glyph through `icon`; size, variant, `pill`, and `loading` follow the same model as Button. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`. Loading sets `aria-busy` and keeps the accessible name stable while the Spinner stays decorative. Reach for ToggleButton when the control needs a persistent pressed state or icon swap after interaction, and IconButtonLink when the action navigates.
+IconButton wraps [Button](/components/actions/button) for compact, icon-only actions. Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`. Loading sets `aria-busy` and keeps the accessible name stable while the Spinner stays decorative.
+
+When the affordance should navigate, use **IconButtonLink** instead. It shares the same visual chrome but keeps link semantics (`href`, or a framework `Link` via `render`). Do not force `render={<a />}` on IconButton. Reach for [ToggleButton](/components/actions/toggle-button) when the control needs a persistent pressed state or icon swap after interaction.
 
 ## Common examples
 
-Variant and size rows of icon-only actions with aria-label naming cover the main IconButton shapes.
+Variant and size rows of icon-only actions with `aria-label` naming cover the main IconButton shapes. The same chrome applies when the control is an IconButtonLink for in-app or external navigation.
 
 <PreviewSlot label="IconButton preview" />
 
@@ -15,4 +17,8 @@ Variant and size rows of icon-only actions with aria-label naming cover the main
 
 ```text tab="Icon toolbar"
 Add a compact icon toolbar to this panel — settings, share, and delete. Label each icon button for screen readers. Show loading on one button during a short async action.
+```
+
+```text tab="Icon links"
+Add icon-only navigation links to this card header — one external, one in-app. Each needs a clear accessible name for where it goes.
 ```

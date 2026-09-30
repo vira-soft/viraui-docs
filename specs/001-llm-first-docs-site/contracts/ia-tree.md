@@ -47,4 +47,4 @@ Theming and Utilities are expandable folders (`defaultOpen: false`) with child p
 
 Categories (Storybook-aligned): actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 
-Component inventory source of truth for stubs: `contracts/component-inventory.txt` (generated from ViraUI Storybook titles).
+Component inventory source of truth for stubs: `contracts/component-inventory.txt` (generated from ViraUI Storybook titles). Human docs may co-locate Storybook siblings that share chrome on one page — ButtonLink lives on Button; IconButtonLink lives on IconButton — so the inventory lists the docs page, not every Storybook title.

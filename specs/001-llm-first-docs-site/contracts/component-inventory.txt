@@ -1,7 +1,5 @@
 Actions/Button
-Actions/ButtonLink
 Actions/IconButton
-Actions/IconButtonLink
 Actions/ToggleButton
 Actions/ToggleGroup
 Dialogs/Dialog

@@ -1,8 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Download, FloppyDisk, Trash } from "@phosphor-icons/react";
-import { Button, Stack } from "@viraui/react";
+import {
+  ArrowRight,
+  ArrowSquareOut,
+  BookOpen,
+  Download,
+  FloppyDisk,
+  Trash,
+} from "@phosphor-icons/react";
+import { Button, ButtonLink, Stack } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
@@ -27,6 +34,14 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
     {children}
   </ViraSandbox>
 );
+
+/** Keep sandbox iframe from navigating when a demo link is activated. */
+const holdHref = {
+  href: "#",
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+  },
+} as const;
 
 /** Primary / secondary / flat / destructive in one row. */
 export const ButtonVariantsDemo: React.FC = () => (
@@ -77,6 +92,35 @@ export const ButtonActionRowDemo: React.FC = () => (
       <Button variant="secondary">Cancel</Button>
       <Button variant="destructive">Delete</Button>
       <Button addon={<FloppyDisk />}>Save</Button>
+    </Stack>
+  </SandboxShell>
+);
+
+/** ButtonLink chrome for in-app and external navigation. */
+export const ButtonLinkDemo: React.FC = () => (
+  <SandboxShell label="ButtonLink: documentation, continue, and external docs">
+    <Stack columnGap="m" direction="row" rowGap="m" wrap>
+      <ButtonLink {...holdHref} addon={<BookOpen />}>
+        Documentation
+      </ButtonLink>
+      <ButtonLink
+        {...holdHref}
+        addon={<ArrowRight />}
+        addonPosition="end"
+        variant="secondary"
+      >
+        Continue
+      </ButtonLink>
+      <ButtonLink
+        {...holdHref}
+        addon={<ArrowSquareOut />}
+        addonPosition="end"
+        rel="noreferrer"
+        target="_blank"
+        variant="flat"
+      >
+        External docs
+      </ButtonLink>
     </Stack>
   </SandboxShell>
 );
