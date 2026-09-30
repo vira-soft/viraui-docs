@@ -9,33 +9,7 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import { mcpPlugin } from "@fumapress/ai";
 import { linkValidationPlugin } from "fumapress/plugins/link-validation";
-import { PreviewSlot } from "./src/components/common/preview-slot";
-import { SpotIllustration } from "./src/components/common/spot-illustration";
-import {
-  GlobalColorTokens,
-  HighlightColorTokens,
-  PrimitiveColorTokens,
-} from "./src/components/demos/color-tokens";
-import { MotionDemoDiscreet } from "./src/components/demos/motion-demo-discreet";
-import { MotionDemoAssistive } from "./src/components/demos/motion-demo-assistive";
-import { MotionDemoIntuitive } from "./src/components/demos/motion-demo-intuitive";
-import { MotionDemoPlayful } from "./src/components/demos/motion-demo-playful";
-import { MotionDemoFunctional } from "./src/components/demos/motion-demo-functional";
-import { MotionDemoEvocative } from "./src/components/demos/motion-demo-evocative";
-import { ElevatorDemo } from "./src/components/demos/elevator-demo";
-import { RadiusConcentricDemo } from "./src/components/demos/radius-concentric-demo";
-import { IconsEmptyStatesDemo } from "./src/components/demos/icons-empty-states-demo";
-import { TypographyFluidDemo } from "./src/components/demos/typography-fluid-demo";
-import {
-  ButtonActionRowDemo,
-  ButtonAddonDemo,
-  ButtonLoadingDemo,
-  ButtonVariantsDemo,
-} from "./src/components/demos/button-demo";
-import { ViraSandbox } from "./src/components/common/vira-sandbox";
-import { Icon } from "./src/components/common/icon";
-import { CursorLogo } from "./src/components/common/cursor-logo";
-import { KiroLogo } from "./src/components/common/kiro-logo";
+import * as customMdx from "./src/mdx-components";
 import { ViraLogo } from "./src/components/common/vira-logo";
 import { OpenWithPopover } from "./src/components/common/open-with-popover";
 import { viraIconsPlugin } from "./src/lib/vira-icons-plugin";
@@ -217,29 +191,7 @@ const config = defineConfig({
           Tab,
           Tabs,
           TypeTable,
-          PreviewSlot,
-          SpotIllustration,
-          GlobalColorTokens,
-          HighlightColorTokens,
-          PrimitiveColorTokens,
-          MotionDemoDiscreet,
-          MotionDemoAssistive,
-          MotionDemoIntuitive,
-          MotionDemoPlayful,
-          MotionDemoFunctional,
-          MotionDemoEvocative,
-          ElevatorDemo,
-          RadiusConcentricDemo,
-          IconsEmptyStatesDemo,
-          TypographyFluidDemo,
-          ButtonVariantsDemo,
-          ButtonAddonDemo,
-          ButtonLoadingDemo,
-          ButtonActionRowDemo,
-          ViraSandbox,
-          Icon,
-          CursorLogo,
-          KiroLogo,
+          ...customMdx,
         };
       },
     }),

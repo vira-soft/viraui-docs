@@ -3,16 +3,120 @@ title: ButtonLink
 description: Link that shares Button visual chrome — href, framework Link render, addon, pill, and loading without button semantics.
 ---
 
-ButtonLink looks like Button but navigates. It defaults to a native `<a>` and accepts `render` when your stack needs a framework `Link` (Next.js, React Router, and similar). The same `size`, `variant`, `addon`, `pill`, and `loading` chrome apply, but there is no `disabled` prop — loading surfaces `aria-disabled` and `aria-busy` on the link chrome only. Your agent picks ButtonLink whenever the affordance is navigation or an external URL, not an in-page command.
+ButtonLink looks like [Button](/components/actions/button) but navigates. It defaults to a native `<a>` with `href`, and accepts `render` when the stack needs a framework `Link` (Next.js, React Router, and similar). Reach for it whenever the affordance is navigation or an external URL — do not force `render={<a />}` on Button, which keeps button semantics.
+
+Treatments, size, `addon`, and `pill` match Button chrome. There is no `disabled` prop: when `loading` is on, the control keeps its width, sets `aria-busy` and `aria-disabled`, and shows a decorative Spinner, but the link stays activatable. Icon-only navigation belongs on [IconButtonLink](/components/actions/icon-button-link) with an accessible name.
 
 ## Common examples
 
-Primary and secondary navigation links with optional addon and loading state cover the main ButtonLink shapes.
+### Treatments
 
-<PreviewSlot label="ButtonLink preview" />
+Pick the treatment from what the destination means on that surface. A bare ButtonLink is already primary; reach for another treatment when the link is not the main commit.
+
+<ButtonLinkVariantsDemo />
+
+```tsx
+import { ButtonLink, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ButtonLink href="/docs">Open docs</ButtonLink>
+  <ButtonLink href="/account" variant="secondary">
+    View account
+  </ButtonLink>
+  <ButtonLink href="/learn" variant="flat">
+    Learn more
+  </ButtonLink>
+  <ButtonLink href="/leave" variant="destructive">
+    Leave workspace
+  </ButtonLink>
+</Stack>
+```
+
+Prefer one primary navigation action per region. Pair it with secondary or flat peers rather than two competing filled links.
+
+### Icons beside the label
+
+Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label — useful for “continue” affordances and external destinations. `pill` rounds the control into a capsule when that shape fits the row.
+
+<ButtonLinkAddonDemo />
+
+```tsx
+import { ArrowRight, ArrowSquareOut, BookOpen } from '@phosphor-icons/react';
+import { ButtonLink, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ButtonLink href="/docs" addon={<BookOpen />}>
+    Documentation
+  </ButtonLink>
+  <ButtonLink
+    href="/next"
+    addon={<ArrowRight />}
+    addonPosition="end"
+    variant="secondary"
+  >
+    Continue
+  </ButtonLink>
+  <ButtonLink
+    href="https://docs.viraui.dev"
+    addon={<ArrowSquareOut />}
+    addonPosition="end"
+    pill
+    rel="noreferrer"
+    target="_blank"
+    variant="flat"
+  >
+    External docs
+  </ButtonLink>
+</Stack>
+```
+
+If the control has no visible text, switch to [IconButtonLink](/components/actions/icon-button-link) with an accessible name — do not empty ButtonLink children and hope the icon is enough.
+
+### Framework Link
+
+Pass the framework `Link` through `render` so routing stays on the stack’s primitive while ButtonLink owns the chrome. Native `<a>` props such as `href` still land on the composed root when the framework Link forwards them.
+
+```tsx
+import Link from 'next/link';
+import { ButtonLink } from '@viraui/react';
+
+<ButtonLink render={<Link href="/docs" />}>Documentation</ButtonLink>
+```
+
+Use `render` for in-app routes. Keep a plain `href` (and `target` / `rel` when needed) for external URLs that should leave the app.
+
+### Loading
+
+Turn on `loading` while a destination prepares. Width stays stable so the layout does not jump when the Spinner appears; `aria-busy` and `aria-disabled` mark the chrome, and the link remains activatable until you clear the flag.
+
+<ButtonLinkLoadingDemo />
+
+```tsx
+import { ButtonLink, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ButtonLink href="/publish" loading>
+    Opening…
+  </ButtonLink>
+  <ButtonLink href="/draft" loading variant="secondary">
+    Preparing
+  </ButtonLink>
+</Stack>
+```
+
+Keep the same label text during the wait (or a short “…”) so the announced name stays continuous.
+
 
 ## Ask your agent
 
 ```text tab="Nav buttons"
 Replace the plain text links in this header with styled navigation buttons. One should open external docs; another should route inside the app. Match the existing visual hierarchy and add a trailing icon on one link if it helps.
+```
+
+```text tab="Primary CTA link"
+Turn the hero CTA into a primary button-styled link that goes to /signup. Keep a quieter secondary link next to it for “See pricing”.
+```
+
+```text tab="External docs"
+Add a flat pill link that opens the product docs in a new tab, with a trailing external-link icon.
 ```
