@@ -1,0 +1,49 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Typography — title, paragraph, and image" class="il">
+  <defs>
+    <linearGradient id="panelG-components-typography" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-typography" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-typography" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-typography)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- Title -->
+  <rect x="34.0" y="48.0" width="52.0" height="6.5" rx="3.25" fill="var(--il-stroke, #35322D)"/>
+  <!-- Paragraph 1 -->
+  <rect x="34.0" y="60.0" width="14.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="51.0" y="60.0" width="20.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="74.0" y="60.0" width="10.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34.0" y="66.2" width="18.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="55.0" y="66.2" width="12.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="70.0" y="66.2" width="16.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34.0" y="72.4" width="10.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="47.0" y="72.4" width="20.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="70.0" y="72.4" width="12.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34.0" y="78.6" width="22.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="59.0" y="78.6" width="14.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="76.0" y="78.6" width="10.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34.0" y="84.8" width="16.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="53.0" y="84.8" width="20.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="76.0" y="84.8" width="8.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- Small title + paragraph 2 -->
+  <rect x="34.0" y="94.0" width="36.0" height="5.0" rx="2.50" fill="var(--il-stroke, #35322D)"/>
+  <rect x="34.0" y="104.0" width="18.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="55.0" y="104.0" width="14.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="72.0" y="104.0" width="12.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="34.0" y="110.2" width="22.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="59.0" y="110.2" width="10.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- Image placeholder square -->
+  <g filter="url(#lift-components-typography)">
+    <rect x="98.0" y="48.0" width="32.0" height="32.0" rx="6.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <rect x="104.0" y="58.0" width="20.0" height="12.0" rx="2.0" fill="var(--il-fill-soft, #E9E4DC)"/>
+  <circle cx="109.5" cy="54.5" r="2.2" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

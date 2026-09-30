@@ -1,0 +1,44 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Widgets — avatar with badge and chips" class="il">
+  <defs>
+    <linearGradient id="panelG-components-widgets" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-widgets" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-widgets" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <clipPath id="avatarClip-components-widgets">
+      <rect x="48.5" y="62.5" width="22.0" height="22.0" rx="5.0"/>
+    </clipPath>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-widgets)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- member row card -->
+  <g filter="url(#liftL-components-widgets)">
+    <rect x="34.0" y="54.0" width="92.0" height="52.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <!-- Avatar (squircle) + person silhouette -->
+  <rect x="48.5" y="62.5" width="22.0" height="22.0" rx="5.0" fill="var(--il-fill, #DCD6CE)"/>
+  <g clip-path="url(#avatarClip-components-widgets)" fill="var(--il-stroke-soft, #9B948A)">
+    <circle cx="59.5" cy="70.0" r="4.2"/>
+    <ellipse cx="59.5" cy="85.0" rx="9.0" ry="7.5"/>
+  </g>
+  <!-- Badge dot -->
+  <circle cx="69.0" cy="64.0" r="3.2" fill="var(--il-surface, #FFFFFF)"/>
+  <circle cx="69.0" cy="64.0" r="2.2" fill="var(--il-accent, #3E9077)"/>
+  <!-- Name + subtitle (mid-align to avatar) -->
+  <rect x="76.5" y="67.8" width="40.0" height="4.2" rx="2.10" fill="var(--il-stroke, #35322D)"/>
+  <rect x="76.5" y="75.8" width="26.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- Chips — centered under card content -->
+  <rect x="48.5" y="90.5" width="24.0" height="7.0" rx="3.5" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="53.0" y="93.0" width="15.0" height="2.2" rx="1.10" fill="var(--il-stroke-soft, #9B948A)"/>
+  <rect x="75.0" y="90.5" width="14.0" height="7.0" rx="3.5" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="78.0" y="93.0" width="8.0" height="2.2" rx="1.10" fill="var(--il-stroke-soft, #9B948A)"/>
+  <rect x="91.5" y="90.5" width="20.0" height="7.0" rx="3.5" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="95.5" y="93.0" width="12.0" height="2.2" rx="1.10" fill="var(--il-stroke-soft, #9B948A)"/>
+</svg>

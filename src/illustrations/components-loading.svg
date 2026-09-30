@@ -1,0 +1,30 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loading  skeleton card with linear progress" class="il">
+  <defs>
+    <linearGradient id="panelG-components-loading" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-loading" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-loading" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-loading)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- linear progress -->
+  <rect x="36.0" y="44.0" width="88.0" height="4.0" rx="2.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="36.0" y="44.0" width="52.0" height="4.0" rx="2.0" fill="var(--il-stroke, #35322D)"/>
+  <!-- skeleton card -->
+  <g filter="url(#liftL-components-loading)">
+    <rect x="36.0" y="58.0" width="88.0" height="58.0" rx="10.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <circle cx="52.0" cy="76.0" r="8.0" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="66.0" y="70.0" width="40.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="66.0" y="78.5" width="28.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="44.0" y="94.0" width="72.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="44.0" y="102.5" width="54.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

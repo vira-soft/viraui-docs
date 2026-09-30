@@ -1,0 +1,42 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Inputs — structured form with field, checkbox, and switch" class="il">
+  <defs>
+    <linearGradient id="panelG-components-inputs" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-inputs" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-inputs" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-inputs)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- form title -->
+  <rect x="36.0" y="40.0" width="34.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- field 1 -->
+  <rect x="36.0" y="52.0" width="20.0" height="3.2" rx="1.60" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="36.0" y="58.0" width="88.0" height="15.0" rx="6.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="42.0" y="63.0" width="36.0" height="4.0" rx="2.00" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- field 2 (focused) -->
+  <rect x="36.0" y="80.0" width="24.0" height="3.2" rx="1.60" fill="var(--il-fill, #DCD6CE)"/>
+  <g filter="url(#lift-components-inputs)">
+    <rect x="36.0" y="86.0" width="88.0" height="15.0" rx="6.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <rect x="42.0" y="91.0" width="44.0" height="4.0" rx="2.00" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="88.0" y="90.0" width="1.4" height="6.0" rx="0.70" fill="var(--il-stroke, #35322D)"/>
+  <!-- options row -->
+  <g filter="url(#lift-components-inputs)">
+    <rect x="36.0" y="110.0" width="11.0" height="11.0" rx="3.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <g transform="translate(38.4 112.4) scale(0.024)" fill="var(--il-stroke, #35322D)">
+    <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/>
+  </g>
+  <rect x="52.0" y="113.5" width="28.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- switch: thumb 7 → track 18×11 (2×thumb+4), inset 2 -->
+  <rect x="106.0" y="110.0" width="18.0" height="11.0" rx="2.5" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="115.0" y="112.0" width="7.0" height="7.0" rx="1.5" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+</svg>

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Layout  flex-wrap grid of surface cards" class="il">
+  <defs>
+    <linearGradient id="panelG-components-layout" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-layout" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-layout" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-layout)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- row 1: three equal cards (flex wrap) -->
+  <rect x="32.0" y="42.0" width="28.0" height="34.0" rx="7.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="38.0" y="50.0" width="16.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="38.0" y="57.0" width="12.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="66.0" y="42.0" width="28.0" height="34.0" rx="7.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="72.0" y="50.0" width="16.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="72.0" y="57.0" width="12.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="100.0" y="42.0" width="28.0" height="34.0" rx="7.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="106.0" y="50.0" width="16.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="106.0" y="57.0" width="12.0" height="3.4" rx="1.70" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- row 2: wrap  two cards, one lifted Surface -->
+  <g filter="url(#lift-components-layout)">
+    <rect x="32.0" y="84.0" width="46.0" height="34.0" rx="7.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <rect x="40.0" y="94.0" width="22.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="40.0" y="102.0" width="30.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="86.0" y="84.0" width="42.0" height="34.0" rx="7.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="94.0" y="94.0" width="20.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="94.0" y="102.0" width="26.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

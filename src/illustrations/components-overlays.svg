@@ -1,0 +1,36 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Overlays — menu popup anchored to a trigger" class="il">
+  <defs>
+    <linearGradient id="panelG-components-overlays" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-overlays" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-overlays" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+  <rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-overlays)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <!-- page chrome stubs -->
+  <rect x="36.0" y="42.0" width="28.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="36.0" y="50.5" width="52.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/>
+  <!-- trigger button -->
+  <rect x="108.0" y="42.0" width="24.0" height="16.0" rx="6.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <circle cx="115.0" cy="50.0" r="1.4" fill="var(--il-stroke, #35322D)"/>
+  <circle cx="120.0" cy="50.0" r="1.4" fill="var(--il-stroke, #35322D)"/>
+  <circle cx="125.0" cy="50.0" r="1.4" fill="var(--il-stroke, #35322D)"/>
+  <!-- Menu.Popup -->
+  <g filter="url(#liftL-components-overlays)">
+    <rect x="76.0" y="60.0" width="56.0" height="52.0" rx="8.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  </g>
+  <!-- menu items — tight inset ~3 -->
+  <rect x="79.0" y="63.0" width="50.0" height="11.0" rx="3.5" fill="var(--il-fill-soft, #E9E4DC)"/>
+  <rect x="83.0" y="66.5" width="24.0" height="3.6" rx="1.80" fill="var(--il-stroke, #35322D)"/>
+  <rect x="83.0" y="81.0" width="28.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+  <rect x="79.0" y="90.0" width="50.0" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.55"/>
+  <rect x="83.0" y="97.0" width="22.0" height="3.6" rx="1.80" fill="var(--il-fill, #DCD6CE)"/>
+</svg>

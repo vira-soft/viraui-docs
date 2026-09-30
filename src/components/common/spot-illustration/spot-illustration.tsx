@@ -21,6 +21,13 @@ import foundationIcons from "../../../illustrations/foundation-icons.svg?raw";
 import componentsActions from "../../../illustrations/components-actions.svg?raw";
 import componentsDialogs from "../../../illustrations/components-dialogs.svg?raw";
 import componentsEffects from "../../../illustrations/components-effects.svg?raw";
+import componentsInputs from "../../../illustrations/components-inputs.svg?raw";
+import componentsLayout from "../../../illustrations/components-layout.svg?raw";
+import componentsLoading from "../../../illustrations/components-loading.svg?raw";
+import componentsNavigation from "../../../illustrations/components-navigation.svg?raw";
+import componentsOverlays from "../../../illustrations/components-overlays.svg?raw";
+import componentsTypography from "../../../illustrations/components-typography.svg?raw";
+import componentsWidgets from "../../../illustrations/components-widgets.svg?raw";
 
 const ART = {
   foundation,
@@ -46,6 +53,13 @@ const ART = {
   "components-actions": componentsActions,
   "components-dialogs": componentsDialogs,
   "components-effects": componentsEffects,
+  "components-inputs": componentsInputs,
+  "components-layout": componentsLayout,
+  "components-loading": componentsLoading,
+  "components-navigation": componentsNavigation,
+  "components-overlays": componentsOverlays,
+  "components-typography": componentsTypography,
+  "components-widgets": componentsWidgets,
 } as const;
 
 export type SpotIllustrationName = keyof typeof ART;
