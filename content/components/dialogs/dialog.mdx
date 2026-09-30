@@ -3,16 +3,186 @@ title: Dialog
 description: Compound bottom sheet with trigger, sheet, close, and optional app-shell indent for focused tasks.
 ---
 
-Dialog is a compound drawer sheet built from `Dialog.Trigger`, `Dialog.Sheet`, and `Dialog.Close`, with pass-through parts for `Dialog.Provider`, `Dialog.Indent`, and `Dialog.IndentBackground` when the app shell should indent behind an open sheet. Pass `title` for assistive technologies; add `description` when the heading alone is thin. Snap points and swipe dismissal live on `Dialog` when a bottom sheet should drag between heights. Nest another `Dialog` inside `Dialog.Sheet` for drill-down settings flows. Reach for Popover or Menu when the content is a small anchored hint, not a page-level interruption.
+Dialog is a compound edge sheet for focused tasks that interrupt the page without navigating away. Compose `Dialog.Trigger` (usually a Button or IconButton via `render`), a titled `Dialog.Sheet`, and `Dialog.Close` for actions that should dismiss. Pass `title` for assistive technologies; add `description` when the heading alone is thin. Portal, backdrop, handle, and heading chrome live inside `Dialog.Sheet` — they are not separate public parts.
+
+Snap points and swipe dismissal live on the `Dialog` root when the sheet should drag between heights. Nest another `Dialog` inside `Dialog.Sheet` for drill-down settings flows; Escape closes only the topmost layer. Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell should indent behind an open sheet. Reach for [Popover](/components/overlays/popover) or Menu when the content is a small anchored hint, not a page-level interruption.
 
 ## Common examples
 
-A confirmation sheet with trigger, titled sheet, and footer actions is the default interruption pattern.
+### Confirmation
 
-<PreviewSlot label="Dialog preview" />
+A confirmation sheet with trigger, titled sheet, and footer actions is the default interruption pattern. Wrap dismiss and commit buttons in `Dialog.Close` so both paths close the sheet.
+
+<DialogConfirmDemo />
+
+```tsx
+import { Trash } from '@phosphor-icons/react';
+import { Button, Dialog, Stack } from '@viraui/react';
+
+<Dialog>
+  <Dialog.Trigger
+    render={
+      <Button addon={<Trash />} variant="destructive">
+        Delete project
+      </Button>
+    }
+  />
+  <Dialog.Sheet
+    title="Delete project?"
+    description="This removes the project and its settings. You cannot undo this."
+    headerAlign="center"
+  >
+    <Stack direction="row" columnGap="s" hAlign="center" hPadding="m" vPadding={['s', 0]}>
+      <Dialog.Close render={<Button variant="secondary">Cancel</Button>} />
+      <Dialog.Close render={<Button variant="destructive">Confirm delete</Button>} />
+    </Stack>
+  </Dialog.Sheet>
+</Dialog>
+```
+
+Prefer an explicit footer action as the primary close path rather than relying only on backdrop press or swipe.
+
+### Close button
+
+Turn on `showCloseButton` when the sheet needs the chrome dismiss control in the header (read-only notices, catch-up panels). Footer `Dialog.Close` actions remain optional when that glyph is enough.
+
+<DialogCloseButtonDemo />
+
+```tsx
+import { Button, Dialog } from '@viraui/react';
+
+<Dialog>
+  <Dialog.Trigger render={<Button variant="secondary">Notifications</Button>} />
+  <Dialog.Sheet
+    title="Notifications"
+    description="You are all caught up."
+    headerAlign="center"
+    showCloseButton
+  />
+</Dialog>
+```
+
+The drag handle stays on by default; set `showHandle={false}` when the sheet should not invite swipe resize.
+
+### Nested sheets
+
+Nest another `Dialog` inside `Dialog.Sheet` children for drill-down flows. Each layer keeps its own trigger, title, and close controls. Escape and the topmost close dismiss only the front sheet; the parent stays open underneath.
+
+<DialogNestedDemo />
+
+```tsx
+import { Button, Dialog, Stack, Text } from '@viraui/react';
+
+<Dialog>
+  <Dialog.Trigger render={<Button>Account</Button>} />
+  <Dialog.Sheet title="Account" description="Manage your account details." headerAlign="center">
+    <Stack expandChildren hPadding="l" rowGap="m" vPadding={['m', 0]}>
+      <Text tone="muted" render={<p />}>
+        Signed in as you@example.com.
+      </Text>
+      <Dialog>
+        <Dialog.Trigger render={<Button>Security settings</Button>} />
+        <Dialog.Sheet
+          title="Security"
+          description="Review your security options."
+          headerAlign="center"
+        >
+          <Stack expandChildren hPadding="l" rowGap="s" vPadding={['s', 0]}>
+            <Text tone="muted" render={<p />}>
+              Two-factor authentication is enabled.
+            </Text>
+            <Dialog.Close render={<Button variant="secondary">Close security</Button>} />
+          </Stack>
+        </Dialog.Sheet>
+      </Dialog>
+      <Dialog.Close render={<Button variant="flat">Close account</Button>} />
+    </Stack>
+  </Dialog.Sheet>
+</Dialog>
+```
+
+### Snap points
+
+Pass `snapPoints` (and controlled `snapPoint` / `onSnapPointChange`, or `defaultSnapPoint`) on the `Dialog` root when the sheet should settle at more than one height. Two points cover preview → full: the preview snap shows a short excerpt plus Read more; that control moves the sheet to full and then disappears so it only exists on the intermediate step.
+
+<DialogSnapPointsDemo />
+
+```tsx
+import { useState } from 'react';
+import { Button, Dialog, Stack, Text, type DialogSnapPoint } from '@viraui/react';
+
+const SNAP_PREVIEW: DialogSnapPoint = 0.5;
+const SNAP_FULL: DialogSnapPoint = 1;
+
+function TermsDialog() {
+  const [snapPoint, setSnapPoint] = useState<DialogSnapPoint>(SNAP_PREVIEW);
+  const atPreview = Object.is(snapPoint, SNAP_PREVIEW);
+
+  return (
+    <Dialog
+      snapPoints={[SNAP_PREVIEW, SNAP_FULL]}
+      snapPoint={snapPoint}
+      onSnapPointChange={(next) => {
+        if (next == null) {
+          return;
+        }
+        setSnapPoint(next);
+      }}
+      onOpenChange={(open) => {
+        if (!open) {
+          setSnapPoint(SNAP_PREVIEW);
+        }
+      }}
+    >
+      <Dialog.Trigger render={<Button>Terms</Button>} />
+      <Dialog.Sheet
+        title="Terms and conditions"
+        description="Preview the terms, then expand to read the full agreement."
+      >
+        <Stack expandChildren hPadding="m" rowGap="m" vPadding={['s', '3xl']}>
+          <Text render={<p />}>
+            These terms cover how the product stores project data, who can invite
+            collaborators, and when invoices renew.
+          </Text>
+          {atPreview ? (
+            <Button onClick={() => setSnapPoint(SNAP_FULL)} variant="secondary">
+              Read more
+            </Button>
+          ) : (
+            <>
+              <Text render={<p />} tone="muted">
+                Collaborators inherit the project role you assign. Billing renews on
+                the anniversary of the workspace plan unless you cancel before the
+                renewal date.
+              </Text>
+              <Dialog.Close render={<Button>I agree</Button>} />
+            </>
+          )}
+        </Stack>
+      </Dialog.Sheet>
+    </Dialog>
+  );
+}
+```
 
 ## Ask your agent
 
 ```text tab="Delete confirm"
 Add a delete confirmation flow on this settings screen. The danger zone opens a bottom sheet with title, short description, Cancel, and Confirm delete. Screen readers need the same context as sighted users.
+```
+
+```text tab="Read-only notice"
+Add a notifications sheet opened from a quiet secondary button. Title and short description are enough; include the header close control and no footer actions.
+```
+
+```text tab="Account drill-down"
+Add an account sheet with a nested security settings sheet. Escaping the security layer should leave the account sheet open. Include a short muted line of account context in the outer sheet.
+```
+
+```text tab="Terms with snaps"
+Add a terms bottom sheet with two snap heights: an intermediate preview and full. On the preview step show a short excerpt and a Read more button; Read more expands to full and then disappears. Show I agree only on the full step.
+```
+
+```text tab="Import form sheet"
+Add an import sheet triggered by a secondary Import button. Center the header, include a text field for pasted code, Apply, and Cancel that closes the sheet.
 ```

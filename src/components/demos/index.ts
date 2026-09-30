@@ -34,3 +34,9 @@ export {
   ToggleGroupMultipleDemo,
   ToggleGroupSingleDemo,
 } from "./toggle-button-demo";
+export {
+  DialogCloseButtonDemo,
+  DialogConfirmDemo,
+  DialogNestedDemo,
+  DialogSnapPointsDemo,
+} from "./dialog-demo";
