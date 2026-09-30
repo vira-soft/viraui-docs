@@ -46,3 +46,4 @@ export {
   ToastUndoDemo,
 } from "./toast-demo";
 export { BeamBorderDemo, BeamLineDemo, BeamPulseDemo } from "./beam-demo";
+export { GlowGridDemo, GlowRainbowDemo, GlowReportRowDemo } from "./glow-demo";
