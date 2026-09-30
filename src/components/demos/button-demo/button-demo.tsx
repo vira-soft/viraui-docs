@@ -73,12 +73,7 @@ export const ButtonAddonDemo: React.FC = () => (
 /** Loading keeps width stable while the action runs. */
 export const ButtonLoadingDemo: React.FC = () => (
   <SandboxShell label="Button loading state with stable width">
-    <Stack columnGap="m" direction="row" rowGap="m" vAlign="center" wrap>
-      <Button loading>Publishing…</Button>
-      <Button loading variant="secondary">
-        Saving
-      </Button>
-    </Stack>
+    <Button loading>Publishing…</Button>
   </SandboxShell>
 );
 

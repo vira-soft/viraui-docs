@@ -1,24 +1,148 @@
 ---
 title: IconButton
-description: Icon-only button and its link twin — size, variant, pill, loading; IconButtonLink for navigation. Requires an accessible name on every instance.
+description: Icon-only button and its link twin. Same size, variant, pill, and loading chrome as Button; IconButtonLink for navigation. Requires an accessible name on every instance.
 ---
 
-IconButton wraps [Button](/components/actions/button) for compact, icon-only actions. Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`. Loading sets `aria-busy` and keeps the accessible name stable while the Spinner stays decorative.
+IconButton wraps [Button](/components/actions/button) for compact, icon-only actions. Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name and every instance needs `aria-label` or `aria-labelledby`.
 
-When the affordance should navigate, use **IconButtonLink** instead. It shares the same visual chrome but keeps link semantics (`href`, or a framework `Link` via `render`). Do not force `render={<a />}` on IconButton. Reach for [ToggleButton](/components/actions/toggle-button) when the control needs a persistent pressed state or icon swap after interaction.
+When the affordance should navigate (in-app route or external URL), use **IconButtonLink** instead. It shares the same visual chrome but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on `IconButton`; Base UI keeps button semantics there. Reach for [ToggleButton](/components/actions/toggle-button) when the control needs a persistent pressed state or icon swap after interaction.
+
+Variants follow intent, not decoration (same rules as `Button`). Size steps denser or roomier chrome; `pill` rounds the control into a capsule when that shape fits the layout. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative `Spinner` over the icon. On IconButton, loading also blocks activation. On IconButtonLink there is no `disabled` prop: loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
 
 ## Common examples
 
-Variant and size rows of icon-only actions with `aria-label` naming cover the main IconButton shapes. The same chrome applies when the control is an IconButtonLink for in-app or external navigation.
+### Variants
 
-<PreviewSlot label="IconButton preview" />
+Pick the variant from what the action means on that surface. A bare IconButton is already primary; reach for another variant when the action is not the commit. Every control still needs an accessible name.
+
+<IconButtonVariantsDemo />
+
+```tsx
+import { Gear, MagnifyingGlass, ShareNetwork, Trash } from '@phosphor-icons/react';
+import { IconButton, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <IconButton aria-label="Settings" icon={<Gear />} />
+  <IconButton aria-label="Share" icon={<ShareNetwork />} variant="secondary" />
+  <IconButton aria-label="Search" icon={<MagnifyingGlass />} variant="flat" />
+  <IconButton aria-label="Delete" icon={<Trash />} variant="destructive" />
+</Stack>
+```
+
+Prefer flat in dense toolbars so icon actions stay quiet next to labeled buttons.
+
+### Sizes
+
+`size` steps the hit target and glyph together.
+
+<IconButtonSizesDemo />
+
+```tsx
+import { Gear } from '@phosphor-icons/react';
+import { IconButton, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" vAlign="center" wrap>
+  <IconButton aria-label="Large settings" icon={<Gear />} size="l" />
+  <IconButton aria-label="Medium settings" icon={<Gear />} />
+  <IconButton aria-label="Small settings" icon={<Gear />} size="s" />
+</Stack>
+```
+
+Match toolbar density: `s` in tight chrome, `l` when the icon sits alone as a primary control.
+
+### Loading
+
+Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
+
+<IconButtonLoadingDemo />
+
+```tsx
+import { ArrowsClockwise } from '@phosphor-icons/react';
+import { IconButton } from '@viraui/react';
+
+<IconButton aria-label="Refreshing" icon={<ArrowsClockwise />} loading />
+```
+
+Keep the same accessible name during the wait so the announced name stays continuous. On IconButton, loading also disables activation until you clear the flag.
+
+### Toolbars
+
+Toolbar strips live in a Surface: Stack row of IconButtons inside, with gap and alignment on the Stack (not per-button CSS). Flat variants keep the strip quiet; reserve destructive for irreversible actions.
+
+<IconButtonToolbarDemo />
+
+```tsx
+import { Gear, ShareNetwork, Trash } from '@phosphor-icons/react';
+import { IconButton, Stack, Surface } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <Stack direction="row" columnGap="2xs" vAlign="center">
+    <IconButton aria-label="Settings" icon={<Gear />} variant="flat" />
+    <IconButton aria-label="Share" icon={<ShareNetwork />} variant="flat" />
+    <IconButton aria-label="Delete" icon={<Trash />} variant="destructive" />
+  </Stack>
+</Surface>
+```
+
+If the action needs a visible text label, switch to [Button](/components/actions/button). Do not force a caption beside `icon`.
+
+### As a link
+
+Use IconButtonLink when activation should navigate. Same chrome as IconButton; different element (a native `<a>`, or a framework `Link` via `render`).
+
+<IconButtonLinkDemo />
+
+```tsx
+import { ArrowSquareOut, House } from '@phosphor-icons/react';
+import { IconButtonLink, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <IconButtonLink href="/" aria-label="Home" icon={<House />} />
+  <IconButtonLink
+    href="https://docs.viraui.dev"
+    aria-label="Open documentation"
+    icon={<ArrowSquareOut />}
+    rel="noreferrer"
+    target="_blank"
+    variant="flat"
+  />
+</Stack>
+```
+
+Pass `href` for native or external URLs (`target` / `rel` when needed). The accessible name should say where the link goes, not only what the icon looks like.
+
+```tsx
+import Link from 'next/link';
+import { House } from '@phosphor-icons/react';
+import { IconButtonLink } from '@viraui/react';
+
+<IconButtonLink
+  render={<Link href="/" />}
+  aria-label="Home"
+  icon={<House />}
+/>
+```
+
+Pass `render` for in-app framework routing. Labeled navigation belongs on [Button](/components/actions/button) (`ButtonLink`).
 
 ## Ask your agent
 
 ```text tab="Icon toolbar"
-Add a compact icon toolbar to this panel — settings, share, and delete. Label each icon button for screen readers. Show loading on one button during a short async action.
+Add a compact icon toolbar to this panel: settings, share, and delete. Label each icon button for screen readers. Show loading on one button during a short async action.
+```
+
+```text tab="Quiet chrome action"
+Add a flat icon button in this header that opens settings. Keep it visually quiet next to the primary Save button.
+```
+
+```text tab="Loading refresh"
+Add a refresh icon button that shows a loading state while data reloads. Keep the accessible name stable during the wait.
 ```
 
 ```text tab="Icon links"
-Add icon-only navigation links to this card header — one external, one in-app. Each needs a clear accessible name for where it goes.
+Add icon-only navigation links to this card header: one external, one in-app. Each needs a clear accessible name for where it goes.
+```
+
+```text tab="External docs icon"
+Add a flat icon link that opens the product docs in a new tab. Name it for the destination, not just “external”.
 ```

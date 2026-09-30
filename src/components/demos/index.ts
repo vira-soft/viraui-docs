@@ -20,3 +20,10 @@ export {
   ButtonLoadingDemo,
   ButtonVariantsDemo,
 } from "./button-demo";
+export {
+  IconButtonLinkDemo,
+  IconButtonLoadingDemo,
+  IconButtonSizesDemo,
+  IconButtonToolbarDemo,
+  IconButtonVariantsDemo,
+} from "./icon-button-demo";

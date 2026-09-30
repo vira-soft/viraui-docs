@@ -62,14 +62,9 @@ Turn on `loading` while the request runs. Width stays stable so the layout does 
 <ButtonLoadingDemo />
 
 ```tsx
-import { Button, Stack } from '@viraui/react';
+import { Button } from '@viraui/react';
 
-<Stack direction="row" columnGap="m" wrap>
-  <Button loading>Publishing…</Button>
-  <Button loading variant="secondary">
-    Saving
-  </Button>
-</Stack>
+<Button loading>Publishing…</Button>
 ```
 
 Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. On Button, loading also disables activation until you clear the flag.
