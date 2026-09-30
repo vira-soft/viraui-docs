@@ -1,7 +1,19 @@
+/*
+ * Product fluid uses `100vi`. Demo frame is an inner Surface — remap progress
+ * to `100cqi` against this container so the resize handle still teaches clamp.
+ */
 .TypographyFluidDemo {
   resize: horizontal;
   inline-size: 100%;
   max-inline-size: 100%;
   max-block-size: 100%;
   min-inline-size: 16rem;
+}
+
+.TypographyFluidDemo :global([data-title-fluid='true']) {
+  --__title-fluid: calc((100cqi - 320px) / 1125px);
+}
+
+.TypographyFluidDemo :global([data-text-fluid='true']) {
+  --__text-fluid: calc((100cqi - 320px) / 1125px);
 }

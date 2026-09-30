@@ -1,7 +1,7 @@
 ---
 title: Typography
 icon: Typography
-description: Titles and body text keep separate typescales — size is visual; heading tags are semantic. Type is fluid by default.
+description: Titles and body text keep separate typescales — size is visual; heading tags are semantic. Title is fluid by default; Text opts in with fluid.
 ---
 
 ViraUI splits type into two lanes: **titles** and **text**. `Title` consumes the heading typescale; `Text` consumes the body scale — separate token families on the [theme](/get-started/theming/what-is-a-theme), so a brand font change updates display and running copy together without per-screen CSS. Pick the component by role, then set `size` for appearance.
@@ -46,9 +46,9 @@ That split is intentional: size is aesthetics; the tag drives accessibility, scr
 </Title>
 ```
 
-## Fluid by default
+## Fluid type
 
-Type is **fluid** by default — as the container narrows, `Title` and `Text` interpolate font-size between the current step and the next-smaller one, without hand-written breakpoints. At the narrow end of the range, a line lands on the size of the **previous** level; widen again and it grows toward its own `--font-scale-*` token, so a medium body step eases down toward small and hierarchy stays coherent across viewports. Opt out at the theme root with `--effect-fluid-typography: initial` — that locks every fluid step to its theme scale token (fixed; same size as full fluid progress). The smallest body step (`Text` `size="xs"`) stays fixed either way. For everyday UI, leave fluid on and compose with `size` + `render`.
+`Title` is fluid by default; pass `fluid` on `Text` when body copy should track the viewport too. As the viewport narrows, fluid instances interpolate font-size between the current step and the next-smaller one, without hand-written breakpoints. At the narrow end of the range, a line lands on the size of the **previous** level; widen again and it grows toward its own `--font-scale-*` token, so hierarchy stays coherent across viewports. Opt out at the theme root with `--effect-fluid-typography: initial` — that locks every fluid step to its theme scale token (fixed; same size as full fluid progress). Per-instance, `fluid={false}` locks that node the same way. The smallest body step (`Text` `size="xs"`) stays fixed either way.
 
 <TypographyFluidDemo />
 
