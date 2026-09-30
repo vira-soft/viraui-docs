@@ -1,0 +1,33 @@
+---
+description: Content icons in MDX examples and live demos use Phosphor — not @viraui/icons
+globs: content/**/*.mdx,src/components/demos/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# Docs demo icons = Phosphor
+
+Live demos and MDX code fences that need **content** icons (addon, `icon`, empty-state glyph, …) import from `@phosphor-icons/react`. Do **not** use `@viraui/icons` / `@viraui/icons/react` in those examples.
+
+## Why
+
+Docs teach that slots take any `ReactNode`. Phosphor is already a site dependency and matches the consumer “bring your own icons” story. `@viraui/icons` stays for **site chrome** only (nav via `viraIconsPlugin`, shared `<Icon name="…" />`).
+
+## Do
+
+```tsx
+import { Download, FloppyDisk, Trash } from '@phosphor-icons/react';
+
+<Button addon={<Download />}>Download</Button>
+```
+
+## Do not
+
+```tsx
+import { Download } from '@viraui/icons/react';
+```
+
+## Out of scope
+
+- Nav / frontmatter `icon:` strings resolved by `viraIconsPlugin`
+- Foundation `/foundation/icons` page may still show Lucide + Phosphor + sprite side-by-side to prove “any library”
+- Built-in chrome inside `@viraui/react` (chevrons, checks, close) — not content glyphs

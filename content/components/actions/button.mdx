@@ -37,7 +37,7 @@ Pass icons through `addon`, not as lone children. Leading is the default; set `a
 <ButtonAddonDemo />
 
 ```tsx
-import { Download, FloppyDisk, Trash } from '@viraui/icons/react';
+import { Download, FloppyDisk, Trash } from '@phosphor-icons/react';
 import { Button, Stack } from '@viraui/react';
 
 <Stack direction="row" columnGap="m" wrap>
@@ -74,22 +74,21 @@ Keep the same label text during the wait (or a short “…”) so the announced
 
 ### Action rows
 
-Footer and dialog strips are Stack rows of Buttons — gap and alignment live on the Stack, not on per-button width CSS. For equal-width or full-bleed fills, put `fullWidth` / `expandChildren` on the Stack rather than inventing `className` width utilities on Button.
+Footer and dialog strips are Stack rows of Buttons — gap and alignment live on the Stack, not on per-button width CSS. Here the three actions share the strip equally: `fullWidth` fills the parent, `expandChildren` grows each Button on the main axis.
 
 <ButtonActionRowDemo />
 
 ```tsx
-import { FloppyDisk } from '@viraui/icons/react';
+import { FloppyDisk } from '@phosphor-icons/react';
 import { Button, Stack } from '@viraui/react';
 
-<Stack direction="row" columnGap="m" hAlign="end" wrap>
+<Stack direction="row" columnGap="m" expandChildren fullWidth>
   <Button variant="secondary">Cancel</Button>
   <Button variant="destructive">Delete</Button>
   <Button addon={<FloppyDisk />}>Save</Button>
 </Stack>
 ```
 
-In a Dialog footer, Cancel often closes via `Dialog.Close` rendered as a secondary Button — the strip still reads as one Stack row.
 
 ## Ask your agent
 

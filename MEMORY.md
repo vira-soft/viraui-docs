@@ -76,6 +76,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - `githubUrl: "https://github.com/vira-soft/viraui-docs"` in `defaultLayoutProps` — nav GitHub icon (private repo; `site.git` also set)
 - Page actions: Copy Markdown + `OpenWithPopover` only; frontmatter `pageActions: false` hides both
 - Nav icons: `@viraui/icons` via `viraIconsPlugin` + shared `<Icon name="…" />` — sync duo barrel; avoid `import.meta.glob` over full icon set
+- Content icons in MDX fences + `src/components/demos/**`: `@phosphor-icons/react` only — never `@viraui/icons` there. Rule `.cursor/rules/05-docs-demo-icons-phosphor.mdc`. Foundation icons page may still demo Lucide/Phosphor/sprite side-by-side
 - Do **not** link Vercel project to GitHub — deploy via GH Actions secrets `VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID`
 - Site cover: static `https://docs.viraui.dev/cover.jpg`; plugin `{ name: "core:takumi" }` skips per-page generated OG
 - Banner: docs under construction (in `press.config.tsx` `renderRoot`)

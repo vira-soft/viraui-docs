@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ImagesLayered } from "@viraui/icons/react";
+import { Check } from "@phosphor-icons/react";
 import { Beam, Button, Stack, Surface, Text, Title } from "@viraui/react";
 import { usePrefersReducedMotion } from "../../../hooks/use-prefers-reduced-motion";
 import { useViraSandboxCss, ViraSandbox } from "../../common/vira-sandbox";
