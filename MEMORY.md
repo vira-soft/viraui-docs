@@ -105,6 +105,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Get started order: setup → Theming group → skills → mcp → Utilities group
 - MDX voice: speak to consumer (`you` / imperative); no meta “this page / keep this page / not here” — rule `.cursor/rules/02-docs-consumer-voice.mdc` (`content/**/*.mdx`)
 - MDX: no 1:1 ViraUI surface catalogs unless page is a browser — `.cursor/rules/03-docs-no-surface-catalog.mdc`
+- Component pages: live previews = demo components wrapping `ViraSandbox` (register in `press.config` MDX map); `PreviewSlot` = stub only. Pattern set by Button (`src/components/demos/button-demo/`). No prop/variant inventories — name values inside examples. Page shell: `specs/001-llm-first-docs-site/contracts/page-shell.md`
 - Vite RSC: `lucide-react` → `optimizeDeps.exclude` in `vite.config.ts` (else “inconsistently optimized” warn)
 - Generated / install: `dist/`, `node_modules/`, `.tokensave/`, `.pnpm-store/` — do not hand-edit
 

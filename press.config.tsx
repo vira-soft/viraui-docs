@@ -26,6 +26,12 @@ import { ElevatorDemo } from "./src/components/demos/elevator-demo";
 import { RadiusConcentricDemo } from "./src/components/demos/radius-concentric-demo";
 import { IconsEmptyStatesDemo } from "./src/components/demos/icons-empty-states-demo";
 import { TypographyFluidDemo } from "./src/components/demos/typography-fluid-demo";
+import {
+  ButtonActionRowDemo,
+  ButtonAddonDemo,
+  ButtonLoadingDemo,
+  ButtonVariantsDemo,
+} from "./src/components/demos/button-demo";
 import { ViraSandbox } from "./src/components/common/vira-sandbox";
 import { Icon } from "./src/components/common/icon";
 import { CursorLogo } from "./src/components/common/cursor-logo";
@@ -226,6 +232,10 @@ const config = defineConfig({
           RadiusConcentricDemo,
           IconsEmptyStatesDemo,
           TypographyFluidDemo,
+          ButtonVariantsDemo,
+          ButtonAddonDemo,
+          ButtonLoadingDemo,
+          ButtonActionRowDemo,
           ViraSandbox,
           Icon,
           CursorLogo,

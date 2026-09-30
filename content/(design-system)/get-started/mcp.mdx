@@ -1,10 +1,12 @@
 ---
 title: MCP
 icon: PlugSparkle
-description: Ground your coding agent in live ViraUI docs via MCP.
+description: Ask or verify live ViraUI docs from chat — not a substitute for package instructions.
 ---
 
-The ViraUI docs MCP exposes this site to your coding agent over Streamable HTTP. Connect the client to `https://docs.viraui.dev/mcp` (no auth) and the agent reads published documentation instead of guessing from training data — `search` for full-text queries with snippets, `get_page` to load one page by path (such as `/principles` or `/get-started/setup`), and `list_pages` to map the index before opening detail. Use those tools together when you want answers grounded in what is live here.
+The ViraUI docs MCP exposes this site to your coding agent over Streamable HTTP so you can ask about these pages — or verify what they say — from chat without leaving the editor. Connect the client to `https://docs.viraui.dev/mcp` (no auth) and the agent reads published documentation instead of guessing from training data — `search` for full-text queries with snippets, `get_page` to load one page by path (such as `/principles` or `/get-started/setup`), and `list_pages` to map the index before opening detail.
+
+It does not replace the agent instructions shipped with the design system. This site explains how each part works and gives copy-ready prompts; it does not carry the technical or implementation contracts. Those live in the packages — [skills](/get-started/skills) playbooks and live specs in `@viraui/react`. Use MCP when the agent needs a grounded lookup or check against what is published here; use skills when it should edit the app.
 
 ## Configuration
 

@@ -25,8 +25,9 @@ Public MDX under `content/` is AI-centric. Humans read it to review agent work a
 - Abuse em-dashes or write telegraph-style sentence stacks
 - Digress into other products or adjacent topics when a link would do
 - Add “What’s next”, “Next steps”, or similar outbound tour sections
-- Meta / editorial asides about the page itself: “Keep this page for…”, “This page covers…”, “not documented here”, “out of scope on this page”, “we only document…”
+- Meta / editorial asides about the page itself: “Keep this page for…”, “This page covers…”, “not documented here”, “out of scope on this page”, “we only document…”, “without a catalog to maintain…”
 - Talk to the author or agent about content boundaries inside consumer copy (put that in specs/contracts/rules)
+- Authoring hygiene for the LLM inside consumer prose: “omit defaults”, “leave prop X off”, “examples stay honest”, “do not invent props”, “skills own the live set” — those belong in skills/rules, not MDX. Show the good shape in code; explain the mechanism in prose
 - “Readers should…” / “Developers will…” when “you” or direct mechanism works
 
 ## Examples
@@ -39,3 +40,5 @@ Public MDX under `content/` is AI-centric. Humans read it to review agent work a
 | What’s next: Themes → Skills → … | Link Themes or Skills inline where the mechanism needs them. |
 | Add hover with `--duration-fast` and `--easing-standard`; include `prefers-reduced-motion`. | Add a subtle hover animation on this custom card — not too fast — and respect reduced-motion settings. |
 | Use viraui-design. Read @viraui/react/specs for Button… | Add a footer with Save, Cancel, and Delete — Save primary, Delete destructive, show loading on Save while it runs. |
+| Omit every prop that matches the default so examples stay honest. | A bare Button is already primary; reach for another treatment when the action is not the commit. |
+| …and pill shape without a prop catalog to maintain. | …optional addon, loading state, and pill shape. |

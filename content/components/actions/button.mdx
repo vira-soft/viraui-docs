@@ -3,16 +3,104 @@ title: Button
 description: Primary labeled action with size, variant, optional addon, loading state, and pill shape.
 ---
 
-Button is the default labeled action control. Text children name the action; optional `addon` slots accept a leading or trailing icon (button CSS sizes SVG descendants — no per-glyph sizing). Pick `variant` for primary, secondary, flat, or destructive treatments, `size` for density, and `pill` when a fully rounded capsule fits the layout. `loading` keeps the control width stable, sets `aria-busy`, and shows a decorative Spinner while the async work runs. Reach for IconButton when there is no visible label, and ButtonLink when the affordance navigates with anchor semantics — do not force `render={<a />}` on Button.
+Button is the default **labeled** action control. Visible text children name what happens when you activate it; the control stays a real button for keyboard and assistive tech. Reach for [IconButton](/components/actions/icon-button) when there is no visible label, and [ButtonLink](/components/actions/button-link) when the affordance should navigate with link semantics — do not force `render={<a />}` on Button.
+
+Treatments follow intent, not decoration. Use the filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Size steps denser or roomier rows; `pill` rounds the control into a capsule when that shape fits the layout.
+
+Optional `addon` slots accept a leading or trailing icon (or a small Chip / Avatar). Button CSS sizes SVG descendants — glyph size comes from the button, not per-icon CSS. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the label while async work runs.
 
 ## Common examples
 
-Variant row with loading and addon slots covers the main Button shapes.
+### Treatments
 
-<PreviewSlot label="Button preview" />
+Pick the treatment from what the action means on that surface. A bare Button is already primary; reach for another treatment when the action is not the commit.
+
+<ButtonVariantsDemo />
+
+```tsx
+import { Button, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <Button>Save</Button>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="flat">Learn more</Button>
+  <Button variant="destructive">Delete</Button>
+</Stack>
+```
+
+Prefer one primary per region. Pair it with secondary cancel rather than two competing filled actions.
+
+### Icons beside the label
+
+Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label. `pill` rounds the control into a capsule when that shape fits the row.
+
+<ButtonAddonDemo />
+
+```tsx
+import { Download, FloppyDisk, Trash } from '@viraui/icons/react';
+import { Button, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <Button addon={<Download />}>Download</Button>
+  <Button addon={<FloppyDisk />} addonPosition="end" variant="secondary">
+    Save draft
+  </Button>
+  <Button addon={<Trash />} pill variant="destructive">
+    Delete
+  </Button>
+</Stack>
+```
+
+If the control has no visible text, switch to [IconButton](/components/actions/icon-button) with an accessible name — do not empty Button children and hope the icon is enough.
+
+### Loading
+
+Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
+
+<ButtonLoadingDemo />
+
+```tsx
+import { Button, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <Button loading>Publishing…</Button>
+  <Button loading variant="secondary">
+    Saving
+  </Button>
+</Stack>
+```
+
+Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. Loading also disables activation until you clear the flag.
+
+### Action rows
+
+Footer and dialog strips are Stack rows of Buttons — gap and alignment live on the Stack, not on per-button width CSS. For equal-width or full-bleed fills, put `fullWidth` / `expandChildren` on the Stack rather than inventing `className` width utilities on Button.
+
+<ButtonActionRowDemo />
+
+```tsx
+import { FloppyDisk } from '@viraui/icons/react';
+import { Button, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" hAlign="end" wrap>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="destructive">Delete</Button>
+  <Button addon={<FloppyDisk />}>Save</Button>
+</Stack>
+```
+
+In a Dialog footer, Cancel often closes via `Dialog.Close` rendered as a secondary Button — the strip still reads as one Stack row.
 
 ## Ask your agent
 
 ```text tab="Footer buttons"
 Add a footer action row to this screen with a primary Save, secondary Cancel, and destructive Delete. Show a loading state on Save while it runs. Put a leading icon on one button where it helps recognition.
+```
+
+```text tab="Quiet toolbar action"
+Add a flat button in this toolbar that opens the advanced options panel. Keep it visually quiet next to the primary Save.
+```
+
+```text tab="Download with icon"
+Add a Download button with a leading download icon. Use a pill shape so it matches the filter chips in the same row.
 ```
