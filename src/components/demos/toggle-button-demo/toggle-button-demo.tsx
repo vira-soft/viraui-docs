@@ -14,7 +14,12 @@ import {
   TextUnderline,
 } from "@phosphor-icons/react";
 import { Stack, Surface, ToggleButton, ToggleGroup } from "@viraui/react";
-import { ViraSandbox } from "../../common/vira-sandbox";
+import {
+  useViraSandboxCss,
+  ViraSandbox,
+} from "../../common/vira-sandbox";
+import sparkCss from "./toggle-button-spark.module.css?inline";
+import sparkStyles from "./toggle-button-spark.module.css";
 
 type SandboxShellProps = {
   children: React.ReactNode;
@@ -38,6 +43,17 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
     {children}
   </ViraSandbox>
 );
+
+const SPARK_BURST = [
+  { x: "0.15rem", y: "-1.35rem", color: "var(--highlight-yellow)" },
+  { x: "1.1rem", y: "-0.85rem", color: "var(--highlight-salmon)" },
+  { x: "1.35rem", y: "0.2rem", color: "var(--highlight-magenta)" },
+  { x: "0.85rem", y: "1.1rem", color: "var(--highlight-purple)" },
+  { x: "-0.2rem", y: "1.3rem", color: "var(--highlight-blue)" },
+  { x: "-1.15rem", y: "0.75rem", color: "var(--highlight-green)" },
+  { x: "-1.35rem", y: "-0.25rem", color: "var(--highlight-cyan)" },
+  { x: "-0.75rem", y: "-1.1rem", color: "var(--highlight-acid)" },
+] as const;
 
 /** Standalone pin / favorite with resting and pressed icons. */
 export const ToggleButtonIconsDemo: React.FC = () => (
@@ -67,6 +83,55 @@ export const ToggleButtonPressedVariantDemo: React.FC = () => (
       pressedVariant="secondary"
       restingIcon={<Moon />}
     />
+  </SandboxShell>
+);
+
+const ToggleButtonSparkScene: React.FC = () => {
+  useViraSandboxCss(sparkCss);
+  const [celebrate, setCelebrate] = React.useState(false);
+
+  return (
+    <div
+      className={sparkStyles.Burst}
+      {...(celebrate ? { "data-celebrate": "" } : {})}
+    >
+      <span aria-hidden className={sparkStyles.Sparks}>
+        {SPARK_BURST.map((spark) => (
+          <span
+            key={`${spark.x}-${spark.y}`}
+            className={sparkStyles.Spark}
+            style={
+              {
+                "--spark-x": spark.x,
+                "--spark-y": spark.y,
+                "--spark-color": spark.color,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </span>
+      <ToggleButton
+        aria-label="Favorite"
+        onPressedChange={(pressed) => {
+          if (!pressed) {
+            setCelebrate(false);
+            return;
+          }
+          setCelebrate(false);
+          requestAnimationFrame(() => setCelebrate(true));
+        }}
+        pressedIcon={<Heart weight="fill" />}
+        pressedVariant="secondary"
+        restingIcon={<Heart />}
+      />
+    </div>
+  );
+};
+
+/** onPressedChange side effect: confetti stand-in when toggle turns on. */
+export const ToggleButtonSparkDemo: React.FC = () => (
+  <SandboxShell height={140} label="ToggleButton onPressedChange side effect">
+    <ToggleButtonSparkScene />
   </SandboxShell>
 );
 

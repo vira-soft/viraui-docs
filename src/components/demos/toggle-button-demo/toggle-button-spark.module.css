@@ -1,0 +1,52 @@
+.Burst {
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.Sparks {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.Spark {
+  position: absolute;
+  inline-size: 0.28rem;
+  block-size: 0.28rem;
+  border-radius: 999px;
+  background: var(--spark-color, var(--highlight-yellow));
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.35);
+  box-shadow: 0 0 0.35rem oklab(from var(--spark-color, var(--highlight-yellow)) l a b / 55%);
+
+  &:nth-child(odd) {
+    inline-size: 0.16rem;
+    block-size: 0.42rem;
+    border-radius: 1px;
+  }
+
+  .Burst[data-celebrate] & {
+    animation: SparkBurst 0.6s var(--easing-entrance, ease-out) forwards;
+  }
+}
+
+@keyframes SparkBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--spark-x, 0px)),
+        calc(-50% + var(--spark-y, 0px))) scale(0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Spark {
+    animation: none;
+  }
+}

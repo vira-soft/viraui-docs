@@ -52,6 +52,28 @@ import { ToggleButton } from '@viraui/react';
 />
 ```
 
+### On press
+
+`onPressedChange` is the hook for side effects when the pressed state flips: persist a favorite, fire analytics, show a toast, or celebrate the moment. The demo below uses a short confetti burst as a stand-in for that reaction; swap the body of the callback for whatever the product needs.
+
+<ToggleButtonSparkDemo />
+
+```tsx
+import { Heart } from '@phosphor-icons/react';
+import { ToggleButton } from '@viraui/react';
+
+<ToggleButton
+  aria-label="Favorite"
+  restingIcon={<Heart />}
+  pressedIcon={<Heart weight="fill" />}
+  pressedVariant="secondary"
+  onPressedChange={(pressed) => {
+    if (!pressed) return;
+    // toast, persist, analytics, celebrate…
+  }}
+/>
+```
+
 ### In a group
 
 ToggleGroup coordinates exclusive pressed values across ToggleButton children. Give each child a `value`; use `defaultValue` (or controlled `value` / `onValueChange`) as a `string[]`. Flat alone barely shows pressed, so pair with `pressedVariant` (or a `pressedIcon`) when the on state must read clearly. Wrap the group in a Surface when you want a bordered toolbar shell; spacing between items is owned by the group.
@@ -136,4 +158,8 @@ Add a formatting strip with bold, italic, and underline. Several can stay on at 
 
 ```text tab="Dark mode toggle"
 Add a dark-mode toggle that swaps moon and sun icons and shifts to a secondary variant when pressed.
+```
+
+```text tab="React on favorite"
+Add a favorite toggle that fills the heart when pressed. When it turns on, run a side effect (toast, persist, or a short celebration). Keep the accessible name on the control.
 ```
