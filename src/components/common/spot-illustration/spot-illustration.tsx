@@ -18,6 +18,9 @@ import foundationTypography from "../../../illustrations/foundation-typography.s
 import foundationSpace from "../../../illustrations/foundation-space.svg?raw";
 import foundationRadius from "../../../illustrations/foundation-radius.svg?raw";
 import foundationIcons from "../../../illustrations/foundation-icons.svg?raw";
+import componentsActions from "../../../illustrations/components-actions.svg?raw";
+import componentsDialogs from "../../../illustrations/components-dialogs.svg?raw";
+import componentsEffects from "../../../illustrations/components-effects.svg?raw";
 
 const ART = {
   foundation,
@@ -40,6 +43,9 @@ const ART = {
   "foundation-space": foundationSpace,
   "foundation-radius": foundationRadius,
   "foundation-icons": foundationIcons,
+  "components-actions": componentsActions,
+  "components-dialogs": componentsDialogs,
+  "components-effects": componentsEffects,
 } as const;
 
 export type SpotIllustrationName = keyof typeof ART;

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Actions — controls that commit work" class="il">
+  <defs>
+    <linearGradient id="panelG-components-actions" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-actions" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-actions" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+  </defs>
+<rect x="15" y="34" width="130" height="106" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="22" y="30" width="116" height="100" rx="10" fill="url(#panelG-components-actions)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="36.0" y="44.0" width="26.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="52.2" width="72.0" height="5.2" rx="2.60" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="66.0" width="22.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="74.2" width="56.0" height="5.2" rx="2.60" fill="var(--il-fill, #DCD6CE)"/><rect x="30" y="92" width="100" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.55"/><rect x="30.0" y="102.0" width="40.0" height="18.0" rx="8.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="38.0" y="108.7" width="24.0" height="4.6" rx="2.30" fill="var(--il-fill, #DCD6CE)"/><g filter="url(#lift-components-actions)"><rect x="78.0" y="102.0" width="52.0" height="18.0" rx="8.0" fill="var(--il-surface, #FFFFFF)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/></g><rect x="88.0" y="108.7" width="22.0" height="4.6" rx="2.30" fill="var(--il-stroke, #35322D)"/><g transform="translate(115.00 106.50) scale(0.03516)" fill="var(--il-stroke, #35322D)"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></g>
+</svg>

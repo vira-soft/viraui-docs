@@ -1,0 +1,24 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dialogs — bottom sheet with centered content column" class="il">
+  <defs>
+    <linearGradient id="panelG-components-dialogs" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--il-panel-top, #FCFBF9)"/>
+      <stop offset="1" stop-color="var(--il-panel, #F7F5F2)"/>
+    </linearGradient>
+    <filter id="lift-components-dialogs" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.6"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <filter id="liftL-components-dialogs" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5"
+        flood-color="var(--il-shadow-c, #4A3F33)" flood-opacity="var(--il-shadow-o, 0.16)"/>
+    </filter>
+    <clipPath id="vp-components-dialogs">
+      <rect x="24.0" y="20.0" width="112.0" height="120.0" rx="10"/>
+    </clipPath>
+  </defs>
+  <rect x="18.0" y="24.0" width="124.0" height="124.0" rx="16" fill="var(--il-ghost, #EAE7E2)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+  <g clip-path="url(#vp-components-dialogs)">
+<rect x="24.0" y="20.0" width="112.0" height="120.0" rx="10" fill="url(#panelG-components-dialogs)"/><g opacity="0.4"><rect x="36.0" y="34.0" width="24.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="42.2" width="68.0" height="5.2" rx="2.60" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="54.0" width="20.0" height="4.2" rx="2.10" fill="var(--il-fill, #DCD6CE)"/><rect x="36.0" y="62.2" width="54.0" height="5.2" rx="2.60" fill="var(--il-fill, #DCD6CE)"/></g><g filter="url(#liftL-components-dialogs)"><path d="M24.0 140.0V82.0a10.0 10.0 0 0 1 10.0 -10.0H126.0a10.0 10.0 0 0 1 10.0 10.0V140.0Z" fill="var(--il-surface, #FFFFFF)"/></g><rect x="24.0" y="72.0" width="112.0" height="0.5" fill="var(--il-line, #B9B1A4)" opacity="0.55"/><rect x="70.0" y="80.0" width="20.0" height="3.0" rx="1.50" fill="var(--il-fill, #DCD6CE)"/><rect x="55.0" y="96.0" width="50.0" height="5.0" rx="2.50" fill="var(--il-fill, #DCD6CE)"/><rect x="55.0" y="114.0" width="22.0" height="14.0" rx="7.0" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="59.0" y="119.0" width="14.0" height="4.0" rx="2.00" fill="var(--il-fill, #DCD6CE)"/><rect x="83.0" y="114.0" width="22.0" height="14.0" rx="7.0" fill="var(--il-fill-soft, #E9E4DC)" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/><rect x="87.0" y="119.0" width="14.0" height="4.0" rx="2.00" fill="var(--il-stroke, #35322D)"/>
+  </g>
+  <rect x="24.0" y="20.0" width="112.0" height="120.0" rx="10" fill="none" stroke="var(--il-line, #B9B1A4)" stroke-width="0.5"/>
+</svg>
