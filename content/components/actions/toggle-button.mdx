@@ -1,18 +1,139 @@
 ---
 title: ToggleButton
-description: Icon-only two-state toggle with resting and pressed icons, variant shift on press, and optional crossfade.
+description: Icon-only two-state toggle and its group. Pressed icons, variant shift, and optional crossfade; ToggleGroup coordinates single- or multi-select across related ToggleButtons.
 ---
 
-ToggleButton is an icon-only control with a persistent pressed state. `restingIcon` is required; `pressedIcon` swaps in when pressed (falls back to resting when omitted). `variant` defaults to flat at rest; optional `pressedVariant` shifts the treatment while pressed. `interpolateIcons` opts into a stacked crossfade and rotate between icons — otherwise the swap is instant. Your agent picks it for toolbar pin, favorite, mute, or copy-feedback toggles where IconButton would lose the pressed affordance.
+ToggleButton is the icon-only control with a persistent pressed state. Pass `restingIcon` (required); optional `pressedIcon` swaps in when pressed, otherwise the resting glyph stays. `variant` defaults to flat at rest; `pressedVariant` can shift the treatment while pressed. `interpolateIcons` opts into a stacked crossfade and rotate between icons; otherwise the swap is instant. Every instance needs `aria-label` or `aria-labelledby`. Reach for [IconButton](/components/actions/icon-button) when there is no pressed state to keep.
+
+When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value` plus an accessible name; the group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` for multi-select. Default layout is a Stack (`row` or `column` from `orientation`) with a tight gap. Label the group with `aria-label` or `aria-labelledby` so assistive tech understands the cluster. A lone one-off toggle stays as ToggleButton alone; tabbed panel navigation belongs on Tabs.
 
 ## Common examples
 
-A toolbar pin toggle with resting and pressed icons and optional crossfade is the default two-state pattern.
+### Icons
 
-<PreviewSlot label="ToggleButton preview" />
+`restingIcon` is required. Pair it with `pressedIcon` when the pressed state should read as a different glyph (fill weight, lock open, sun after moon). Omit `pressedIcon` when the same icon is enough and only `aria-pressed` / variant carry the state.
+
+<ToggleButtonIconsDemo />
+
+```tsx
+import { Heart, PushPin } from '@phosphor-icons/react';
+import { Stack, ToggleButton } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ToggleButton
+    aria-label="Pin"
+    restingIcon={<PushPin />}
+    pressedIcon={<PushPin weight="fill" />}
+  />
+  <ToggleButton
+    aria-label="Favorite"
+    restingIcon={<Heart />}
+    pressedIcon={<Heart weight="fill" />}
+  />
+</Stack>
+```
+
+### Pressed variant
+
+Default resting chrome is flat. Pass `pressedVariant` when the pressed state should look filled or secondary so the on state reads clearly in a quiet toolbar. Turn on `interpolateIcons` for a short crossfade and rotate between the two icons instead of an instant swap.
+
+<ToggleButtonPressedVariantDemo />
+
+```tsx
+import { Moon, Sun } from '@phosphor-icons/react';
+import { ToggleButton } from '@viraui/react';
+
+<ToggleButton
+  aria-label="Dark mode"
+  restingIcon={<Moon />}
+  pressedIcon={<Sun />}
+  pressedVariant="secondary"
+  interpolateIcons
+/>
+```
+
+### In a group
+
+ToggleGroup coordinates exclusive pressed values across ToggleButton children. Give each child a `value`; use `defaultValue` (or controlled `value` / `onValueChange`) as a `string[]`. Flat alone barely shows pressed, so pair with `pressedVariant` (or a `pressedIcon`) when the on state must read clearly. Wrap the group in a Surface when you want a bordered toolbar shell; spacing between items is owned by the group.
+
+<ToggleGroupSingleDemo />
+
+```tsx
+import { TextAlignCenter, TextAlignLeft, TextAlignRight } from '@phosphor-icons/react';
+import { Surface, ToggleButton, ToggleGroup } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <ToggleGroup aria-label="Text alignment" defaultValue={['left']}>
+    <ToggleButton
+      aria-label="Align left"
+      restingIcon={<TextAlignLeft />}
+      pressedVariant="secondary"
+      value="left"
+    />
+    <ToggleButton
+      aria-label="Align center"
+      restingIcon={<TextAlignCenter />}
+      pressedVariant="secondary"
+      value="center"
+    />
+    <ToggleButton
+      aria-label="Align right"
+      restingIcon={<TextAlignRight />}
+      pressedVariant="secondary"
+      value="right"
+    />
+  </ToggleGroup>
+</Surface>
+```
+
+### Multi-select
+
+Turn on `multiple` when several children can stay pressed together (formatting toolbars). Values still move as `string[]`.
+
+<ToggleGroupMultipleDemo />
+
+```tsx
+import { TextB, TextItalic, TextUnderline } from '@phosphor-icons/react';
+import { Surface, ToggleButton, ToggleGroup } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <ToggleGroup aria-label="Text formatting" defaultValue={['bold']} multiple>
+    <ToggleButton
+      aria-label="Bold"
+      restingIcon={<TextB />}
+      pressedVariant="secondary"
+      value="bold"
+    />
+    <ToggleButton
+      aria-label="Italic"
+      restingIcon={<TextItalic />}
+      pressedVariant="secondary"
+      value="italic"
+    />
+    <ToggleButton
+      aria-label="Underline"
+      restingIcon={<TextUnderline />}
+      pressedVariant="secondary"
+      value="underline"
+    />
+  </ToggleGroup>
+</Surface>
+```
 
 ## Ask your agent
 
-```text tab="Pin / copy toggles"
-Add a pin toggle and a copy toggle to this note card toolbar. Pin should look pressed when active. Copy should briefly show a check after the user taps it. Label each control for screen readers.
+```text tab="Pin / favorite"
+Add a pin toggle and a favorite toggle to this note card toolbar. Each should look pressed when active and swap to a filled icon. Label each control for screen readers.
+```
+
+```text tab="Align toolbar"
+Add a text-alignment toolbar to this editor: left, center, and right, icon-only, one choice at a time. Label the group "Text alignment" for screen readers.
+```
+
+```text tab="Formatting multi"
+Add a formatting strip with bold, italic, and underline. Several can stay on at once. Put it in a quiet bordered surface next to the alignment group.
+```
+
+```text tab="Dark mode toggle"
+Add a dark-mode toggle that swaps moon and sun icons and shifts to a secondary variant when pressed.
 ```

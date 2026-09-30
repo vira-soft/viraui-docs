@@ -3,8 +3,7 @@
   "pages": [
     "button",
     "icon-button",
-    "toggle-button",
-    "toggle-group"
+    "toggle-button"
   ],
   "defaultOpen": false,
   "icon": "HandPointer"

@@ -27,3 +27,9 @@ export {
   IconButtonToolbarDemo,
   IconButtonVariantsDemo,
 } from "./icon-button-demo";
+export {
+  ToggleButtonIconsDemo,
+  ToggleButtonPressedVariantDemo,
+  ToggleGroupMultipleDemo,
+  ToggleGroupSingleDemo,
+} from "./toggle-button-demo";
