@@ -1,18 +1,199 @@
 ---
 title: Toast
-description: Non-blocking transient notifications with stacked placement, Banner API, and optional action buttons.
+description: Non-blocking transient notifications with stacked placement and optional action buttons.
 ---
 
-Toast is a compound namespace for short-lived feedback — save confirmations, undo windows, and contextual messages anchored to the control that triggered them. Queue toasts through `toastManager.add` with `title` and `description` strings so high-priority announcements reach screen readers. `Toast.Banner` is the high-level surface; its children must be `Toast.Action` only. Your agent picks Toast for reversible or informational outcomes, not blocking validation errors (inline field errors or Dialog own those).
+Toast shows short-lived feedback after an action — save confirmations, undo windows, and messages that sit next to the control that triggered them. Mount `Toast.Provider` once with a manager from `Toast.createToastManager()`, keep a `Toast.Portal` and `Toast.Viewport` region in the tree, and map live toasts to `Toast.Banner`. Call `toastManager.add({ title, description })` from the action that should announce; keep copy brief so screen readers hear a clear result.
+
+Optional actions on a banner are `Toast.Action` only. The stack defaults to `bottom-right`; set `position` for another corner, or `anchored` with `Toast.Positioner` when the message should hug a trigger. Prefer Toast for reversible or informational outcomes; blocking validation belongs on the field or in a [Dialog](/components/dialogs/dialog).
 
 ## Common examples
 
-A save confirmation with title, description, and optional undo action is the default transient feedback pattern.
+### Stacked feedback
 
-<PreviewSlot label="Toast preview" />
+Mount the provider once, keep a portal region in the tree, and call `add` from any action under that provider. Multiple banners stack in the viewport; `close()` without an id clears the queue.
+
+<ToastStackedDemo />
+
+```tsx
+import { Button, Stack, Toast } from '@viraui/react';
+
+const toastManager = Toast.createToastManager();
+
+function AppToastRegion() {
+  const { toasts } = Toast.useToastManager();
+
+  return (
+    <Toast.Portal>
+      <Toast.Viewport>
+        {toasts.map((toast) => (
+          <Toast.Banner key={toast.id} description={toast.description} toast={toast} />
+        ))}
+      </Toast.Viewport>
+    </Toast.Portal>
+  );
+}
+
+function SaveActions() {
+  return (
+    <Toast.Provider toastManager={toastManager}>
+      <Stack columnGap="s" direction="row">
+        <Button
+          onClick={() => {
+            toastManager.add({
+              title: 'File saved',
+              description: 'Your changes are on the server.',
+            });
+          }}
+        >
+          Show toast
+        </Button>
+        <Button onClick={() => toastManager.close()} variant="secondary">
+          Clear all
+        </Button>
+      </Stack>
+      <AppToastRegion />
+    </Toast.Provider>
+  );
+}
+```
+
+Pass `position` on `Toast.Viewport` when the stack should live in another corner (for example `bottom-left`).
+
+### Undo action
+
+Banner children are limited to `Toast.Action`. Use the default Button chrome, or pass `render` when the action needs a different variant. Closing the toast from the action handler ends the undo window.
+
+<ToastUndoDemo />
+
+```tsx
+import { Button, Toast } from '@viraui/react';
+
+const toastManager = Toast.createToastManager();
+
+function UndoToastRegion() {
+  const { close, toasts } = Toast.useToastManager();
+
+  return (
+    <Toast.Portal>
+      <Toast.Viewport>
+        {toasts.map((toast) => (
+          <Toast.Banner key={toast.id} description={toast.description} toast={toast}>
+            <Toast.Action
+              render={<Button variant="destructive" />}
+              onClick={() => {
+                close(toast.id);
+              }}
+            >
+              Undo
+            </Toast.Action>
+          </Toast.Banner>
+        ))}
+      </Toast.Viewport>
+    </Toast.Portal>
+  );
+}
+
+function DeleteWithUndo() {
+  return (
+    <Toast.Provider toastManager={toastManager}>
+      <Button
+        variant="destructive"
+        onClick={() => {
+          toastManager.close();
+          toastManager.add({
+            title: 'Item deleted',
+            description: 'You can undo this action.',
+          });
+        }}
+      >
+        Delete item
+      </Button>
+      <UndoToastRegion />
+    </Toast.Provider>
+  );
+}
+```
+
+### Anchored
+
+For feedback tied to a specific control, set `Toast.Viewport` to `position="anchored"`, wrap each banner in `Toast.Positioner`, and pass `positionerProps.anchor` (plus optional `sideOffset` and a short `timeout`) when calling `add`. Turn off `dismissable` when the toast should disappear on its own.
+
+<ToastAnchoredDemo />
+
+```tsx
+import { useRef } from 'react';
+import { Button, Toast } from '@viraui/react';
+
+const toastManager = Toast.createToastManager();
+
+function AnchoredToastRegion() {
+  const { toasts } = Toast.useToastManager();
+
+  return (
+    <Toast.Portal>
+      <Toast.Viewport position="anchored">
+        {toasts.map((toast) => {
+          if (!toast.positionerProps?.anchor) {
+            return null;
+          }
+
+          return (
+            <Toast.Positioner key={toast.id} toast={toast}>
+              <Toast.Banner
+                description={toast.description}
+                dismissable={false}
+                toast={toast}
+              />
+            </Toast.Positioner>
+          );
+        })}
+      </Toast.Viewport>
+    </Toast.Portal>
+  );
+}
+
+function CopyLink() {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <Toast.Provider toastManager={toastManager}>
+      <Button
+        ref={triggerRef}
+        onClick={() => {
+          toastManager.close();
+          toastManager.add({
+            description: 'Copied to clipboard.',
+            timeout: 1500,
+            positionerProps: {
+              anchor: triggerRef.current,
+              sideOffset: 8,
+            },
+          });
+        }}
+      >
+        Copy
+      </Button>
+      <AnchoredToastRegion />
+    </Toast.Provider>
+  );
+}
+```
 
 ## Ask your agent
 
 ```text tab="Save toast"
-After this form saves successfully, show a short toast with title and description. Include Undo to reverse the change. Keep copy brief. Do not use toasts for validation errors that block the task.
+After this form saves successfully, show a short toast with title and description. Keep copy brief. Do not use toasts for validation errors that block the task.
+```
+
+```text tab="Delete with undo"
+When the user deletes an item, show a toast with an Undo action that reverses the delete and dismisses the toast. Keep the message short.
+```
+
+```text tab="Copy confirmation"
+When the user copies a link, show a short confirmation toast next to the copy control that disappears on its own after about a second and a half. No dismiss button.
+```
+
+```text tab="Corner placement"
+Move the app toast stack to the bottom-left corner so it stays clear of the primary action area on the right.
 ```

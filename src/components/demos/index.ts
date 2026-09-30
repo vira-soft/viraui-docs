@@ -40,3 +40,8 @@ export {
   DialogNestedDemo,
   DialogSnapPointsDemo,
 } from "./dialog-demo";
+export {
+  ToastAnchoredDemo,
+  ToastStackedDemo,
+  ToastUndoDemo,
+} from "./toast-demo";
