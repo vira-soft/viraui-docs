@@ -74,10 +74,10 @@ import { Stack, Text, Title, Typewriter } from '@viraui/react';
 ```tsx
 import { Stack, Surface, Text, Title, Typewriter } from '@viraui/react';
 
-const wrapTexts = [
+const wrapTexts: string[] = [
   'We build focused, useful tools for designers and developers.',
   'Ship calm systems that stay steady across teams and releases.',
-] as const;
+];
 
 <Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
   <Stack rowGap="m">

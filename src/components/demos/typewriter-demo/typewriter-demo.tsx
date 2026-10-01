@@ -98,7 +98,7 @@ export const TypewriterMutedDemo: React.FC = () => (
 
 /** Wrapping Text holds layout through type/delete with preserveSpace. */
 export const TypewriterWrapDemo: React.FC = () => (
-  <SandboxShell height={260} label="Wrapping subtitle with reserved space">
+  <SandboxShell height={360} label="Wrapping subtitle with reserved space">
     <Surface
       border="all"
       color={1}
