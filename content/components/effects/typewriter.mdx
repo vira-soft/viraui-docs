@@ -3,18 +3,116 @@ title: Typewriter
 description: Inline typing animation — single phrase or cycling texts with caret styles and reduced-motion fallback.
 ---
 
-Typewriter animates copy inside a `span` by writing characters into a typed layer while an `aria-live` region holds the full phrase for screen readers. Pass string `children` for one line, or `texts` to cycle multiple phrases with type, pause, delete, and loop timing controlled by `speed`, `deleteSpeed`, `pause`, and `delay`. `caret` selects block, underscore, pipe, or none; `caretColor` overrides the default `currentColor` caret.
+Typewriter animates copy inside a `span` by writing characters into a typed layer while an `aria-live` region holds the full phrase for screen readers. Nest it inside [Title](/components/typography/title) or [Text](/components/typography/text) so size, tone, and heading `render` live on the parent — Typewriter stays the progressive reveal. Pass string `children` for one line, or a **stable** `texts` array to cycle phrases with type, pause, delete, and loop timing via `speed`, `deleteSpeed`, `pause`, and `delay`.
 
-When `prefers-reduced-motion: reduce` is active, the animation skips straight to the full phrase — do not rely on the typing effect alone to reveal critical information. `preserveSpace` reserves the final layout width and height from first paint so surrounding flex rows do not jump while letters appear; use it for hero lines next to buttons or badges.
+`caret` selects `block`, `underscore`, `pipe` (default), or `none`; `caretColor` overrides the default `currentColor` caret. `preserveSpace` reserves the final layout width and height from first paint so surrounding flex rows do not jump while letters appear — use it for hero lines next to buttons. Prefer Typewriter when progressive letter reveal is the intent; loading shimmer on static copy belongs on [Shimmer](/components/typography/shimmer).
+
+<Callout type="warn" title="Reduced motion">
+When `prefers-reduced-motion: reduce` is active, Typewriter skips straight to the full phrase (the last phrase when cycling). Do not rely on the typing effect alone to reveal critical information.
+</Callout>
 
 ## Common examples
 
-A hero subtitle that cycles product taglines with a pipe caret.
+### Cycle text
 
-<PreviewSlot label="Typewriter preview" />
+Nest Typewriter in a display Title for marketing heroes. `preserveSpace` holds the line box through type/delete; an underscore caret and themed `caretColor` match the auth compose pattern.
+
+<TypewriterHeroDemo />
+
+```tsx
+import { Button, Stack, Title, Typewriter } from '@viraui/react';
+
+const heroTexts: string[] = [
+  'Ship real UI at the speed of thought.',
+  'Ship real UI at the speed of your LLM.',
+  'Ship real UI at the speed of your team.',
+];
+
+<Stack rowGap="l">
+  <Title lineHeight="s" maxWidth="32rem" render={<h1 />} size="1">
+    <Typewriter
+      caret="underscore"
+      caretColor="var(--base-5)"
+      preserveSpace
+      texts={heroTexts}
+    />
+  </Title>
+  <Stack columnGap="m" direction="row" wrap>
+    <Button />
+    <Button variant="secondary" />
+  </Stack>
+</Stack>
+```
+
+Keep `texts` at module scope (or otherwise stable). Inline arrays recreate on every parent render and restart the cycle.
+
+### Colored caret
+
+String `children` type once under a static Title. `caretColor` lifts the pipe above muted copy so the cursor reads as a highlight accent while the phrase stays quiet.
+
+<TypewriterMutedDemo />
+
+```tsx
+import { Stack, Text, Title, Typewriter } from '@viraui/react';
+
+<Stack hAlign="center" rowGap="s">
+  <Title />
+  <Text size="s" tone="muted">
+    <Typewriter caretColor="var(--highlight-green)" delay={200} speed={35}>
+      Quiet tools for night shoots — grade, mask, and ship.
+    </Typewriter>
+  </Text>
+</Stack>
+```
+
+### Reserved space
+
+`preserveSpace` plus a constrained `maxWidth` on Text keeps multi-line height steady while phrases cycle. `caret="none"` softens the reveal when a blinking mark would compete with body rhythm.
+
+<TypewriterWrapDemo />
+
+```tsx
+import { Stack, Surface, Text, Title, Typewriter } from '@viraui/react';
+
+const wrapTexts = [
+  'We build focused, useful tools for designers and developers.',
+  'Ship calm systems that stay steady across teams and releases.',
+] as const;
+
+<Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
+  <Stack rowGap="m">
+    <Title />
+    <Text maxWidth="33ch" size="2xl" tone="muted">
+      <Typewriter
+        caret="none"
+        delay={800}
+        deleteSpeed={30}
+        pause={2500}
+        preserveSpace
+        speed={20}
+        texts={wrapTexts}
+      />
+    </Text>
+  </Stack>
+</Surface>
+```
+
+Typewriter is decorative motion on labeled copy — parent Title/Text (or a surrounding region) owns the accessible name and any busy semantics.
 
 ## Ask your agent
 
-```text tab="Cycling tagline"
-Replace the static hero subtitle with cycling lines: "Ship faster.", "Stay on brand.", "Let the agent compose." Keep the first phrase available as plain text for users who need it without animation.
+```text tab="Hero cycle"
+Replace the static hero headline with a Typewriter that cycles three short product lines. Nest it in Title, keep preserveSpace so the CTA row does not jump, and use an underscore caret themed to the base accent.
+```
+
+```text tab="Colored caret"
+Animate the muted product subtitle under the studio name with a single Typewriter phrase. Keep the Title static and color the caret with `--highlight-green` so it reads against muted copy.
+```
+
+```text tab="Wrapping blurb"
+Turn this release-notes blurb into a cycling Typewriter inside Text. Reserve space so the card height stays steady, and hide the caret.
+```
+
+```text tab="Stable texts"
+The hero Typewriter restarts on every parent re-render — move the texts array to a stable module constant and keep preserveSpace.
 ```

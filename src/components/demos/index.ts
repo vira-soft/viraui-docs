@@ -57,3 +57,8 @@ export {
   StaticNoiseHeroDemo,
   StaticNoisePhotoDemo,
 } from "./static-noise-demo";
+export {
+  TypewriterHeroDemo,
+  TypewriterMutedDemo,
+  TypewriterWrapDemo,
+} from "./typewriter-demo";
