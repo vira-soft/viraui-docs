@@ -52,3 +52,8 @@ export {
   ProgressiveBlurDualDemo,
   ProgressiveBlurTopDemo,
 } from "./progressive-blur-demo";
+export {
+  StaticNoiseAnimatedDemo,
+  StaticNoiseHeroDemo,
+  StaticNoisePhotoDemo,
+} from "./static-noise-demo";

@@ -31,51 +31,22 @@ const glowProps: GlowProps = {
   radius: 'l',
 };
 
-function FeatureCard({
-  description,
-  title,
-}: {
-  description: string;
-  title: string;
-}) {
-  return (
-    <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
-      <Stack maxWidth="12rem" rowGap="s">
-        <Title render={<h3 />} size="5">
-          {title}
-        </Title>
-        <Text render={<p />} size="s" tone="muted">
-          {description}
-        </Text>
-      </Stack>
-    </Surface>
-  );
-}
-
 <Stack columnGap="m" direction="row" rowGap="m" wrap>
   <Glow {...glowProps}>
-    <FeatureCard
-      title="Design"
-      description="Ship polished screens without reinventing chrome."
-    />
+    <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
+      <Stack maxWidth="12rem" rowGap="s">
+        <Title />
+        <Text />
+      </Stack>
+    </Surface>
   </Glow>
   <Glow {...glowProps}>
-    <FeatureCard
-      title="Build"
-      description="Accessible primitives wired for agent-led builds."
-    />
-  </Glow>
-  <Glow {...glowProps}>
-    <FeatureCard
-      title="Ship"
-      description="Theme tokens and motion that stay on-brand."
-    />
-  </Glow>
-  <Glow {...glowProps}>
-    <FeatureCard
-      title="Iterate"
-      description="Tighten copy, spacing, and motion from real feedback."
-    />
+    <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
+      <Stack maxWidth="12rem" rowGap="s">
+        <Title />
+        <Text />
+      </Stack>
+    </Surface>
   </Glow>
 </Stack>
 ```
@@ -94,13 +65,8 @@ import { Glow, Stack, Surface, Text, Title } from '@viraui/react';
 <Glow borderOffset={0} fitContent radius="l" rainbowColors>
   <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
     <Stack maxWidth="18rem" rowGap="s">
-      <Title render={<h3 />} size="4">
-        Studio Pro
-      </Title>
-      <Text render={<p />} size="s" tone="muted">
-        Unlimited seats, private components, and priority support for growing
-        teams.
-      </Text>
+      <Title />
+      <Text />
     </Stack>
   </Surface>
 </Glow>
@@ -118,46 +84,36 @@ import { Glow, IconButton, Stack, Surface, Text, Title } from '@viraui/react';
 
 <Surface border="all" color={1} hPadding="m" radius="l" vPadding="m">
   <Stack rowGap="m">
-    <Stack hAlign="center" rowGap="xs">
-      <Title align="center" render={<h3 />} size="6">
-        Recent reports
-      </Title>
-      <Text align="center" render={<p />} size="s" tone="muted">
-        Exports from the last 30 days
-      </Text>
-    </Stack>
-    <Stack rowGap="s">
-      <Glow borderOffset={0} borderWidth={1} proximity={10} radius="full">
-        <Surface
-          color={2}
-          hPadding="m"
-          overflow="hidden"
-          radius="full"
-          vPadding="m"
+    <Title />
+    <Text />
+    <Glow borderOffset={0} borderWidth={1} proximity={10} radius="full">
+      <Surface
+        color={2}
+        hPadding="m"
+        overflow="hidden"
+        radius="full"
+        vPadding="m"
+      >
+        <Stack
+          columnGap="m"
+          direction="row"
+          hAlign="space-between"
+          vAlign="center"
         >
-          <Stack
-            columnGap="m"
-            direction="row"
-            hAlign="space-between"
-            vAlign="center"
-          >
-            <Stack rowGap="s">
-              <Text weight="semibold">Q2 payout report</Text>
-              <Text size="s" tone="muted">
-                PDF · Updated 2 hours ago · 14 pages
-              </Text>
-            </Stack>
-            <IconButton
-              aria-label="More actions for Q2 payout report"
-              icon={<DotsThreeVertical size={16} />}
-              pill
-              size="s"
-              variant="flat"
-            />
+          <Stack rowGap="s">
+            <Text />
+            <Text />
           </Stack>
-        </Surface>
-      </Glow>
-    </Stack>
+          <IconButton
+            aria-label="More actions"
+            icon={<DotsThreeVertical size={16} />}
+            pill
+            size="s"
+            variant="flat"
+          />
+        </Stack>
+      </Surface>
+    </Glow>
   </Stack>
 </Surface>
 ```

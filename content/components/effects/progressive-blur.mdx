@@ -78,7 +78,7 @@ const bottomBlurStyle = {
       paddingBlockEnd: '1rem',
     }}
   >
-    <Button>Continue reading</Button>
+    <Button />
   </Stack>
 </Surface>
 ```
@@ -124,12 +124,8 @@ const topBlurStyle = {
     }}
     vPadding="s"
   >
-    <Title render={<h3 />} size="5">
-      Field notes
-    </Title>
-    <Text size="xs" tone="muted">
-      Oct 2026 · Coastal studio
-    </Text>
+    <Title />
+    <Text />
   </Stack>
   <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
   <div style={{ blockSize: '100%', overflow: 'auto' }}>
@@ -183,9 +179,7 @@ const bottomBlurStyle = {
       paddingBlock: '0.85rem',
     }}
   >
-    <Title align="center" render={<h3 />} size="5">
-      Issue 12
-    </Title>
+    <Title />
   </Stack>
   <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
   <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
@@ -203,7 +197,7 @@ const bottomBlurStyle = {
       paddingBlockEnd: '1rem',
     }}
   >
-    <Button variant="secondary">Mark as read</Button>
+    <Button variant="secondary" />
   </Stack>
 </Surface>
 ```

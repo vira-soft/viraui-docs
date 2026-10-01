@@ -3,18 +3,164 @@ title: StaticNoise
 description: SVG grain overlay — turbulence filter with optional animated seed cycling and blend-mode control.
 ---
 
-StaticNoise renders a full-bleed decorative grain layer as a `figure` with an internal SVG turbulence filter. It is always `aria-hidden` — use it to add texture on top of photography, gradients, or [Surface](/components/layout/surface) fills, not to convey information. `opacity` and `mixBlendMode` (default `difference`) control how strongly the grain reads against what's underneath; `baseFrequency` adjusts the noise scale.
+StaticNoise paints a full-bleed decorative grain layer as a `figure` with an internal SVG turbulence filter. It is always `aria-hidden` — texture on top of photography, gradients, or [Surface](/components/layout/surface) fills, not information. `opacity` and `mixBlendMode` (default `difference`) control how strongly the grain reads against what sits underneath; `baseFrequency` adjusts the noise scale.
 
-Set `animate` to cycle `feTurbulence` seed values for living static — leave it off for a fixed grain plate. Because the filter id is scoped with `useId`, multiple instances on one screen stay isolated. Position the figure absolutely over the target region and keep interactive content in a sibling layer above the noise.
+Set `animate` to cycle `feTurbulence` seed values for living static — leave it off for a fixed grain plate. The filter id is scoped with `useId`, so multiple instances on one screen stay isolated. Position the figure absolutely over the target region (`inset: 0` on a `position: relative` parent) and keep interactive content in a sibling layer above the noise.
+
+<Callout type="warn" title="Performance cost">
+StaticNoise runs SVG turbulence and is memory-heavy. Prefer one focal overlay per view. Do not wallpaper every card in a dense grid.
+</Callout>
 
 ## Common examples
 
-A hero panel with a subtle animated grain wash over a gradient background.
+### Hero grain
 
-<PreviewSlot label="StaticNoise preview" />
+A gradient hero with a fixed grain wash is the usual StaticNoise composition. Content sits above the figure so CTAs stay clickable while the plate still blends through the scene.
+
+<StaticNoiseHeroDemo />
+
+```tsx
+import { Button, Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
+
+const overlayStyle = {
+  position: 'absolute',
+  inset: 0,
+  zIndex: 1,
+} as const;
+
+const contentStyle = {
+  position: 'relative',
+  zIndex: 2,
+} as const;
+
+<Surface
+  border="all"
+  overflow="hidden"
+  radius="l"
+  style={{
+    position: 'relative',
+    maxInlineSize: '28rem',
+    backgroundImage:
+      'linear-gradient(145deg, oklch(0.42 0.09 265) 0%, oklch(0.28 0.06 230) 48%, oklch(0.32 0.07 175) 100%)',
+  }}
+>
+  <StaticNoise opacity={0.28} style={overlayStyle} />
+  <Stack hPadding="xl" rowGap="m" style={contentStyle} vPadding="xl">
+    <Title />
+    <Text />
+    <Button />
+  </Stack>
+</Surface>
+```
+
+`opacity={0.28}` lifts the grain a notch above the default so it reads on a dark gradient.
+
+### Living static
+
+`animate` cycles seed frames for a living grain plate — useful on a single vibrant product card where the atmosphere should feel awake without a motion accent like [Beam](/components/effects/beam).
+
+<StaticNoiseAnimatedDemo />
+
+```tsx
+import { Button, Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
+
+const overlayStyle = {
+  position: 'absolute',
+  inset: 0,
+  zIndex: 1,
+} as const;
+
+const contentStyle = {
+  position: 'relative',
+  zIndex: 2,
+} as const;
+
+<Surface
+  border="all"
+  color={2}
+  data-vibrant
+  overflow="hidden"
+  radius="l"
+  style={{ position: 'relative', maxInlineSize: '22rem' }}
+>
+  <StaticNoise animate opacity={0.22} style={overlayStyle} />
+  <Stack hPadding="l" rowGap="m" style={contentStyle} vPadding="l">
+    <Title />
+    <Text />
+    <Button variant="secondary" />
+  </Stack>
+</Surface>
+```
+
+### Soft-light on photography
+
+Raise `baseFrequency` and switch `mixBlendMode` to `soft-light` when grain should sit like film over a photo instead of a hard difference plate. Caption chrome stays above the overlay.
+
+<StaticNoisePhotoDemo />
+
+```tsx
+import { Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
+
+const overlayStyle = {
+  position: 'absolute',
+  inset: 0,
+  zIndex: 1,
+} as const;
+
+<Surface
+  border="all"
+  overflow="hidden"
+  radius="l"
+  style={{
+    position: 'relative',
+    maxInlineSize: '24rem',
+    blockSize: '22rem',
+    backgroundImage: 'url(…)',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  }}
+>
+  <StaticNoise
+    baseFrequency={0.65}
+    mixBlendMode="soft-light"
+    opacity={0.45}
+    style={overlayStyle}
+  />
+  <Stack
+    hPadding="l"
+    rowGap="xs"
+    style={{
+      position: 'absolute',
+      insetInline: 0,
+      bottom: 0,
+      zIndex: 2,
+      paddingBlock: '1.25rem',
+      background:
+        'linear-gradient(to top, color-mix(in oklab, black 55%, transparent), transparent)',
+    }}
+  >
+    <Title />
+    <Text />
+  </Stack>
+</Surface>
+```
+
+StaticNoise is decorative only — accessible names and actions live on the content above it, not on the grain plate.
 
 ## Ask your agent
 
-```text tab="Layer grain on a hero"
-Layer subtle film grain on the hero background behind the headline. Keep text on top and treat the grain as decorative only.
+```text tab="Hero film grain"
+Add subtle film grain over this dark gradient hero so the panel feels photographic. Keep the Open workspace button clickable above the grain.
+```
+
+```text tab="Living product card"
+Give this vibrant Signal room card a living grain overlay that gently animates. Keep the Join channel action above the noise.
+```
+
+```text tab="Archive photo grain"
+Layer soft-light film grain over this harbor photo card so it reads like an archive print, with the caption sitting above the grain.
+```
+
+```text tab="Stronger grain"
+The grain on this hero feels too faint — push the opacity up a little and keep interactive content above the overlay.
 ```
