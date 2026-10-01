@@ -106,10 +106,11 @@ export const GlowRainbowDemo: React.FC = () => (
       <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
         <Stack maxWidth="18rem" rowGap="s">
           <Title render={<h3 />} size="4">
-            Featured plan
+            Studio Pro
           </Title>
           <Text render={<p />} size="s" tone="muted">
-            Move the pointer near the card to see the rainbow arc follow.
+            Unlimited seats, private components, and priority support for growing
+            teams.
           </Text>
         </Stack>
       </Surface>
@@ -127,7 +128,7 @@ export const GlowReportRowDemo: React.FC = () => (
             Recent reports
           </Title>
           <Text align="center" render={<p />} size="s" tone="muted">
-            Move near a row to light the rim.
+            Exports from the last 30 days
           </Text>
         </Stack>
         <Stack rowGap="s">

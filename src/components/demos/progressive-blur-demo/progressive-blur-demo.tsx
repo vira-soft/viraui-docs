@@ -151,8 +151,8 @@ const ScrollArticle: React.FC<ScrollArticleProps> = ({
       instead of blank.
     </Text>
     <Text render={<p />} size="s" tone="muted">
-      Scroll further if you want the blur to do its job — the last lines should
-      soften under the edge veil instead of clipping hard against the frame.
+      Tomorrow we ship the quieter build — fewer flourishes, tighter spacing, and
+      the same coastal light on the bench.
     </Text>
   </Stack>
 );
@@ -219,10 +219,10 @@ export const ProgressiveBlurTopDemo: React.FC = () => (
         vPadding="s"
       >
         <Title render={<h3 />} size="5">
-          Studio journal
+          Field notes
         </Title>
         <Text size="xs" tone="muted">
-          Sticky chrome · content fades underneath
+          Oct 2026 · Coastal studio
         </Text>
       </Stack>
       <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
@@ -263,7 +263,7 @@ export const ProgressiveBlurDualDemo: React.FC = () => (
         }}
       >
         <Title align="center" render={<h3 />} size="5">
-          Long read
+          Issue 12
         </Title>
       </Stack>
       <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
