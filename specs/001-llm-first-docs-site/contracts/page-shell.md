@@ -9,7 +9,9 @@ Every **ComponentPage** MDX MUST include, in order:
 MUST NOT include exhaustive prop-table as primary documentation.
 MUST NOT maintain prop / variant / size inventories — name values inside examples and prose only.
 MUST NOT add “What’s next” / next-steps tour sections.
+MUST NOT fill static code fences with incidental product copy — self-closing placeholders (`<Title />`, `<Button />`, …) for siblings that are not the teaching point; live demos keep real consumer copy (`.cursor/rules/06-docs-code-fence-placeholders.mdc`).
 
 Every **instructional** page under Get started MUST include a titled prompt code block region as the primary path; manual steps only when strictly necessary and secondary.
 
 Voice: `.cursor/rules/02-docs-consumer-voice.mdc`.
+Code fences: `.cursor/rules/06-docs-code-fence-placeholders.mdc`.

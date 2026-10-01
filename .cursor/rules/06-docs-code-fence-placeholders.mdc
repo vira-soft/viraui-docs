@@ -1,0 +1,39 @@
+---
+description: MDX code fences use self-closing placeholders for incidental content — keep fences short
+globs: content/**/*.mdx
+alwaysApply: false
+---
+
+# Docs: slim code fences
+
+Static MDX code fences teach the **featured** component’s wiring. Incidental siblings (`Title`, `Text`, `Button`, labels, lorem) are placeholders — not product copy.
+
+Live demos (`src/components/demos/**`) keep real consumer copy. Fences stay short.
+
+## Do
+
+- Self-close parts that are not the teaching point: `<Title />`, `<Text />`, `<Button />`, `<ButtonLink />`
+- Keep structure, layout, and props that show how the featured part mounts (overlay `style`, `Stack` chrome, wrap shells)
+- Keep props on placeholders only when they matter to the pattern (`variant="secondary"`, `href`, `radius="auto"`)
+- Prefer one or two repeated shells over a full grid of copy-filled cards
+
+## Do not
+
+- Paste demo marketing copy, titles, or button labels into fences when the featured component does not need them
+- Expand placeholder trees with `render`, `size`, `tone`, or style only so the fence “looks finished”
+- Mirror the live demo line-for-line when half the lines are filler content
+
+## Examples
+
+| Avoid | Prefer |
+| --- | --- |
+| `<Title render={<h3 />} size="4">Studio Pro</Title>` | `<Title />` |
+| `<Button>Open workspace</Button>` | `<Button />` |
+| Four `FeatureCard` calls with full title/description props | Two `Glow` shells with `<Title /><Text />` inside |
+| Full article paragraphs in a ProgressiveBlur fence | `{/* long prose + images */}` + `<Button />` for the CTA |
+
+## Out of scope
+
+- Live demo TSX — still real consumer product copy
+- Ask-your-agent prompt fences — those stay plain-language consumer intents
+- When the featured component **is** Title/Text/Button, show the props and children that teach that component
