@@ -47,7 +47,6 @@ const contentStyle = {
 export const StaticNoiseHeroDemo: React.FC = () => (
   <SandboxShell height={380} label="Hero panel with film grain">
     <Surface
-      border="all"
       overflow="hidden"
       radius="l"
       style={{
@@ -56,7 +55,7 @@ export const StaticNoiseHeroDemo: React.FC = () => (
         maxInlineSize: "28rem",
         marginInline: "auto",
         backgroundImage:
-          "linear-gradient(145deg, oklch(0.42 0.09 265) 0%, oklch(0.28 0.06 230) 48%, oklch(0.32 0.07 175) 100%)",
+          "linear-gradient(145deg, var(--highlight-indigo) 0%, var(--highlight-blue) 48%, var(--highlight-green) 100%)",
       }}
     >
       <StaticNoise opacity={0.28} style={overlayStyle} />
@@ -126,7 +125,6 @@ export const StaticNoiseAnimatedDemo: React.FC = () => (
 export const StaticNoisePhotoDemo: React.FC = () => (
   <SandboxShell height={400} label="Archive print with soft-light grain">
     <Surface
-      border="all"
       overflow="hidden"
       radius="l"
       style={{
@@ -144,7 +142,7 @@ export const StaticNoisePhotoDemo: React.FC = () => (
       <StaticNoise
         baseFrequency={0.65}
         mixBlendMode="soft-light"
-        opacity={0.45}
+        opacity={1}
         style={overlayStyle}
       />
       <Stack
