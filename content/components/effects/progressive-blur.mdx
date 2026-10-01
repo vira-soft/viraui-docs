@@ -15,7 +15,7 @@ ProgressiveBlur paints several `backdrop-filter` layers. Prefer one or two edge 
 
 ### Bottom fade over a reader
 
-A tall scroll article with images is the usual ProgressiveBlur composition. Pin a bottom band over the viewport, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above the blur in z-order.
+A tall scroll article with images is the usual ProgressiveBlur composition. Keep the blur band inside the scrollport (sticky zero-height shell + `100cqb` viewport) so the scrollbar stays sharp, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above the blur in z-order.
 
 <ProgressiveBlurBottomDemo />
 
@@ -34,14 +34,39 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: '8rem',
-  zIndex: 1,
 } as const;
 
 <Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
-  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+  <div
+    style={{
+      blockSize: '100%',
+      containerType: 'size',
+      overflow: 'auto',
+    }}
+  >
+    <div
+      aria-hidden
+      style={{
+        position: 'sticky',
+        top: 0,
+        blockSize: 0,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          insetInline: 0,
+          top: 0,
+          blockSize: '100cqb',
+        }}
+      >
+        <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
+      </div>
+    </div>
     {/* long prose + images */}
   </div>
-  <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
   <Stack
     hAlign="center"
     hPadding="l"
@@ -62,7 +87,7 @@ const bottomBlurStyle = {
 
 ### Top fade under sticky chrome
 
-Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath.
+Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
 
 <ProgressiveBlurTopDemo />
 
@@ -73,6 +98,7 @@ const panelStyle = {
   position: 'relative',
   blockSize: '28rem',
   maxInlineSize: '24rem',
+  marginInline: 'auto',
 } as const;
 
 const topBlurStyle = {
@@ -81,13 +107,21 @@ const topBlurStyle = {
   top: 0,
   blockSize: '9rem',
   zIndex: 1,
+  background:
+    'linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)',
 } as const;
 
 <Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
   <Stack
     hPadding="l"
     rowGap="xs"
-    style={{ position: 'absolute', insetInline: 0, top: 0, zIndex: 2 }}
+    style={{
+      position: 'absolute',
+      insetInline: 0,
+      top: 0,
+      zIndex: 2,
+      paddingBlock: '0.85rem',
+    }}
     vPadding="s"
   >
     <Title render={<h3 />} size="5">
@@ -99,14 +133,14 @@ const topBlurStyle = {
   </Stack>
   <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
   <div style={{ blockSize: '100%', overflow: 'auto' }}>
-    {/* long prose + images — keep content under the veil, not padded clear of it */}
+    {/* long prose + images — paddingBlockStart ~7rem under the veil */}
   </div>
 </Surface>
 ```
 
 ### Dual-edge long read
 
-Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping.
+Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Reuse the same tinted top band as the sticky-chrome example.
 
 <ProgressiveBlurDualDemo />
 
@@ -117,6 +151,7 @@ const panelStyle = {
   position: 'relative',
   blockSize: '30rem',
   maxInlineSize: '26rem',
+  marginInline: 'auto',
 } as const;
 
 const topBlurStyle = {
@@ -125,6 +160,8 @@ const topBlurStyle = {
   top: 0,
   blockSize: '9rem',
   zIndex: 1,
+  background:
+    'linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)',
 } as const;
 
 const bottomBlurStyle = {
@@ -132,14 +169,19 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: '8rem',
-  zIndex: 1,
 } as const;
 
 <Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
   <Stack
     hAlign="center"
     hPadding="l"
-    style={{ position: 'absolute', insetInline: 0, top: 0, zIndex: 2 }}
+    style={{
+      position: 'absolute',
+      insetInline: 0,
+      top: 0,
+      zIndex: 2,
+      paddingBlock: '0.85rem',
+    }}
   >
     <Title align="center" render={<h3 />} size="5">
       Long read
@@ -148,7 +190,7 @@ const bottomBlurStyle = {
   <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
   <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
   <div style={{ blockSize: '100%', overflow: 'auto' }}>
-    {/* long prose + images */}
+    {/* long prose + images — top ~7rem under the veil, bottom ~7rem for CTA */}
   </div>
   <Stack
     hAlign="center"

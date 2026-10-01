@@ -41,8 +41,29 @@ const panelStyle = {
 
 const scrollStyle = {
   blockSize: "100%",
+  containerType: "size",
   overflow: "auto",
   overscrollBehavior: "contain",
+} satisfies React.CSSProperties;
+
+/**
+ * Sticky zero-height shell inside the scrollport — width excludes the scrollbar.
+ * Child viewport uses 100cqb so the blur band pins to the visible panel.
+ */
+const scrollBlurShellStyle = {
+  position: "sticky",
+  top: 0,
+  blockSize: 0,
+  pointerEvents: "none",
+  zIndex: 1,
+} satisfies React.CSSProperties;
+
+const scrollBlurViewportStyle = {
+  position: "absolute",
+  insetInline: 0,
+  top: 0,
+  blockSize: "100cqb",
+  pointerEvents: "none",
 } satisfies React.CSSProperties;
 
 const bottomBlurStyle = {
@@ -50,7 +71,6 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: "8rem",
-  zIndex: 1,
 } satisfies React.CSSProperties;
 
 const topBlurStyle = {
@@ -59,6 +79,8 @@ const topBlurStyle = {
   top: 0,
   blockSize: "9rem",
   zIndex: 1,
+  background:
+    "linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)",
 } satisfies React.CSSProperties;
 
 const figureStyle = {
@@ -146,9 +168,17 @@ export const ProgressiveBlurBottomDemo: React.FC = () => (
       style={{ ...panelStyle, marginInline: "auto" }}
     >
       <div style={scrollStyle}>
+        <div aria-hidden style={scrollBlurShellStyle}>
+          <div style={scrollBlurViewportStyle}>
+            <ProgressiveBlur
+              blur="24px"
+              direction="bottom"
+              style={bottomBlurStyle}
+            />
+          </div>
+        </div>
         <ScrollArticle />
       </div>
-      <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
       <Stack
         hAlign="center"
         hPadding="l"
@@ -197,7 +227,7 @@ export const ProgressiveBlurTopDemo: React.FC = () => (
       </Stack>
       <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
       <div style={scrollStyle}>
-        <ScrollArticle bottomPad="2rem" topPad="1.25rem" />
+        <ScrollArticle bottomPad="2rem" topPad="7rem" />
       </div>
     </Surface>
   </SandboxShell>
@@ -239,7 +269,7 @@ export const ProgressiveBlurDualDemo: React.FC = () => (
       <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
       <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
       <div style={scrollStyle}>
-        <ScrollArticle bottomPad="7rem" topPad="1.25rem" />
+        <ScrollArticle bottomPad="7rem" topPad="7rem" />
       </div>
       <Stack
         hAlign="center"
