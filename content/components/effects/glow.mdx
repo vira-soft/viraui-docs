@@ -20,7 +20,16 @@ A small set of cards with shared `globalHighlight` is the baseline Glow pattern.
 <GlowGridDemo />
 
 ```tsx
-import { Glow, Stack, Surface, Text, Title } from '@viraui/react';
+import { Glow, Stack, Surface, Text, Title, type GlowProps } from '@viraui/react';
+
+const glowProps: GlowProps = {
+  borderColor: 'transparent',
+  borderWidth: 1,
+  fitContent: true,
+  globalHighlight: true,
+  proximity: 180,
+  radius: 'l',
+};
 
 function FeatureCard({
   description,
@@ -43,23 +52,29 @@ function FeatureCard({
   );
 }
 
-<Stack columnGap="l" direction="row" rowGap="l" wrap>
-  <Glow fitContent radius="l">
+<Stack columnGap="m" direction="row" rowGap="m" wrap>
+  <Glow {...glowProps}>
     <FeatureCard
       title="Design"
       description="Ship polished screens without reinventing chrome."
     />
   </Glow>
-  <Glow fitContent radius="l">
+  <Glow {...glowProps}>
     <FeatureCard
       title="Build"
       description="Accessible primitives wired for agent-led builds."
     />
   </Glow>
-  <Glow fitContent radius="l">
+  <Glow {...glowProps}>
     <FeatureCard
       title="Ship"
       description="Theme tokens and motion that stay on-brand."
+    />
+  </Glow>
+  <Glow {...glowProps}>
+    <FeatureCard
+      title="Iterate"
+      description="Tighten copy, spacing, and motion from real feedback."
     />
   </Glow>
 </Stack>

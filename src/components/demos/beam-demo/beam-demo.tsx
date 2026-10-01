@@ -68,7 +68,7 @@ export const BeamLineDemo: React.FC = () => (
   <SandboxShell label="Line beam under a secondary CTA" height={160}>
     <Stack columnGap="m" direction="row" vAlign="center">
       <Button>Send magic link</Button>
-      <Text render={<span />} size="s" tone="muted">
+      <Text size="s" tone="muted">
         or
       </Text>
       <Beam duration="5s" radius="m" strength={0.8} variant="line">

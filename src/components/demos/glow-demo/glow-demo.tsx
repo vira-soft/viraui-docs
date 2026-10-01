@@ -9,6 +9,7 @@ import {
   Surface,
   Text,
   Title,
+  type GlowProps,
 } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
@@ -51,32 +52,47 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ description, title }) => (
   </Surface>
 );
 
+const glowProps: GlowProps = {
+  borderColor: "transparent",
+  borderWidth: 1,
+  fitContent: true,
+  globalHighlight: true,
+  proximity: 180,
+  radius: "l",
+};
+
 /** Shared pointer glow across a small feature grid. */
 export const GlowGridDemo: React.FC = () => (
-  <SandboxShell height={340} label="Feature cards with shared pointer glow">
+  <SandboxShell height={400} label="Feature cards with shared pointer glow">
     <Stack
-      columnGap="l"
+      columnGap="m"
       direction="row"
-      rowGap="l"
+      rowGap="m"
       style={{ maxInlineSize: "36rem" }}
       wrap
     >
-      <Glow fitContent radius="l">
+      <Glow {...glowProps}>
         <FeatureCard
           description="Ship polished screens without reinventing chrome."
           title="Design"
         />
       </Glow>
-      <Glow fitContent radius="l">
+      <Glow {...glowProps}>
         <FeatureCard
           description="Accessible primitives wired for agent-led builds."
           title="Build"
         />
       </Glow>
-      <Glow fitContent radius="l">
+      <Glow {...glowProps}>
         <FeatureCard
           description="Theme tokens and motion that stay on-brand."
           title="Ship"
+        />
+      </Glow>
+      <Glow {...glowProps}>
+        <FeatureCard
+          description="Tighten copy, spacing, and motion from real feedback."
+          title="Iterate"
         />
       </Glow>
     </Stack>
