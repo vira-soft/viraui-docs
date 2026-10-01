@@ -1,0 +1,49 @@
+---
+description: Base UI handoff Card on component docs pages that wrap Base UI primitives
+globs: content/components/**/*.mdx
+alwaysApply: false
+---
+
+# Docs: Base UI handoff Card
+
+When a **ComponentPage** documents a Vira surface that wraps a Base UI **component primitive**, end the page (after `## Ask your agent`) with a Base UI handoff Card. Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
+
+## Authority (do not invent)
+
+Read sibling DS agent-doc specs — **not** memory, Storybook, or Base UI site browsing:
+
+1. `../vira-ui/packages/react/src/components/<id>/specs/meta.xml`
+2. Copy `<base_ui href="…"/>` **verbatim** into the Card `href` (keep `#api-reference`)
+3. If meta has `shared_contract="<other-id>"` and no own `<base_ui>`, resolve that unit’s `<base_ui>` (e.g. IconButton → Button)
+4. No `<base_ui>` after resolve → **omit** the Card (Vira-only / `use-render` helpers)
+
+Published mirror when checkout unavailable: `@viraui/react/specs` / guide `baseUIApi` — same URL.
+
+## When omit
+
+- No `<base_ui>` in meta (and none via `shared_contract`)
+- ViraUI-only surfaces; helpers that only use `use-render` / `merge-props`
+
+## Shape
+
+```mdx
+## Base UI
+
+<Cards>
+  <Card
+    title="Button"
+    href="https://base-ui.com/react/components/button#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+```
+
+## Rules
+
+- `href` = exact meta `<base_ui href>` (or resolved shared_contract target) — never hand-map Dialog→Drawer etc. from memory
+- `title` = Base UI component name derived from that URL’s last path segment (e.g. `drawer` → `Drawer`, `toggle-group` → `Toggle Group`)
+- Always set `external` on the Card
+- One Card only; no “What’s next” tour
+- Voice stays consumer-facing; Card body explains upstream pass-through, not authoring instructions

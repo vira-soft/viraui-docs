@@ -108,6 +108,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - MDX voice: speak to consumer (`you` / imperative); no meta “this page / keep this page / not here” — rule `.cursor/rules/02-docs-consumer-voice.mdc` (`content/**/*.mdx`)
 - MDX: no 1:1 ViraUI surface catalogs unless page is a browser — `.cursor/rules/03-docs-no-surface-catalog.mdc`
 - Component pages: live previews = demo components wrapping `ViraSandbox` (register via `src/mdx-components.ts` / demos barrel); `PreviewSlot` = stub only. Pattern set by Button (`src/components/demos/button-demo/`). **Co-locate link twins:** ButtonLink on `/components/actions/button`; IconButtonLink on `/components/actions/icon-button` (same chrome). No prop/variant inventories — name values inside examples. Page shell: `specs/001-llm-first-docs-site/contracts/page-shell.md`
+- Base UI handoff Card: after Ask your agent, only when sibling `meta.xml` has `<base_ui href>` (or via `shared_contract`). Copy `href` verbatim — rule `.cursor/rules/07-docs-base-ui-card.mdc`
 - MDX code fences: incidental content → self-closing placeholders — `.cursor/rules/06-docs-code-fence-placeholders.mdc` (+ `page-shell.md`). Live demos keep real consumer copy.
 - Vite RSC: `lucide-react` → `optimizeDeps.exclude` in `vite.config.ts` (else “inconsistently optimized” warn)
 - Generated / install: `dist/`, `node_modules/`, `.tokensave/`, `.pnpm-store/` — do not hand-edit

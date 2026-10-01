@@ -48,7 +48,7 @@ Keep `texts` at module scope (or otherwise stable). Inline arrays recreate on ev
 
 ### Colored caret
 
-String `children` type once under a static Title. `caretColor` lifts the pipe above muted copy so the cursor reads as a highlight accent while the phrase stays quiet.
+String `children` type once under a static Title. `caret="underscore"` with `caretColor` lifts the mark above muted copy so the cursor reads as a highlight accent while the phrase stays quiet.
 
 <TypewriterMutedDemo />
 
@@ -58,7 +58,7 @@ import { Stack, Text, Title, Typewriter } from '@viraui/react';
 <Stack hAlign="center" rowGap="s">
   <Title />
   <Text size="s" tone="muted">
-    <Typewriter caretColor="var(--highlight-green)" delay={200} speed={35}>
+    <Typewriter caret="underscore" caretColor="var(--highlight-green)" delay={200} speed={35}>
       Quiet tools for night shoots — grade, mask, and ship.
     </Typewriter>
   </Text>
@@ -106,7 +106,7 @@ Replace the static hero headline with a Typewriter that cycles three short produ
 ```
 
 ```text tab="Colored caret"
-Animate the muted product subtitle under the studio name with a single Typewriter phrase. Keep the Title static and color the caret with `--highlight-green` so it reads against muted copy.
+Animate the muted product subtitle under the studio name with a single Typewriter phrase. Keep the Title static, use an underscore caret, and color it with `--highlight-green` so it reads against muted copy.
 ```
 
 ```text tab="Wrapping blurb"

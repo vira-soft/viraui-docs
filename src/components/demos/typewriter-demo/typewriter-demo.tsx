@@ -85,6 +85,7 @@ export const TypewriterMutedDemo: React.FC = () => (
       </Title>
       <Text render={<p />} size="s" tone="muted">
         <Typewriter
+          caret="underscore"
           caretColor="var(--highlight-green)"
           delay={200}
           speed={35}
