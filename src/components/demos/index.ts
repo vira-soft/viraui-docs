@@ -47,3 +47,8 @@ export {
 } from "./toast-demo";
 export { BeamBorderDemo, BeamLineDemo, BeamPulseDemo } from "./beam-demo";
 export { GlowGridDemo, GlowRainbowDemo, GlowReportRowDemo } from "./glow-demo";
+export {
+  ProgressiveBlurBottomDemo,
+  ProgressiveBlurDualDemo,
+  ProgressiveBlurTopDemo,
+} from "./progressive-blur-demo";

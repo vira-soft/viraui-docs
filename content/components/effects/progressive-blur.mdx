@@ -3,18 +3,187 @@ title: ProgressiveBlur
 description: Multi-layer edge blur — fades from full backdrop blur at one edge to clear at the opposite side.
 ---
 
-ProgressiveBlur stacks several masked `backdrop-filter` layers so blur strength ramps along one edge — `direction` picks which edge starts at full blur (`top`, `right`, `bottom`, or `left`). `blur` sets the maximum radius at that edge; `easing` and optional `steps` control how the internal layers distribute the falloff (exponential is the default curve). The root is `aria-hidden` — it is a visual scrim, not interactive content.
+ProgressiveBlur stacks masked `backdrop-filter` layers so blur strength ramps along one edge. `direction` picks which edge starts at full blur (`top`, `right`, `bottom`, or `left`). `blur` sets the maximum radius at that edge; `easing` and optional `steps` shape how the internal layers fall off (exponential is the default). The root is `aria-hidden` — a visual scrim, not interactive chrome.
 
-Mount it at the edge of a scroll region or over media when content should fade under a soft veil instead of a hard clip. Parent needs something to blur through — a photo, gradient, or scrolling list behind the overlay. Tune `steps` only when banding shows at the default layer count for your chosen easing.
+Mount it absolutely at the edge of a scroll region or over media when content should dissolve under a soft veil instead of a hard clip. The parent needs something to blur through — photos, gradients, or scrolling prose behind the overlay — and ProgressiveBlur itself needs a positioned size (usually a band along the edge). Keep list content and any sticky CTA above the fade layer in z-order so actions stay clickable.
+
+<Callout type="warn" title="Performance cost">
+ProgressiveBlur paints several `backdrop-filter` layers. Prefer one or two edge bands on a focal scroll panel. Do not stack it on every card in a dense grid.
+</Callout>
 
 ## Common examples
 
-A bottom-edge blur over a scrolling feed so the last items dissolve under a footer action.
+### Bottom fade over a reader
 
-<PreviewSlot label="ProgressiveBlur preview" />
+A tall scroll article with images is the usual ProgressiveBlur composition. Pin a bottom band over the viewport, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above the blur in z-order.
+
+<ProgressiveBlurBottomDemo />
+
+```tsx
+import { Button, ProgressiveBlur, Stack, Surface } from '@viraui/react';
+
+const panelStyle = {
+  position: 'relative',
+  blockSize: '28rem',
+  maxInlineSize: '24rem',
+  marginInline: 'auto',
+} as const;
+
+const bottomBlurStyle = {
+  position: 'absolute',
+  insetInline: 0,
+  bottom: 0,
+  blockSize: '8rem',
+  zIndex: 1,
+} as const;
+
+<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+    {/* long prose + images */}
+  </div>
+  <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
+  <Stack
+    hAlign="center"
+    hPadding="l"
+    style={{
+      position: 'absolute',
+      insetInline: 0,
+      bottom: 0,
+      zIndex: 2,
+      paddingBlockEnd: '1rem',
+    }}
+  >
+    <Button>Continue reading</Button>
+  </Stack>
+</Surface>
+```
+
+`direction="bottom"` is the default — set it only when the code should read the edge explicitly.
+
+### Top fade under sticky chrome
+
+Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath.
+
+<ProgressiveBlurTopDemo />
+
+```tsx
+import { ProgressiveBlur, Stack, Surface, Text, Title } from '@viraui/react';
+
+const panelStyle = {
+  position: 'relative',
+  blockSize: '28rem',
+  maxInlineSize: '24rem',
+} as const;
+
+const topBlurStyle = {
+  position: 'absolute',
+  insetInline: 0,
+  top: 0,
+  blockSize: '9rem',
+  zIndex: 1,
+} as const;
+
+<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+  <Stack
+    hPadding="l"
+    rowGap="xs"
+    style={{ position: 'absolute', insetInline: 0, top: 0, zIndex: 2 }}
+    vPadding="s"
+  >
+    <Title render={<h3 />} size="5">
+      Studio journal
+    </Title>
+    <Text size="xs" tone="muted">
+      Sticky chrome · content fades underneath
+    </Text>
+  </Stack>
+  <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
+  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+    {/* long prose + images — keep content under the veil, not padded clear of it */}
+  </div>
+</Surface>
+```
+
+### Dual-edge long read
+
+Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping.
+
+<ProgressiveBlurDualDemo />
+
+```tsx
+import { Button, ProgressiveBlur, Stack, Surface, Title } from '@viraui/react';
+
+const panelStyle = {
+  position: 'relative',
+  blockSize: '30rem',
+  maxInlineSize: '26rem',
+} as const;
+
+const topBlurStyle = {
+  position: 'absolute',
+  insetInline: 0,
+  top: 0,
+  blockSize: '9rem',
+  zIndex: 1,
+} as const;
+
+const bottomBlurStyle = {
+  position: 'absolute',
+  insetInline: 0,
+  bottom: 0,
+  blockSize: '8rem',
+  zIndex: 1,
+} as const;
+
+<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+  <Stack
+    hAlign="center"
+    hPadding="l"
+    style={{ position: 'absolute', insetInline: 0, top: 0, zIndex: 2 }}
+  >
+    <Title align="center" render={<h3 />} size="5">
+      Long read
+    </Title>
+  </Stack>
+  <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
+  <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
+  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+    {/* long prose + images */}
+  </div>
+  <Stack
+    hAlign="center"
+    hPadding="l"
+    style={{
+      position: 'absolute',
+      insetInline: 0,
+      bottom: 0,
+      zIndex: 2,
+      paddingBlockEnd: '1rem',
+    }}
+  >
+    <Button variant="secondary">Mark as read</Button>
+  </Stack>
+</Surface>
+```
+
+Tune `blur` when the veil feels too soft or too heavy; reach for `easing` or `steps` only when banding shows at the defaults.
+
+ProgressiveBlur is decorative only — accessible names and actions live on the content and chrome above it, not on the scrim.
 
 ## Ask your agent
 
-```text tab="Scroll blur"
-Soften the bottom edge of this scrollable list so items fade as they scroll under the sticky footer. Keep list content and the footer above the fade layer.
+```text tab="Bottom scroll veil"
+Soften the bottom edge of this tall scrollable article so the last lines dissolve under a Continue reading button. Keep the button clickable above the fade.
+```
+
+```text tab="Sticky header fade"
+Add a soft top blur under the sticky journal header so scrolling content fades underneath instead of clipping hard against the chrome.
+```
+
+```text tab="Dual-edge reader"
+Give this long-read panel progressive blur on both the top and bottom edges so content softens under the title and the Mark as read action.
+```
+
+```text tab="Stronger veil"
+The bottom fade on this reader feels too weak — push the blur radius up and keep the footer CTA above the veil.
 ```
