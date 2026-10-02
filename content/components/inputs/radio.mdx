@@ -15,16 +15,144 @@ description: Single-choice option row for use inside RadioGroup and Fieldset.
   </Card>
 </Cards>
 
-`Radio` is one row in a mutually exclusive set — each option carries its own label and optional description, while `name`, validation, and group-level errors belong on an external `Field.Root` and [`Fieldset`](/components/inputs/fieldset), not on individual radios. Options render inside `RadioGroup` so Base UI keeps keyboard roving and selection in sync. Use `Radio` when exactly one choice is allowed; use [`Checkbox`](/components/inputs/checkbox) when multiple independent toggles fit the task, and [`Select`](/components/inputs/select) when the option list is long or needs grouping in a popup.
+`Radio` is one row in a mutually exclusive set — each option carries its own label and optional description, while `name`, validation, and group-level errors belong on an external `Field.Root` and [`Fieldset`](/components/inputs/fieldset), not on individual radios. Always nest options inside `RadioGroup` so Base UI keeps keyboard roving and selection in sync. Add Fieldset with `render={<RadioGroup />}` only when the group needs a shared legend or helper copy; otherwise `RadioGroup` may sit directly in `Field.Root`. Use `Radio` when exactly one choice is allowed; use [`Checkbox`](/components/inputs/checkbox) when multiple independent toggles fit the task, and [`Select`](/components/inputs/select) when the option list is long or needs grouping in a popup.
 
 ## Common examples
 
-A billing plan RadioGroup inside a Fieldset with labeled option rows is the default single-choice pattern.
+### Billing plans
 
-<PreviewSlot label="Radio preview" />
+A Fieldset-backed `RadioGroup` with labeled plan rows is the default single-choice pattern. Each option keeps its own `label` / `description`; the group owns `value` and `onValueChange`.
+
+<RadioPlansDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Fieldset, Radio, RadioGroup, Separator, Stack } from '@viraui/react';
+
+const [value, setValue] = useState('starter');
+
+<Field.Root name="plan">
+  <Fieldset
+    label="Plan"
+    description="Choose one plan for this workspace."
+    render={<RadioGroup value={value} onValueChange={setValue} />}
+  >
+    <Stack rowGap="m">
+      <Separator />
+      <Radio
+        label="Starter"
+        description="Solo workspaces and early experiments."
+        value="starter"
+      />
+      <Radio
+        label="Pro"
+        description="Shared seats, roles, and priority support."
+        value="pro"
+      />
+      <Radio
+        label="Enterprise"
+        description="SSO, audit logs, and custom limits."
+        value="enterprise"
+      />
+    </Stack>
+  </Fieldset>
+</Field.Root>
+```
+
+### Without Fieldset
+
+When every option already has a visible label and the group needs no shared legend, put `RadioGroup` directly under `Field.Root`.
+
+<RadioContactDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Radio, RadioGroup, Stack } from '@viraui/react';
+
+const [value, setValue] = useState('email');
+
+<Field.Root name="preferred-contact">
+  <RadioGroup value={value} onValueChange={setValue}>
+    <Stack rowGap="m">
+      <Radio
+        label="Email"
+        description="Daily digest to your inbox."
+        value="email"
+      />
+      <Radio
+        label="SMS"
+        description="Urgent alerts to your phone."
+        value="sms"
+      />
+      <Radio
+        label="Push"
+        description="In-app and device notifications."
+        value="push"
+      />
+    </Stack>
+  </RadioGroup>
+</Field.Root>
+```
+
+### Surface cards
+
+`hPadding` / `vPadding` let each control fill a bordered `Surface`. Drive `Surface` `color` from the selected value when the whole card should read as chosen. Lay cards in a row with `Stack` `direction="row"` and `expandChildren`.
+
+<RadioSurfaceCardsDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Fieldset, Radio, RadioGroup, Stack, Surface } from '@viraui/react';
+
+const [value, setValue] = useState('bank');
+
+<Field.Root name="receiving-method">
+  <Fieldset
+    label="Receiving method"
+    render={<RadioGroup value={value} onValueChange={setValue} />}
+  >
+    <Stack columnGap="m" direction="row" expandChildren vAlign="start">
+      <Surface
+        border="all"
+        radius="m"
+        {...(value === 'bank' ? { color: 3 } : {})}
+      >
+        <Radio
+          label="Bank transfer"
+          description="SWIFT / IBAN."
+          value="bank"
+          hPadding="m"
+          vPadding="m"
+        />
+      </Surface>
+      <Surface
+        border="all"
+        radius="m"
+        {...(value === 'paypal' ? { color: 3 } : {})}
+      >
+        <Radio
+          label="PayPal"
+          description="Instant payout."
+          value="paypal"
+          hPadding="m"
+          vPadding="m"
+        />
+      </Surface>
+    </Stack>
+  </Fieldset>
+</Field.Root>
+```
 
 ## Ask your agent
 
 ```text tab="Billing plans"
 Add a billing plan picker: heading "Plan", three options (Starter, Pro, Enterprise) each with a one-line description. Starter selected by default.
+```
+
+```text tab="Contact channel"
+Build a preferred contact picker with Email, SMS, and Push radios — each with a short description. No group legend; Email selected by default.
+```
+
+```text tab="Payout cards"
+Add a receiving method Fieldset with two radio cards (Bank transfer and PayPal). Highlight the selected card and keep Bank transfer selected by default.
 ```
