@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import {
   Autocomplete,
   Avatar,
@@ -182,7 +182,7 @@ export const AutocompleteReviewerDemo: React.FC = () => {
               label="Assign reviewer"
               onValueChange={setValue}
               placeholder="Search by name…"
-              startAddon={<MagnifyingGlass aria-hidden size={16} />}
+              startAddon={<MagnifyingGlassIcon aria-hidden size={16} />}
               value={value}
             >
               {(person: Reviewer) => (

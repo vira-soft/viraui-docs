@@ -91,3 +91,10 @@ export {
   SelectThemeDemo,
   SelectTimezoneDemo,
 } from "./select-demo";
+export {
+  SliderAmountDemo,
+  SliderBrightnessDemo,
+  SliderEqualizerDemo,
+  SliderRangeDemo,
+  SliderSaturationDemo,
+} from "./slider-demo";

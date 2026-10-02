@@ -15,16 +15,226 @@ description: Range input for numeric values — single thumb or dual-thumb range
   </Card>
 </Cards>
 
-`Slider` exposes a draggable thumb on a track for choosing one number or a min–max range between `min`, `max`, and `step`. Label, description, and error copy follow the shared field pattern; orientation, disabled state, and value change handlers pass through Base UI `Slider`. Pass a two-element `value` array for range mode — the component detects range layout automatically. Use `Slider` when the valid interval is continuous and the exact number matters less than position on a scale; use `Select` or `Radio` for discrete named choices.
+`Slider` exposes a draggable thumb on a track for choosing one number or a min–max pair between `min`, `max`, and `step`. Label, description, and error copy follow the shared field pattern; orientation, disabled state, and value change handlers pass through Base UI `Slider`. Pass a two-element `value` / `defaultValue` array for range mode — the component detects range layout automatically. Show the live number with `renderValue` (`true` for default mono formatting, or a function that owns the value slot). The track fills its container — grow it with a parent [`Stack`](/components/layout/stack) `expandChildren` or a sized host, not fixed pixel lengths. Use `Slider` when the valid interval is continuous and position on a scale matters more than a named choice; use [`Select`](/components/inputs/select) or [`Radio`](/components/inputs/radio) for discrete options.
 
 ## Common examples
 
-A labeled single-thumb price filter between min and max shows the standard range input row.
+### Amount with captions
 
-<PreviewSlot label="Slider preview" />
+A labeled single-thumb amount with `renderValue` and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
+
+<SliderAmountDemo />
+
+```tsx
+import { Slider, Stack, Text } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Slider
+    label="Minimum payout"
+    defaultValue={2500}
+    min={50}
+    max={10000}
+    step={50}
+    renderValue
+  />
+  <Stack
+    columnGap="s"
+    direction="row"
+    hAlign="space-between"
+    vAlign="center"
+  >
+    <Text family="mono" size="xs" tone="muted">
+      $50
+    </Text>
+    <Text family="mono" size="xs" tone="muted">
+      $10,000
+    </Text>
+  </Stack>
+</Stack>
+```
+
+### Price range
+
+Pass a two-element array for dual thumbs. Name each thumb with `thumbAriaLabel`, and format the value slot with a `renderValue` function when currency or units need custom copy.
+
+<SliderRangeDemo />
+
+```tsx
+import { Slider } from '@viraui/react';
+
+<Slider
+  label="Price range"
+  description="Filter listings by nightly rate."
+  defaultValue={[120, 480]}
+  min={0}
+  max={800}
+  step={10}
+  thumbAriaLabel={['Minimum price', 'Maximum price']}
+  renderValue={(formattedValues) =>
+    `$${formattedValues[0]} – $${formattedValues[1]}`
+  }
+/>
+```
+
+### Control saturation
+
+Keep the Slider controlled and wire `onValueChange` into whatever you are adjusting — here a photo preview follows saturation.
+
+<SliderSaturationDemo />
+
+```tsx
+import { Slider, Stack, Surface } from '@viraui/react';
+
+const [saturation, setSaturation] = useState(100);
+
+<Stack rowGap="l">
+  <Surface border="all" overflow="hidden" radius="m">
+    <img
+      alt=""
+      src="…"
+      style={{ filter: `saturate(${saturation}%)` }}
+    />
+  </Surface>
+  <Slider
+    label="Saturation"
+    min={0}
+    max={200}
+    step={1}
+    value={saturation}
+    onValueChange={setSaturation}
+    renderValue={(formattedValues) => `${formattedValues[0]}%`}
+  />
+</Stack>
+```
+
+### External label row
+
+When the visible name lives beside the track — icon, title, trailing percent — omit `label` on Slider and pass `aria-label` / `thumbAriaLabel` so the thumb stays named. Parent `Stack` `expandChildren` grows the track. Give the value a `minInlineSize` so single- and triple-digit percents do not shift the layout.
+
+<SliderBrightnessDemo />
+
+```tsx
+import { Sun } from '@phosphor-icons/react';
+import { Slider, Stack, Surface, Text } from '@viraui/react';
+
+const [brightness, setBrightness] = useState(86);
+
+<Surface color={2} radius="l" hPadding="m" vPadding="m">
+  <Stack columnGap="m" direction="row" expandChildren vAlign="center">
+    <Stack
+      columnGap="s"
+      data-grow="false"
+      direction="row"
+      minWidth="13ch"
+      vAlign="center"
+    >
+      <Sun aria-hidden size={16} />
+      <Text weight="semibold" whiteSpace="nowrap">
+        Brightness
+      </Text>
+    </Stack>
+    <Slider
+      aria-label="Kitchen island brightness"
+      thumbAriaLabel="Kitchen island brightness"
+      min={0}
+      max={100}
+      value={brightness}
+      onValueChange={setBrightness}
+    />
+    <Text
+      align="end"
+      data-shrink="false"
+      family="mono"
+      size="xs"
+      style={{ minInlineSize: '4ch' }}
+      tone="muted"
+    >
+      {brightness}%
+    </Text>
+  </Stack>
+</Surface>
+```
+
+### Linked equalizer
+
+Vertical bands need a sized host (`style={{ blockSize }}` — Stack has no height prop) with `expandChildren` so the Slider grows and the band label opts out via `data-grow="false"`. Dragging one thumb can wave neighbors — freeze an anchor at gesture start, apply falloff by band distance, and commit with `onValueCommitted`. Preset buttons set the whole curve from outside.
+
+<SliderEqualizerDemo />
+
+```tsx
+import { Button, Slider, Stack, Surface, Text } from '@viraui/react';
+
+const bands = ['60', '150', '400', '1K', '2.4K', '6K', '12K'];
+const [levels, setLevels] = useState([50, 50, 50, 50, 50, 50, 50]);
+
+{/* applyEqualizerWave(anchor, activeIndex, next) links neighbors */}
+
+<Stack rowGap="m">
+  <Stack columnGap="xs" direction="row" wrap>
+    <Button size="s" variant="secondary" />
+    <Button size="s" variant="secondary" />
+  </Stack>
+  <Surface color={2} radius="m" hPadding="m" vPadding="m">
+    <Stack columnGap="xs" direction="row" hAlign="space-between" vAlign="end">
+      {bands.map((label, index) => (
+        <Stack
+          key={label}
+          expandChildren
+          hAlign="center"
+          minWidth="3ch"
+          rowGap="s"
+          style={{ blockSize: '11rem' }}
+        >
+          <Slider
+            orientation="vertical"
+            aria-label={`${label} hertz band`}
+            thumbAriaLabel={`${label} hertz band`}
+            min={0}
+            max={100}
+            value={levels[index]}
+            onValueChange={() => {
+              /* wave neighbors from frozen gesture anchor */
+            }}
+            onValueCommitted={() => {
+              /* clear active band + anchor */
+            }}
+            renderValue
+          />
+          <Text
+            align="center"
+            data-grow="false"
+            data-shrink="false"
+            family="mono"
+            size="xs"
+            tone="muted"
+          >
+            {label}
+          </Text>
+        </Stack>
+      ))}
+    </Stack>
+  </Surface>
+</Stack>
+```
 
 ## Ask your agent
 
-```text tab="Price filter"
-Add a price filter from $0 to $500 in $10 steps, labeled "Max price", with the current value shown in helper copy below.
+```text tab="Payout amount"
+Add a Minimum payout Slider from $50 to $10,000 in $50 steps, show the live value beside the label, and put $50 / $10,000 captions under the track.
+```
+
+```text tab="Price range"
+Add a dual-thumb Price range Slider from $0 to $800 in $10 steps, default $120–$480, with currency formatting in the value slot.
+```
+
+```text tab="Saturation control"
+Add a Saturation Slider from 0% to 200% that drives a photo preview filter, starting at 100%.
+```
+
+```text tab="Brightness row"
+Add a Brightness control with a sun icon and label on the left, Slider filling the middle, and a live percent on the right with a fixed minimum width so the layout does not jump.
+```
+
+```text tab="Equalizer bands"
+Add a seven-band vertical equalizer where dragging one Slider gently waves neighboring bands, with Flat, Bass, Vocal, and Bright preset buttons.
 ```
