@@ -9,7 +9,7 @@ import {
   FloppyDisk,
   Trash,
 } from "@phosphor-icons/react";
-import { Button, ButtonLink, Stack } from "@viraui/react";
+import { Button, ButtonLink, Stack, Surface, Text } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
@@ -63,9 +63,39 @@ export const ButtonAddonDemo: React.FC = () => (
       <Button addon={<FloppyDisk />} addonPosition="end" variant="secondary">
         Save draft
       </Button>
-      <Button addon={<Trash />} pill variant="destructive">
+      <Button addon={<Trash />} variant="destructive">
         Delete
       </Button>
+    </Stack>
+  </SandboxShell>
+);
+
+/** Pill CTA on a full-radius Surface bar — label left, capsule action right. */
+export const ButtonPillDemo: React.FC = () => (
+  <SandboxShell height={120} label="Pill button on a rounded Surface bar">
+    <Stack fullWidth>
+      <Surface
+        border="all"
+        color={2}
+        hPadding="s"
+        overflow="hidden"
+        radius="full"
+        vPadding="s"
+      >
+        <Stack
+          columnGap="m"
+          direction="row"
+          hAlign="space-between"
+          vAlign="center"
+        >
+          <Text hPadding="m" weight="semibold">
+            Export ready
+          </Text>
+          <Button addon={<Download />} pill>
+            Download
+          </Button>
+        </Stack>
+      </Surface>
     </Stack>
   </SandboxShell>
 );

@@ -34,7 +34,7 @@ Prefer one primary per region. Pair it with secondary cancel rather than two com
 
 ### Addons
 
-Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label. `pill` rounds the control into a capsule when that shape fits the row.
+Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label.
 
 <ButtonAddonDemo />
 
@@ -47,13 +47,44 @@ import { Button, Stack } from '@viraui/react';
   <Button addon={<FloppyDisk />} addonPosition="end" variant="secondary">
     Save draft
   </Button>
-  <Button addon={<Trash />} pill variant="destructive">
+  <Button addon={<Trash />} variant="destructive">
     Delete
   </Button>
 </Stack>
 ```
 
 If the control has no visible text, switch to [IconButton](/components/actions/icon-button) with an accessible name — do not empty Button children and hope the icon is enough.
+
+### Pill
+
+`pill` rounds the control into a capsule. Nest it in a full-radius [Surface](/components/layout/surface) bar when the action should read as chrome inside a strip rather than a free-floating button — put supporting copy on one side and the capsule CTA on the other so the row stays balanced.
+
+<ButtonPillDemo />
+
+```tsx
+import { Download } from '@phosphor-icons/react';
+import { Button, Stack, Surface, Text } from '@viraui/react';
+
+<Stack fullWidth>
+  <Surface
+    border="all"
+    color={2}
+    hPadding="s"
+    overflow="hidden"
+    radius="full"
+    vPadding="s"
+  >
+    <Stack direction="row" columnGap="m" hAlign="space-between" vAlign="center">
+      <Text hPadding="m" weight="semibold">
+        Export ready
+      </Text>
+      <Button addon={<Download />} pill>
+        Download
+      </Button>
+    </Stack>
+  </Surface>
+</Stack>
+```
 
 ### Loading
 
