@@ -3,6 +3,8 @@
 import * as React from "react";
 import { Field } from "@base-ui/react";
 import {
+  Checkbox,
+  CheckboxGroup,
   Fieldset,
   Radio,
   RadioGroup,
@@ -52,26 +54,24 @@ const FieldShell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 export const FieldsetBillingDemo: React.FC = () => (
   <SandboxShell height={280} label="Billing details Fieldset with Textfields">
     <FieldShell>
-      <Surface border="all" overflow="hidden" radius="l">
-        <Stack hPadding="l" rowGap="m" vPadding="l">
-          <Fieldset label="Billing details">
-            <Stack rowGap="m">
-              <Separator />
-              <Textfield
-                defaultValue="Vira Soft"
-                label="Company"
-                name="company"
-                placeholder="Enter company name"
-              />
-              <Textfield
-                defaultValue="IT12345678901"
-                label="Tax ID"
-                name="taxId"
-                placeholder="Enter fiscal number"
-              />
-            </Stack>
-          </Fieldset>
-        </Stack>
+      <Surface border="all" overflow="hidden" radius="l" hPadding="l" vPadding="l">
+        <Fieldset label="Billing details">
+          <Stack rowGap="m">
+            <Separator />
+            <Textfield
+              defaultValue="Vira Soft"
+              label="Company"
+              name="company"
+              placeholder="Enter company name"
+            />
+            <Textfield
+              defaultValue="IT12345678901"
+              label="Tax ID"
+              name="taxId"
+              placeholder="Enter fiscal number"
+            />
+          </Stack>
+        </Fieldset>
       </Surface>
     </FieldShell>
   </SandboxShell>
@@ -137,13 +137,7 @@ export const FieldsetDeliveryDemo: React.FC = () => {
   );
 };
 
-type PlanValue = "free" | "pro";
-
-const PLAN_OPTIONS: {
-  value: PlanValue;
-  label: string;
-  description: string;
-}[] = [
+const PLAN_OPTIONS = [
   {
     value: "free",
     label: "Free",
@@ -154,24 +148,23 @@ const PLAN_OPTIONS: {
     label: "Pro",
     description: "For growing teams.",
   },
-];
+] as const;
 
 /** Group error on Fieldset — Field.Root carries invalid; Surface owns card chrome. */
 export const FieldsetPlanErrorDemo: React.FC = () => {
-  const [value, setValue] = React.useState<PlanValue | "">("");
+  const [value, setValue] = React.useState<string[]>([]);
+  const empty = value.length === 0;
 
   return (
     <SandboxShell height={360} label="Plan cards with Fieldset group error">
       <FieldShell>
-        <Field.Root dirty invalid={!value} name="plan">
+        <Field.Root dirty invalid={empty} name="plan">
           <Fieldset
-            error={!value ? "Select a plan to continue." : undefined}
+            description="Pick every plan tier this workspace may trial."
+            error={empty ? "Select a plan to continue." : undefined}
             label="Plan"
             render={
-              <RadioGroup
-                onValueChange={(next) => setValue(next as PlanValue)}
-                value={value}
-              />
+              <CheckboxGroup onValueChange={setValue} value={value} />
             }
           >
             <Stack expandChildren rowGap="s">
@@ -181,12 +174,11 @@ export const FieldsetPlanErrorDemo: React.FC = () => {
                   key={option.value}
                   border="all"
                   radius="m"
-                  {...(value === option.value ? { color: 3 } : {})}
+                  {...(value.includes(option.value) ? { color: 3 } : {})}
                 >
-                  <Radio
+                  <Checkbox
                     description={option.description}
                     hPadding="m"
-                    id={`plan-${option.value}`}
                     label={option.label}
                     value={option.value}
                     vPadding="m"

@@ -28,16 +28,14 @@ A Surface card with a Fieldset legend over related Textfields is the baseline fi
 ```tsx
 import { Fieldset, Separator, Stack, Surface, Textfield } from '@viraui/react';
 
-<Surface border="all" overflow="hidden" radius="l">
-  <Stack hPadding="l" rowGap="m" vPadding="l">
-    <Fieldset label="Billing details">
-      <Stack rowGap="m">
-        <Separator />
-        <Textfield name="company" label="Company" />
-        <Textfield name="taxId" label="Tax ID" />
-      </Stack>
-    </Fieldset>
-  </Stack>
+<Surface border="all" overflow="hidden" radius="l" hPadding="l" vPadding="l">
+  <Fieldset label="Billing details">
+    <Stack rowGap="m">
+      <Separator />
+      <Textfield name="company" label="Company" />
+      <Textfield name="taxId" label="Tax ID" />
+    </Stack>
+  </Fieldset>
 </Surface>
 ```
 
@@ -75,27 +73,39 @@ const [value, setValue] = useState('express');
 
 ### Plan cards with group error
 
-Drive Fieldset `error` from `Field.Root` `invalid`. Surface owns the card chrome; highlight the selected card with `color`.
+Drive Fieldset `error` from `Field.Root` `invalid`. Keep `description` set — helper copy shows while valid; error replaces it when invalid. Surface owns the card chrome; highlight checked cards with `color`.
 
 <FieldsetPlanErrorDemo />
 
 ```tsx
 import { Field } from '@base-ui/react';
-import { Fieldset, Radio, RadioGroup, Separator, Stack, Surface } from '@viraui/react';
+import {
+  Checkbox,
+  CheckboxGroup,
+  Fieldset,
+  Separator,
+  Stack,
+  Surface,
+} from '@viraui/react';
 
-const [value, setValue] = useState('');
+const [value, setValue] = useState<string[]>([]);
+const empty = value.length === 0;
 
-<Field.Root dirty invalid={!value} name="plan">
+<Field.Root dirty invalid={empty} name="plan">
   <Fieldset
     label="Plan"
-    error={!value ? 'Select a plan to continue.' : undefined}
-    render={<RadioGroup value={value} onValueChange={setValue} />}
+    description="Pick every plan tier this workspace may trial."
+    error={empty ? 'Select a plan to continue.' : undefined}
+    render={<CheckboxGroup value={value} onValueChange={setValue} />}
   >
     <Stack expandChildren rowGap="s">
       <Separator />
-      <Surface border="all" radius="m" {...(value === 'free' ? { color: 3 } : {})}>
-        <Radio
-          id="plan-free"
+      <Surface
+        border="all"
+        radius="m"
+        {...(value.includes('free') ? { color: 3 } : {})}
+      >
+        <Checkbox
           label="Free"
           description="For getting started."
           value="free"
@@ -103,9 +113,12 @@ const [value, setValue] = useState('');
           vPadding="m"
         />
       </Surface>
-      <Surface border="all" radius="m" {...(value === 'pro' ? { color: 3 } : {})}>
-        <Radio
-          id="plan-pro"
+      <Surface
+        border="all"
+        radius="m"
+        {...(value.includes('pro') ? { color: 3 } : {})}
+      >
+        <Checkbox
           label="Pro"
           description="For growing teams."
           value="pro"
@@ -117,7 +130,6 @@ const [value, setValue] = useState('');
   </Fieldset>
 </Field.Root>
 ```
-
 ## Ask your agent
 
 ```text tab="Billing details"
@@ -129,5 +141,5 @@ Add a delivery method Fieldset with three radios (Standard, Express, Overnight),
 ```
 
 ```text tab="Plan error"
-Build a plan picker with Free and Pro radio cards. Show a group error until a plan is selected, and highlight the selected card.
+Build a plan picker with Free and Pro checkbox cards inside a Fieldset. Keep a group description while valid, show a group error until at least one plan is checked, and highlight checked cards.
 ```
