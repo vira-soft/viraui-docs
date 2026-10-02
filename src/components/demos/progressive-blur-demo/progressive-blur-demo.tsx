@@ -225,8 +225,12 @@ export const ProgressiveBlurTopDemo: React.FC = () => (
           Oct 2026 · Coastal studio
         </Text>
       </Stack>
-      <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
       <div style={scrollStyle}>
+        <div aria-hidden style={scrollBlurShellStyle}>
+          <div style={scrollBlurViewportStyle}>
+            <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
+          </div>
+        </div>
         <ScrollArticle bottomPad="2rem" topPad="7rem" />
       </div>
     </Surface>
@@ -266,9 +270,17 @@ export const ProgressiveBlurDualDemo: React.FC = () => (
           Issue 12
         </Title>
       </Stack>
-      <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
-      <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
       <div style={scrollStyle}>
+        <div aria-hidden style={scrollBlurShellStyle}>
+          <div style={scrollBlurViewportStyle}>
+            <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
+            <ProgressiveBlur
+              blur="24px"
+              direction="bottom"
+              style={bottomBlurStyle}
+            />
+          </div>
+        </div>
         <ScrollArticle bottomPad="7rem" topPad="7rem" />
       </div>
       <Stack

@@ -87,7 +87,7 @@ const bottomBlurStyle = {
 
 ### Top fade under sticky chrome
 
-Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
+Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. Keep the blur inside the scrollport with the same sticky zero-height shell so the scrollbar stays sharp. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
 
 <ProgressiveBlurTopDemo />
 
@@ -127,8 +127,34 @@ const topBlurStyle = {
     <Title />
     <Text />
   </Stack>
-  <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
-  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+  <div
+    style={{
+      blockSize: '100%',
+      containerType: 'size',
+      overflow: 'auto',
+    }}
+  >
+    <div
+      aria-hidden
+      style={{
+        position: 'sticky',
+        top: 0,
+        blockSize: 0,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          insetInline: 0,
+          top: 0,
+          blockSize: '100cqb',
+        }}
+      >
+        <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
+      </div>
+    </div>
     {/* long prose + images — paddingBlockStart ~7rem under the veil */}
   </div>
 </Surface>
@@ -136,7 +162,7 @@ const topBlurStyle = {
 
 ### Dual-edge long read
 
-Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Reuse the same tinted top band as the sticky-chrome example.
+Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Mount both bands in the same sticky scrollport shell so neither covers the scrollbar. Reuse the same tinted top band as the sticky-chrome example.
 
 <ProgressiveBlurDualDemo />
 
@@ -181,9 +207,35 @@ const bottomBlurStyle = {
   >
     <Title />
   </Stack>
-  <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
-  <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
-  <div style={{ blockSize: '100%', overflow: 'auto' }}>
+  <div
+    style={{
+      blockSize: '100%',
+      containerType: 'size',
+      overflow: 'auto',
+    }}
+  >
+    <div
+      aria-hidden
+      style={{
+        position: 'sticky',
+        top: 0,
+        blockSize: 0,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          insetInline: 0,
+          top: 0,
+          blockSize: '100cqb',
+        }}
+      >
+        <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
+        <ProgressiveBlur blur="24px" direction="bottom" style={bottomBlurStyle} />
+      </div>
+    </div>
     {/* long prose + images — top ~7rem under the veil, bottom ~7rem for CTA */}
   </div>
   <Stack
