@@ -3,18 +3,160 @@ title: Checkbox
 description: Boolean option row with label and helper copy — standalone or inside CheckboxGroup.
 ---
 
-`Checkbox` renders a single on/off option with Vira label and helper typography beside the control. Standalone checkboxes need an external `Field.Root` wrapper for validation, naming, and group-level error wiring; inside `CheckboxGroup`, options share the group name and selection model from Base UI. The control exposes `size` for visual scale and supports indeterminate state through Base UI pass-through props. Pair multiple related options with [`Fieldset`](/components/inputs/fieldset) when the group needs a legend and shared description.
+`Checkbox` is a single on/off option with Vira label and helper typography beside the control. Standalone rows need an external `Field.Root` from `@base-ui/react` for naming and validation — Checkbox does not own a field root the way [`Textfield`](/components/inputs/textfield) does. Prefer Checkbox when the value is part of a form batch, or when several independent options can stay on at once; use [`Switch`](/components/inputs/switch) for immediate settings toggles, and [`Radio`](/components/inputs/radio) when exactly one choice is allowed.
+
+Related options share a selection model through `CheckboxGroup`. Add [`Fieldset`](/components/inputs/fieldset) with `render={<CheckboxGroup />}` only when the group needs a legend or shared description — otherwise `CheckboxGroup` may sit directly in `Field.Root`. Pass-through Base UI props cover `checked`, `indeterminate`, `disabled`, and change handlers; `size` scales the control and label.
 
 ## Common examples
 
-A Fieldset-backed CheckboxGroup with three labeled preference rows is the default multi-select pattern.
+### Email alerts group
 
-<PreviewSlot label="Checkbox preview" />
+A Fieldset-backed `CheckboxGroup` with labeled preference rows is the default multi-select pattern. Each option keeps its own `label` / `description`; the group owns `value` and `onValueChange`.
+
+<CheckboxPreferencesDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Checkbox, CheckboxGroup, Fieldset, Separator, Stack } from '@viraui/react';
+
+const [value, setValue] = useState(['product', 'security']);
+
+<Field.Root name="email-alerts">
+  <Fieldset
+    label="Email alerts"
+    description="Pick every channel this workspace may email."
+    render={<CheckboxGroup value={value} onValueChange={setValue} />}
+  >
+    <Stack rowGap="m">
+      <Separator />
+      <Checkbox
+        label="Product updates"
+        description="New features and changelog notes."
+        value="product"
+      />
+      <Checkbox
+        label="Security alerts"
+        description="Login attempts and device trust."
+        value="security"
+      />
+      <Checkbox
+        label="Marketing"
+        description="Occasional tips and webinars."
+        value="marketing"
+      />
+    </Stack>
+  </Fieldset>
+</Field.Root>
+```
+
+### Form footer boolean
+
+Standalone booleans under other fields wrap in their own `Field.Root` — no Fieldset without a shared legend.
+
+<CheckboxFormFooterDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Checkbox, Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Textfield label="Street address" required />
+  <Textfield label="Apt / Suite" />
+  <Field.Root name="save-as-default">
+    <Checkbox label="Save as default address" defaultChecked />
+  </Field.Root>
+</Stack>
+```
+
+### Surface card
+
+`hPadding` / `vPadding` let the control fill a bordered `Surface`. Drive `Surface` `color` from checked state when the whole card should read as selected.
+
+<CheckboxSurfaceCardDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Checkbox, Surface } from '@viraui/react';
+
+const [checked, setChecked] = useState(false);
+
+<Field.Root name="terms">
+  <Surface border="all" radius="m" {...(checked ? { color: 3 } : {})}>
+    <Checkbox
+      checked={checked}
+      onCheckedChange={setChecked}
+      hPadding="m"
+      vPadding="m"
+      label="Accept terms of service"
+      description="Required before payouts leave this workspace."
+    />
+  </Surface>
+</Field.Root>
+```
+
+### Select all
+
+Lists of independent options stay one `Field.Root` + `Checkbox` per row. Drive a select-all row with Base UI `indeterminate` when some — but not all — children are checked.
+
+<CheckboxSelectAllDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Checkbox, Separator, Stack, Surface, Text, Title } from '@viraui/react';
+
+const keys = ['transaction', 'security', 'milestones', 'market'];
+const [selected, setSelected] = useState(['transaction', 'security']);
+const allChecked = selected.length === keys.length;
+const someChecked = selected.length > 0 && !allChecked;
+
+<Surface border="all" overflow="hidden" radius="l">
+  <Stack hPadding="l" rowGap="m" vPadding="l">
+    <Title />
+    <Text />
+    <Separator />
+    <Field.Root name="select-all">
+      <Checkbox
+        label="Select all"
+        checked={allChecked}
+        indeterminate={someChecked}
+        onCheckedChange={(next) => setSelected(next ? keys : [])}
+      />
+    </Field.Root>
+    <Field.Root name="transaction">
+      <Checkbox
+        label="Transaction alerts"
+        description="Deposits, withdrawals, and transfers."
+        checked={selected.includes('transaction')}
+        onCheckedChange={(next) => {
+          setSelected((current) =>
+            next
+              ? [...current, 'transaction']
+              : current.filter((item) => item !== 'transaction'),
+          );
+        }}
+      />
+    </Field.Root>
+    {/* more Field.Root + Checkbox rows */}
+  </Stack>
+</Surface>
+```
 
 ## Ask your agent
 
-```text tab="Notification preferences"
-Build notification preferences under the heading "Email alerts" with three checkboxes: product updates, security, and marketing. Keep each label short.
+```text tab="Email alerts"
+Build notification preferences under the heading "Email alerts" with three checkboxes: product updates, security, and marketing. Keep each label short and add a one-line description per option.
+```
+
+```text tab="Form footer"
+Add a shipping address form with street and suite fields, plus a "Save as default address" checkbox under the inputs.
+```
+
+```text tab="Terms card"
+Wrap an Accept terms checkbox in a bordered card that highlights when checked. Require the checkbox before continuing.
+```
+
+```text tab="Select all"
+Build a notifications list with a Select all row that goes indeterminate when only some alerts are enabled, plus four alert options with short descriptions.
 ```
 
 ## Base UI

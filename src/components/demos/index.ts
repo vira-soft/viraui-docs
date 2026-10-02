@@ -68,3 +68,9 @@ export {
   AutocompleteGroupedDemo,
   AutocompleteReviewerDemo,
 } from "./autocomplete-demo";
+export {
+  CheckboxFormFooterDemo,
+  CheckboxPreferencesDemo,
+  CheckboxSelectAllDemo,
+  CheckboxSurfaceCardDemo,
+} from "./checkbox-demo";
