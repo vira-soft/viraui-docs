@@ -62,3 +62,9 @@ export {
   TypewriterMutedDemo,
   TypewriterWrapDemo,
 } from "./typewriter-demo";
+export {
+  AutocompleteAsyncDemo,
+  AutocompleteCategoryDemo,
+  AutocompleteGroupedDemo,
+  AutocompleteReviewerDemo,
+} from "./autocomplete-demo";

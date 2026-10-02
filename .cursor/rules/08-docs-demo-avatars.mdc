@@ -1,0 +1,27 @@
+---
+description: Docs demos prefer real photo Avatars — show fallback only when teaching it
+globs: content/**/*.mdx,src/components/demos/**/*
+alwaysApply: false
+---
+
+# Docs: Avatar photos in examples
+
+When a docs demo or MDX fence needs a person/entity face, prefer a **real photo** via `src`. Do not stage fallback-only Avatars just to fill a row.
+
+## Do
+
+- Pass `src` with a stable portrait URL whenever the example shows people (assignees, teammates, account menus, AvatarGroup clusters)
+- Reuse the shared mock portrait host already used in ViraUI preview blocks: `https://mockmind-api.uifaces.co/content/human/{n}.jpg` (vary `{n}` per person)
+- Still pass required `fallback` (initials) for the Avatar API / image-error path — that is not the same as teaching the fallback look
+- Reserve fallback-only Avatars for pages or examples whose **job** is to show missing/broken image behavior (Avatar / AvatarGroup surface docs)
+
+## Do not
+
+- Ship list rows, pickers, or groups with initials-only faces when a photo would work
+- Invent random CDN hosts when `mockmind-api.uifaces.co` already matches DS preview fixtures
+- Omit `fallback` to “hide” it — the prop stays required; the visual teaching point is the photo
+
+## Live demos vs fences
+
+- Live demos (`src/components/demos/**`): real `src` + real names
+- MDX fences: keep `src` on Avatar when the fence teaches item addons / people rows; do not strip `src` to shorten the fence

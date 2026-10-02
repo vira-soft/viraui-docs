@@ -3,18 +3,224 @@ title: Autocomplete
 description: Combobox with filterable suggestions, field chrome, and an elevated option list.
 ---
 
-`Autocomplete` combines a text input with a filterable popup — type to narrow `items`, pick a row, or accept free text depending on `mode` and filter settings from Base UI `Autocomplete`. Field label, description, error copy, and `startAddon` / `endAddon` chrome match `Textfield`; options render as `Autocomplete.Item` rows on an elevated `Surface` like [`Select`](/components/inputs/select). Use it when the option set is large enough that scanning a closed dropdown is awkward but the value still comes from a known list — assignees, tags, airports. For a fixed short list with no typing, prefer `Select`.
+`Autocomplete` combines a text input with a filterable popup — type to narrow `items`, pick a row, or keep free-form text when the list is only a suggestion. Field label, description, error copy, and `startAddon` / `endAddon` chrome match [`Textfield`](/components/inputs/textfield); options render as `Autocomplete.Item` rows on an elevated `Surface` like [`Select`](/components/inputs/select). Prefer it when the option set is large enough that scanning a closed dropdown is awkward, or when users may type a value that is not in the list — assignees, tags, categories, docs search. For a fixed short list with no typing, use Select instead.
+
+Pass list content as a render function over `items`, or compose `Autocomplete.Group` with `Autocomplete.Collection` for sectioned results. Root `empty` and `status` feed the baked empty and status slots — keep `status` mounted and update its children when async messaging changes; do not conditionally drop the prop. Fill a form column from a parent [`Stack`](/components/layout/stack) with `fullWidth` / `expandChildren` — Autocomplete has no `fullWidth` prop of its own.
 
 ## Common examples
 
-A filterable assignee combobox with search addon and elevated option list is the baseline picker.
+### Teammate search
 
-<PreviewSlot label="Autocomplete preview" />
+A labeled reviewer picker with search chrome and avatar item addons is the baseline suggest pattern. `itemToStringValue` maps each object to the string written into the input when a row is chosen. When that string matches a reviewer, `endAddon` shows their Avatar.
+
+<AutocompleteReviewerDemo />
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Autocomplete, Avatar, Stack } from '@viraui/react';
+
+const reviewers = [
+  {
+    id: 'r1',
+    label: 'Sarah Chen',
+    role: 'Product Design',
+    fallback: 'SC',
+    src: 'https://mockmind-api.uifaces.co/content/human/80.jpg',
+  },
+  {
+    id: 'r2',
+    label: 'Marcus Reed',
+    role: 'Engineering',
+    fallback: 'MR',
+    src: 'https://mockmind-api.uifaces.co/content/human/219.jpg',
+  },
+];
+
+const [value, setValue] = useState('');
+const selected = reviewers.find((person) => person.label === value);
+
+<Autocomplete
+  label="Assign reviewer"
+  description="Pick a teammate who can approve this payout batch."
+  empty="No teammates match that name."
+  placeholder="Search by name…"
+  items={reviewers}
+  itemToStringValue={(person) => person.label}
+  value={value}
+  onValueChange={setValue}
+  startAddon={<MagnifyingGlass aria-hidden size={16} />}
+  endAddon={
+    selected ? (
+      <Stack hPadding={[0, 'xs']}>
+        <Avatar
+          alt={selected.label}
+          fallback={selected.fallback}
+          size="xs"
+          src={selected.src}
+        />
+      </Stack>
+    ) : undefined
+  }
+>
+  {(person) => (
+    <Autocomplete.Item
+      key={person.id}
+      addon={
+        <Avatar
+          alt={person.label}
+          fallback={person.fallback}
+          size="s"
+          src={person.src}
+        />
+      }
+      value={person}
+    >
+      {`${person.label} · ${person.role}`}
+    </Autocomplete.Item>
+  )}
+</Autocomplete>
+```
+
+Buttons inside `endAddon` must use `type="button"` so they do not submit a parent form.
+
+### Free-form category
+
+Flat items still allow free-form text — the list suggests ledger labels while the input can keep a custom phrase. Prefer this over Select when the value does not have to be one of the options.
+
+<AutocompleteCategoryDemo />
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Autocomplete } from '@viraui/react';
+
+const expenseCategories = [
+  { id: 'c1', label: 'SaaS subscriptions' },
+  { id: 'c2', label: 'Travel' },
+  { id: 'c3', label: 'Contractors' },
+];
+
+<Autocomplete
+  label="Expense category"
+  description="Suggest a ledger category — free-form text stays allowed."
+  empty="No category match. Keep typing to create a custom label."
+  placeholder="SaaS, travel, contractors…"
+  items={expenseCategories}
+  itemToStringValue={(category) => category.label}
+  startAddon={<MagnifyingGlass aria-hidden size={16} />}
+>
+  {(category) => (
+    <Autocomplete.Item key={category.id} value={category}>
+      {category.label}
+    </Autocomplete.Item>
+  )}
+</Autocomplete>
+```
+
+### Grouped options
+
+Grouped `items` pair with `Autocomplete.Group` and `Autocomplete.Collection` so each section keeps its own heading and nested rows.
+
+<AutocompleteGroupedDemo />
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Autocomplete } from '@viraui/react';
+
+const transferDesks = [
+  {
+    value: 'Europe',
+    items: [
+      { id: 'd1', label: 'Paris', hours: '09:00–18:00 CET' },
+      { id: 'd2', label: 'Berlin', hours: '08:00–17:00 CET' },
+    ],
+  },
+  {
+    value: 'Americas',
+    items: [{ id: 'd3', label: 'Austin', hours: '08:00–17:00 CT' }],
+  },
+];
+
+<Autocomplete
+  label="Transfer desk"
+  description="Route an urgent payout to the desk covering that region."
+  empty="No transfer desk matches."
+  placeholder="Paris, Berlin, Austin…"
+  items={transferDesks}
+  itemToStringValue={(desk) => desk.label}
+  startAddon={<MagnifyingGlass aria-hidden size={16} />}
+>
+  {(group) => (
+    <Autocomplete.Group key={group.value} items={group.items} label={group.value}>
+      <Autocomplete.Collection>
+        {(desk) => (
+          <Autocomplete.Item key={desk.id} value={desk}>
+            {`${desk.label} · ${desk.hours}`}
+          </Autocomplete.Item>
+        )}
+      </Autocomplete.Collection>
+    </Autocomplete.Group>
+  )}
+</Autocomplete>
+```
+
+### Async status
+
+When results load outside the control, set `filter={null}` and drive `items` from your fetch. Keep root `status` mounted — swap Spinner and muted copy inside it while the request runs. Clear or omit `empty` while pending so the no-match copy does not flash over the spinner.
+
+<AutocompleteAsyncDemo />
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Autocomplete, Spinner, Stack, Text } from '@viraui/react';
+
+const empty = pending ? undefined : 'No articles for that query.';
+
+<Autocomplete
+  label="Search help center"
+  description="Async docs search."
+  empty={empty}
+  filter={null}
+  items={results}
+  itemToStringValue={(article) => article.title}
+  placeholder="Wire limits, SEPA, tax forms…"
+  startAddon={<MagnifyingGlass aria-hidden size={16} />}
+  status={
+    pending ? (
+      <Stack columnGap="s" direction="row" vAlign="center">
+        <Spinner aria-hidden size="s" />
+        <Text size="xs" tone="muted">
+          Searching help center…
+        </Text>
+      </Stack>
+    ) : null
+  }
+>
+  {(article) => (
+    <Autocomplete.Item key={article.id} value={article}>
+      {`${article.title} · ${article.section}`}
+    </Autocomplete.Item>
+  )}
+</Autocomplete>
+```
+
+In iframe previews, shadow roots, or custom overlay hosts, pass `container` on Autocomplete so the popup portals into that document instead of the default body.
 
 ## Ask your agent
 
 ```text tab="Assignee picker"
-Add an assignee picker labeled "Assignee" with ten sample names, search-as-you-type filtering, and at most six visible rows in the dropdown.
+Add an assignee picker labeled "Assignee" with ten sample names, search-as-you-type filtering, avatar rows, and at most six visible rows in the dropdown.
+```
+
+```text tab="Free-form category"
+Add an expense category field that suggests common ledger labels but still accepts a custom typed value when nothing matches.
+```
+
+```text tab="Grouped desks"
+Add a transfer desk picker with desks grouped by region and a short hours note on each row.
+```
+
+```text tab="Async help search"
+Wire this help-center search to an async fetch. Show a searching status while results load, hide empty copy during the wait, and show empty only when the query returns nothing.
 ```
 
 ## Base UI
