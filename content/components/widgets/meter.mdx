@@ -3,6 +3,18 @@ title: Meter
 description: Read-only progress bar with optional label, description, and formatted value — not an interactive slider.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Meter"
+    href="https://base-ui.com/react/components/meter#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Meter displays a scalar value on a track using Base UI meter semantics — `value`, `min`, and `max` feed an accessible `progressbar` that users do not drag. Optional `label` renders through the shared `FieldLabel` pattern; `description` adds muted helper copy below the track; `renderValue` shows the current amount beside the label (boolean for default formatting or a function for custom text). The indicator width follows `value` automatically. Use Meter for storage quotas, completion percentages, or any read-only fill level; use [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for indeterminate or route-level loading bars without a numeric model.
 
 ## Common examples
@@ -16,15 +28,3 @@ A labeled meter with optional value readout is the baseline dashboard pattern.
 ```text tab="Storage meter"
 Add a storage-used meter on this account settings card — used GB out of 100 GB cap, with short description of what counts toward the quota. Read-only here, not editable.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Meter"
-    href="https://base-ui.com/react/components/meter#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

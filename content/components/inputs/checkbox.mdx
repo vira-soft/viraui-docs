@@ -3,6 +3,18 @@ title: Checkbox
 description: Boolean option row with label and helper copy — standalone or inside CheckboxGroup.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Checkbox"
+    href="https://base-ui.com/react/components/checkbox#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 `Checkbox` is a single on/off option with Vira label and helper typography beside the control. Standalone rows need an external `Field.Root` from `@base-ui/react` for naming and validation — Checkbox does not own a field root the way [`Textfield`](/components/inputs/textfield) does. Prefer Checkbox when the value is part of a form batch, or when several independent options can stay on at once; use [`Switch`](/components/inputs/switch) for immediate settings toggles, and [`Radio`](/components/inputs/radio) when exactly one choice is allowed.
 
 Related options share a selection model through `CheckboxGroup`. Add [`Fieldset`](/components/inputs/fieldset) with `render={<CheckboxGroup />}` only when the group needs a legend or shared description — otherwise `CheckboxGroup` may sit directly in `Field.Root`. Pass-through Base UI props cover `checked`, `indeterminate`, `disabled`, and change handlers; `size` scales the control and label.
@@ -158,15 +170,3 @@ Wrap an Accept terms checkbox in a bordered card that highlights when checked. R
 ```text tab="Select all"
 Build a notifications list with a Select all row that goes indeterminate when only some alerts are enabled, plus four alert options with short descriptions.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Checkbox"
-    href="https://base-ui.com/react/components/checkbox#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

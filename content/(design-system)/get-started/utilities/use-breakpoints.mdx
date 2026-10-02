@@ -3,6 +3,10 @@ title: useBreakpoints
 description: Optional viewport match helpers when the React tree must branch — prefer CSS for layout-only shifts.
 ---
 
+## Base UI utilities
+
+ViraUI builds on [Base UI](https://base-ui.com). For direction, focus management, portals, and similar built-ins, use [Base UI's docs](https://base-ui.com).
+
 `BreakpointsProvider` and `useBreakpoints` let the React tree **branch** at named min-width thresholds — swap markup, mount different components, or drive props CSS cannot express alone. Prefer CSS `@media` or container queries when the same elements can just shift with styles. The required overlay shell from [Setup](/get-started/setup) does not include these helpers; add them only when you need that kind of branch.
 
 Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider. Passing `breakpoints` on the provider **replaces** the default map entirely — it does not merge. Defaults are em-based names from `extra-small` through `extra-large` (the example below uses `small` at `48em`); the full table lives in `@viraui/react/specs` → `breakpoints`.
@@ -53,7 +57,3 @@ Custom names replace the defaults entirely — there is no partial merge:
   {children}
 </BreakpointsProvider>
 ```
-
-## Base UI utilities
-
-ViraUI builds on [Base UI](https://base-ui.com). For direction, focus management, portals, and similar built-ins, use [Base UI's docs](https://base-ui.com).

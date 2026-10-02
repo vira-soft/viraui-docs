@@ -3,6 +3,18 @@ title: Tooltip
 description: Supplementary hint on hover or focus — Trigger plus Content, shared delay through Tooltip.Provider.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Tooltip"
+    href="https://base-ui.com/react/components/tooltip#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Tooltip shows a short hint when someone hovers or focuses a trigger — never the only place critical information lives. Wrap the app once in `Tooltip.Provider` at the root (same overlay shell as [Setup](/get-started/setup)) so open and close delays stay consistent across every tooltip on the page. Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`; the trigger accepts any control through `render`, including [IconButton](/components/actions/icon-button) with an `aria-label` when the glyph alone would be ambiguous.
 
 Content is brief — a [Text](/components/typography/text) node or a short phrase. For icon-only controls, repeat the accessible name in the tooltip so sighted hover matches what screen readers hear. Detached triggers and multiple triggers sharing one content surface use `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes. Prefer [Popover](/components/overlays/popover) when the surface needs interaction, a title, or dismiss controls — tooltips are read-only hints.
@@ -35,15 +47,3 @@ import { Button, Text, Tooltip } from '@viraui/react';
 ```text tab="Tooltips to icon-only"
 Add short tooltips on each icon-only toolbar control that lacks visible text. Do not hide essential instructions in tooltips alone — duplicate key guidance in visible copy.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Tooltip"
-    href="https://base-ui.com/react/components/tooltip#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

@@ -3,6 +3,18 @@ title: ToggleButton
 description: Icon-only two-state toggle and its group. Pressed icons, variant shift, and optional crossfade; ToggleGroup coordinates single- or multi-select across related ToggleButtons.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Toggle"
+    href="https://base-ui.com/react/components/toggle#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 ToggleButton is the icon-only control with a persistent pressed state. Pass `restingIcon` (required); optional `pressedIcon` swaps in when pressed, otherwise the resting glyph stays. `variant` defaults to flat at rest; `pressedVariant` can shift the treatment while pressed. `interpolateIcons` opts into a stacked crossfade and rotate between icons; otherwise the swap is instant. Every instance needs `aria-label` or `aria-labelledby`. Reach for [IconButton](/components/actions/icon-button) when there is no pressed state to keep.
 
 When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value` plus an accessible name; the group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` for multi-select. Default layout is a Stack (`row` or `column` from `orientation`) with a tight gap. Label the group with `aria-label` or `aria-labelledby` so assistive tech understands the cluster. A lone one-off toggle stays as ToggleButton alone; tabbed panel navigation belongs on Tabs.
@@ -163,15 +175,3 @@ Add a dark-mode toggle that swaps moon and sun icons and shifts to a secondary v
 ```text tab="React on favorite"
 Add a favorite toggle that fills the heart when pressed. When it turns on, run a side effect (toast, persist, or a short celebration). Keep the accessible name on the control.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Toggle"
-    href="https://base-ui.com/react/components/toggle#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

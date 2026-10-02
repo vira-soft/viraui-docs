@@ -12,8 +12,8 @@
 2. Get started nav (`content/get-started/meta.json`) lists `utilities` after `mcp` (folder entry).
 3. `use-breakpoints.mdx` frontmatter: `title: useBreakpoints`, non-stub `description` about viewport-conditional markup, `pageActions: false`.
 4. Lead: helper is optional beyond Setup’s Dialog/Tooltip/Toast overlay shell; **ViraUI-custom**; link to `/get-started/setup`.
-5. Body: when to use vs prefer CSS; five named default em thresholds; custom map replaces defaults; client wrap + `useBreakpoints` guidance; one complete TSX example (provider + consumer component); short custom-map fence; pointer to package specs / `viraui-design`.
-6. Base UI utilities section: short handoff that Base UI built-ins (direction, focus, portals, …) live on [base-ui.com](https://base-ui.com)—not documented on this page.
+5. Base UI utilities section (**first body section**, before lead): short handoff that Base UI built-ins (direction, focus, portals, …) live on [base-ui.com](https://base-ui.com)—not documented on this page.
+6. Body: when to use vs prefer CSS; five named default em thresholds; custom map replaces defaults; client wrap + `useBreakpoints` guidance; one complete TSX example (provider + consumer component); short custom-map fence; pointer to package specs / `viraui-design`.
 7. Discursive concise English; speak **to the consumer** (`you` / imperative)—no meta “this page covers / keep this page / not documented here” (see `.cursor/rules/02-docs-consumer-voice.mdc`).
 8. IA: `specs/001-llm-first-docs-site/contracts/ia-tree.md` lists Utilities group + `/get-started/utilities/use-breakpoints`; Get started order mcp → utilities group.
 9. Setup: brief optional ViraUI providers/utilities note linking `/get-started/utilities/use-breakpoints` (no Breakpoints recipes on Setup).

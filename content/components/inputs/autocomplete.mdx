@@ -3,6 +3,18 @@ title: Autocomplete
 description: Combobox with filterable suggestions, field chrome, and an elevated option list.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Autocomplete"
+    href="https://base-ui.com/react/components/autocomplete#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 `Autocomplete` combines a text input with a filterable popup — type to narrow `items`, pick a row, or keep free-form text when the list is only a suggestion. Field label, description, error copy, and `startAddon` / `endAddon` chrome match [`Textfield`](/components/inputs/textfield); options render as `Autocomplete.Item` rows on an elevated `Surface` like [`Select`](/components/inputs/select). Prefer it when the option set is large enough that scanning a closed dropdown is awkward, or when users may type a value that is not in the list — assignees, tags, categories, docs search. For a fixed short list with no typing, use Select instead.
 
 Pass list content as a render function over `items`, or compose `Autocomplete.Group` with `Autocomplete.Collection` for sectioned results. Root `empty` and `status` feed the baked empty and status slots — keep `status` mounted and update its children when async messaging changes; do not conditionally drop the prop. Fill a form column from a parent [`Stack`](/components/layout/stack) with `fullWidth` / `expandChildren` — Autocomplete has no `fullWidth` prop of its own.
@@ -222,15 +234,3 @@ Add a transfer desk picker with desks grouped by region and a short hours note o
 ```text tab="Async help search"
 Wire this help-center search to an async fetch. Show a searching status while results load, hide empty copy during the wait, and show empty only when the query returns nothing.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Autocomplete"
-    href="https://base-ui.com/react/components/autocomplete#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

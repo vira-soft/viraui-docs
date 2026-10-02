@@ -3,6 +3,18 @@ title: Radio
 description: Single-choice option row for use inside RadioGroup and Fieldset.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Radio"
+    href="https://base-ui.com/react/components/radio#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 `Radio` is one row in a mutually exclusive set — each option carries its own label and optional description, while `name`, validation, and group-level errors belong on an external `Field.Root` and [`Fieldset`](/components/inputs/fieldset), not on individual radios. Options render inside `RadioGroup` so Base UI keeps keyboard roving and selection in sync. Use `Radio` when exactly one choice is allowed; use [`Checkbox`](/components/inputs/checkbox) when multiple independent toggles fit the task, and [`Select`](/components/inputs/select) when the option list is long or needs grouping in a popup.
 
 ## Common examples
@@ -16,15 +28,3 @@ A billing plan RadioGroup inside a Fieldset with labeled option rows is the defa
 ```text tab="Billing plans"
 Add a billing plan picker: heading "Plan", three options (Starter, Pro, Enterprise) each with a one-line description. Starter selected by default.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Radio"
-    href="https://base-ui.com/react/components/radio#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

@@ -3,6 +3,18 @@ title: Popover
 description: Non-modal floating panel anchored to a trigger — titled Sheet, portal, dismiss, and optional focus trap.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Popover"
+    href="https://base-ui.com/react/components/popover#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Popover opens a floating panel beside or below a trigger without blocking the rest of the page. Compose `Popover.Trigger` and `Popover.Sheet` as children of `Popover`; the trigger accepts any control through `render`, and the sheet carries the accessible name through required `title` (plus optional `description`) on the styled variant. Content portals out of the DOM flow, picks a side from available space, and dismisses on outside click or Escape — same overlay family as [Menu](/components/overlays/menu), but sized for richer panels rather than command rows.
 
 Use the styled `Popover.Sheet` when ViraUI chrome is enough. Pass `unstyled` when you own the surface — then compose `Popover.Title` and `Popover.Description` with [Title](/components/typography/title) and [Text](/components/typography/text) so the dialog name still resolves. Interactive panels can set `modal="trap-focus"` so tab cycles stay inside the sheet while it is open. Hover-open panels use `openOnHover`, `delay`, and `closeDelay` on the trigger. Detached or multi-trigger layouts share one sheet through `Popover.createHandle()` — the handle links triggers outside the root to a single popover instance, and payload render props morph content when the active trigger changes. Do not wrap [Menu](/components/overlays/menu) in Popover; Menu already owns portal and menu keyboard behavior. For modal tasks that block the page, use [Dialog](/components/dialogs/dialog) instead.
@@ -36,15 +48,3 @@ import { Button, Popover, Stack, Text } from '@viraui/react';
 ```text tab="Options panel"
 Add a notifications popover from an icon-only bell button. Title Notifications, description "You are all caught up", short status body, and a Dismiss button. If the panel needs a text field, trap focus inside while open.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Popover"
-    href="https://base-ui.com/react/components/popover#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

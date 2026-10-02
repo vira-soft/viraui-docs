@@ -75,3 +75,8 @@ export {
   CheckboxSelectAllDemo,
   CheckboxSurfaceCardDemo,
 } from "./checkbox-demo";
+export {
+  FieldsetBillingDemo,
+  FieldsetDeliveryDemo,
+  FieldsetPlanErrorDemo,
+} from "./fieldset-demo";

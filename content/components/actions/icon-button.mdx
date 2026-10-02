@@ -3,6 +3,18 @@ title: IconButton
 description: Icon-only button and its link twin. Same size, variant, pill, and loading chrome as Button; IconButtonLink for navigation. Requires an accessible name on every instance.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Button"
+    href="https://base-ui.com/react/components/button#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 IconButton wraps [Button](/components/actions/button) for compact, icon-only actions. Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name and every instance needs `aria-label` or `aria-labelledby`.
 
 When the affordance should navigate (in-app route or external URL), use **IconButtonLink** instead. It shares the same visual chrome but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on `IconButton`; Base UI keeps button semantics there. Reach for [ToggleButton](/components/actions/toggle-button) when the control needs a persistent pressed state or icon swap after interaction.
@@ -146,15 +158,3 @@ Add icon-only navigation links to this card header: one external, one in-app. Ea
 ```text tab="External docs icon"
 Add a flat icon link that opens the product docs in a new tab. Name it for the destination, not just “external”.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Button"
-    href="https://base-ui.com/react/components/button#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

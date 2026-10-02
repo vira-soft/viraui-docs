@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Docs: Base UI handoff Card
 
-When a **ComponentPage** documents a Vira surface that wraps a Base UI **component primitive**, end the page (after `## Ask your agent`) with a Base UI handoff Card. Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
+When a **ComponentPage** documents a Vira surface that wraps a Base UI **component primitive**, put a Base UI handoff Card **at the top of the page body** — immediately after frontmatter, before the lead narrative. Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
 
 ## Authority (do not invent)
 

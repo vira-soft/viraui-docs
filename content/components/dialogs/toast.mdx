@@ -3,6 +3,18 @@ title: Toast
 description: Non-blocking transient notifications with stacked placement and optional action buttons.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Toast"
+    href="https://base-ui.com/react/components/toast#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Toast shows short-lived feedback after an action — save confirmations, undo windows, and messages that sit next to the control that triggered them. Mount `Toast.Provider` once with a manager from `Toast.createToastManager()`, keep a `Toast.Portal` and `Toast.Viewport` region in the tree, and map live toasts to `Toast.Banner`. Call `toastManager.add({ title, description })` from the action that should announce; keep copy brief so screen readers hear a clear result.
 
 Optional actions on a banner are `Toast.Action` only. The stack defaults to `bottom-right`; set `position` for another corner, or `anchored` with `Toast.Positioner` when the message should hug a trigger. Prefer Toast for reversible or informational outcomes; blocking validation belongs on the field or in a [Dialog](/components/dialogs/dialog).
@@ -197,15 +209,3 @@ When the user copies a link, show a short confirmation toast next to the copy co
 ```text tab="Corner placement"
 Move the app toast stack to the bottom-left corner so it stays clear of the primary action area on the right.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Toast"
-    href="https://base-ui.com/react/components/toast#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

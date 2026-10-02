@@ -3,6 +3,18 @@ title: Dialog
 description: Compound bottom sheet with trigger, sheet, close, and optional app-shell indent for focused tasks.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Drawer"
+    href="https://base-ui.com/react/components/drawer#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Dialog is a compound edge sheet for focused tasks that interrupt the page without navigating away. Compose `Dialog.Trigger` (usually a Button or IconButton via `render`), a titled `Dialog.Sheet`, and `Dialog.Close` for actions that should dismiss. Pass `title` for assistive technologies; add `description` when the heading alone is thin. Portal, backdrop, handle, and heading chrome live inside `Dialog.Sheet` — they are not separate public parts.
 
 Snap points and swipe dismissal live on the `Dialog` root when the sheet should drag between heights. Nest another `Dialog` inside `Dialog.Sheet` for drill-down settings flows; Escape closes only the topmost layer. Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell should indent behind an open sheet. Reach for [Popover](/components/overlays/popover) or Menu when the content is a small anchored hint, not a page-level interruption.
@@ -186,15 +198,3 @@ Add a terms bottom sheet with two snap heights: an intermediate preview and full
 ```text tab="Import form sheet"
 Add an import sheet triggered by a secondary Import button. Center the header, include a text field for pasted code, Apply, and Cancel that closes the sheet.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Drawer"
-    href="https://base-ui.com/react/components/drawer#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

@@ -3,6 +3,18 @@ title: Button
 description: Labeled action and its link twin — size, variant, addon, pill, loading; ButtonLink for navigation with the same chrome.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Button"
+    href="https://base-ui.com/react/components/button#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Button is the default **labeled** action control. Visible text children name what happens when you activate it; the control stays a real button for keyboard and assistive tech. Reach for [IconButton](/components/actions/icon-button) when there is no visible label.
 
 When the affordance should navigate — in-app route or external URL — use **ButtonLink** instead. It shares the same visual chrome (`size`, `variant`, `addon`, `pill`, `loading`) but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on Button; Base UI keeps button semantics there.
@@ -185,15 +197,3 @@ Replace the plain text links in this header with styled navigation buttons. One 
 ```text tab="External docs"
 Add a flat pill link that opens the product docs in a new tab, with a trailing external-link icon.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Button"
-    href="https://base-ui.com/react/components/button#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

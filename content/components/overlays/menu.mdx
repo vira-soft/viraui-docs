@@ -3,6 +3,18 @@ title: Menu
 description: Command menu anchored to a trigger — items, groups, submenus, and built-in portal plus keyboard roving.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Menu"
+    href="https://base-ui.com/react/components/menu#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Menu surfaces a list of actions or choices from a trigger click (or equivalent activation). The compound bundles portal mounting, collision-aware positioning, typeahead, and roving keyboard focus — compose `Menu.Trigger` with `Menu.Popup` and the item parts you need rather than nesting another overlay. Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; mutually exclusive choices use `Menu.RadioGroup` with `Menu.RadioItem`; persistent toggles use `Menu.CheckboxItem`. `Menu.Group` adds section labels, `Menu.Separator` divides blocks, and `Menu.Submenu` nests another popup on hover or keyboard — including deep trees with link rows and destructive `sentiment` on individual items.
 
 Triggers accept any control through `render`, including custom chrome such as a [Surface](/components/layout/surface) account chip. Static header content may sit inside `Menu.Popup` beside items when it stays non-interactive so roving focus remains on menu rows. Detached triggers share one menu through `Menu.createHandle()`. Do not wrap Menu in [Popover](/components/overlays/popover) — Menu already owns the floating surface contract.
@@ -36,15 +48,3 @@ import { Button, Menu } from '@viraui/react';
 ```text tab="Sort menu"
 Add a Sort menu with Ascending and Descending choices that stay selected while the menu is open. Match toolbar button style to neighbors.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Menu"
-    href="https://base-ui.com/react/components/menu#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

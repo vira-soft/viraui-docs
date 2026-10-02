@@ -3,6 +3,18 @@ title: Tabs
 description: Tab list and panels in one compound — animated indicator, controlled value, scrollable overflow.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Tabs"
+    href="https://base-ui.com/react/components/tabs#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 Tabs splits wayfinding from content: `Tabs.List` holds `Tabs.Tab` triggers, and `Tabs.Viewport` mounts one `Tabs.Panel` per `value`. The root owns selection — `defaultValue` for uncontrolled usage, `value` plus `onValueChange` when another control must drive the active tab. Each tab’s `value` string pairs with exactly one panel of the same `value`; only the selected panel stays mounted in the viewport while the indicator animates under the active trigger.
 
 `listAlignment` on the root aligns the tab row (`start`, `center`, …) through the same stack contract as [Stack](/components/layout/stack). Long label sets scroll horizontally inside the list — overflow is expected, not a layout bug. Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move across tabs without changing selection until click. Disabled tabs carry `disabled` on `Tabs.Tab` and ignore activation. Tab labels accept `addon` slots — icons or [Chip](/components/widgets/chip) badges — with `addonPosition` when the addon trails the text. Functional motion on the indicator follows theme [motion](/foundation/motion) tokens.
@@ -51,15 +63,3 @@ import { Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
 ```text tab="Settings tabs"
 Add settings tabs with icons — General, Billing, Goals. General has profile fields; Billing shows plan summary with usage progress; Goals has two progress rows and a checkbox. Sync tab selection to URL search params if the screen already uses them.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Tabs"
-    href="https://base-ui.com/react/components/tabs#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

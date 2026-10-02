@@ -3,6 +3,18 @@ title: LinearProgress
 description: Accessible progress bar — determinate value, indeterminate sync, optional label and value display.
 ---
 
+## Base UI
+
+<Cards>
+  <Card
+    title="Progress"
+    href="https://base-ui.com/react/components/progress#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
 LinearProgress renders a horizontal track with a filled indicator and exposes a native `progressbar` role. Pass `value` between `min` and `max` for determinate work — uploads, quotas, onboarding checklists — and set `renderValue` when the percentage or a custom formatter should appear beside the label. Set `value={null}` for indeterminate progress while duration is unknown; the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
 
 `label` names the bar for accessibility; add `description` when supporting copy helps. You can omit visible label text and supply `aria-label` on the root for compact inline bars. The indicator animates with theme [motion](/foundation/motion) tokens; completed runs can sit at `value={100}` with `renderValue` until you clear the row. Use [Skeleton](/components/loading/skeleton) when structure matters more than percent complete; use [Spinner](/components/loading/spinner) for compact opaque waits without a track metaphor.
@@ -30,15 +42,3 @@ import { LinearProgress, Stack } from '@viraui/react';
 ```text tab="Sync progress"
 Add a background sync row labeled Syncing with indeterminate progress and helper text "Checking for updates." Wire to real job progress when the API exposes a percent.
 ```
-
-## Base UI
-
-<Cards>
-  <Card
-    title="Progress"
-    href="https://base-ui.com/react/components/progress#api-reference"
-    external
-  >
-    Upstream API and behavior for the Base UI primitive this control wraps.
-  </Card>
-</Cards>

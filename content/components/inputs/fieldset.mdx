@@ -3,20 +3,6 @@ title: Fieldset
 description: Groups related radios or checkboxes with a legend and optional group helper copy.
 ---
 
-`Fieldset` wraps Base UI `Fieldset.Root` and `Legend` with Vira legend typography and optional group-level description and error slots — use it whenever a cluster of [`Radio`](/components/inputs/radio) or [`Checkbox`](/components/inputs/checkbox) options needs a visible group name and shared helper copy. Pass `render` to merge the fieldset root with `RadioGroup` or `CheckboxGroup` so the group and legend stay one accessible unit. Group validation and `name` still live on `Field.Root` above the fieldset; individual options keep their own labels.
-
-## Common examples
-
-A shipping method block with legend, group description, and RadioGroup options is the baseline field grouping.
-
-<PreviewSlot label="Fieldset preview" />
-
-## Ask your agent
-
-```text tab="Shipping options"
-Build a shipping method block: heading "Delivery", helper "Choose one option", three radio choices for delivery speed.
-```
-
 ## Base UI
 
 <Cards>
@@ -28,3 +14,120 @@ Build a shipping method block: heading "Delivery", helper "Choose one option", t
     Upstream API and behavior for the Base UI primitive this control wraps.
   </Card>
 </Cards>
+
+`Fieldset` wraps Base UI `Fieldset.Root` and `Legend` with Vira legend typography and optional group-level description and error slots — use it whenever a cluster of [`Radio`](/components/inputs/radio) or [`Checkbox`](/components/inputs/checkbox) options needs a visible group name and shared helper copy, or when several labeled fields share one section legend. Pass `render` to merge the fieldset root with `RadioGroup` or `CheckboxGroup` so the group and legend stay one accessible unit. Group validation and `name` still live on `Field.Root` above the fieldset; individual options keep their own labels. Border and card chrome belong on [`Surface`](/components/layout/surface), not on Fieldset.
+
+## Common examples
+
+### Billing details section
+
+A Surface card with a Fieldset legend over related Textfields is the baseline field grouping — no `render` merge when children already own their labels.
+
+<FieldsetBillingDemo />
+
+```tsx
+import { Fieldset, Separator, Stack, Surface, Textfield } from '@viraui/react';
+
+<Surface border="all" overflow="hidden" radius="l">
+  <Stack hPadding="l" rowGap="m" vPadding="l">
+    <Fieldset label="Billing details">
+      <Stack rowGap="m">
+        <Separator />
+        <Textfield name="company" label="Company" />
+        <Textfield name="taxId" label="Tax ID" />
+      </Stack>
+    </Fieldset>
+  </Stack>
+</Surface>
+```
+
+### Delivery RadioGroup
+
+Choice groups that need a shared legend or description merge `RadioGroup` through `render` under `Field.Root`. Each option keeps its own `label` / `description`.
+
+<FieldsetDeliveryDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Fieldset, Radio, RadioGroup, Separator, Stack } from '@viraui/react';
+
+const [value, setValue] = useState('express');
+
+<Field.Root name="delivery">
+  <Fieldset
+    label="Delivery"
+    description="Choose one option for this shipment."
+    render={<RadioGroup value={value} onValueChange={setValue} />}
+  >
+    <Stack rowGap="m">
+      <Separator />
+      <Radio label="Standard" description="3–5 business days." value="standard" />
+      <Radio label="Express" description="1–2 business days." value="express" />
+      <Radio
+        label="Overnight"
+        description="Next business morning."
+        value="overnight"
+      />
+    </Stack>
+  </Fieldset>
+</Field.Root>
+```
+
+### Plan cards with group error
+
+Drive Fieldset `error` from `Field.Root` `invalid`. Surface owns the card chrome; highlight the selected card with `color`.
+
+<FieldsetPlanErrorDemo />
+
+```tsx
+import { Field } from '@base-ui/react';
+import { Fieldset, Radio, RadioGroup, Separator, Stack, Surface } from '@viraui/react';
+
+const [value, setValue] = useState('');
+
+<Field.Root dirty invalid={!value} name="plan">
+  <Fieldset
+    label="Plan"
+    error={!value ? 'Select a plan to continue.' : undefined}
+    render={<RadioGroup value={value} onValueChange={setValue} />}
+  >
+    <Stack expandChildren rowGap="s">
+      <Separator />
+      <Surface border="all" radius="m" {...(value === 'free' ? { color: 3 } : {})}>
+        <Radio
+          id="plan-free"
+          label="Free"
+          description="For getting started."
+          value="free"
+          hPadding="m"
+          vPadding="m"
+        />
+      </Surface>
+      <Surface border="all" radius="m" {...(value === 'pro' ? { color: 3 } : {})}>
+        <Radio
+          id="plan-pro"
+          label="Pro"
+          description="For growing teams."
+          value="pro"
+          hPadding="m"
+          vPadding="m"
+        />
+      </Surface>
+    </Stack>
+  </Fieldset>
+</Field.Root>
+```
+
+## Ask your agent
+
+```text tab="Billing details"
+Build a billing details card with a Fieldset legend and two fields: Company and Tax ID. Put a horizontal separator under the legend.
+```
+
+```text tab="Delivery"
+Add a delivery method Fieldset with three radios (Standard, Express, Overnight), each with a short description. Express selected by default. Merge RadioGroup through Fieldset render.
+```
+
+```text tab="Plan error"
+Build a plan picker with Free and Pro radio cards. Show a group error until a plan is selected, and highlight the selected card.
+```
