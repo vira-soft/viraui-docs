@@ -105,7 +105,7 @@ export const SliderSaturationDemo: React.FC = () => {
   const [saturation, setSaturation] = React.useState(100);
 
   return (
-    <SandboxShell height={360} label="Saturation Slider controlling a photo">
+    <SandboxShell height={420} label="Saturation Slider controlling a photo">
       <FieldShell maxInlineSize="20rem">
         <Stack rowGap="l">
           <Surface
