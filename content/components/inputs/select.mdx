@@ -15,16 +15,172 @@ description: Single-choice dropdown with field chrome, grouped options, and an e
   </Card>
 </Cards>
 
-`Select` is a closed-choice control — the trigger shows the current value and opens a popup list of `Select.Option` rows rendered on a `Surface` with `Elevator` shadow so the menu reads above page content. Field label, description, and error copy follow the shared Vira input pattern; value, disabled state, and change handlers pass through Base UI `Select`. Compose options inline or inside `Select.Group` when sections need headings; use `Select.Separator` between groups. For free-text filtering over a long list, prefer [`Autocomplete`](/components/inputs/autocomplete) instead.
+`Select` is a closed-choice control — the trigger shows the current value and opens a popup list of `Select.Option` rows rendered on a `Surface` with `Elevator` shadow so the menu reads above page content. Field label, description, and error copy follow the shared Vira input pattern; value, disabled state, and change handlers pass through Base UI `Select`. Compose options inline or inside `Select.Group` when sections need headings; use `Select.Separator` between groups. Fill a form column from a parent [`Stack`](/components/layout/stack) with `fullWidth` / `expandChildren` — Select has no `fullWidth` prop of its own. For free-text filtering over a long list, prefer [`Autocomplete`](/components/inputs/autocomplete) instead.
 
 ## Common examples
 
-A grouped timezone dropdown with field chrome and elevated popup options is the default closed-choice pattern.
+### Timezone groups
 
-<PreviewSlot label="Select preview" />
+A labeled timezone dropdown with field chrome, grouped regions, and a divider between groups is the default closed-choice pattern. Pass `items` so the trigger can resolve each value to a display label.
+
+<SelectTimezoneDemo />
+
+```tsx
+import { Select } from '@viraui/react';
+
+const timezoneItems = {
+  'europe-london': 'London (GMT)',
+  'europe-paris': 'Paris (CET)',
+  'america-new_york': 'New York (EST)',
+  'america-los_angeles': 'Los Angeles (PST)',
+};
+
+<Select
+  label="Timezone"
+  description="Used for reports, digests, and scheduled jobs."
+  placeholder="Select a timezone"
+  defaultValue="america-new_york"
+  items={timezoneItems}
+>
+  <Select.Group label="Europe">
+    <Select.Option value="europe-london">London (GMT)</Select.Option>
+    <Select.Option value="europe-paris">Paris (CET)</Select.Option>
+  </Select.Group>
+  <Select.Separator />
+  <Select.Group label="Americas">
+    <Select.Option value="america-new_york">New York (EST)</Select.Option>
+    <Select.Option value="america-los_angeles">
+      Los Angeles (PST)
+    </Select.Option>
+  </Select.Group>
+</Select>
+```
+
+### Beside Textfield
+
+Equal-width form rows share a parent `Stack` with `direction="row"` and `expandChildren` — pair Select with [`Textfield`](/components/inputs/textfield) for city/state or similar address fields.
+
+<SelectAddressDemo />
+
+```tsx
+import { Select, Stack, Textfield } from '@viraui/react';
+
+const stateItems = {
+  california: 'California',
+  texas: 'Texas',
+};
+
+<Stack columnGap="m" direction="row" expandChildren>
+  <Textfield label="City" defaultValue="San Francisco" />
+  <Select label="State" defaultValue="california" items={stateItems}>
+    <Select.Option value="california">California</Select.Option>
+    <Select.Option value="texas">Texas</Select.Option>
+  </Select>
+</Stack>
+```
+
+### Option addons
+
+`Select.Option` `addon` takes a leading decorative node. Drive root `addon` from the selected value so the trigger shows the same icon. Set `alignListWithTrigger={false}` when options use a leading addon so the popup is not forced to the trigger width. Pass `label` when the option children are a multi-line stack so the accessible name stays short.
+
+<SelectThemeDemo />
+
+```tsx
+import { Lightning, Moon } from '@phosphor-icons/react';
+import { Select, Stack, Text } from '@viraui/react';
+
+const themeItems = {
+  vivid: 'Vivid',
+  dusk: 'Dusk',
+};
+
+const themeAddons = {
+  vivid: <Lightning aria-hidden size={16} />,
+  dusk: <Moon aria-hidden size={16} />,
+};
+
+const [value, setValue] = useState('vivid');
+
+<Select
+  label="Theme"
+  description="Root addon mirrors the selected option icon."
+  placeholder="Select theme"
+  items={themeItems}
+  value={value}
+  onValueChange={setValue}
+  addon={themeAddons[value]}
+  alignListWithTrigger={false}
+>
+  <Select.Option
+    value="vivid"
+    label="Vivid"
+    addon={themeAddons.vivid}
+  >
+    <Stack>
+      Vivid
+      <Text size="xs" tone="muted">
+        High-contrast default
+      </Text>
+    </Stack>
+  </Select.Option>
+  <Select.Option value="dusk" label="Dusk" addon={themeAddons.dusk}>
+    <Stack>
+      Dusk
+      <Text size="xs" tone="muted">
+        Dim evening chrome
+      </Text>
+    </Stack>
+  </Select.Option>
+</Select>
+```
+
+### Long scrolling list
+
+When the option set outgrows the popup, the list scrolls inside the elevated surface and Base UI scroll arrows appear at the edges — no extra props.
+
+<SelectLongListDemo />
+
+```tsx
+import { Select } from '@viraui/react';
+
+const items = Object.fromEntries(
+  Array.from({ length: 24 }, (_, index) => [
+    `opt-${index}`,
+    `Option ${index + 1}`,
+  ]),
+);
+
+<Select
+  label="Workspace"
+  description="Long lists scroll inside the elevated popup."
+  placeholder="Pick a workspace"
+  defaultValue="opt-11"
+  items={items}
+>
+  {Array.from({ length: 24 }, (_, index) => (
+    <Select.Option key={index} value={`opt-${index}`}>
+      {`Option ${index + 1}`}
+    </Select.Option>
+  ))}
+</Select>
+```
+
+In iframe previews, shadow roots, or custom overlay hosts, pass `container` on Select so the popup portals into that document instead of the default body.
 
 ## Ask your agent
 
 ```text tab="Timezone select"
-Add a labeled timezone dropdown on this settings form with six IANA zones grouped by region and a divider between groups.
+Add a labeled timezone dropdown with four zones in two region groups and a divider between groups.
+```
+
+```text tab="City and state"
+Build a shipping address row with City Textfield and State Select side by side, equal width, California selected by default.
+```
+
+```text tab="Theme with icons"
+Add a Theme Select with two options, each with a leading icon and a one-line muted description. Mirror the selected option icon on the Select trigger addon. Keep the popup width independent of the trigger.
+```
+
+```text tab="Scrolling list"
+Add a Workspace Select with about twenty-four options so the popup scrolls and shows the built-in scroll arrows.
 ```

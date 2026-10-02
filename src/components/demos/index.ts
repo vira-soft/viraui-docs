@@ -85,3 +85,9 @@ export {
   RadioPlansDemo,
   RadioSurfaceCardsDemo,
 } from "./radio-demo";
+export {
+  SelectAddressDemo,
+  SelectLongListDemo,
+  SelectThemeDemo,
+  SelectTimezoneDemo,
+} from "./select-demo";
