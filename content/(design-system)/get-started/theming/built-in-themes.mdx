@@ -13,7 +13,7 @@ Each preset is a single stylesheet. Load that one file in the app, then the Font
 
 Switching brands means swapping that theme import (and its fonts) for another, not stacking sheets. Light and dark already live inside the sheet as `light-dark()` pairs; [What is a theme](/get-started/theming/what-is-a-theme#light-and-dark) explains how `data-mode` picks which side resolves.
 
-During [Setup](/get-started/setup), `viraui-setup` stops at the theme gate before it installs foundation or fonts. Paste this anytime you need to wire or switch a built-in brand:
+During [Setup](/get-started/setup), you choose the brand look first; foundation and matching fonts follow that choice. Paste this anytime you need to wire or switch a built-in brand:
 
 ```text tab="Built-in brand"
 Switch this app to a built-in ViraUI brand. Ask which one I want if I haven't said. Wire it so the whole UI picks up that look — one brand at a time, not stacked themes.
