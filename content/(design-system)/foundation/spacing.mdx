@@ -1,14 +1,16 @@
 ---
 title: Spacing
 icon: GapX
-description: Theme `--space-*` tokens and layout props — compose rhythm without hand-rolling gap CSS.
+description: Theme `--space-*` tokens and layout props. Compose rhythm without hand-rolling gap CSS.
 ---
 
-Spacing on a [theme](/get-started/theming/what-is-a-theme) is a named step scale compiled to `--space-*` custom properties. Layout components — `Stack`, `Grid`, `Surface`, and similar hosts — read those names through token props (`rowGap`, `hPadding`, `columnGap`, and the rest) so you compose rhythm in JSX instead of re-implementing flex gap and padding in CSS. When the brand needs a denser or roomier UI, you retune the scale on the theme sheet; every prop and every `var(--space-…)` reference picks up the new lengths without chasing individual screens.
+Spacing on a [theme](/get-started/theming/what-is-a-theme) is a named step scale compiled to `--space-*` custom properties. Layout components (`Stack`, `Grid`, `Surface`, and similar hosts) read those names through token props (`rowGap`, `hPadding`, `columnGap`, and the rest) so you compose rhythm in JSX instead of re-implementing flex gap and padding in CSS.
+
+When the brand needs a denser or roomier UI, retune the scale on the theme sheet. Every prop and every `var(--space-…)` reference picks up the new lengths without chasing individual screens.
 
 ## Compose with layout props
 
-Gap and padding props accept the same step names the theme defines (`s`, `m`, `l`, and so on — check the active theme or `@viraui/foundation` specs for the live set). Paste a layout prompt into your agent when you are building or reshaping a section.
+Gap and padding props accept the same step names the theme defines (`s`, `m`, `l`, and so on; check the active theme or `@viraui/foundation` specs for the live set). Paste a layout prompt into your agent when you are building or reshaping a section.
 
 ```text tab="Settings block"
 Build a settings section: heading at the top, two-column grid of cards below with comfortable outer padding and tighter gaps between cards. Match the app's spacing rhythm — don't hand-roll gap CSS.
@@ -32,7 +34,7 @@ import { Grid, Stack, Surface, Text, Title } from '@viraui/react';
 </Stack>
 ```
 
-Reach for raw spacing CSS only when layout props cannot express the distance — scroll offsets under sticky chrome, absolute insets, third-party wrappers, and similar one-offs. Even then, reference `var(--space-…)` so a theme edit still flows through.
+Reach for raw spacing CSS only when layout props cannot express the distance: scroll offsets under sticky chrome, absolute insets, third-party wrappers, and similar one-offs. Even then, reference `var(--space-…)` so a theme edit still flows through.
 
 ```css title="Anchor clearance under sticky chrome"
 .section-heading {
@@ -42,7 +44,7 @@ Reach for raw spacing CSS only when layout props cannot express the distance —
 
 ## Tune
 
-App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape rhythm: tweak `--space-*` on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — step names and layout props stay stable; only the resolved lengths change.
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape rhythm: tweak `--space-*` on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes). Step names and layout props stay stable; only the resolved lengths change.
 
 Without Studio, paste a prompt into your agent or edit `--space-*` on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). Every `rowGap`, `hPadding`, and `var(--space-…)` reference picks up the new scale without chasing individual screens.
 

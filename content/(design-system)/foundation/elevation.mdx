@@ -1,20 +1,29 @@
 ---
 title: Elevation
 icon: Layers2
-description: Shadow depth through Elevator — not z-index. Layer numbers usually align both jobs; stacking stays a separate control.
+description: Shadow depth through Elevator, not z-index. Layer numbers usually align both jobs; stacking stays a separate control.
 ---
 
-Elevation is **shadow depth**, not paint order. A raised surface casts a larger, softer shadow — ViraUI maps that to a stepped scale you apply with `Elevator` (or `data-elevation*`). `z-index` is a different contract: who paints on top of whom. The same layer numbers usually line up so something that *looks* elevated also *stacks* where you expect — but `Elevator` never sets `z-index`, and raising a card's shadow does not move it above a sticky header.
+Elevation is **shadow depth**, not paint order. A raised surface casts a larger, softer shadow. ViraUI maps that to a stepped scale you apply with `Elevator` (or `data-elevation*`).
 
-Shadows respect the `--effect-shadows` gate on your [theme](/get-started/theming/what-is-a-theme) — empty or unset means on, `initial` means off. When the gate is off, elevated surfaces stay flat even if attrs remain. For overlay direction, focus, and portals when you compose modals and popovers, see [Base UI](https://base-ui.com).
+`z-index` is a different contract: who paints on top of whom. The same layer numbers usually line up so something that *looks* elevated also *stacks* where you expect, but `Elevator` never sets `z-index`. Raising a card's shadow does not move it above a sticky header.
+
+Shadows respect the `--effect-shadows` gate on your [theme](/get-started/theming/what-is-a-theme): empty or unset means on, `initial` means off. When the gate is off, elevated surfaces stay flat even if attrs remain. For overlay direction, focus, and portals when you compose modals and popovers, see [Base UI](https://base-ui.com).
 
 ## Shadow and stack share one vocabulary
 
-Use the same stepped numbers for shadow *and* stacking so depth stays consistent across the product. Treat them as one vocabulary with two controls: elevate for appearance, stack for paint order. Stay within the built-in scale unless you have an extreme exception — theme chrome may use very high values on `body::after`; app UI should not copy that pattern to beat modals.
+Use the same stepped numbers for shadow *and* stacking so depth stays consistent across the product. Treat them as one vocabulary with two controls: elevate for appearance, stack for paint order.
+
+Stay within the built-in scale unless you have an extreme exception. Theme chrome may use very high values on `body::after`; app UI should not copy that pattern to beat modals.
 
 <SpotIllustration name="foundation-elevation-layers" />
 
-Plane content — page backgrounds, cards, flat controls — usually sits at the low end. Anchored overlays step up above nearby page content. Fixed chrome belongs above the page but below blocking modals. Modals, drawers, and global toasts sit at the top of app UI. Match stack placement to how the surface should read: a popover that looks elevated but paints under its trigger is a stack problem, not an `Elevator` problem.
+- Plane content (page backgrounds, cards, flat controls) usually sits at the low end
+- Anchored overlays step up above nearby page content
+- Fixed chrome belongs above the page but below blocking modals
+- Modals, drawers, and global toasts sit at the top of app UI
+
+Match stack placement to how the surface should read. A popover that looks elevated but paints under its trigger is a stack problem, not an `Elevator` problem.
 
 ## Applying shadows
 
@@ -41,10 +50,11 @@ Give this card a subtle shadow that lifts a bit more on hover. Shadows only — 
 This popover should look elevated above the page but sit below modals and drawers. The sticky header should stay under modal overlays.
 ```
 
-
 ## Tune
 
-Elevation compose stays on `Elevator` and stack `z-index` — what you retune on the theme is whether shadows can run at all, via the `--effect-shadows` gate (and related shadow tokens when the brand softens or hardens depth). App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path: flip that gate and preview depth on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes).
+Elevation compose stays on `Elevator` and stack `z-index`. What you retune on the theme is whether shadows can run at all, via the `--effect-shadows` gate (and related shadow tokens when the brand softens or hardens depth).
+
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path: flip that gate and preview depth on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes).
 
 Without Studio, paste a prompt into your agent or edit `--effect-shadows` on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). Full gate polarity lives under [Effects](/foundation/effects).
 

@@ -1,10 +1,10 @@
 ---
 title: Motion
 icon: AnimationFast
-description: Duration and easing tokens on the theme — functional vs evocative motion, principles, and reduced-motion.
+description: Duration and easing tokens on the theme for functional vs evocative motion, principles, and reduced-motion.
 ---
 
-Motion is animation with intent: shared `--duration-*` and `--easing-*` tokens on the [theme](/get-started/theming/what-is-a-theme) so `@viraui/react` and your custom CSS speak the same timing contract. Components already follow the principles below; retune the token values when the brand needs a different pace — screens keep the same motion roles without hand-tuning each transition.
+Motion is animation with intent: shared `--duration-*` and `--easing-*` tokens on the [theme](/get-started/theming/what-is-a-theme) so `@viraui/react` and your custom CSS speak the same timing contract. Components already follow the principles below. Retune the token values when the brand needs a different pace; screens keep the same motion roles without hand-tuning each transition.
 
 ## Principles
 
@@ -12,19 +12,19 @@ Motion is animation with intent: shared `--duration-*` and `--easing-*` tokens o
 
 <MotionDemoDiscreet height={400} />
 
-Every animation earns its place without pulling attention from the task. Keep transitions fast and agile so nobody waits on motion to finish. Draw attention with animation only when that **is** the goal — surfacing an alert, a hero entrance, a celebration.
+Every animation earns its place without pulling attention from the task. Keep transitions fast and agile so nobody waits on motion to finish. Draw attention with animation only when that **is** the goal: surfacing an alert, a hero entrance, a celebration.
 
 ### Assistive
 
 <MotionDemoAssistive height={400} />
 
-Motion supports the message; it never carries information alone. Use it to hint that a control is interactive or to give immediate feedback when someone acts — copy and structure still communicate if the animation never runs.
+Motion supports the message; it never carries information alone. Use it to hint that a control is interactive or to give immediate feedback when someone acts. Copy and structure still communicate if the animation never runs.
 
 ### Intuitive
 
 <MotionDemoIntuitive height={400} />
 
-Movement should recall how objects behave in the real world — acceleration, gravity, volume — so the result feels natural rather than arbitrary. Familiar open/close and settle patterns make the app easier to learn, especially on touch screens where the finger drives the interface.
+Movement should recall how objects behave in the real world (acceleration, gravity, volume) so the result feels natural rather than arbitrary. Familiar open/close and settle patterns make the app easier to learn, especially on touch screens where the finger drives the interface.
 
 ### Playful but self-aware
 
@@ -34,29 +34,36 @@ Animation can carry brand personality, but playful motion only fits when the ton
 
 ## Animations
 
-ViraUI motion splits into two roles — **functional** and **evocative** — both built from the same principles and theme tokens.
+ViraUI motion splits into two roles, **functional** and **evocative**, both built from the same principles and theme tokens.
 
 ### Functional
 
 <MotionDemoFunctional />
 
-Everyday UI feedback — hover and focus, expand and collapse, menus, dialogs, tabs — is functional motion. It stays discreet (short, out of the way), assistive (confirms the action), and intuitive (familiar settle patterns). Keep timing predictable: `--duration-instant` or `--duration-fast` with `--easing-standard` or `--easing-entrance`. In serious or dense contexts — errors, destructive actions, legal copy, data-heavy tables — stay in that same lane. If someone asks for "delight" on a dense surface, prefer a quieter cue such as a chip and a live region instead of bounce.
+Everyday UI feedback (hover and focus, expand and collapse, menus, dialogs, tabs) is functional motion. It stays discreet (short, out of the way), assistive (confirms the action), and intuitive (familiar settle patterns).
+
+Keep timing predictable: short duration steps with standard or entrance easings. In serious or dense contexts (errors, destructive actions, legal copy, data-heavy tables), stay in that same lane. If someone asks for "delight" on a dense surface, prefer a quieter cue such as a chip and a live region instead of bounce.
 
 ### Evocative
 
 <MotionDemoEvocative />
 
-Evocative motion is when attention **is** the goal: a toast arriving, a badge popping in, a celebration, or a hero entrance. It still follows the same principles with a louder dial — discreet means you earn the spotlight only for that rare moment; assistive means copy still carries the message; intuitive means personality easings still read like spring and settle, not random noise; playful but self-aware means elastic and wiggle only when the tone allows.
+Evocative motion is when attention **is** the goal: a toast arriving, a badge popping in, a celebration, or a hero entrance. It still follows the same principles with a louder dial:
 
-Use longer timing (`--duration-slow` or `--duration-slowest`) and personality easings (`--easing-elastic`, `--easing-wiggle`) on purpose. A flourish on every card stops feeling special and starts feeling noisy — reserve that energy for moments people should notice.
+- Discreet means you earn the spotlight only for that rare moment
+- Assistive means copy still carries the message
+- Intuitive means personality easings still read like spring and settle, not random noise
+- Playful but self-aware means elastic and wiggle only when the tone allows
+
+Use longer timing and personality easings on purpose. A flourish on every card stops feeling special and starts feeling noisy; reserve that energy for moments people should notice.
 
 ## Accessibility
 
-Avoid large, sudden movements and multiple objects moving at once in different directions — people with epilepsy or vestibular disorders can be especially sensitive. Respect **Reduce motion** on the user's device: every transition you add in custom CSS should include a `prefers-reduced-motion: reduce` fallback (or equivalent). Motion never carries meaning alone.
+Avoid large, sudden movements and multiple objects moving at once in different directions. People with epilepsy or vestibular disorders can be especially sensitive. Respect **Reduce motion** on the user's device: every transition you add in custom CSS should include a `prefers-reduced-motion: reduce` fallback (or equivalent). Motion never carries meaning alone.
 
 ## Tune
 
-App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape pace: tweak `--duration-*` and `--easing-*` on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — built-in components and token-based custom CSS keep the same motion roles; only the timing changes.
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape pace: tweak duration and easing tokens on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes). Built-in components and token-based custom CSS keep the same motion roles; only the timing changes.
 
 Without Studio, paste a prompt into your agent or edit those tokens on a custom theme sheet (or switch a [built-in preset](/get-started/theming/built-in-themes)). The first prompt retunes the theme; the others add motion on a custom surface while still respecting the same tokens and reduced-motion.
 
