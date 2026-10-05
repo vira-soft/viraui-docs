@@ -15,19 +15,35 @@ description: Supplementary hint on hover or focus — Trigger plus Content, shar
   </Card>
 </Cards>
 
-Tooltip shows a short hint when someone hovers or focuses a trigger — never the only place critical information lives. Wrap the app once in `Tooltip.Provider` at the root (same overlay shell as [Setup](/get-started/setup)) so open and close delays stay consistent across every tooltip on the page. Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`; the trigger accepts any control through `render`, including [IconButton](/components/actions/icon-button) with an `aria-label` when the glyph alone would be ambiguous.
+Tooltip shows a short hint when someone hovers or focuses a trigger. It is never the only place critical information should live. Wrap the app once in `Tooltip.Provider` at the root (same overlay shell as [Setup](/get-started/setup)) so open and close delays stay consistent across every tooltip on the page.
 
-Content is brief — a [Text](/components/typography/text) node or a short phrase. For icon-only controls, repeat the accessible name in the tooltip so sighted hover matches what screen readers hear. Detached triggers and multiple triggers sharing one content surface use `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes. Prefer [Popover](/components/overlays/popover) when the surface needs interaction, a title, or dismiss controls — tooltips are read-only hints.
+Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`. The trigger accepts any control through `render`, including [IconButton](/components/actions/icon-button) with an `aria-label` when the glyph alone would be ambiguous. Content stays brief — a [Text](/components/typography/text) node or a short phrase. For icon-only controls, repeat the accessible name in the tooltip so sighted hover matches what screen readers hear.
+
+## When to use
+
+- A short label or clarification on hover/focus for a control that already has an accessible name
+- Icon-only toolbar buttons where the visible hint should match `aria-label`
+- Shared delay across many tooltips via one `Tooltip.Provider`
+
+## When not to use
+
+- The surface needs interaction, a title, or dismiss controls → [Popover](/components/overlays/popover)
+- A list of commands from a trigger → [Menu](/components/overlays/menu)
+- Essential instructions that must stay visible without hover → put them in on-page copy
+
+## Related
+
+- [Popover](/components/overlays/popover) — anchored interactive panels
+- [Menu](/components/overlays/menu) — command lists from a trigger
+- [IconButton](/components/actions/icon-button) — common host for icon-only tooltips
 
 ## Common examples
 
-A labeled button with matching hint text is the baseline pattern.
+### Matching label
+
+A labeled button with matching hint text is the baseline pattern. Prefer the provider default delay in product UI; zero delay is for demos only.
 
 <PreviewSlot label="Tooltip preview" />
-
-```text tab="Button tooltip"
-Add a tooltip on the Bold button that repeats the label Bold. Use zero delay only in this demo.
-```
 
 ```tsx
 import { Button, Text, Tooltip } from '@viraui/react';
@@ -42,7 +58,13 @@ import { Button, Text, Tooltip } from '@viraui/react';
 </Tooltip.Provider>
 ```
 
+Detached triggers and multiple triggers sharing one content surface use `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes.
+
 ## Ask your agent
+
+```text tab="Button tooltip"
+Add a tooltip on the Bold button that repeats the label Bold. Use zero delay only in this demo.
+```
 
 ```text tab="Tooltips to icon-only"
 Add short tooltips on each icon-only toolbar control that lacks visible text. Do not hide essential instructions in tooltips alone — duplicate key guidance in visible copy.
