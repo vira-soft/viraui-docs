@@ -103,3 +103,8 @@ export {
   SwitchPreferencesDemo,
   SwitchSurfaceCardDemo,
 } from "./switch-demo";
+export {
+  TextareaFitContentDemo,
+  TextareaMessageDemo,
+  TextareaResizeDemo,
+} from "./textarea-demo";

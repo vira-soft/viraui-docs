@@ -15,16 +15,96 @@ description: Multi-line text input with label, helper copy, and validation throu
   </Card>
 </Cards>
 
-`Textarea` renders a native `<textarea>` through Base UI `Field.Control` inside the same Stack field layout as `Textfield` — label, description, and error slots share typography and spacing tokens so long-form copy fields look like the rest of your form without custom CSS. Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation and dirty-state errors flow through `Field` the same way as single-line inputs. Reach for `Textarea` when the value spans multiple lines — profile bios, notes, message bodies — and keep `Textfield` for single-line identifiers.
+`Textarea` renders a native `<textarea>` through Base UI `Field.Control` inside the same Stack field layout as [`Textfield`](/components/inputs/textfield) — label, description, and error slots share typography and spacing tokens so long-form copy fields match the rest of the form. Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation and dirty-state errors flow through `Field` the same way as single-line inputs. `fitContent` sets `field-sizing: content` so the control grows with its value; `resize` opts into native CSS resize (`vertical`, `horizontal`, or `both`) when drag handles help. Reach for `Textarea` when the value spans multiple lines — notes, message bodies, bios — and keep `Textfield` for single-line identifiers. Width fill comes from a parent `Stack` with `fullWidth` / `expandChildren`; Textarea has no `fullWidth` prop and no addon slots.
 
 ## Common examples
 
-A feedback form with labeled message body rows and Field error wiring is the baseline long-form input.
+### Message body
 
-<PreviewSlot label="Textarea preview" />
+A labeled message with helper copy and Field validation is the baseline long-form input. Pair it with a submit button in a `Stack` — no extra Field wrapper around Textarea itself.
+
+<Example preview={<TextareaMessageDemo />}>
+
+```tsx
+import { Button, Stack, Textarea } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Textarea
+    label="Message"
+    description="Tell us what went wrong or what would help next time."
+    name="message"
+    placeholder="Describe the issue in a few sentences…"
+    rows={4}
+    validationMode="onChange"
+    validate={(value) => {
+      const trimmed = String(value ?? '').trim();
+      if (!trimmed) return 'Enter a message.';
+      if (trimmed.length < 12) return 'Message must be at least 12 characters.';
+      return null;
+    }}
+  />
+  <Button />
+</Stack>
+```
+
+</Example>
+
+### Fit content
+
+`fitContent` grows the control with its value via `field-sizing: content`. Keep a small `rows` floor; the field still respects `min-block-size`. Use this when notes should expand as the user types instead of forcing a drag handle.
+
+<Example preview={<TextareaFitContentDemo />}>
+
+```tsx
+import { Textarea } from '@viraui/react';
+
+<Textarea
+  fitContent
+  defaultValue="Ship notes…"
+  label="Release notes"
+  description="The field grows as you add lines — no drag handle needed."
+  name="release-notes"
+  rows={2}
+/>
+```
+
+</Example>
+
+### Vertical resize
+
+Combine `resize="vertical"` with `fitContent` when the field should grow with content and still offer a drag handle for extra room. Omitted `resize` keeps the handle off (`none`).
+
+<Example preview={<TextareaResizeDemo />}>
+
+```tsx
+import { Button, Stack, Textarea } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Textarea
+    fitContent
+    resize="vertical"
+    label="Notes"
+    description="Grows with the value; drag the corner when you want more room."
+    name="notes"
+    placeholder="Add any notes…"
+    rows={3}
+  />
+  <Button />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Feedback form"
-Add a feedback section with subject line, message body (about four rows tall), and submit. Show validation errors after the user edits a field.
+```text tab="Feedback message"
+Add a feedback section with a labeled Message textarea about four rows tall and a send button. Show a validation error after the user edits if the message is empty or under 12 characters.
+```
+
+```text tab="Growing notes"
+Build a Release notes textarea that grows with the typed text using fitContent. Start with a couple of seed lines so the growth is obvious.
+```
+
+```text tab="Resizable notes"
+Add a Notes textarea with fitContent and vertical resize, plus a save button under it.
 ```
