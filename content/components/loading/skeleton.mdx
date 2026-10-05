@@ -94,6 +94,87 @@ import { Skeleton, Stack, Surface, Text, Title } from '@viraui/react';
 
 </Example>
 
+### Overlay reveal wipe
+
+When the fetch completes, swap Overlay cards for the real tree inside a View Transition. Put `view-transition-name: skeleton-overlay` on a CSS class that wraps both states — Skeleton paints the wipe from that name. Click **Show content** in the preview to run it.
+
+<Example preview={<SkeletonRevealDemo />}>
+
+```tsx
+import { flushSync } from 'react-dom';
+import { Button, Skeleton, Stack, Surface, Text, Title } from '@viraui/react';
+
+function revealContent() {
+  if (!document.startViewTransition) {
+    setLoading(false);
+    return;
+  }
+
+  document.startViewTransition(() => {
+    flushSync(() => setLoading(false));
+  });
+}
+
+<div className="skeleton-overlay-shell">
+  <Surface
+    aria-busy={loading}
+    aria-label={loading ? 'Loading overview card' : 'Overview card'}
+    border="all"
+    overflow="hidden"
+    radius="l"
+    role="region"
+  >
+    <Stack hPadding="m" rowGap="m" vPadding="m">
+      {loading ? (
+        <>
+          <Stack maxWidth="20ch" rowGap="xs">
+            <Skeleton.Overlay>
+              <Title />
+            </Skeleton.Overlay>
+            <Skeleton.Overlay>
+              <Text size="s" tone="muted" />
+            </Skeleton.Overlay>
+          </Stack>
+          <Skeleton.Overlay>{/* media */}</Skeleton.Overlay>
+          <Skeleton.Overlay>
+            <Text size="s" />
+          </Skeleton.Overlay>
+          <Stack columnGap="s" direction="row" expandChildren>
+            <Button onClick={revealContent} size="s">
+              Show content
+            </Button>
+            <Skeleton.Overlay>
+              <Button size="s" variant="secondary" />
+            </Skeleton.Overlay>
+          </Stack>
+        </>
+      ) : (
+        <>
+          <Stack rowGap="xs">
+            <Title />
+            <Text size="s" tone="muted" />
+          </Stack>
+          {/* media */}
+          <Text size="s" />
+          <Stack columnGap="s" direction="row" expandChildren>
+            <Button size="s" variant="secondary" />
+            <Button size="s" variant="secondary" />
+          </Stack>
+        </>
+      )}
+    </Stack>
+  </Surface>
+</div>
+```
+
+```css
+.skeleton-overlay-shell {
+  view-transition-name: skeleton-overlay;
+}
+```
+
+</Example>
+
 ### Equal-width actions
 
 Stack `expandChildren` on a row of Skeletons so action placeholders share width like a dual Button footer — no flex CSS.
@@ -129,6 +210,10 @@ Show a loading profile row: circular avatar placeholder beside two text lines, i
 
 ```text tab="Card overlay"
 While this card's data is pending, show loading overlays on the headline and supporting text so layout size matches the loaded state.
+```
+
+```text tab="Reveal wipe"
+When the overview card finishes loading, wipe the skeleton overlays into the real title, media, and actions with a view transition.
 ```
 
 ```text tab="Action row"

@@ -190,6 +190,7 @@ export {
   SkeletonAvatarTextDemo,
   SkeletonEqualActionsDemo,
   SkeletonOverlayDemo,
+  SkeletonRevealDemo,
 } from "./skeleton-demo";
 export {
   SpinnerButtonLoadingDemo,
