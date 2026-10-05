@@ -1,4 +1,5 @@
 export {
+  SurfaceAxisPaddingDemo,
   SurfaceBorderSidesDemo,
   SurfaceColorRampDemo,
   SurfaceNestedConcentricDemo,

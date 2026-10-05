@@ -170,6 +170,58 @@ export const StackNestedDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** One-sided and alternating padding via `[start, end]` tuples. */
+export const StackAxisPaddingDemo: React.FC = () => (
+  <SandboxShell
+    height={320}
+    label="Stack axis padding with [start, end] tuples"
+  >
+    <PanelShell>
+      <Surface border="all" color={1} overflow="hidden" radius="l">
+        <Stack>
+          <Stack hPadding="l" rowGap="xs" vPadding={["l", 0]}>
+            <Title render={<h2 />} size="6">
+              Mentions
+            </Title>
+            <Text maxWidth="22rem" size="s" tone="muted">
+              Unread notes from reviewers — top padding only on this header.
+            </Text>
+          </Stack>
+          <Stack hPadding={["l", "m"]} rowGap="s" vPadding="m">
+            <Stack
+              columnGap="m"
+              direction="row"
+              hAlign="space-between"
+              vAlign="center"
+            >
+              <Text size="s">Sarah asked for a tighter hero crop.</Text>
+              <Text size="xs" tone="muted">
+                2h
+              </Text>
+            </Stack>
+            <Stack
+              columnGap="m"
+              direction="row"
+              hAlign="space-between"
+              vAlign="center"
+            >
+              <Text size="s">Marcus flagged the billing copy.</Text>
+              <Text size="xs" tone="muted">
+                5h
+              </Text>
+            </Stack>
+          </Stack>
+          <Stack hPadding="l" vPadding={[0, "l"]}>
+            <Button size="s" type="button" variant="secondary">
+              View all
+            </Button>
+          </Stack>
+        </Stack>
+      </Surface>
+    </PanelShell>
+  </SandboxShell>
+);
+
 /** Semantic root via render — header with brand and nav links. */
 export const StackSemanticDemo: React.FC = () => (
   <SandboxShell height={140} label="Semantic Stack header with nav">

@@ -111,7 +111,7 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 <Stack render={<Surface border="all" color={1} overflow="hidden" radius="l" />}>
-  <Stack hPadding="l" rowGap="m" vPadding="l">
+  <Stack hPadding="l" rowGap="l" vPadding="l">
     <Title />
     <Text />
   </Stack>
@@ -119,6 +119,33 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
     <Stack direction="row" hAlign="space-between">
       <Button variant="secondary" />
       <Button />
+    </Stack>
+  </Surface>
+</Stack>
+```
+
+</Example>
+
+### Axis padding tuples
+
+Pass a `[start, end]` tuple when start and end should use different tokens — never invent `paddingBlock*` / `paddingInline*` CSS for those cases. Use `0` on one side only when that edge is intentionally flush (media, shared seam); keep a token when text must clear a border.
+
+<Example preview={<SurfaceAxisPaddingDemo />}>
+
+```tsx
+import { Button, Stack, Surface, Text } from '@viraui/react';
+
+<Stack rowGap="s">
+  <Surface border="all" color={2} hPadding={['l', 'm']} radius="m" vPadding={['s', 'm']}>
+    <Stack rowGap="xs">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Stack>
+  </Surface>
+  <Surface border="all" color={1} hPadding={['m', 'l']} radius="m" vPadding={['m', 's']}>
+    <Stack direction="row" hAlign="space-between" vAlign="center">
+      <Text size="s" />
+      <Button size="s" variant="secondary" />
     </Stack>
   </Surface>
 </Stack>
@@ -142,4 +169,8 @@ Build an invite teammates card with a rounded outer panel and an inset seats sum
 
 ```text tab="Defaults panel"
 Build a workspace defaults panel: title and two setting rows in the body, Reset and Save in a tinted footer strip. Use one host for the card chrome and flex layout, and token padding instead of custom CSS.
+```
+
+```text tab="Asymmetric cards"
+Build two stacked bordered cards with unequal start/end padding on both axes — first card more start and bottom inset, second more end and top — using Surface hPadding/vPadding [start, end] tuples, not custom CSS.
 ```

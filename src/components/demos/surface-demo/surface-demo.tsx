@@ -208,6 +208,55 @@ export const SurfaceNestedConcentricDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** Alternating padding via `[start, end]` tuples (both sides inset). */
+export const SurfaceAxisPaddingDemo: React.FC = () => (
+  <SandboxShell
+    height={280}
+    label="Surface axis padding with [start, end] tuples"
+  >
+    <PanelShell maxInlineSize="24rem">
+      <Stack rowGap="s">
+        <Surface
+          border="all"
+          color={2}
+          hPadding={["l", "m"]}
+          radius="m"
+          vPadding={["s", "m"]}
+        >
+          <Stack rowGap="xs">
+            <Text size="s" weight="semibold">
+              Release notes
+            </Text>
+            <Text size="s" tone="muted">
+              More start and bottom inset than end and top — still clears the
+              border.
+            </Text>
+          </Stack>
+        </Surface>
+        <Surface
+          border="all"
+          color={1}
+          hPadding={["m", "l"]}
+          radius="m"
+          vPadding={["m", "s"]}
+        >
+          <Stack
+            columnGap="m"
+            direction="row"
+            hAlign="space-between"
+            vAlign="center"
+          >
+            <Text size="s">Draft ready for review</Text>
+            <Button size="s" type="button" variant="secondary">
+              Open
+            </Button>
+          </Stack>
+        </Surface>
+      </Stack>
+    </PanelShell>
+  </SandboxShell>
+);
+
 /** Token padding on Surface; Stack owns child gaps on one composed host. */
 export const SurfacePaddingComposeDemo: React.FC = () => (
   <SandboxShell height={360} label="Surface padding with Stack-composed body">
@@ -217,8 +266,8 @@ export const SurfacePaddingComposeDemo: React.FC = () => (
           <Surface border="all" color={1} overflow="hidden" radius="l" />
         }
       >
-        <Stack hPadding="l" rowGap="m" vPadding="l">
-          <Stack rowGap="2xs">
+        <Stack hPadding="l" rowGap="l" vPadding="l">
+          <Stack rowGap="xs">
             <Title render={<h2 />} size="6">
               Workspace defaults
             </Title>

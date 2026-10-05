@@ -13,6 +13,12 @@
       "skillPath": "skills/authoring-react/SKILL.md",
       "computedHash": "2d95cb5b6bf1eeba389c7b2d15ba6119046270a66578b6e91ed3374fca3b37c4"
     },
+    "doc-coauthoring": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "computedHash": "b964e4c3ffe13f66f76dd7919073e60c7aec622cd8a8363bb36323188100cf8e"
+    },
     "viraui-a11y": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/IQZPjm9biEMkAZOP",

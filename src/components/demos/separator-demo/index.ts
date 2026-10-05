@@ -1,4 +1,5 @@
 export {
+  SeparatorAxisPaddingDemo,
   SeparatorListDemo,
   SeparatorThicknessDemo,
   SeparatorToolbarDemo,

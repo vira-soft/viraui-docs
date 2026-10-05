@@ -121,12 +121,14 @@ export {
   TextfieldFitContentDemo,
 } from "./textfield-demo";
 export {
+  StackAxisPaddingDemo,
   StackColumnDemo,
   StackEqualRowDemo,
   StackNestedDemo,
   StackSemanticDemo,
 } from "./stack-demo";
 export {
+  SurfaceAxisPaddingDemo,
   SurfaceBorderSidesDemo,
   SurfaceColorRampDemo,
   SurfaceNestedConcentricDemo,
@@ -144,6 +146,7 @@ export {
   MasonryVariableHeightDemo,
 } from "./masonry-demo";
 export {
+  SeparatorAxisPaddingDemo,
   SeparatorListDemo,
   SeparatorThicknessDemo,
   SeparatorToolbarDemo,

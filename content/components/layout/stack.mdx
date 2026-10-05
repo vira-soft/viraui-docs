@@ -81,6 +81,36 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 </Example>
 
+### Axis padding tuples
+
+`hPadding` / `vPadding` accept a `[start, end]` tuple — use `0` on one side for single-edge inset, or different tokens when start and end should not match. Prefer the tuple over custom `paddingBlock*` / `paddingInline*` CSS.
+
+<Example preview={<StackAxisPaddingDemo />}>
+
+```tsx
+import { Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack>
+    <Stack hPadding="l" rowGap="xs" vPadding={['l', 0]}>
+      <Title />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Stack hPadding={['l', 'm']} rowGap="s" vPadding="m">
+      <Stack direction="row" hAlign="space-between" vAlign="center">
+        <Text size="s" />
+        <Text size="xs" tone="muted" />
+      </Stack>
+    </Stack>
+    <Stack hPadding="l" vPadding={[0, 'l']}>
+      <Button size="s" variant="secondary" />
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
 ### Semantic root
 
 `render` swaps the default `div` for a native landmark while Stack still owns direction, gap, and padding — useful for page chrome and nested `nav` clusters.
@@ -123,6 +153,10 @@ Add a full-width footer row where Cancel, Delete, and Save share the strip evenl
 
 ```text tab="Settings panel"
 Compose a settings panel with a title and short description, then a footer bar with Reset and Save — nest stacks so padding and gaps stay on the theme scale.
+```
+
+```text tab="Mentions list"
+Build a mentions panel: title with top-only padding, list rows with more start than end inset, and a View all button with bottom-only padding — use hPadding/vPadding [start, end] tuples, not custom CSS.
 ```
 
 ```text tab="Page header"

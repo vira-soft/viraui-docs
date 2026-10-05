@@ -121,6 +121,54 @@ export const SeparatorToolbarDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** One-sided and alternating padding via `[start, end]` tuples. */
+export const SeparatorAxisPaddingDemo: React.FC = () => (
+  <SandboxShell
+    height={260}
+    label="Separator axis padding with [start, end] tuples"
+  >
+    <PanelShell>
+      <Surface border="all" color={1} overflow="hidden" radius="l">
+        <Stack rowGap="m" vPadding="l">
+          <Stack hPadding="l" rowGap="xs">
+            <Title render={<h2 />} size="6">
+              Invoice preview
+            </Title>
+            <Text maxWidth="22rem" size="s" tone="muted">
+              Rule insets more on the end so it clears a trailing status chip.
+            </Text>
+          </Stack>
+          <Separator hPadding={["l", "2xl"]} size="m" />
+          <Stack hPadding="l" rowGap="s">
+            <Stack
+              columnGap="m"
+              direction="row"
+              hAlign="space-between"
+              vAlign="center"
+            >
+              <Text size="s">Northwind Labs</Text>
+              <Text size="xs" tone="muted">
+                Due Fri
+              </Text>
+            </Stack>
+            <Stack
+              columnGap="m"
+              direction="row"
+              hAlign="space-between"
+              vAlign="center"
+            >
+              <Text size="s">Amount</Text>
+              <Text family="mono" size="s" weight="semibold">
+                $840.00
+              </Text>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Surface>
+    </PanelShell>
+  </SandboxShell>
+);
+
 /** size and hPadding inset a section rule under a panel title. */
 export const SeparatorThicknessDemo: React.FC = () => (
   <SandboxShell
