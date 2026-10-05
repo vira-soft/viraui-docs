@@ -14,6 +14,11 @@ type MotionDemoDiscreetToastProps = {
    * Toast manager used for the autoplay loop.
    */
   toastManager: ReturnType<typeof Toast.createToastManager>;
+  /**
+   * Sandbox canvas height — fills the low-fi shell (auto-height iframe
+   * makes percentage block-size collapse to content).
+   */
+  height: number;
 };
 
 const ToastRegion: React.FC = () => {
@@ -51,12 +56,13 @@ const ToastRegion: React.FC = () => {
  */
 const MotionDemoDiscreetToast: React.FC<MotionDemoDiscreetToastProps> = ({
   toastManager,
+  height,
 }) => {
   useViraSandboxCss(css);
 
   return (
     <Toast.Provider toastManager={toastManager}>
-      <div className={styles.Fill}>
+      <div className={styles.Fill} style={{ blockSize: height }}>
         <Surface border="all" className={styles.Shell} color={2}>
           <aside className={styles.Sidebar} aria-hidden="true">
             <div className={styles.Rail} />

@@ -65,7 +65,7 @@ export const MotionDemoDiscreet: React.FC<MotionDemoDiscreetProps> = ({
       padded={false}
       vAlign="start"
     >
-      <MotionDemoDiscreetToast toastManager={toastManager} />
+      <MotionDemoDiscreetToast height={height} toastManager={toastManager} />
     </ViraSandbox>
   );
 };
