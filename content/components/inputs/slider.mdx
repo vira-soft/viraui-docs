@@ -15,7 +15,26 @@ description: Range input for numeric values — single thumb or dual-thumb range
   </Card>
 </Cards>
 
-`Slider` exposes a draggable thumb on a track for choosing one number or a min–max pair between `min`, `max`, and `step`. Label, description, and error copy follow the shared field pattern; orientation, disabled state, and value change handlers pass through Base UI `Slider`. Pass a two-element `value` / `defaultValue` array for range mode — the component detects range layout automatically. Show the live number with `renderValue` (`true` for default mono formatting, or a function that owns the value slot). The track fills its container — grow it with a parent [`Stack`](/components/layout/stack) `expandChildren` or a sized host, not fixed pixel lengths. Use `Slider` when the valid interval is continuous and position on a scale matters more than a named choice; use [`Select`](/components/inputs/select) or [`Radio`](/components/inputs/radio) for discrete options.
+Slider exposes a draggable thumb on a track for choosing one number or a min–max pair between `min`, `max`, and `step`. Label, description, and error copy follow the shared field pattern; orientation, disabled state, and value change handlers pass through Base UI.
+
+Pass a two-element `value` / `defaultValue` array for range mode; the component detects dual thumbs automatically. Show the live number with `renderValue` (`true` for default mono formatting, or a function that owns the value slot). The track fills its container — grow it with a parent [Stack](/components/layout/stack) `expandChildren` or a sized host, not fixed pixel lengths.
+
+## When to use
+
+- A continuous numeric interval where position on a scale matters (amount, price band, saturation)
+- Dual-thumb ranges, external label rows, or linked vertical bands
+
+## When not to use
+
+- Discrete named options → [Select](/components/inputs/select) or [Radio](/components/inputs/radio)
+- A read-only fill level the user does not drag → [Meter](/components/widgets/meter)
+- Indeterminate or route-level loading → [LinearProgress](/components/loading/linear-progress)
+
+## Related
+
+- [Select](/components/inputs/select) — named closed choices
+- [Radio](/components/inputs/radio) — short visible single-choice sets
+- [Meter](/components/widgets/meter) — read-only scalar on a track
 
 ## Common examples
 

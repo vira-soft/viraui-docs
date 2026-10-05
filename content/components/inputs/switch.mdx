@@ -15,7 +15,26 @@ description: Toggle control for immediate on/off settings with label and helper 
   </Card>
 </Cards>
 
-`Switch` maps a boolean setting to a sliding toggle. Checked state, disabled, and change handlers pass through Base UI `Switch`, while `label`, `description`, and `error` use the same field-row layout as [`Checkbox`](/components/inputs/checkbox) and [`Radio`](/components/inputs/radio). Unlike those controls, Switch already owns its `Field.Root` — pass `name`, `invalid`, and validation props on Switch itself; do not wrap it in another field root. Prefer Switch when the change applies immediately (feature flags, notification mute, effect toggles); use Checkbox when the value is part of a larger form batch or when several independent options can stay on at once. `size` scales the track and label (`s` by default, or `m`).
+Switch maps a boolean setting to a sliding toggle. Checked state, disabled, and change handlers pass through Base UI; `label`, `description`, and `error` use the same field-row layout as [Checkbox](/components/inputs/checkbox) and [Radio](/components/inputs/radio).
+
+Unlike those controls, Switch already owns its `Field.Root`. Pass `name`, `invalid`, and validation props on Switch itself; do not wrap it in another field root. `size` scales the track and label (`s` by default, or `m`).
+
+## When to use
+
+- A setting that should apply as soon as the thumb moves (notifications, feature flags, effects)
+- Preference rows where each toggle is independent and labeled
+
+## When not to use
+
+- The boolean ships with a larger form submit → [Checkbox](/components/inputs/checkbox)
+- Exactly one choice from a set → [Radio](/components/inputs/radio)
+- A pressed toolbar control that may swap icons → [ToggleButton](/components/actions/toggle-button)
+
+## Related
+
+- [Checkbox](/components/inputs/checkbox) — form-batch and multi-select booleans
+- [Radio](/components/inputs/radio) — mutually exclusive options
+- [ToggleButton](/components/actions/toggle-button) — pressed-state toolbar toggles
 
 ## Common examples
 

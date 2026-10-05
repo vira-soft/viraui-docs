@@ -15,7 +15,27 @@ description: Single-choice dropdown with field chrome, grouped options, and an e
   </Card>
 </Cards>
 
-`Select` is a closed-choice control — the trigger shows the current value and opens a popup list of `Select.Option` rows rendered on a `Surface` with `Elevator` shadow so the menu reads above page content. Field label, description, and error copy follow the shared Vira input pattern; value, disabled state, and change handlers pass through Base UI `Select`. Compose options inline or inside `Select.Group` when sections need headings; use `Select.Separator` between groups. Fill a form column from a parent [`Stack`](/components/layout/stack) with `fullWidth` / `expandChildren` — Select has no `fullWidth` prop of its own. For free-text filtering over a long list, prefer [`Autocomplete`](/components/inputs/autocomplete) instead.
+Select is a closed-choice control. The trigger shows the current value and opens a popup list of `Select.Option` rows on an elevated `Surface`, so the menu reads above page content.
+
+Field label, description, and error copy follow the shared input pattern; value, disabled state, and change handlers pass through Base UI. Compose options inline or inside `Select.Group` when sections need headings; use `Select.Separator` between groups. Fill a form column from a parent [Stack](/components/layout/stack) with `fullWidth` / `expandChildren` — Select has no `fullWidth` prop of its own.
+
+## When to use
+
+- Exactly one value from a fixed list that fits in a popup (timezone, state, theme)
+- Grouped options with section headings and dividers
+- Option rows that need leading addons mirrored on the trigger
+
+## When not to use
+
+- Users type to filter, or may keep a value not in the list → [Autocomplete](/components/inputs/autocomplete)
+- A short list that should stay visible on the page → [Radio](/components/inputs/radio)
+- Free-form single-line text with no option list → [Textfield](/components/inputs/textfield)
+
+## Related
+
+- [Autocomplete](/components/inputs/autocomplete) — filterable or free-form suggestions
+- [Radio](/components/inputs/radio) — visible single-choice rows
+- [Textfield](/components/inputs/textfield) — open text beside Select in form rows
 
 ## Common examples
 

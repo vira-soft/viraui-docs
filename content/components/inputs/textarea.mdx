@@ -15,7 +15,24 @@ description: Multi-line text input with label, helper copy, and validation throu
   </Card>
 </Cards>
 
-`Textarea` renders a native `<textarea>` through Base UI `Field.Control` inside the same Stack field layout as [`Textfield`](/components/inputs/textfield) — label, description, and error slots share typography and spacing tokens so long-form copy fields match the rest of the form. Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation and dirty-state errors flow through `Field` the same way as single-line inputs. `fitContent` sets `field-sizing: content` so the control grows with its value; `resize` opts into native CSS resize (`vertical`, `horizontal`, or `both`) when drag handles help. Reach for `Textarea` when the value spans multiple lines — notes, message bodies, bios — and keep `Textfield` for single-line identifiers. Width fill comes from a parent `Stack` with `fullWidth` / `expandChildren`; Textarea has no `fullWidth` prop and no addon slots.
+Textarea is the multi-line control for notes, message bodies, bios, and other long-form values. It uses the same field layout as [Textfield](/components/inputs/textfield) for label, description, and error copy, so long answers match the rest of the form.
+
+Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation flows through Base UI `Field` the same way as single-line inputs. `fitContent` grows the control with its value; `resize` opts into a native drag handle (`vertical`, `horizontal`, or `both`) when users need more room. Width fill comes from a parent [Stack](/components/layout/stack) with `fullWidth` / `expandChildren` — Textarea has no `fullWidth` prop and no addon slots.
+
+## When to use
+
+- Values that naturally span multiple lines (feedback, release notes, comments)
+- Fields that should grow with typing (`fitContent`) or offer a resize handle
+
+## When not to use
+
+- Single-line identifiers or short values → [Textfield](/components/inputs/textfield)
+- Prefix, search glyph, or trailing action chrome → Textfield addons (Textarea has none)
+
+## Related
+
+- [Textfield](/components/inputs/textfield) — single-line input with optional addons
+- [Fieldset](/components/inputs/fieldset) — section legend when several fields share a group
 
 ## Common examples
 
