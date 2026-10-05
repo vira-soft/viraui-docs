@@ -3,7 +3,7 @@ title: Annotate
 description: Decorative arrow and note beside wrapped content — optional highlighter mark, side placement, and offset tuning.
 ---
 
-Annotate wraps inline content with a static callout arrow and a short handwritten-style note. Pass `note` for the label and `side` for one of eight compass positions around the child. Optional `mark` paints a highlighter behind the wrapped words; `color` tints the arrow, label, and mark together.
+Annotate wraps inline content with a static callout arrow and a short handwritten-style note. Pass `note` for the label and `side` for placement around the child. Optional `mark` paints a highlighter behind the wrapped words; `color` tints the arrow, label, and mark together.
 
 Spacing and nudges are CSS custom properties on the root (`targetGap`, `labelGap`, `rotate`, offset props, `labelMaxWidth`, `textAlign`). The note and arrow are `aria-hidden` and presentational, so anything important in `note` must also appear in nearby announced copy.
 
@@ -33,12 +33,54 @@ Spacing and nudges are CSS custom properties on the root (`targetGap`, `labelGap
 
 ### Side note with mark
 
-A top-side note with optional `mark` shows the default editorial treatment.
+Default `side` is top. `mark` paints a highlighter behind the wrapped phrase. Leave room around the line — overflow clipping cuts off the arrow and note. Repeat the benefit in nearby [Text](/components/typography/text); the note is `aria-hidden`.
 
-<PreviewSlot label="Annotate preview" />
+<Example preview={<AnnotateMarkDemo />}>
+
+```tsx
+import { Annotate, Text } from '@viraui/react';
+
+<Text>
+  Every workspace includes{' '}
+  <Annotate mark note="Best value">
+    unlimited storage
+  </Annotate>{' '}
+  so teams are not counting gigabytes. Best value sits in this sentence
+  too — the arrow is decoration only.
+</Text>
+```
+
+</Example>
+
+### End side
+
+Pick one other `side` when the note should sit beside the phrase instead of above it. Do not fan out every compass point.
+
+<Example preview={<AnnotateEndDemo />}>
+
+```tsx
+import { Annotate, Stack, Text } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Text>
+    Ship the{' '}
+    <Annotate note="New this week" side="end">
+      public changelog
+    </Annotate>
+    .
+  </Text>
+  <Text />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Pricing highlight"
 Highlight the words "unlimited storage" in this pricing copy with a short note "Best value" above. Repeat the benefit in surrounding body text so screen readers are not relying on the decorative note alone.
+```
+
+```text tab="Note on the side"
+Call out "public changelog" with a short "New this week" note to the right of the phrase. Repeat that it is new in the sentence so the decorative note is not the only copy.
 ```

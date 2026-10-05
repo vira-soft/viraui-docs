@@ -40,10 +40,56 @@ Respect reduced motion: swap to static muted [Text](/components/typography/text)
 
 A single-line status label with shimmer while an agent response streams. Keep a static muted explanation beside or below it, then replace with normal answer text when content arrives.
 
-<PreviewSlot label="Shimmer preview" />
+<Example preview={<ShimmerStatusDemo />}>
+
+```tsx
+import { Shimmer, Stack, Surface, Text } from '@viraui/react';
+
+<Surface
+  aria-busy="true"
+  aria-label="Assistant is summarizing"
+  border="all"
+  radius="l"
+  role="region"
+  hPadding="m"
+  vPadding="m"
+>
+  <Stack rowGap="2xs">
+    <Text>
+      <Shimmer>Summarizing your request…</Shimmer>
+    </Text>
+    <Text />
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Shimmer in a heading
+
+Wrap Shimmer in [Title](/components/typography/title) when the loading string should occupy heading space. Mark the surrounding region busy; leave Shimmer readable.
+
+<Example preview={<ShimmerTitleDemo />}>
+
+```tsx
+import { Shimmer, Stack, Text, Title } from '@viraui/react';
+
+<Stack aria-busy="true" aria-label="Generating weekly report" role="region">
+  <Title render={<h2 />} size="3">
+    <Shimmer>Generating weekly report…</Shimmer>
+  </Title>
+  <Text />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="AI shimmer label"
 While this assistant panel waits, show a shimmering "Summarizing your request…" label and a static muted line explaining the wait. Replace with normal answer text when content arrives.
+```
+
+```text tab="Shimmer heading"
+While the weekly report title is generating, keep a heading-sized shimmering placeholder so the layout does not jump, and mark the region as busy.
 ```

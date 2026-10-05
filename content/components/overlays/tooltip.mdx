@@ -179,12 +179,16 @@ import {
 
 ### Shared handle
 
-Detached or multi-trigger layouts share one content surface through `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes. Hover across the icons — same tooltip, morphing label.
+Detached or multi-trigger layouts share one content surface through `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes. Hover across Align left, center, and right — same tooltip, morphing label.
 
 <Example preview={<TooltipHandleDemo />}>
 
 ```tsx
-import { Bell, Pulse, User } from '@phosphor-icons/react';
+import {
+  TextAlignCenter,
+  TextAlignLeft,
+  TextAlignRight,
+} from '@phosphor-icons/react';
 import { IconButton, Stack, Surface, Text, Tooltip } from '@viraui/react';
 
 const handle = Tooltip.createHandle<string>();
@@ -194,11 +198,11 @@ const handle = Tooltip.createHandle<string>();
     <Stack columnGap="2xs" direction="row" vAlign="stretch">
       <Tooltip.Trigger
         handle={handle}
-        payload="Notifications"
+        payload="Align left"
         render={
           <IconButton
-            aria-label="Notifications"
-            icon={<Bell />}
+            aria-label="Align left"
+            icon={<TextAlignLeft />}
             size="s"
             variant="flat"
           />
@@ -206,11 +210,11 @@ const handle = Tooltip.createHandle<string>();
       />
       <Tooltip.Trigger
         handle={handle}
-        payload="Activity"
+        payload="Align center"
         render={
           <IconButton
-            aria-label="Activity"
-            icon={<Pulse />}
+            aria-label="Align center"
+            icon={<TextAlignCenter />}
             size="s"
             variant="flat"
           />
@@ -218,11 +222,11 @@ const handle = Tooltip.createHandle<string>();
       />
       <Tooltip.Trigger
         handle={handle}
-        payload="Profile"
+        payload="Align right"
         render={
           <IconButton
-            aria-label="Profile"
-            icon={<User />}
+            aria-label="Align right"
+            icon={<TextAlignRight />}
             size="s"
             variant="flat"
           />
@@ -253,5 +257,5 @@ Add short tooltips on a bordered editor toolbar like the vertical Separator stri
 ```
 
 ```text tab="Shared handle"
-Add a small icon strip — Notifications, Activity, Profile — that share one Tooltip via createHandle. Morph the hint from each trigger payload.
+Add a text-align toolbar strip — Align left, Align center, Align right — that share one Tooltip via createHandle. Morph the hint from each trigger payload.
 ```

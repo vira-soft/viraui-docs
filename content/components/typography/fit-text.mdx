@@ -5,9 +5,9 @@ description: Container-filling display type — scales font size to the availabl
 
 FitText shrinks or grows headline copy to fill its container width. Drop it inside a hero band, stat callout, or narrow sidebar where a fixed [Title](/components/typography/title) size would either overflow or leave dead space.
 
-It measures the untransformed text, then applies a fitted font size on a display layer. `maxFontSize` caps how large the fit may grow — without it, short strings in wide containers can become enormous. Children are plain text or inline nodes; the FitText root is a `div`, so pair with Title semantics separately if the line also belongs in the document outline.
+A hidden reference layer plus CSS container sizing scale the display copy to the parent width. `maxFontSize` caps how large the fit may grow — without it, short strings in wide containers can become enormous. Wrap [Title](/components/typography/title) or [Text](/components/typography/text) as children; the FitText root is a `div`, so pair heading semantics on the inner Title when the line belongs in the document outline.
 
-Give the parent a defined width. Flex children need `min-width: 0` or an explicit width constraint, or the measurement pass cannot resolve. For ordinary paragraphs, stay on [Text](/components/typography/text) with foundation fluid sizing instead.
+Give the parent a defined width. Flex children need `min-width: 0` or an explicit width constraint, or the fit cannot resolve. For ordinary paragraphs, stay on [Text](/components/typography/text) with foundation fluid sizing instead.
 
 ---
 
@@ -35,14 +35,48 @@ Give the parent a defined width. Flex children need `min-width: 0` or an explici
 
 ## Common examples
 
-### Width-filling stat
+### Resize the frame
 
-A dashboard stat label that fills the tile width without manual font-size tweaks. Keep unit suffixes or captions on muted [Text](/components/typography/text) below.
+Drag the sandbox edge. The title fills the available width and scales with the frame — that is FitText’s job. No `maxFontSize` here on purpose: short words grow huge in a wide frame.
 
-<PreviewSlot label="FitText preview" />
+<Example preview={<FitTextResizeDemo />}>
+
+```tsx
+import { FitText, Title } from '@viraui/react';
+
+<FitText>
+  <Title render={<h2 />} size="display">
+    North
+  </Title>
+</FitText>
+```
+
+</Example>
+
+### Cap the growth
+
+Same KPI fill, but `maxFontSize` stops the digit from outgrowing the layout when the frame is wide. Drag the sandbox to compare.
+
+<Example preview={<FitTextStatDemo />}>
+
+```tsx
+import { FitText, Title } from '@viraui/react';
+
+<FitText maxFontSize="4.5rem">
+  <Title render={<h2 />} size="display">
+    12.4
+  </Title>
+</FitText>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Fit KPI number"
 Make the KPI number in this tile scale down to fit the width while the unit suffix stays small muted text below.
+```
+
+```text tab="Fit hero word"
+Put the short workspace name in a fixed-width band so it fills the row, but cap how large the type can grow. Keep a muted caption underneath.
 ```

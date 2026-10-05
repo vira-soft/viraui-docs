@@ -31,13 +31,50 @@ Badge wraps any child and optionally paints a decorative status dot on a corner.
 
 ## Common examples
 
-### Status on a control
+### Presence on a host
 
-Toggling `show` on an avatar documents the mask-and-dot choreography.
+Wrap an [Avatar](/components/widgets/avatar) and toggle `show` when presence changes. Default corner is `top-end`. The dot is decorative — keep status in nearby copy or a labeled control.
 
-<PreviewSlot label="Badge preview" />
+<Example preview={<BadgePresenceDemo />}>
+
+```tsx
+import { Avatar, Badge, Switch } from '@viraui/react';
+
+<Badge color="green" show>
+  <Avatar
+    alt="Lara Thompson"
+    fallback="LT"
+    size="m"
+    src="https://mockmind-api.uifaces.co/content/human/80.jpg"
+  />
+</Badge>
+<Switch label="Online" />
+```
+
+</Example>
+
+### Unread on IconButton
+
+The [IconButton](/components/actions/icon-button) keeps `aria-label`. Other corners exist; reach for them only when the default `top-end` collides with the host.
+
+<Example preview={<BadgeUnreadDemo />}>
+
+```tsx
+import { Bell } from '@phosphor-icons/react';
+import { Badge, IconButton } from '@viraui/react';
+
+<Badge show>
+  <IconButton aria-label="Notifications" icon={<Bell />} />
+</Badge>
+```
+
+</Example>
 
 ## Ask your agent
+
+```text tab="Online on avatar"
+Show a green online dot on Lara's avatar. Add a nearby Online switch that shows and hides the dot. The dot is decoration — the switch label carries the status.
+```
 
 ```text tab="Mark unread on an icon"
 Show an unread dot on the notifications icon button when there are unread items. The button still needs a clear accessible name — the badge does not replace it.

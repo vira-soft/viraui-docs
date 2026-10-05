@@ -41,10 +41,77 @@ For headings, use [Title](/components/typography/title) instead of bumping Text 
 
 Muted supporting copy under a section heading is the baseline Text pattern. Keep the line on the body scale; do not fake a heading with oversized Text.
 
-<PreviewSlot label="Text preview" />
+<Example preview={<TextMutedHelperDemo />}>
+
+```tsx
+import { Stack, Text, Title } from '@viraui/react';
+
+<Stack rowGap="2xs">
+  <Title />
+  <Text maxWidth="36ch" size="s" tone="muted">
+    Choose which product emails you still want. You can change this later.
+  </Text>
+</Stack>
+```
+
+</Example>
+
+### Semantic block root
+
+Default Text is a `span`. Pass `render` when the outline or form needs a `p` or `label` while the same size, tone, and weight still apply.
+
+<Example preview={<TextSemanticRootDemo />}>
+
+```tsx
+import { Stack, Text } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Text render={<p />}>
+    Workspace members can invite teammates, manage billing, and publish shared
+    libraries.
+  </Text>
+  <Text render={<label />} size="s" weight="semibold">
+    Workspace name
+  </Text>
+</Stack>
+```
+
+</Example>
+
+### Nested tones
+
+Nest Text to retone a phrase without restating `size`. Inner copies inherit the outer body size unless you set one.
+
+<Example preview={<TextNestedTonesDemo />}>
+
+```tsx
+import { Text } from '@viraui/react';
+
+<Text size="l" tone="muted">
+  Deploy finished with{' '}
+  <Text tone="danger" weight="semibold">
+    3 failing checks
+  </Text>{' '}
+  and{' '}
+  <Text tone="positive" weight="semibold">
+    18 passing
+  </Text>
+  . Review the failed jobs before you merge.
+</Text>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Body copy under section"
+```text tab="Muted helper line"
 Under each section heading on this settings screen, add one sentence of muted helper copy — keep lines readable around 60 characters wide. Use paragraphs where the outline needs them; do not fake headings with oversized body text.
+```
+
+```text tab="Semantic paragraph and label"
+Turn the workspace policy blurb into a real paragraph, and the workspace name caption into a label, without changing the body type treatment.
+```
+
+```text tab="Nested status tones"
+In the deploy summary, keep the sentence muted and mark failing checks as danger and passing checks as positive — same size as the surrounding line.
 ```

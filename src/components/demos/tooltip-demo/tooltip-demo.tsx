@@ -4,7 +4,9 @@ import * as React from "react";
 import {
   FloppyDisk,
   MagnifyingGlass,
+  TextAlignCenter,
   TextAlignLeft,
+  TextAlignRight,
   TextB,
   TextItalic,
 } from "@phosphor-icons/react";
@@ -154,3 +156,58 @@ export const TooltipToolbarDemo: React.FC = () => (
     </PortalHost>
   </SandboxShell>
 );
+
+const alignActions = [
+  { icon: <TextAlignLeft />, label: "Align left" },
+  { icon: <TextAlignCenter />, label: "Align center" },
+  { icon: <TextAlignRight />, label: "Align right" },
+] as const satisfies readonly ToolbarAction[];
+
+/** Shared createHandle — one Content morphs from trigger payloads. */
+export const TooltipHandleDemo: React.FC = () => {
+  const [handle] = React.useState(() => Tooltip.createHandle<string>());
+
+  return (
+    <SandboxShell height={160} label="Shared Tooltip handle on text-align toolbar">
+      <PortalHost>
+        {(container) => (
+          <Tooltip.Provider closeDelay={0} delay={0}>
+            <Surface
+              border="all"
+              color={1}
+              hPadding="2xs"
+              radius="m"
+              vPadding="2xs"
+            >
+              <Stack columnGap="2xs" direction="row" vAlign="stretch">
+                {alignActions.map((action) => (
+                  <Tooltip.Trigger
+                    key={action.label}
+                    closeDelay={100}
+                    handle={handle}
+                    payload={action.label}
+                    render={
+                      <IconButton
+                        aria-label={action.label}
+                        icon={action.icon}
+                        size="s"
+                        variant="flat"
+                      />
+                    }
+                  />
+                ))}
+              </Stack>
+            </Surface>
+            <Tooltip handle={handle}>
+              {({ payload }) => (
+                <Tooltip.Content container={container}>
+                  <Text size="s">{payload as string}</Text>
+                </Tooltip.Content>
+              )}
+            </Tooltip>
+          </Tooltip.Provider>
+        )}
+      </PortalHost>
+    </SandboxShell>
+  );
+};

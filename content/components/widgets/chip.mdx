@@ -32,14 +32,77 @@ Optional `addon` accepts an icon or other node on the start or end side. The slo
 
 ## Common examples
 
-### Variants and addons
+### Status pill
 
-Variant rows and addon placement cover most chip compositions.
+Use filled primary, muted secondary, and one highlight for status — not a row of every highlight token. Reach for `outline` when the pill should sit quieter than a fill.
 
-<PreviewSlot label="Chip preview" />
+<Example preview={<ChipStatusDemo />}>
+
+```tsx
+import { Chip, Stack } from '@viraui/react';
+
+<Stack columnGap="s" direction="row" wrap>
+  <Chip>Paid</Chip>
+  <Chip variant="secondary">Pending</Chip>
+  <Chip variant="red">Overdue</Chip>
+</Stack>
+```
+
+</Example>
+
+### Addon
+
+`addon` is decorative and `aria-hidden`. Put meaning in the label. Default side is start; set `addonPosition="end"` when the glyph should trail.
+
+<Example preview={<ChipAddonDemo />}>
+
+```tsx
+import { CheckCircle, Tag } from '@phosphor-icons/react';
+import { Chip, Stack } from '@viraui/react';
+
+<Stack columnGap="s" direction="row" wrap>
+  <Chip addon={<CheckCircle />} variant="outline">
+    Verified
+  </Chip>
+  <Chip addon={<Tag />} addonPosition="end" variant="outline">
+    Billing
+  </Chip>
+</Stack>
+```
+
+</Example>
+
+### As a link
+
+`render` replaces the default `div` when the pill should navigate. Chip keeps pill chrome (`data-no-link-style`) and still is not a submit control — use [Button](/components/actions/button) when the action commits work.
+
+<Example preview={<ChipLinkDemo />}>
+
+```tsx
+import { ArrowSquareOut } from '@phosphor-icons/react';
+import { Chip } from '@viraui/react';
+
+<Chip
+  addon={<ArrowSquareOut />}
+  addonPosition="end"
+  render={<a href="/docs" />}
+>
+  API docs
+</Chip>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Status chips"
 Add a status chip on each invoice row — Paid, Pending, or Overdue. Keep labels to one word; use strong red only for overdue.
+```
+
+```text tab="Chip with icon"
+Add a Verified chip with a small check icon before the label, and a Billing chip with a tag icon after the label. The icons are decoration — the words carry the meaning.
+```
+
+```text tab="Chip as link"
+Make an API docs chip that looks like a pill but goes to the docs URL, with a trailing outbound icon. Do not turn it into a button that submits.
 ```

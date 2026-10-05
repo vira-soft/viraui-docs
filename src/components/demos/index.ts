@@ -174,6 +174,18 @@ export {
   LinearProgressLabeledDemo,
 } from "./linear-progress-demo";
 export { MeterCustomValueDemo, MeterLabeledDemo } from "./meter-demo";
+export { ChipAddonDemo, ChipLinkDemo, ChipStatusDemo } from "./chip-demo";
+export { AnnotateEndDemo, AnnotateMarkDemo } from "./annotate-demo";
+export {
+  AvatarFallbackDemo,
+  AvatarNameRowDemo,
+  AvatarSizesDemo,
+} from "./avatar-demo";
+export {
+  AvatarGroupOverflowDemo,
+  AvatarGroupVerticalDemo,
+} from "./avatar-group-demo";
+export { BadgePresenceDemo, BadgeUnreadDemo } from "./badge-demo";
 export {
   SkeletonAvatarTextDemo,
   SkeletonEqualActionsDemo,
@@ -202,4 +214,21 @@ export {
   PopoverNotificationsDemo,
   PopoverSheetDemo,
 } from "./popover-demo";
-export { TooltipLabelDemo, TooltipToolbarDemo } from "./tooltip-demo";
+export {
+  TooltipHandleDemo,
+  TooltipLabelDemo,
+  TooltipToolbarDemo,
+} from "./tooltip-demo";
+export {
+  TextMutedHelperDemo,
+  TextNestedTonesDemo,
+  TextSemanticRootDemo,
+} from "./text-demo";
+export { TitleSemanticPageDemo, TitleVisualVsSemanticDemo } from "./title-demo";
+export {
+  ClampTextCardDemo,
+  ClampTextHeadingDemo,
+  ClampTextInlineDemo,
+} from "./clamp-text-demo";
+export { FitTextResizeDemo, FitTextStatDemo } from "./fit-text-demo";
+export { ShimmerStatusDemo, ShimmerTitleDemo } from "./shimmer-demo";

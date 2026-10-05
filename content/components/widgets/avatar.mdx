@@ -45,14 +45,89 @@ Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` 
 
 ## Common examples
 
-### Size and fallback
+### Face beside name
 
-Size steps and image-vs-fallback behavior are the usual starting points. Prefer a real `src` for people; keep `fallback` for the error path.
+A photo next to a name is the usual row. Always pass `fallback` even when `src` is set — that layer is the image-error path, not a second visual for people who already have a photo.
 
-<PreviewSlot label="Avatar preview" />
+<Example preview={<AvatarNameRowDemo />}>
+
+```tsx
+import { Avatar, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" vAlign="center">
+  <Avatar
+    alt="Lara Thompson"
+    fallback="LT"
+    size="m"
+    src="https://mockmind-api.uifaces.co/content/human/80.jpg"
+  />
+  <Stack rowGap="2xs">
+    <Text />
+    <Text size="s" tone="muted" />
+  </Stack>
+</Stack>
+```
+
+</Example>
+
+### Missing image
+
+Omit `src` only when teaching initials. The required `fallback` then becomes the visible face.
+
+<Example preview={<AvatarFallbackDemo />}>
+
+```tsx
+import { Avatar, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" vAlign="center">
+  <Avatar fallback="NP" size="m" />
+  <Stack rowGap="2xs">
+    <Text />
+    <Text size="s" tone="muted" />
+  </Stack>
+</Stack>
+```
+
+</Example>
+
+### Two sizes
+
+Default size is `s`. Reach for `m` in a name row or a slightly larger toolbar face — skip an xs-through-l catalog.
+
+<Example preview={<AvatarSizesDemo />}>
+
+```tsx
+import { Avatar, Stack, Surface } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="s" radius="m" vPadding="s">
+  <Stack columnGap="s" direction="row" vAlign="center">
+    <Avatar
+      alt="Mia Chen"
+      fallback="MC"
+      src="https://mockmind-api.uifaces.co/content/human/81.jpg"
+    />
+    <Avatar
+      alt="Elena Rossi"
+      fallback="ER"
+      size="m"
+      src="https://mockmind-api.uifaces.co/content/human/82.jpg"
+    />
+  </Stack>
+</Surface>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Member list avatars"
 Show an avatar before each name in this member list. Use profile photos when URLs exist; otherwise initials. Keep avatars non-interactive — navigation belongs on the row or a separate button.
+```
+
+```text tab="Missing photo"
+This teammate has no photo. Show initials in the avatar and keep their name beside it.
+```
+
+```text tab="Toolbar faces"
+Put two teammate avatars in a small bordered toolbar — default size for one, a bit larger for the other. Photos when you have URLs, initials as fallback.
 ```

@@ -33,12 +33,93 @@ Faces overlap on the inline or block axis so collaborators read as one unit. Set
 
 ### Overlap with overflow
 
-Horizontal overlap with an overflow pill is the default collaboration pattern. Prefer real photos in the array when faces represent people.
+Horizontal overlap is the default. Set `maxVisible` and `overflowText` when the list is longer than the strip. Put names or counts in nearby [Text](/components/typography/text), not inside the group.
 
-<PreviewSlot label="AvatarGroup preview" />
+<Example preview={<AvatarGroupOverflowDemo />}>
+
+```tsx
+import { AvatarGroup, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" vAlign="center">
+  <AvatarGroup
+    avatars={[
+      {
+        alt: 'Lucas Meyer',
+        fallback: 'LM',
+        src: 'https://mockmind-api.uifaces.co/content/human/222.jpg',
+      },
+      {
+        alt: 'Mia Chen',
+        fallback: 'MC',
+        src: 'https://mockmind-api.uifaces.co/content/human/221.jpg',
+      },
+      {
+        alt: 'Elena Rossi',
+        fallback: 'ER',
+        src: 'https://mockmind-api.uifaces.co/content/human/220.jpg',
+      },
+      {
+        alt: 'Noah Patel',
+        fallback: 'NP',
+        src: 'https://mockmind-api.uifaces.co/content/human/219.jpg',
+      },
+      {
+        alt: 'Lara Thompson',
+        fallback: 'LT',
+        src: 'https://mockmind-api.uifaces.co/content/human/80.jpg',
+      },
+    ]}
+    maxVisible={3}
+    overflowText="+2"
+  />
+  <Text size="s" tone="muted" />
+</Stack>
+```
+
+</Example>
+
+### Vertical overlap
+
+`direction="vertical"` stacks faces on the block axis. Same `avatars` shape; still keep labels outside the group.
+
+<Example preview={<AvatarGroupVerticalDemo />}>
+
+```tsx
+import { AvatarGroup, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" vAlign="center">
+  <AvatarGroup
+    avatars={[
+      {
+        alt: 'Lucas Meyer',
+        fallback: 'LM',
+        src: 'https://mockmind-api.uifaces.co/content/human/222.jpg',
+      },
+      {
+        alt: 'Mia Chen',
+        fallback: 'MC',
+        src: 'https://mockmind-api.uifaces.co/content/human/221.jpg',
+      },
+      {
+        alt: 'Elena Rossi',
+        fallback: 'ER',
+        src: 'https://mockmind-api.uifaces.co/content/human/220.jpg',
+      },
+    ]}
+    direction="vertical"
+  />
+  <Text size="s" tone="muted" />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Collaborators"
 Show up to three collaborator avatars beside the project title, then a +N overflow for the rest.
+```
+
+```text tab="Stacked reviewers"
+Stack three reviewer avatars vertically next to a Reviewers label. Use photos when you have URLs.
 ```
