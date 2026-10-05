@@ -1,15 +1,38 @@
 ---
 title: Title
-description: Heading-scale display type — visual size presets with render for semantic h1–h6 and document outline.
+description: Heading-scale display type — visual size presets with render for semantic h1–h6.
 ---
 
-Title renders heading and display presets from the theme typescale. `size` controls appearance (`display`, `1`–`6`); `render` chooses the actual element — default root is `span`, so outline-bearing headings need an explicit `render={<h2 />}` (or the level the page structure requires). Visual size and semantic level stay independent on purpose: a quiet `h1` with `size="4"` is valid when SEO needs one page title but the layout calls for a smaller look.
+Title is the heading and display primitive on the theme typescale. Use it for heroes, section titles, and any line that belongs in the document outline.
 
-`lineHeight`, `align`, `maxWidth`, `balanced`, and `trim` mirror [Text](/components/typography/text) layout controls at heading densities. `weight` accepts a numeric override when a preset needs a heavier or lighter draw without changing `size`. Literal `color` bypasses theme heading color — use sparingly on marketing hero lines. Fluid viewport clamp is on by default; pass `fluid={false}` to lock one instance, or set `--effect-fluid-typography: initial` on the theme root to lock every preset at its `--font-scale-display` / `--font-scale-h*` token. Avoid hand-written media queries for ordinary heading steps.
+`size` controls appearance (`display`, `1`–`6`); `render` chooses the actual element. Default root is `span`, so outline-bearing headings need an explicit `render={<h2 />}` (or the level the page structure requires). Visual size and semantic level stay independent on purpose: a quiet `h1` with a smaller `size` is valid when SEO needs one page title but the layout calls for a quieter look.
+
+Layout controls (`lineHeight`, `align`, `maxWidth`, `balanced`, `trim`) mirror [Text](/components/typography/text) at heading densities. Fluid viewport clamp is on by default for ordinary heading steps — see [Typography](/foundation/typography) for the foundation gate.
+
+## When to use
+
+- Page heroes and section or subsection headings
+- Display lines that still need a semantic heading tag
+- Balanced wrapping on short marketing titles
+
+## When not to use
+
+- Body, helper, or caption copy → [Text](/components/typography/text)
+- A line that must grow or shrink to fill a band → [FitText](/components/typography/fit-text)
+- Truncating a title inside a fixed card chrome → wrap with [ClampText](/components/typography/clamp-text)
+
+## Related
+
+- [Text](/components/typography/text) — body-scale running copy
+- [FitText](/components/typography/fit-text) — fit-to-width display
+- [ClampText](/components/typography/clamp-text) — row-limited truncation
+- [Typography](/foundation/typography) — scale, fluid gate, and tokens
 
 ## Common examples
 
-A page hero with `size="2"` and `render={<h1 />}` plus balanced wrapping.
+### Semantic page title
+
+A page hero with a visual size preset and `render={<h1 />}` plus balanced wrapping. Keep supporting sentences on [Text](/components/typography/text) underneath.
 
 <PreviewSlot label="Title preview" />
 

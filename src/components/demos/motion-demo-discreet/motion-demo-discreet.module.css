@@ -1,13 +1,18 @@
+/* Sandbox body = flex column + minBlockSize; % height collapses under auto-height. */
 .Fill {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   inline-size: 100%;
-  block-size: 100%;
+  min-block-size: 0;
 }
 
 .Shell {
   display: grid;
+  flex: 1;
   grid-template-columns: 5.5rem 1fr;
   inline-size: 100%;
-  block-size: 100%;
+  min-block-size: 0;
   overflow: hidden;
 }
 

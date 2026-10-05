@@ -5,7 +5,9 @@ description: Install ViraUI skills, reload the editor, then bootstrap the React 
 pageActions: false
 ---
 
-ViraUI bootstrap wires a React app to the design system: packages and peers, a theme choice, global styles in a fixed order, and one root shell for overlays. The agent does that through `viraui-setup`, so install the skills pack and reload the editor before any bootstrap prompt.
+ViraUI bootstrap wires a React app to the design system: packages and peers, a theme choice, global styles in a fixed order, and one root shell for overlays.
+
+The agent does that work through `viraui-setup`. Install the skills pack and reload the editor before any bootstrap prompt. What each playbook covers lives on [Skills](/get-started/skills); connecting the agent to these docs is [MCP](/get-started/mcp).
 
 ## Requirements
 
@@ -13,7 +15,8 @@ ViraUI bootstrap wires a React app to the design system: packages and peers, a t
 - A Node-capable package manager
 - A coding agent that can edit the repo and run installs
 - [Base UI](https://base-ui.com) (`@base-ui/react`) as the only required peer beyond React / React DOM
-- `@viraui/foundation` only when you pick a [built-in theme](/get-started/theming/built-in-themes).
+- `@viraui/foundation` only when you pick a [built-in theme](/get-started/theming/built-in-themes)
+- `@viraui/icons` only when you want the optional icon set ([Iconography](/foundation/iconography))
 
 ## Setup
 
@@ -22,7 +25,7 @@ ViraUI bootstrap wires a React app to the design system: packages and peers, a t
 
 ### Install skills
 
-Skills are playbooks the agent loads from the project. Install the pack **before** any bootstrap prompt, then **reload the editor** (or restart the agent session) so `viraui-setup` registers. What each playbook governs lives on [Skills](/get-started/skills).
+Skills are playbooks the agent loads from the project. Install the pack **before** any bootstrap prompt, then **reload the editor** (or restart the agent session) so `viraui-setup` registers.
 
 ```sh title="Install the skills pack"
 npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP
@@ -33,10 +36,12 @@ npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP
 
 ### Bootstrap with your agent
 
-Paste the Setup prompt after skills are loaded. The agent asks for a [built-in preset](/get-started/theming/built-in-themes) or a [custom theme](/get-started/theming/custom-themes) before it installs foundation or fonts. Use Verify when wiring finishes so the agent smoke-checks the same outcomes you would look for by hand.
+Paste the Setup prompt after skills are loaded. You choose the brand look: a [built-in preset](/get-started/theming/built-in-themes) or a [custom theme](/get-started/theming/custom-themes). Font import follows that choice: fonts that ship with the built-in theme, or your own for a custom brand.
+
+Use Verify when wiring finishes so the agent smoke-checks the same outcomes you would look for by hand.
 
 ```text tab="Setup"
-Set up ViraUI in this project using viraui-setup skill. Ask which brand look I want if I haven't said yet, then wire the app so it looks themed, fonts load, overlays (dialogs, tooltips, toasts) work, and a simple sample control shows the design system styling.
+Set up ViraUI in this project using viraui-setup skill. Ask which brand or theme look I want if I haven't said yet, then wire the app for that choice so fonts load for it, the UI looks themed, overlays (dialogs, tooltips, toasts) work, and a simple sample control shows the design system styling.
 ```
 ```text tab="Verify"
 Check that ViraUI bootstrap in this project actually works: the app looks themed (not unstyled), light/dark mode resolves if wired, overlays open and dismiss, and a sample button or layout looks right. Report anything broken and fix it.
@@ -44,3 +49,15 @@ Check that ViraUI bootstrap in this project actually works: the app looks themed
 
 </Step>
 </Steps>
+
+## Manual fallback
+
+Only when you must wire by hand after skills are installed. Prefer the prompts above.
+
+1. Install `@viraui/react`, React / React DOM, and `@base-ui/react`.
+2. Choose the brand look: [built-in](/get-started/theming/built-in-themes) or [custom](/get-started/theming/custom-themes). Import the fonts that match: built-in theme fonts, or your custom fonts.
+3. Import theme CSS, then fonts, then `@viraui/react/preflight.css`, in that order at the app root.
+4. Mount the Dialog, Tooltip, and Toast root providers once in the app shell.
+5. Optional: add viewport helpers when markup must branch ([useBreakpoints](/get-started/utilities/use-breakpoints)).
+
+**Verify by hand:** the app looks themed, light/dark resolves if wired, overlays open and dismiss, and a sample control picks up design-system styling.

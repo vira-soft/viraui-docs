@@ -3,17 +3,37 @@ title: Glow
 description: Pointer-following border highlight — proximity, spread, and optional rainbow or global gradient attachment.
 ---
 
-Glow wraps content the same way [Beam](/components/effects/beam) does: a transparent [Surface](/components/layout/surface) shell with `radius`, and the visible card as a child Surface with `radius="auto"`. Pointer position drives a highlight arc along the rim — `angleLag` softens how the arc follows (set `0` for instant snap). `proximity` is the distance from the edge where the glow reaches full strength; `spread` sets the arc width in degrees. Resting `opacity` keeps a faint rim visible when the pointer is far away (default is fully off until the pointer is near).
+Glow wraps content the same way [Beam](/components/effects/beam) does: a transparent [Surface](/components/layout/surface) shell with `radius`, and the visible card as a child Surface with `radius="auto"`. Pointer position drives a highlight arc along the rim.
 
-`borderWidth`, `borderColor`, and `borderOffset` shape the masked ring under the gradient. `glowColor` overrides the theme conic highlight; `rainbowColors` switches to a multi-stop palette and disables shared attachment. `globalHighlight` keeps one fixed gradient across cards when several Glow instances sit on the same page — turn it off when each card should feel independent. `fitContent` shrink-wraps the shell to the child. Prefer Glow when the highlight should follow the pointer; continuous spin or pulse belongs on Beam.
+Tune how near the pointer must be, how wide the arc reads, and whether a faint rim stays when the pointer is far away. Shared `globalHighlight` keeps one fixed gradient across several cards; turn it off — or use rainbow colors — when a single card should feel independent. Prefer Glow when the highlight should follow the pointer; continuous spin or pulse belongs on Beam.
+
+Glow hides under coarse pointers and `prefers-reduced-motion`. Do not use it as keyboard focus or status chrome.
 
 <Callout type="warn" title="Performance cost">
 Glow tracks the pointer and paints CSS variables on every move. Prefer one focal instance, or a small shared grid, per view. Do not default-decorate every card on a dense page.
 </Callout>
 
+## When to use
+
+- Feature cards where a pointer-driven rim adds polish without changing layout
+- A small shared grid that should share one highlight gradient
+- Pill list rows that need a subtle edge response on hover
+
+## When not to use
+
+- Continuous border spin, traveling line, or pulse → [Beam](/components/effects/beam)
+- Keyboard focus or status indication (Glow is decorative only)
+- Wallpapering every card on a dense dashboard
+
+## Related
+
+- [Beam](/components/effects/beam) — continuous animated border, line, or pulse
+- [Surface](/components/layout/surface) — shell and nested card radius
+- [ProgressiveBlur](/components/effects/progressive-blur) — edge fade over scroll or media
+
 ## Common examples
 
-### Feature grid
+### Shared highlight grid
 
 A small set of cards with shared `globalHighlight` is the baseline Glow pattern. Move the pointer across the row — the arc follows and the gradient stays consistent across shells.
 
@@ -76,9 +96,9 @@ import { Glow, Stack, Surface, Text, Title } from '@viraui/react';
 
 </Example>
 
-### Report rows
+### Pill list rows
 
-Tight `proximity` and a flush ring (`borderOffset={0}`, thin `borderWidth`) suit pill list rows inside a list shell. Glow stays decorative — row actions own the accessible labels.
+Tight proximity and a flush ring suit pill list rows inside a list shell. Glow stays decorative — row actions own the accessible labels.
 
 <Example preview={<GlowReportRowDemo />}>
 
@@ -124,8 +144,6 @@ import { Glow, IconButton, Stack, Surface, Text, Title } from '@viraui/react';
 
 </Example>
 
-Glow hides under coarse pointers and `prefers-reduced-motion`. Do not use it as keyboard focus or status chrome.
-
 ## Ask your agent
 
 ```text tab="Pointer glow on features"
@@ -141,5 +159,5 @@ Wrap each report row with a subtle pointer glow on the pill edge. Keep the more-
 ```
 
 ```text tab="Tone down"
-The glow on these cards feels too loud — tighten proximity, soften the resting opacity, and keep a shared highlight across the row instead of per-card rainbows.
+The glow on these cards feels too loud — tighten how close the pointer must be, soften the resting rim, and keep a shared highlight across the row instead of per-card rainbows.
 ```

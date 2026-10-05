@@ -15,9 +15,27 @@ description: Boolean option row with label and helper copy — standalone or ins
   </Card>
 </Cards>
 
-`Checkbox` is a single on/off option with Vira label and helper typography beside the control. Standalone rows need an external `Field.Root` from `@base-ui/react` for naming and validation — Checkbox does not own a field root the way [`Textfield`](/components/inputs/textfield) does. Prefer Checkbox when the value is part of a form batch, or when several independent options can stay on at once; use [`Switch`](/components/inputs/switch) for immediate settings toggles, and [`Radio`](/components/inputs/radio) when exactly one choice is allowed.
+Checkbox is a single on/off option with label and helper copy beside the control. Standalone rows need an external `Field.Root` from `@base-ui/react` for naming and validation; Checkbox does not own a field root the way [Textfield](/components/inputs/textfield) does.
 
-Related options share a selection model through `CheckboxGroup`. Add [`Fieldset`](/components/inputs/fieldset) with `render={<CheckboxGroup />}` only when the group needs a legend or shared description — otherwise `CheckboxGroup` may sit directly in `Field.Root`. Pass-through Base UI props cover `checked`, `indeterminate`, `disabled`, and change handlers; `size` scales the control and label.
+Related options share a selection model through `CheckboxGroup`. Add [Fieldset](/components/inputs/fieldset) with `render={<CheckboxGroup />}` only when the group needs a legend or shared description; otherwise `CheckboxGroup` may sit directly in `Field.Root`. Checked, indeterminate, disabled, and change handlers pass through Base UI; `size` scales the control and label.
+
+## When to use
+
+- A boolean that ships with a larger form submit (terms, save-as-default)
+- Several independent options that can stay on at once (alert channels, plan tiers)
+- A select-all row that needs an indeterminate state when only some children are checked
+
+## When not to use
+
+- The change should apply immediately as a setting → [Switch](/components/inputs/switch)
+- Exactly one choice is allowed → [Radio](/components/inputs/radio)
+- A long closed list in a popup → [Select](/components/inputs/select)
+
+## Related
+
+- [Fieldset](/components/inputs/fieldset) — legend and group helper for CheckboxGroup
+- [Switch](/components/inputs/switch) — immediate on/off settings
+- [Radio](/components/inputs/radio) — mutually exclusive options
 
 ## Common examples
 

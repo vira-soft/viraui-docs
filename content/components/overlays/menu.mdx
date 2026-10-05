@@ -15,19 +15,37 @@ description: Command menu anchored to a trigger — items, groups, submenus, and
   </Card>
 </Cards>
 
-Menu surfaces a list of actions or choices from a trigger click (or equivalent activation). The compound bundles portal mounting, collision-aware positioning, typeahead, and roving keyboard focus — compose `Menu.Trigger` with `Menu.Popup` and the item parts you need rather than nesting another overlay. Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; mutually exclusive choices use `Menu.RadioGroup` with `Menu.RadioItem`; persistent toggles use `Menu.CheckboxItem`. `Menu.Group` adds section labels, `Menu.Separator` divides blocks, and `Menu.Submenu` nests another popup on hover or keyboard — including deep trees with link rows and destructive `sentiment` on individual items.
+Menu opens a list of actions or choices from a trigger click (or equivalent activation). Portal mounting, collision-aware positioning, typeahead, and roving keyboard focus ship with the compound — compose `Menu.Trigger` with `Menu.Popup` and the item parts you need.
 
-Triggers accept any control through `render`, including custom chrome such as a [Surface](/components/layout/surface) account chip. Static header content may sit inside `Menu.Popup` beside items when it stays non-interactive so roving focus remains on menu rows. Detached triggers share one menu through `Menu.createHandle()`. Do not wrap Menu in [Popover](/components/overlays/popover) — Menu already owns the floating surface contract.
+Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; exclusive picks use `Menu.RadioGroup` with `Menu.RadioItem`; persistent toggles use `Menu.CheckboxItem`. Groups, separators, and nested `Menu.Submenu` trees cover denser toolbars. Triggers accept any control through `render`, including custom chrome such as a [Surface](/components/layout/surface) account chip. Do not wrap Menu in [Popover](/components/overlays/popover) — Menu already owns the floating surface contract.
+
+## When to use
+
+- A short list of commands from a button, icon, or custom chip (Edit, Duplicate, Archive)
+- Sort or view choices that stay selected while the menu is open
+- Nested command trees or rows with destructive sentiment
+
+## When not to use
+
+- A richer panel with title, description, or form controls → [Popover](/components/overlays/popover)
+- A brief read-only hint on hover or focus → [Tooltip](/components/overlays/tooltip)
+- A task that should block the page → [Dialog](/components/dialogs/dialog)
+- A closed form field that shows the current value in a trigger → [Select](/components/inputs/select)
+
+## Related
+
+- [Popover](/components/overlays/popover) — anchored panels with chrome and interactive body content
+- [Tooltip](/components/overlays/tooltip) — short hover/focus hints
+- [Dialog](/components/dialogs/dialog) — modal edge sheets that interrupt the page
+- [Select](/components/inputs/select) — single-choice field with value in the trigger
 
 ## Common examples
 
-A compact action menu with a separator between primary and secondary commands.
+### Separated commands
+
+A compact action menu with a separator between primary and secondary commands is the default pattern. Static header content may sit inside `Menu.Popup` beside items when it stays non-interactive so roving focus remains on menu rows.
 
 <PreviewSlot label="Menu preview" />
-
-```text tab="Actions menu"
-Add an Actions menu on a button with Edit, Duplicate, and Archive separated from each other. Keep it small — no submenu on the first pass.
-```
 
 ```tsx
 import { Button, Menu } from '@viraui/react';
@@ -43,7 +61,31 @@ import { Button, Menu } from '@viraui/react';
 </Menu>
 ```
 
+### Exclusive choices
+
+Use `Menu.RadioGroup` with `Menu.RadioItem` when the open menu should show which sort or view is active. Match toolbar button style to neighbors.
+
+```tsx
+import { Button, Menu } from '@viraui/react';
+
+<Menu>
+  <Menu.Trigger render={<Button variant="secondary">Sort</Button>} />
+  <Menu.Popup>
+    <Menu.RadioGroup defaultValue="asc" label="Order">
+      <Menu.RadioItem value="asc">Ascending</Menu.RadioItem>
+      <Menu.RadioItem value="desc">Descending</Menu.RadioItem>
+    </Menu.RadioGroup>
+  </Menu.Popup>
+</Menu>
+```
+
+Detached triggers share one menu through `Menu.createHandle()` when the open control sits outside the root tree.
+
 ## Ask your agent
+
+```text tab="Actions menu"
+Add an Actions menu on a button with Edit, Duplicate, and Archive separated from each other. Keep it small — no submenu on the first pass.
+```
 
 ```text tab="Sort menu"
 Add a Sort menu with Ascending and Descending choices that stay selected while the menu is open. Match toolbar button style to neighbors.

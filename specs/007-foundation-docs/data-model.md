@@ -57,7 +57,7 @@ Ordered list (nav order):
 | Typography | `typography` | `components` | `foundation-typography` |
 | Spacing | `spacing` | `foundation` | `foundation-space` |
 | Radius | `radius` | `foundation` | `foundation-radius` |
-| Icons | `icons` | `components` | `foundation-icons` |
+| Iconography | `iconography` | `components` | `foundation-icons` |
 
 ## NavMeta
 

@@ -1,6 +1,6 @@
 ---
 title: Tabs
-description: Tab list and panels in one compound — animated indicator, controlled value, scrollable overflow.
+description: In-page tab list and panels with a moving indicator and scrollable overflow.
 ---
 
 ## Base UI
@@ -15,19 +15,37 @@ description: Tab list and panels in one compound — animated indicator, control
   </Card>
 </Cards>
 
-Tabs splits wayfinding from content: `Tabs.List` holds `Tabs.Tab` triggers, and `Tabs.Viewport` mounts one `Tabs.Panel` per `value`. The root owns selection — `defaultValue` for uncontrolled usage, `value` plus `onValueChange` when another control must drive the active tab. Each tab’s `value` string pairs with exactly one panel of the same `value`; only the selected panel stays mounted in the viewport while the indicator animates under the active trigger.
+Tabs keep related views on one screen. Compose a `Tabs.List` of `Tabs.Tab` triggers with matching `Tabs.Panel` children inside `Tabs.Viewport`. The root owns selection — `defaultValue` when the compound owns it, or `value` plus `onValueChange` when the URL or another control drives the active tab.
 
-`listAlignment` on the root aligns the tab row (`start`, `center`, …) through the same stack contract as [Stack](/components/layout/stack). Long label sets scroll horizontally inside the list — overflow is expected, not a layout bug. Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move across tabs without changing selection until click. Disabled tabs carry `disabled` on `Tabs.Tab` and ignore activation. Tab labels accept `addon` slots — icons or [Chip](/components/widgets/chip) badges — with `addonPosition` when the addon trails the text. Functional motion on the indicator follows theme [motion](/foundation/motion) tokens.
+Each tab’s `value` pairs with exactly one panel of the same `value`. Only the selected panel stays mounted while the indicator moves under the active trigger. Long label sets scroll horizontally inside the list; that overflow is expected, not a layout bug.
+
+`listAlignment` aligns the tab row through the same stack contract as [Stack](/components/layout/stack). Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move without changing selection until click. Labels accept `addon` slots for icons or [Chip](/components/widgets/chip) badges; disabled tabs ignore activation.
+
+## When to use
+
+- Peer sections of the same screen (profile, billing, goals)
+- In-page wayfinding where content swaps without a route change
+- Selection that should sync to search params or another control
+
+## When not to use
+
+- Expand/collapse FAQs or stacked disclosures → [Accordion](/components/layout/accordion)
+- Primary app routes or top-level destinations → links and the router
+- Commands from a trigger → [Menu](/components/overlays/menu)
+
+## Related
+
+- [Accordion](/components/layout/accordion) — expand/collapse sections on the same page
+- [Menu](/components/overlays/menu) — command lists anchored to a trigger
+- [Chip](/components/widgets/chip) — badges in tab addons
 
 ## Common examples
 
-A three-tab settings block with general, billing, and goals panels is the canonical layout.
+### Tabbed panels
+
+A three-tab block with paired list triggers and viewport panels is the default in-page navigation pattern. Seed the active tab with `defaultValue` so the first panel mounts on load.
 
 <PreviewSlot label="Tabs preview" />
-
-```text tab="Three tabs"
-Add settings tabs for General, Billing, and Goals. General is selected first and contains a profile heading and form fields.
-```
 
 ```tsx
 import { Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
@@ -41,18 +59,16 @@ import { Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
   <Tabs.Viewport>
     <Tabs.Panel value="general">
       <Stack rowGap="m">
-        <Title size="3" render={<h3 />}>
-          Profile & workspace
-        </Title>
-        <Text tone="muted">Manage how your team appears across projects.</Text>
-        <Textfield label="Workspace name" defaultValue="Northwind Labs" />
+        <Title />
+        <Text />
+        <Textfield label="Workspace name" />
       </Stack>
     </Tabs.Panel>
     <Tabs.Panel value="billing">
-      <Text>Billing panel content</Text>
+      <Text />
     </Tabs.Panel>
     <Tabs.Panel value="goals">
-      <Text>Goals panel content</Text>
+      <Text />
     </Tabs.Panel>
   </Tabs.Viewport>
 </Tabs>

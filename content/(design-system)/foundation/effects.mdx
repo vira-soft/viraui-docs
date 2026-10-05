@@ -1,12 +1,12 @@
 ---
 title: Effects
 icon: Sparkle
-description: Brand-level visual gates on the theme — flip whole treatments on or off with --effect-* tokens.
+description: Brand-level visual gates on the theme. Flip whole treatments on or off with --effect-* tokens.
 ---
 
-Effects are **brand-level visual gates** on your theme. `--effect-*` custom properties decide whether whole treatments can run. Preflight and components already watch those tokens — when a gate is off, the matching look stays quiet even if markup still asks for it. Flip a gate on the [theme](/get-started/theming/what-is-a-theme) and the UI follows without per-surface retuning.
+Effects are **brand-level visual gates** on your theme. `--effect-*` custom properties decide whether whole treatments can run. Preflight and components already watch those tokens; when a gate is off, the matching look stays quiet even if markup still asks for it. Flip a gate on the [theme](/get-started/theming/what-is-a-theme) and the UI follows without per-surface retuning.
 
-Polarity is the same for every gate: leave the variable **empty or unset** to turn the effect **on**, set it to **`initial`** to turn it **off**. Built-in brands pick a default per gate — check the theme sheet.
+Polarity is the same for every gate: leave the variable **empty or unset** to turn the effect **on**, set it to **`initial`** to turn it **off**. Built-in brands pick a default per gate; check the theme sheet.
 
 ## How toggles work
 
@@ -24,7 +24,7 @@ Clearing a value restores the "on" state; `initial` is the off signal that `@con
 }
 ```
 
-Intensity for a treatment that has parameters — glass blur, for example — lives on its own variables (`--vibrancy-blur`, `--vibrancy-brightness`), not on the `--effect-*` gate itself.
+Intensity for a treatment that has parameters (glass blur, for example) lives on its own variables (`--vibrancy-blur`, `--vibrancy-brightness`), not on the `--effect-*` gate itself.
 
 ## In practice
 
@@ -36,13 +36,19 @@ Mark a surface for glass with `data-vibrant` (prefer that over hand-rolled `back
 </Surface>
 ```
 
-Corner treatment follows the theme's `--corner-shape` when its gate is on; off is ordinary [`border-radius`](/foundation/radius). A foil wash paints a fixed, non-interactive overlay on `body::after` for the whole viewport when its gate is on — global, not per surface. Elevation shadows behind `Elevator` / `data-elevation*` respect the shadows gate the same way; off kills those stacks even if attrs remain. Stacking (`z-index`) is separate — depth layers: [Elevation](/foundation/elevation).
+Other gates follow the same pattern:
+
+- Corner treatment follows the theme's `--corner-shape` when its gate is on; off is ordinary [`border-radius`](/foundation/radius)
+- A foil wash paints a fixed, non-interactive overlay on `body::after` for the whole viewport when its gate is on (global, not per surface)
+- Elevation shadows behind `Elevator` / `data-elevation*` respect the shadows gate the same way; off kills those stacks even if attrs remain
+
+Stacking (`z-index`) is separate. Depth layers: [Elevation](/foundation/elevation).
 
 ## Tune
 
-App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape brand treatments: flip effect gates and intensity on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes) — surfaces that already ask for glass or shadows follow the new posture without per-panel CSS.
+App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape brand treatments: flip effect gates and intensity on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes). Surfaces that already ask for glass or shadows follow the new posture without per-panel CSS.
 
-Without Studio, paste a prompt into your agent or set `--effect-*` (and related intensity vars) on a custom theme sheet — preferably on `:root` or another ancestor that owns the theme — or switch a [built-in preset](/get-started/theming/built-in-themes).
+Without Studio, paste a prompt into your agent or set `--effect-*` (and related intensity vars) on a custom theme sheet, preferably on `:root` or another ancestor that owns the theme, or switch a [built-in preset](/get-started/theming/built-in-themes).
 
 ```text tab="No shadows"
 Turn off drop shadows everywhere in the app. Leave glass, foil, and other brand effects as they are.

@@ -3,13 +3,37 @@ title: Stack
 description: Flex layout host — direction, gap, alignment, and padding through theme tokens.
 ---
 
-`Stack` is the most important layout primitive in ViraUI — the foundational flex host for almost every screen. Prefer it wherever a single axis is enough: page sections, card internals, toolbars, form rows, and nested groups. Children flow in a column or row with `direction`, `rowGap` and `columnGap` mapped to [spacing](/foundation/spacing) tokens, and `hAlign` / `vAlign` for axis alignment from the consumer point of view. Padding props take the same step names as [`Surface`](/components/layout/surface); pass a `[start, end]` tuple when only one side needs inset. Prefer `expandChildren` and `fullWidth` when a row of actions or a panel shell should fill space along the main axis. Pass `render` to replace the default `div` when the stack should be a `header`, `nav`, `section`, or other semantic host while keeping the same layout hooks. Reach for [`Grid`](/components/layout/grid) or [`Masonry`](/components/layout/masonry) only when the layout is truly two-dimensional rather than a single flex axis.
+`Stack` is the default flex host in ViraUI. Reach for it whenever a single axis is enough: page sections, card internals, toolbars, form rows, and nested groups.
+
+Children flow in a column or row. `direction`, `rowGap`, and `columnGap` map to [spacing](/foundation/spacing) tokens; `hAlign` / `vAlign` align from the consumer point of view. Padding props use the same step names as [`Surface`](/components/layout/surface); pass a `[start, end]` tuple when only one side needs inset.
+
+Prefer `expandChildren` and `fullWidth` when a row of actions or a panel shell should fill the main axis. Pass `render` to swap the default `div` for a `header`, `nav`, `section`, or other semantic host while keeping the same layout hooks.
+
+## When to use
+
+- One flex axis is enough (vertical list, toolbar row, card internals)
+- Gaps and padding should stay on the [spacing](/foundation/spacing) scale
+- Nested groups need alignment without custom flex CSS
+- The host should be a semantic landmark via `render`
+
+## When not to use
+
+- Fixed tracks, spans, or two-dimensional placement → [Grid](/components/layout/grid)
+- Uneven tile heights in a column wall → [Masonry](/components/layout/masonry)
+- Background, border, or radius chrome alone → [Surface](/components/layout/surface) (nest Stack inside for gaps)
+
+## Related
+
+- [Grid](/components/layout/grid) — CSS Grid tracks, spans, and auto-fill
+- [Masonry](/components/layout/masonry) — variable-height column walls
+- [Surface](/components/layout/surface) — themed panel chrome around a Stack
+- [Separator](/components/layout/separator) — visual breaks between stacked rows
 
 ## Common examples
 
 ### Column list
 
-A vertical card list with token `rowGap` is the usual screen pattern — each row is its own nested Stack for media, copy, and a trailing action.
+A vertical card list with token `rowGap` is the usual screen pattern. Each row is its own nested Stack for media, copy, and a trailing action.
 
 <Example preview={<StackColumnDemo />}>
 
@@ -37,7 +61,7 @@ import { Avatar, Button, Stack, Surface, Text } from '@viraui/react';
 
 ### Equal-width row
 
-`direction="row"` plus `expandChildren` grows direct children along the main axis so Cancel, Delete, and Save share the strip evenly — pair with `fullWidth` when the stack itself must fill the parent.
+`direction="row"` plus `expandChildren` grows direct children along the main axis so Cancel, Delete, and Save share the strip evenly. Pair with `fullWidth` when the stack itself must fill the parent.
 
 <Example preview={<StackEqualRowDemo />}>
 
@@ -56,7 +80,7 @@ import { Button, Stack } from '@viraui/react';
 
 ### Nested padding
 
-Outer and inner Stacks own section gaps and token padding — header copy, body controls, and a footer bar stay on the spacing scale without custom flex CSS.
+Outer and inner Stacks own section gaps and token padding. Header copy, body controls, and a footer bar stay on the spacing scale without custom flex CSS.
 
 <Example preview={<StackNestedDemo />}>
 
@@ -83,7 +107,7 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Axis padding tuples
 
-`hPadding` / `vPadding` accept a `[start, end]` tuple — use `0` on one side for single-edge inset, or different tokens when start and end should not match. Prefer the tuple over custom `paddingBlock*` / `paddingInline*` CSS.
+`hPadding` / `vPadding` accept a `[start, end]` tuple. Use `0` on one side for single-edge inset, or different tokens when start and end should not match. Prefer the tuple over custom `paddingBlock*` / `paddingInline*` CSS.
 
 <Example preview={<StackAxisPaddingDemo />}>
 
@@ -113,7 +137,7 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Semantic root
 
-`render` swaps the default `div` for a native landmark while Stack still owns direction, gap, and padding — useful for page chrome and nested `nav` clusters.
+`render` swaps the default `div` for a native landmark while Stack still owns direction, gap, and padding. Useful for page chrome and nested `nav` clusters.
 
 <Example preview={<StackSemanticDemo />}>
 

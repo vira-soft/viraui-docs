@@ -15,7 +15,29 @@ description: Single-line text input with label, helper copy, validation, and opt
   </Card>
 </Cards>
 
-`Textfield` wraps a native input in Vira's shared field layout — label, description, and error copy render through the same `FieldLabel` and `FieldHelperCopy` pattern as other inputs, and optional `startAddon` / `endAddon` slots sit beside the control without becoming second fields. Value, placeholder, disabled state, and validation pass through Base UI `Field` and `Input`; you declare the whole row in JSX instead of hand-wiring `aria-labelledby` and error regions. Use `fullWidth` to span a form column — prefer that prop over inventing `width: 100%` CSS. `fitContent` grows the control inline with its value while block height stays fixed. Reach for `Textfield` for single-line identifiers (email, amount, search); use [`Textarea`](/components/inputs/textarea) when the value spans multiple lines. Group several related fields under [`Fieldset`](/components/inputs/fieldset) when they share a section legend — a lone Textfield does not need Fieldset.
+Textfield is the single-line text control for collecting a value. It mounts label, description, and error copy in the shared field layout, and optional `startAddon` / `endAddon` slots sit beside the control without becoming second fields.
+
+Value, placeholder, disabled state, and validation pass through Base UI `Field` and `Input`, so you declare the whole row in JSX instead of hand-wiring labelled-by and error regions. Use `fullWidth` to span a form column (prefer that over inventing `width: 100%` CSS). `fitContent` grows the control inline with its value while block height stays fixed.
+
+## When to use
+
+- Single-line identifiers and short values (email, amount, search, city)
+- Fields that need label, helper, or validation beside a native input
+- Prefix, glyph, or small action chrome via start/end addons
+- Native `date`, `time`, or `datetime-local` when the browser picker is enough
+
+## When not to use
+
+- The value spans multiple lines → [Textarea](/components/inputs/textarea)
+- A closed list of named options in a popup → [Select](/components/inputs/select)
+- Type-to-filter or free-form suggestions → [Autocomplete](/components/inputs/autocomplete)
+
+## Related
+
+- [Textarea](/components/inputs/textarea) — multi-line bodies and notes
+- [Fieldset](/components/inputs/fieldset) — shared section legend for several fields
+- [Select](/components/inputs/select) — closed-choice dropdown
+- [Autocomplete](/components/inputs/autocomplete) — filterable or free-form suggestions
 
 ## Common examples
 

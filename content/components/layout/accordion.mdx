@@ -15,13 +15,36 @@ description: Expandable sections — single or multiple open panels with optiona
   </Card>
 </Cards>
 
-`Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack) — each `Accordion.Item` owns the trigger header and collapsible panel, so you pass a `trigger` label and panel children instead of composing public Header / Trigger / Panel parts. Root `value`, `defaultValue`, and `onValueChange` come from Base UI; set `multiple` when several sections can stay open — exclusive FAQs stay single-open by default. Items wrap [`Surface`](/components/layout/surface) by default — `color`, `border`, and `radius` forward to that host, and root `islands` toggles separated cards versus an attached block with corner radius only on the first and last rows. Keyboard and aria behavior stay upstream; you compose items, copy, and surrounding chrome in JSX.
+`Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack). Each `Accordion.Item` owns the trigger header and collapsible panel, so you pass a `trigger` label and panel children instead of composing public Header / Trigger / Panel parts.
+
+Root `value`, `defaultValue`, and `onValueChange` come from Base UI. Set `multiple` when several sections can stay open; exclusive FAQs stay single-open by default. Items wrap [`Surface`](/components/layout/surface) by default: `color`, `border`, and `radius` forward to that host, and root `islands` toggles separated cards versus an attached block with corner radius only on the first and last rows.
+
+Keyboard and aria behavior stay upstream. You compose items, copy, and surrounding chrome in JSX.
+
+## When to use
+
+- FAQ or help content where one answer at a time keeps the page short
+- Settings groups where several sections can stay open together (`multiple`)
+- Collapsible blocks that should look like Surface islands or one attached stack
+
+## When not to use
+
+- Persistent peer views in the same region → [Tabs](/components/navigation/tabs)
+- A single boolean or short disclosure that is not a section list → details/summary or a custom Stack row
+- Content that should always stay visible → plain [Stack](/components/layout/stack) / [Surface](/components/layout/surface)
+
+## Related
+
+- [Stack](/components/layout/stack) — column host Accordion builds on
+- [Surface](/components/layout/surface) — island / attached item chrome
+- [Tabs](/components/navigation/tabs) — peer panels that stay in view when selected
+- [Separator](/components/layout/separator) — static breaks when collapse is not needed
 
 ## Common examples
 
 ### Exclusive open
 
-One open panel at a time is the default disclosure pattern — useful for FAQs where each answer replaces the previous. Items keep Surface islands with gap between cards; nest the accordion under a titled panel when the group needs chrome.
+One open panel at a time is the default disclosure pattern. Useful for FAQs where each answer replaces the previous. Items keep Surface islands with gap between cards; nest the accordion under a titled panel when the group needs chrome.
 
 <Example preview={<AccordionExclusiveDemo />}>
 
@@ -61,7 +84,7 @@ import { Accordion, Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Multiple open
 
-Pass `multiple` so several panels can stay expanded together — handy for settings groups where readers compare related answers. Seed open sections with `defaultValue` as an array of item values.
+Pass `multiple` so several panels can stay expanded together. Handy for settings groups where readers compare related answers. Seed open sections with `defaultValue` as an array of item values.
 
 <Example preview={<AccordionMultipleDemo />}>
 
@@ -85,7 +108,7 @@ import { Accordion, Text } from '@viraui/react';
 
 ### Attached block
 
-Set `islands={false}` when Surface items should read as one attached block — corner radius stays on the outer edges of the first and last rows instead of gapped islands. Leave `islands` on (the default) for separated cards.
+Set `islands={false}` when Surface items should read as one attached block. Corner radius stays on the outer edges of the first and last rows instead of gapped islands. Leave `islands` on (the default) for separated cards.
 
 <Example preview={<AccordionAttachedDemo />}>
 

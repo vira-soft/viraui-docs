@@ -3,9 +3,29 @@ title: Annotate
 description: Decorative arrow and note beside wrapped content — optional highlighter mark, side placement, and offset tuning.
 ---
 
-Annotate wraps inline content with an optional callout arrow and handwritten-style note. Set `note` to show the label; `side` places the arrow on any of eight compass positions around the child. `color` maps to a highlight token for the arrow, label, and optional `mark` highlighter behind the child. Fine-tuning uses CSS custom properties — `targetGap` and `labelGap` for spacing, `rotate` for label tilt, `arrowOffsetX` / `arrowOffsetY` and `textOffsetX` / `textOffsetY` for nudges, `labelMaxWidth` and `textAlign` for long copy. The note and arrow are `aria-hidden` presentational spans, so never put information that only exists in `note` — duplicate anything critical in visible, announced copy nearby. Reach for [Tooltip](/components/overlays/tooltip) or [Popover](/components/overlays/popover) when the callout must be hoverable, focusable, or dismissible; Annotate is for static marketing or editorial emphasis.
+Annotate wraps inline content with a static callout arrow and a short handwritten-style note. Pass `note` for the label and `side` for one of eight compass positions around the child. Optional `mark` paints a highlighter behind the wrapped words; `color` tints the arrow, label, and mark together.
+
+Spacing and nudges are CSS custom properties on the root (`targetGap`, `labelGap`, `rotate`, offset props, `labelMaxWidth`, `textAlign`). The note and arrow are `aria-hidden` and presentational, so anything important in `note` must also appear in nearby announced copy.
+
+## When to use
+
+- Marketing or editorial emphasis beside a phrase (pricing perk, feature callout)
+- Static decoration that never needs hover, focus, or dismiss
+
+## When not to use
+
+- Hoverable, focusable, or dismissible help → [Tooltip](/components/overlays/tooltip) or [Popover](/components/overlays/popover)
+- Status that belongs on a control chrome → [Badge](/components/widgets/badge) or [Chip](/components/widgets/chip)
+
+## Related
+
+- [Tooltip](/components/overlays/tooltip) — interactive, accessible hover/focus hints
+- [Popover](/components/overlays/popover) — richer dismissible callouts
+- [Badge](/components/widgets/badge) — corner status on a control
 
 ## Common examples
+
+### Side note with mark
 
 A top-side note with optional `mark` shows the default editorial treatment.
 

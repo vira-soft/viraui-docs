@@ -15,11 +15,31 @@ description: Circular identity image with required fallback initials or node whe
   </Card>
 </Cards>
 
-Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` when a photo exists; always supply `fallback` — initials or a short node — because Base UI's avatar primitive renders that layer when `src` is omitted or the image errors. `size` picks the footprint (`xs` through `l`) and scales the fallback label through the shared [Text](/components/typography/text) sizing map. The root is a non-growing `span` (`data-grow="false"`) so avatars stay stable inside toolbars and list rows. Pair a single avatar with a name in [Stack](/components/layout/stack); use [AvatarGroup](/components/widgets/avatar-group) when several identities overlap on one line.
+Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` when a photo exists; always supply `fallback` (initials or a short node) so Base UI can render that layer when the image is missing or fails.
+
+`size` picks the footprint and scales the fallback label through the shared [Text](/components/typography/text) map. The root stays a non-growing `span`, so avatars hold steady in toolbars and list rows. Pair a single face with a name in [Stack](/components/layout/stack); use [AvatarGroup](/components/widgets/avatar-group) when several identities should overlap on one line.
+
+## When to use
+
+- One person or entity face beside a name, row, or menu trigger
+- Photo when a URL exists; initials only as the image-error path
+
+## When not to use
+
+- Several overlapping collaborators → [AvatarGroup](/components/widgets/avatar-group)
+- A clickable chrome control with no face → [IconButton](/components/actions/icon-button)
+
+## Related
+
+- [AvatarGroup](/components/widgets/avatar-group) — overlapping faces with overflow
+- [Badge](/components/widgets/badge) — status dot on an avatar
+- [Stack](/components/layout/stack) — name + avatar rows
 
 ## Common examples
 
-Size steps and image-vs-fallback behavior are the usual starting points.
+### Size and fallback
+
+Size steps and image-vs-fallback behavior are the usual starting points. Prefer a real `src` for people; keep `fallback` for the error path.
 
 <PreviewSlot label="Avatar preview" />
 

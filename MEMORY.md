@@ -54,11 +54,14 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 
 ## Product model
 
-- Human docs = how each part works + copy-ready agent prompts. **Not** exhaustive prop tables or human study guides.
-- Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt.
-- Deep API authority stays in sibling `@viraui/react/specs` / skills — pages point agents there.
+- Human docs for **humans who use LLMs as the central tool** — not LLM-only docs, not memorize-the-API study guides. Default path: agent does work, human reviews; docs help when deciding / doubting. Teach overview, capabilities, layers, when/why to pick a part.
+- Prose = use cases + when-to-use (+ when-not / vs siblings on component pages). Short paragraphs (lead ≈2–3). Bullets / Callouts / headings OK when they help assimilation — prefer lists over long paragraphs when list is clearer. No text walls, no surface catalogs. Em-dashes rare. No telegraph short-sentence stacks. Keep **Ask your agent** prompts. Deep API stays in `@viraui/react/specs` / skills.
+- Voice split: DS intro pages = product-story; component pages = task-oriented. Base UI Card stays top of ComponentPage body.
+- Voice contract: `page-shell.md` + `.cursor/rules/02-docs-consumer-voice.mdc` (update when this model drifts).
+- Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt. Brand/theme = user choice; font import follows (built-in theme fonts vs custom) — not a hard “theme gate” that blocks foundation/font install.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
-- Intro top-level: `/`, `/why`, `/principles`, `/layers`; separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
 
 ## Context habits
 
@@ -77,21 +80,20 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - `githubUrl: "https://github.com/vira-soft/viraui-docs"` in `defaultLayoutProps` — nav GitHub icon (private repo; `site.git` also set)
 - Page actions: Copy Markdown + `OpenWithPopover` only; frontmatter `pageActions: false` hides both
 - Nav icons: `@viraui/icons` via `viraIconsPlugin` + shared `<Icon name="…" />` — sync duo barrel; avoid `import.meta.glob` over full icon set
-- Content icons in MDX fences + `src/components/demos/**`: `@phosphor-icons/react` only — never `@viraui/icons` there. Rule `.cursor/rules/05-docs-demo-icons-phosphor.mdc`. Foundation icons page may still demo Lucide/Phosphor/sprite side-by-side
+- Content icons in MDX fences + `src/components/demos/**`: `@phosphor-icons/react` only — never `@viraui/icons` there. Rule `.cursor/rules/05-docs-demo-icons-phosphor.mdc`. Foundation iconography page may still demo Lucide/Phosphor/sprite side-by-side
 - Do **not** link Vercel project to GitHub — deploy via GH Actions secrets `VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID`
 - Site cover: static `https://docs.viraui.dev/cover.jpg`; plugin `{ name: "core:takumi" }` skips per-page generated OG
 - Banner: docs under construction (in `press.config.tsx` `renderRoot`)
 - Sidebar CTA: `sidebar.footer` in `renderLayout` — "Get ViraUI Pro" → `https://viraui.dev/#pro` (both roots, below page tree)
 - MDX paths: Design System pages live under `content/(design-system)/` (folder group); Components under `content/components/`. Root `meta.json` lists both roots only.
-- `content/(design-system)/meta.json` lists `why` — `why.mdx` may still be missing (IA stub drift)
 - Principles (`002`): no product/timeline claim for “browser as canvas”; Figma OK as disposable low-fi only; a11y → generic skills + link `/get-started/skills`; next links `/layers` + `/get-started/skills` only
 - Layers (`003`): Cards use `layers-*` spotkit stack (one slab lit); intro Core Cards keep `foundation`/`components`/`motion`/`ai`
 - Intro Spotkit (`core-*` / `pro-*`): **no fade mask**; contained panels; composition centered in 160 (same treatment as `foundation-*`)
 - Setup (`004`): page = `content/(design-system)/get-started/setup.mdx` → `/get-started/setup` (not category `index`); icon `CubeSettings`; **skills install + editor reload before** bootstrap/verify prompts; Manual demoted
-- Consumer voice: `.cursor/rules/02-docs-consumer-voice.mdc` — AI-centric (mechanism + prompts); no What's next; spaced em-dashes ` — `
+- Consumer voice: `.cursor/rules/02-docs-consumer-voice.mdc` + `page-shell.md` — AI-centric tool, human decide/review; short paras / bullets OK; em-dash rare; no telegraph stacks; no What's next
 - Skills (`005`): page = `content/(design-system)/get-started/skills.mdx` → `/get-started/skills`; icon `OrbitSparkle`; orientation only (no install one-liner, no ask-agent fence); Setup owns install; brief MCP link required
 - Utilities (`006`): expandable group `content/(design-system)/get-started/utilities/` (`defaultOpen: false`); child `use-breakpoints.mdx` → `/get-started/utilities/use-breakpoints`; owns BreakpointsProvider / `useBreakpoints` live Examples (`breakpoints-demo`, no sandbox resize — `matchMedia` is document viewport); not under Layout; Base UI = link-out
-- Foundation overview (`007`): `/foundation` = lead → how-it-works → 8 Cards (title+image); title `Overview`; children = colors → motion → elevation → effects → typography → spacing → radius → icons
+- Foundation overview (`007`): `/foundation` = lead → how-it-works → 8 Cards (title+image); title `Overview`; children = colors → motion → elevation → effects → typography → spacing → radius → iconography
 - Foundation Colors: `/foundation/colors` — browse `--global-*` / `--highlight-*` / `--color-*` swatches (`GlobalColorTokens`, `HighlightColorTokens`, `PrimitiveColorTokens` in `src/components/demos/color-tokens/`); theme retune → UI follows; “Change or extend” → Theming / Studio (no agent/skills CTA on foundation)
 - Foundation Motion: flat `/foundation/motion` (`motion.mdx`, icon `AnimationFast`) — principles + functional/evocative; components already follow duration/easing; theme retune for pace. No skill CTA. Demos: `motion-demo-discreet` (Toast), `motion-demo-assistive` (4× Textfield), `motion-demo-intuitive` (EmptyTeam + fake cursor), `motion-demo-playful` (Distribute Track + Beam), `motion-demo-functional` (Accordion), `motion-demo-evocative` (Dialog); shared `hooks/use-prefers-reduced-motion/`.
 - Docs root CSS: **no** full `vira.css` / preflight on `src/app.css` — they clash with Tailwind `@theme` (`--radius-*`, `--color-*-50/60/70`). Thin bridge `src/lib/vira-docs-bridge.ts` (`--global-*` / `--highlight-*` from `vira/nested`) injected in `press.config` `meta.root`. Spotkit / tab colors / foundation-colors art use bridge. Color swatches paint from nested JSON inline (not root `--color-*`). Full theme+preflight = **only** `ViraSandbox` iframe.
@@ -100,9 +102,9 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Foundation Spotkit set (`foundation-*`): **no fade mask**; contained panels only; composition centered in 160; no bottom fake bars; done: colors, motion (bezier), elevation (hub: slight stack), effects (Glow border-ring on card), typography (raised specimen), spacing art key `foundation-space` (gap ladder exponential), radius (corner zoom: concentric R / R+p / R+2p), icons (outline mono vs fill duo, Vira sun/shield/cube); `foundation-themes-and-brand` exists (Get started theme page art optional)
 - Foundation Elevation page (`/foundation/elevation`): elevation/`Elevator` = **shadow depth**, not `z-index` (same `0`–`4` numbers usually align; mechanisms independent). Essay plane → 4; shadows gate on theme; no skill CTA. Art = `foundation-elevation-layers`. Applying: `ElevatorDemo` + short `Elevator` snippet
 - Foundation Effects page (`/foundation/effects`): `--effect-*` gates (empty/unset = on, `initial` = off). Pattern + examples, **no** enumerated effect inventory. Theme flip → UI follows; no spot; no skill CTA. Not Components/effects (Glow/Beam/…)
-- Foundation Typography page (`/foundation/typography`): `Title` vs `Text` = separate typescales; Title `size` vs `render`; fluid = `100vi` (viewport), Title default on / Text default off (`fluid` prop). `TypographyFluidDemo` = resizable Surface + demo-only `--__*-fluid` remap to `100cqi` (handle works; product still `vi`). Theme owns fonts/typescale; no size inventory; no spot; no skill CTA
-- Foundation Spacing page (`/foundation/spacing`): prefer layout props (`Stack`/`Grid`/`Surface`); CSS only for one-offs via `--space-*`; retune theme scale; no inventory; no spot; no skill CTA
-- Foundation Radius page (`/foundation/radius`): prefer `radius` props; CSS only for one-offs via `--radius-*`; concentric nested corners = `radius="auto"` (Surface context − padding); live toggle demo `RadiusConcentricDemo` (equal token vs `auto`); retune theme scale; no token inventory; no spot; no skill CTA
+- Foundation Typography page (`/foundation/typography`): `Title` vs `Text` = separate typescales; Title `size` vs `render`; fluid = `100vi` (viewport), Title default on / Text default off (`fluid` prop). `TypographyFluidDemo` = `ViraSandbox resizable` (no inner card); iframe width = `100vi` so product clamp teaches without cqi remap. Theme owns fonts/typescale; no size inventory; no spot; no skill CTA
+- Foundation Spacing page (`/foundation/spacing`): prefer layout props (`Stack`/`Grid`/`Surface`); CSS only for one-offs via `--space-*`; beyond top step = add brand `--space-*` (CSS-only; not layout props) or `calc(var(--space-*) * N)`; retune theme when whole product needs roomier steps; no inventory; no spot; no skill CTA
+- Foundation Radius page (`/foundation/radius`): prefer `radius` props; CSS only for one-offs via `--radius-*`; concentric nested corners = `radius="auto"` (Surface context − padding) or CSS `max(0px, calc(var(--radius-*) - var(--space-*)))`; live toggle demo `RadiusConcentricDemo` (equal token vs `auto`); retune theme scale; no token inventory; no spot; no skill CTA
 - Foundation voice: substrate essays teach how Vira already wires look; consumer job = change theme. Skill/agent CTAs live on Get started Skills / Setup—not Foundation topic leads
 - Get started order: setup → Theming group → skills → mcp → Utilities group
 - MDX voice: speak to consumer (`you` / imperative); no meta “this page / keep this page / not here” — rule `.cursor/rules/02-docs-consumer-voice.mdc` (`content/**/*.mdx`)

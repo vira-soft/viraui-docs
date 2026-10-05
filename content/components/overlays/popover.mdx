@@ -15,19 +15,35 @@ description: Non-modal floating panel anchored to a trigger — titled Sheet, po
   </Card>
 </Cards>
 
-Popover opens a floating panel beside or below a trigger without blocking the rest of the page. Compose `Popover.Trigger` and `Popover.Sheet` as children of `Popover`; the trigger accepts any control through `render`, and the sheet carries the accessible name through required `title` (plus optional `description`) on the styled variant. Content portals out of the DOM flow, picks a side from available space, and dismisses on outside click or Escape — same overlay family as [Menu](/components/overlays/menu), but sized for richer panels rather than command rows.
+Popover opens a floating panel beside or below a trigger without blocking the rest of the page. Compose `Popover.Trigger` and `Popover.Sheet` as children of `Popover`. The trigger accepts any control through `render`; the sheet carries the accessible name through required `title` (plus optional `description`) on the styled variant.
 
-Use the styled `Popover.Sheet` when ViraUI chrome is enough. Pass `unstyled` when you own the surface — then compose `Popover.Title` and `Popover.Description` with [Title](/components/typography/title) and [Text](/components/typography/text) so the dialog name still resolves. Interactive panels can set `modal="trap-focus"` so tab cycles stay inside the sheet while it is open. Hover-open panels use `openOnHover`, `delay`, and `closeDelay` on the trigger. Detached or multi-trigger layouts share one sheet through `Popover.createHandle()` — the handle links triggers outside the root to a single popover instance, and payload render props morph content when the active trigger changes. Do not wrap [Menu](/components/overlays/menu) in Popover; Menu already owns portal and menu keyboard behavior. For modal tasks that block the page, use [Dialog](/components/dialogs/dialog) instead.
+Content portals out of the DOM flow, picks a side from available space, and dismisses on outside click or Escape. Same overlay family as [Menu](/components/overlays/menu), but sized for richer panels rather than command rows. Use styled `Popover.Sheet` when ViraUI chrome is enough; pass `unstyled` when you own the surface and still need `Popover.Title` / `Popover.Description` for the dialog name.
+
+## When to use
+
+- Options, notifications, or short forms anchored to a control without blocking the page
+- Panels that need a title, description, body stack, and an explicit dismiss action
+- Hover-open or focus-trapped interactive sheets (`openOnHover`, `modal="trap-focus"`)
+
+## When not to use
+
+- A list of commands or exclusive picks from a trigger → [Menu](/components/overlays/menu)
+- A brief read-only hint with no interaction → [Tooltip](/components/overlays/tooltip)
+- A modal task that should block the page → [Dialog](/components/dialogs/dialog)
+
+## Related
+
+- [Menu](/components/overlays/menu) — command lists with roving focus and typeahead
+- [Tooltip](/components/overlays/tooltip) — short hover/focus hints
+- [Dialog](/components/dialogs/dialog) — edge sheets that interrupt the page
 
 ## Common examples
 
-A notifications sheet with a dismiss control is the default shape — trigger, titled sheet, body stack, and `Popover.Close`.
+### Titled sheet
+
+A titled sheet with trigger, body stack, and `Popover.Close` is the default non-modal panel. Keep body copy short; put dense command lists in Menu instead.
 
 <PreviewSlot label="Popover preview" />
-
-```text tab="Notifications sheet"
-Add an Options popover from a secondary button — title Options, short description, body copy, and a Done dismiss action.
-```
 
 ```tsx
 import { Button, Popover, Stack, Text } from '@viraui/react';
@@ -36,15 +52,21 @@ import { Button, Popover, Stack, Text } from '@viraui/react';
   <Popover.Trigger render={<Button variant="secondary">Options</Button>} />
   <Popover.Sheet title="Options" description="Choose an action">
     <Stack rowGap="m">
-      <Text render={<p />}>Notification preferences and workspace shortcuts live here.</Text>
+      <Text />
       <Popover.Close render={<Button variant="flat">Done</Button>} />
     </Stack>
   </Popover.Sheet>
 </Popover>
 ```
 
+Interactive panels can set `modal="trap-focus"` so tab cycles stay inside the sheet while it is open. Detached or multi-trigger layouts share one sheet through `Popover.createHandle()`; payload render props morph content when the active trigger changes. Do not wrap [Menu](/components/overlays/menu) in Popover.
+
 ## Ask your agent
 
 ```text tab="Options panel"
+Add an Options popover from a secondary button — title Options, short description, body copy, and a Done dismiss action.
+```
+
+```text tab="Notifications sheet"
 Add a notifications popover from an icon-only bell button. Title Notifications, description "You are all caught up", short status body, and a Dismiss button. If the panel needs a text field, trap focus inside while open.
 ```

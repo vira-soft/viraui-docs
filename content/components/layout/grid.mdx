@@ -3,7 +3,30 @@ title: Grid
 description: CSS Grid host — fixed columns, auto-fill tracks, and token gap and padding.
 ---
 
-`Grid` lays out children on a CSS Grid with Vira-owned props instead of hand-written `grid-template` rules. Set `columns` for a fixed track count — bare `columns={N}` builds fluid `1fr` tracks — or leave `columns` unset and use `filling` with `colMinWidth` for responsive auto-fill / auto-fit. Gap and padding props read the same [spacing](/foundation/spacing) tokens as [`Stack`](/components/layout/stack); `hPadding` and `vPadding` also accept `[start, end]` tuples for one-sided inset. `Grid.Item` owns placement — `fullWidth` / `fullHeight`, `column` / `row` spans, or `subgrid` when a cell should inherit parent tracks. Pass `render` when the grid or an item should be a semantic element. Reach for `Grid` when two-dimensional placement matters — dashboards, form columns, media tiles — and prefer [`Stack`](/components/layout/stack) when a single flex axis is enough.
+`Grid` lays out children on a CSS Grid with Vira-owned props instead of hand-written `grid-template` rules. Reach for it when placement is truly two-dimensional: dashboards, form columns, media tiles, and bento boards.
+
+Set `columns` for a fixed track count (`columns={N}` builds fluid `1fr` tracks), or leave `columns` unset and use `filling` with `colMinWidth` for responsive auto-fill / auto-fit. Gap and padding props read the same [spacing](/foundation/spacing) tokens as [`Stack`](/components/layout/stack); `hPadding` and `vPadding` also accept `[start, end]` tuples.
+
+`Grid.Item` owns placement: `fullWidth` / `fullHeight`, `column` / `row` spans, or `subgrid` when a cell should inherit parent tracks. Pass `render` when the grid or an item should be a semantic element.
+
+## When to use
+
+- Fixed columns, spans, or full-width bands on a shared track grid
+- Responsive auto-fill / auto-fit walls from a minimum track width
+- Dashboards and form layouts where row and column placement both matter
+
+## When not to use
+
+- A single flex axis is enough → [Stack](/components/layout/stack)
+- Tile heights vary and should pack into columns → [Masonry](/components/layout/masonry)
+- You only need panel chrome (color, border, radius) → [Surface](/components/layout/surface)
+
+## Related
+
+- [Stack](/components/layout/stack) — default single-axis flex host
+- [Masonry](/components/layout/masonry) — variable-height column packing
+- [Surface](/components/layout/surface) — themed chrome inside grid cells
+- [Elevator](/components/layout/elevator) — resting / hover shadow on cell roots
 
 ## Common examples
 
@@ -51,7 +74,7 @@ import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Spanning items
 
-`Grid.Item` breaks the default 1×1 cell when a block needs more tracks. Prefer `fullWidth` for a banner across every column, or `row="span N"` / `column="span N"` for a partial span — placement stays on the item props.
+`Grid.Item` breaks the default 1×1 cell when a block needs more tracks. Prefer `fullWidth` for a banner across every column, or `row="span N"` / `column="span N"` for a partial span. Placement stays on the item props.
 
 <Example preview={<GridItemSpanDemo />}>
 
@@ -106,7 +129,7 @@ import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Bento grid
 
-Reach for asymmetric `column` / `row` spans when tiles should not share equal weight — feature boards, marketing mosaics, and dashboard walls where a hero cell sits beside shorter companions.
+Reach for asymmetric `column` / `row` spans when tiles should not share equal weight: feature boards, marketing mosaics, and dashboard walls where a hero cell sits beside shorter companions.
 
 <Example preview={<GridBentoDemo />}>
 
@@ -167,7 +190,7 @@ const fillHeightStyle = { height: '100%' };
 
 ### Auto-fill tracks
 
-When `columns` is unset, `filling` defaults to `'fill'` and builds `repeat(auto-fill, …)` tracks sized from `colMinWidth` (default `10rem`). Pass `filling="fit"` for auto-fit, or `false` to skip the filling attribute. Tracks reflow as the host width changes — useful for media walls and card libraries.
+When `columns` is unset, `filling` defaults to `'fill'` and builds `repeat(auto-fill, …)` tracks sized from `colMinWidth` (default `10rem`). Pass `filling="fit"` for auto-fit, or `false` to skip the filling attribute. Tracks reflow as the host width changes; useful for media walls and card libraries.
 
 <Example preview={<GridAutoFillDemo />}>
 

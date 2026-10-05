@@ -2,8 +2,36 @@
 
 import * as React from "react";
 import { Button, Dialog, Stack, Text } from "@viraui/react";
-import { useViraSandboxDocument } from "../../common/vira-sandbox";
+import {
+  useViraSandboxCss,
+  useViraSandboxDocument,
+} from "../../common/vira-sandbox";
+import stageCss from "./motion-demo-evocative.module.css?inline";
 import styles from "./motion-demo-evocative.module.css";
+
+/** Clamp sandbox + hide enter/exit scrollbar track (auto-height frame + Dialog Content). */
+const SANDBOX_SCROLL_CSS = `
+html, body {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+[data-starting-style],
+[data-ending-style],
+[data-starting-style] *,
+[data-ending-style] * {
+  scrollbar-width: none;
+}
+[data-starting-style]::-webkit-scrollbar,
+[data-ending-style]::-webkit-scrollbar,
+[data-starting-style] *::-webkit-scrollbar,
+[data-ending-style] *::-webkit-scrollbar {
+  display: none;
+}
+`;
 
 type MotionDemoEvocativeDialogProps = {
   /**
@@ -26,6 +54,7 @@ const MotionDemoEvocativeDialog: React.FC<MotionDemoEvocativeDialogProps> = ({
   onOpenChange,
 }) => {
   const { document: frameDoc } = useViraSandboxDocument();
+  useViraSandboxCss(`${stageCss}\n${SANDBOX_SCROLL_CSS}`);
 
   if (!frameDoc?.body) {
     return null;

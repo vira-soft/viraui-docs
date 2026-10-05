@@ -3,9 +3,30 @@ title: Chip
 description: Compact label pill with primary, secondary, outline, or highlight variants and optional decorative addon.
 ---
 
-Chip is a small, non-submitting label for tags, filters, and metadata. Children render as the label through [Text](/components/typography/text); `variant` selects primary, secondary, outline, or a foundation highlight name. An optional `addon` slot accepts an icon or other node on the `start` or `end` side — the slot is `aria-hidden` because the label text should carry meaning. Base UI `render` can swap the root element when the chip should look like a pill but behave as a link. Chips on filled [Button](/components/actions/button) surfaces often need `data-mode="inverted"` so contrast holds against the button fill. Prefer Chip over Button when the control is informational or removable in place; reach for Button or [ToggleButton](/components/actions/toggle-button) when activation should commit work.
+Chip is a small, non-submitting label for tags, filters, and metadata. Children render as the label through [Text](/components/typography/text); `variant` selects primary, secondary, outline, or a foundation highlight name.
+
+Optional `addon` accepts an icon or other node on the start or end side. The slot is `aria-hidden` because the label text should carry meaning. Base UI `render` can swap the root when the chip should look like a pill but behave as a link. On filled [Button](/components/actions/button) surfaces, chips often need `data-mode="inverted"` so contrast holds against the button fill.
+
+## When to use
+
+- Tags, filters, or status pills that do not commit work
+- Compact metadata beside a row or inside a filter strip
+
+## When not to use
+
+- Activation that commits work → [Button](/components/actions/button) or [ToggleButton](/components/actions/toggle-button)
+- Icon-only chrome with no label → [IconButton](/components/actions/icon-button)
+- Corner status on another control → [Badge](/components/widgets/badge)
+
+## Related
+
+- [Button](/components/actions/button) — labeled actions that commit
+- [ToggleButton](/components/actions/toggle-button) — pressed-state filters that activate
+- [Badge](/components/widgets/badge) — decorative corner status on a host
 
 ## Common examples
+
+### Variants and addons
 
 Variant rows and addon placement cover most chip compositions.
 

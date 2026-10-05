@@ -8,9 +8,17 @@ pageActions: false
 
 ViraUI builds on [Base UI](https://base-ui.com). For direction, focus management, portals, and similar built-ins, use [Base UI's docs](https://base-ui.com).
 
-`BreakpointsProvider` and `useBreakpoints` let the React tree **branch** at named min-width thresholds — swap markup, mount different components, or drive props CSS cannot express alone. Prefer CSS `@media` or container queries when the same elements can just shift with styles. The required overlay shell from [Setup](/get-started/setup) does not include these helpers; add them only when you need that kind of branch.
+## How it works
 
-Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider. Passing `breakpoints` on the provider **replaces** the default map entirely — it does not merge. Defaults are em-based names from `extra-small` through `extra-large` (the example below uses `small` at `48em`); the full table lives in `@viraui/react/specs` → `breakpoints`. Matches come from `window.matchMedia` on the document that mounts the provider — not from a preview frame’s resize handle.
+`BreakpointsProvider` and `useBreakpoints` let the React tree **branch** at named min-width thresholds: swap markup, mount different components, or drive props CSS cannot express alone. Prefer CSS `@media` or container queries when the same elements can just shift with styles.
+
+These helpers are ViraUI-specific and optional. The required overlay shell from [Setup](/get-started/setup) does not include them; add them only when you need that kind of branch.
+
+Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider.
+
+Passing `breakpoints` on the provider **replaces** the default map entirely; it does not merge. Defaults are em-based names: `extra-small` (`30em`), `small` (`48em`), `medium` (`60em`), `large` (`80em`), and `extra-large` (`100em`). Confirm the live map in `@viraui/react/specs` under `breakpoints`.
+
+Matches come from `window.matchMedia` on the document that mounts the provider, not from a preview frame’s resize handle.
 
 ```tsx title="ResponsiveNav.tsx"
 'use client';
@@ -43,7 +51,7 @@ export function App({ children }: { children: React.ReactNode }) {
 }
 ```
 
-Custom names replace the defaults entirely — there is no partial merge:
+Custom names replace the defaults entirely. There is no partial merge:
 
 ```tsx title="Custom breakpoints"
 <BreakpointsProvider breakpoints={{ compact: '20em', wide: '50em' }}>
@@ -55,7 +63,7 @@ Custom names replace the defaults entirely — there is no partial merge:
 
 ### Direction flip
 
-A studio nav reads one named flag and flips Stack `direction` when that min-width matches — the provider must wrap every screen that calls the hook.
+A studio nav reads one named flag and flips Stack `direction` when that min-width matches. The provider must wrap every screen that calls the hook.
 
 <Example preview={<BreakpointsDirectionDemo />}>
 
@@ -101,7 +109,7 @@ function StudioNav() {
 
 ### Match record
 
-Call `useBreakpoints()` with no argument when several names drive the same subtree — you get the full name → boolean record for the provider’s current map. Matched names light as green chips.
+Call `useBreakpoints()` with no argument when several names drive the same subtree. You get the full name → boolean record for the provider’s current map. Matched names light as green chips.
 
 <Example preview={<BreakpointsRecordDemo />}>
 
@@ -139,7 +147,7 @@ function MatchBoard() {
 
 ### Custom map
 
-The `breakpoints` prop installs a product map for that provider instance. Named hooks must use those keys only — sparse overrides do not keep default names like `small`.
+The `breakpoints` prop installs a product map for that provider instance. Named hooks must use those keys only. Sparse overrides do not keep default names like `small`.
 
 <Example preview={<BreakpointsCustomMapDemo />}>
 
@@ -189,7 +197,7 @@ function ReleaseDesk() {
 
 </Example>
 
-## Ask an agent
+## Ask your agent
 
 Paste a need like this when CSS alone cannot express the layout change:
 

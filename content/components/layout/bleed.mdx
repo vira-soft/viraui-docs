@@ -3,7 +3,29 @@ title: Bleed
 description: Pull content past parent padding — token amount or full viewport edge bleed.
 ---
 
-`Bleed` applies negative inline margin so children escape a padded parent without reworking the outer layout — set `amount` to a [spacing](/foundation/spacing) token for a controlled pull, or `full` to reach the viewport edges and ignore `amount`. Match `amount` to the parent [`Stack`](/components/layout/stack) or [`Surface`](/components/layout/surface) `hPadding` token so media, dividers, or trailing controls kiss the chrome while siblings stay inset. Typical uses include edge-to-edge hero bands inside a padded section, carousels that should meet the screen sides, and full-width rules under inset copy. The wrapper is a plain `div`; it offsets from the parent's content box and does not resize its children.
+`Bleed` applies negative inline margin so children escape a padded parent without reworking the outer layout. The wrapper is a plain `div`; it offsets from the parent's content box and does not resize its children.
+
+Set `amount` to a [spacing](/foundation/spacing) token for a controlled pull, or `full` to reach the viewport edges and ignore `amount`. Match `amount` to the parent [`Stack`](/components/layout/stack) or [`Surface`](/components/layout/surface) `hPadding` token so media, dividers, or trailing controls kiss the chrome while siblings stay inset.
+
+Typical uses include edge-to-edge hero bands inside a padded section, carousels that should meet the screen sides, and full-width rules under inset copy.
+
+## When to use
+
+- Media or a divider should break out of padded Surface / Stack chrome
+- A hero band should span viewport edges while intro copy stays inset
+- The outer padding should stay intact for siblings above and below
+
+## When not to use
+
+- You can drop parent padding for the whole section instead of a local breakout
+- The edge belongs to the panel outline → [Surface](/components/layout/surface) `border`
+- You need a themed divider without breakout → [Separator](/components/layout/separator) alone
+
+## Related
+
+- [Stack](/components/layout/stack) — padded host whose `hPadding` Bleed should match
+- [Surface](/components/layout/surface) — card or section chrome around bleed content
+- [Separator](/components/layout/separator) — edge-to-edge rules wrapped in Bleed
 
 ## Common examples
 
@@ -35,7 +57,7 @@ import { Bleed, Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Viewport edge
 
-`full` stretches the child to the viewport width from a centered, padded layout — useful for hero media that should ignore section margins while title and body stay on the spacing scale.
+`full` stretches the child to the viewport width from a centered, padded layout. Useful for hero media that should ignore section margins while title and body stay on the spacing scale.
 
 <Example preview={<BleedFullDemo />}>
 

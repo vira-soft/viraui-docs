@@ -3,13 +3,35 @@ title: Elevator
 description: Apply resting and hover elevation hooks to child roots — no wrapper element.
 ---
 
-`Elevator` is a renderless helper — it walks valid element children and merges [elevation](/foundation/elevation) data attributes (`data-elevation`, `data-elevation-hover`, `data-elevation-direction`) onto each child's root so preflight shadow styles activate without a wrapping `div`. Set `resting` for the default level and optional `hover` for pointer elevation; `direction` controls which edge casts the shadow. Invalid nodes pass through unchanged. Popup lists in [`Select`](/components/inputs/select) and [`Autocomplete`](/components/inputs/autocomplete) already sit on elevated surfaces — use `Elevator` when a custom child needs the same shadow contract. [`Surface`](/components/layout/surface) has no elevation prop of its own.
+`Elevator` is a renderless helper. It walks valid element children and merges [elevation](/foundation/elevation) data attributes (`data-elevation`, `data-elevation-hover`, `data-elevation-direction`) onto each child's root so preflight shadow styles activate without a wrapping `div`.
+
+Set `resting` for the default level and optional `hover` for pointer elevation; `direction` controls which edge casts the shadow. Invalid nodes pass through unchanged.
+
+Popup lists in [`Select`](/components/inputs/select) and [`Autocomplete`](/components/inputs/autocomplete) already sit on elevated surfaces. Use `Elevator` when a custom child needs the same shadow contract. [`Surface`](/components/layout/surface) has no elevation prop of its own.
+
+## When to use
+
+- A custom card or panel needs resting and/or hover shadow without an extra wrapper
+- A floating bar should cast upward (`direction="top"`) toward content below
+- You want the same elevation hooks Select and Autocomplete already use
+
+## When not to use
+
+- You only need background, border, or radius → [Surface](/components/layout/surface)
+- The control already elevates its popup (Select, Autocomplete menus)
+- Depth should come from nested color ramp layers alone → Surface `color`
+
+## Related
+
+- [Surface](/components/layout/surface) — panel chrome that Elevator typically wraps
+- [Elevation](/foundation/elevation) — shadow levels and direction contract
+- [Select](/components/inputs/select) — elevated popups that already own their own lift
 
 ## Common examples
 
 ### Resting shadow
 
-A feature card with only `resting` keeps a steady soft shadow — useful for static tiles and placeholder shells that should not lift on hover.
+A feature card with only `resting` keeps a steady soft shadow. Useful for static tiles and placeholder shells that should not lift on hover.
 
 <Example preview={<ElevatorRestingDemo />}>
 
@@ -35,7 +57,7 @@ import { Elevator, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Hover lift
 
-Pair `resting` with `hover` so the child root steps up on pointer hover — the usual interactive card pattern.
+Pair `resting` with `hover` so the child root steps up on pointer hover. The usual interactive card pattern.
 
 <Example preview={<ElevatorDemo />}>
 
@@ -61,7 +83,7 @@ import { Elevator, Stack, Surface, Text } from '@viraui/react';
 
 ### Cast direction
 
-`direction` picks which edge casts the shadow — default is bottom for page cards; `top` suits floating bars that sit above content.
+`direction` picks which edge casts the shadow. Default is bottom for page cards; `top` suits floating bars that sit above content.
 
 <Example preview={<ElevatorDirectionDemo />}>
 

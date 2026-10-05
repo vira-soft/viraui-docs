@@ -4,7 +4,6 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 
 ```
 /                          → Introduction (Core + Pro overview)
-/why                       → why & how
 /principles                → principles
 /layers                    → layers & composition
 /get-started               → Get started overview
@@ -25,7 +24,7 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 /foundation/typography
 /foundation/spacing
 /foundation/radius
-/foundation/icons
+/foundation/iconography
 /components                → components overview (category cards → first component page)
 /components/{category}/{component}  → component page (category folders expandable in nav; no category index)
 ```

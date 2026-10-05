@@ -3,13 +3,36 @@ title: Masonry
 description: Multi-column masonry layout — responsive column counts from breakpoint map.
 ---
 
-`Masonry` distributes children into a variable-height column grid — each child is a `Masonry.Item`, and the root measures its inline size to pick a column count from `breakpointCols`. The default map opens more columns as the root grows; pass your own `breakpointCols` object to replace that schedule — keys are min-width pixel thresholds against the Masonry root's content-box, and the largest matching breakpoint wins. Layout runs in the client after mount, so the first paint matches the `default` column count until `ResizeObserver` settles. Prefer [`Grid`](/components/layout/grid) when every row shares the same height. Masonry fits image galleries, tag clouds, and card feeds where tile height varies — compose each item as Elevator → [`Surface`](/components/layout/surface) → [`Stack`](/components/layout/stack) for chrome and spacing, and set `gap` from the spacing scale instead of custom column margins.
+`Masonry` packs children into a variable-height column grid. Each child is a `Masonry.Item`; the root measures its inline size and picks a column count from `breakpointCols`.
+
+The default map opens more columns as the root grows. Pass your own `breakpointCols` object to replace that schedule: keys are min-width pixel thresholds against the Masonry root's content-box, and the largest matching breakpoint wins. Layout runs in the client after mount, so the first paint matches the `default` column count until `ResizeObserver` settles.
+
+Compose each item as Elevator → [`Surface`](/components/layout/surface) → [`Stack`](/components/layout/stack) for chrome and spacing, and set `gap` from the spacing scale instead of custom column margins.
+
+## When to use
+
+- Image galleries, tag clouds, or card feeds where tile height varies
+- Columns should reflow from the Masonry root width, not a fixed track grid
+- You want packed columns rather than shared row heights
+
+## When not to use
+
+- Every row should share the same height, or items need spans → [Grid](/components/layout/grid)
+- A single flex axis is enough → [Stack](/components/layout/stack)
+- You only need a themed panel around content → [Surface](/components/layout/surface)
+
+## Related
+
+- [Grid](/components/layout/grid) — fixed tracks, spans, and auto-fill
+- [Stack](/components/layout/stack) — single-axis flex layout
+- [Surface](/components/layout/surface) — item chrome inside masonry cells
+- [Elevator](/components/layout/elevator) — resting / hover shadow on item roots
 
 ## Common examples
 
 ### Responsive gallery
 
-A photo wall with uneven tile heights is the baseline Masonry layout. The built-in schedule applies unless you pass `breakpointCols` — one column by default, then more as the root grows.
+A photo wall with uneven tile heights is the baseline Masonry layout. The built-in schedule applies unless you pass `breakpointCols`: one column by default, then more as the root grows.
 
 <Example preview={<MasonryResponsiveGalleryDemo />}>
 
@@ -50,7 +73,7 @@ import { Elevator, Masonry, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Custom breakpoints
 
-Replace the default map when the wall should open columns at different root widths. Keys may arrive unsorted — the largest matching min-width still wins — and thresholds are measured on the Masonry root, not the viewport.
+Replace the default map when the wall should open columns at different root widths. Keys may arrive unsorted; the largest matching min-width still wins. Thresholds are measured on the Masonry root, not the viewport.
 
 <Example preview={<MasonryCustomBreakpointsDemo />}>
 

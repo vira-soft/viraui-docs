@@ -36,7 +36,7 @@
 | Typography | `/foundation/typography` | `components` |
 | Spacing | `/foundation/spacing` | `foundation` |
 | Radius | `/foundation/radius` | `foundation` |
-| Icons | `/foundation/icons` | `components` |
+| Iconography | `/foundation/iconography` | `components` |
 
 **Rationale**: Clarify C (stand-ins); FR-008; avoid Pro `studio`/`prompts` on Core foundation hub; thematic nearest-neighbor among Core + `layers-foundation`.
 

@@ -1,6 +1,6 @@
 ---
 title: Toast
-description: Non-blocking transient notifications with stacked placement and optional action buttons.
+description: Transient non-blocking feedback with a stacked viewport and optional undo actions.
 ---
 
 ## Base UI
@@ -15,9 +15,26 @@ description: Non-blocking transient notifications with stacked placement and opt
   </Card>
 </Cards>
 
-Toast shows short-lived feedback after an action — save confirmations, undo windows, and messages that sit next to the control that triggered them. Mount `Toast.Provider` once with a manager from `Toast.createToastManager()`, keep a `Toast.Portal` and `Toast.Viewport` region in the tree, and map live toasts to `Toast.Banner`. Call `toastManager.add({ title, description })` from the action that should announce; keep copy brief so screen readers hear a clear result.
+Toast shows short-lived feedback after an action: save confirmations, undo windows, and messages that sit next to the control that triggered them. Mount `Toast.Provider` once with a manager from `Toast.createToastManager()`, keep a `Toast.Portal` and `Toast.Viewport` region in the tree, and map live toasts to `Toast.Banner`. Call `toastManager.add({ title, description })` from the action that should announce; keep copy brief so screen readers hear a clear result.
 
-Optional actions on a banner are `Toast.Action` only. The stack defaults to `bottom-right`; set `position` for another corner, or `anchored` with `Toast.Positioner` when the message should hug a trigger. Prefer Toast for reversible or informational outcomes; blocking validation belongs on the field or in a [Dialog](/components/dialogs/dialog).
+Optional actions on a banner are `Toast.Action` only. The stack defaults to `bottom-right`; set `position` for another corner, or `anchored` with `Toast.Positioner` when the message should hug a trigger.
+
+## When to use
+
+- Reversible or informational outcomes after an action (saved, deleted with undo, copied)
+- Brief status that should not steal focus or block the rest of the page
+- Feedback tied to a specific control via anchored placement
+
+## When not to use
+
+- Blocking validation that must be fixed before the task continues → field errors, or a [Dialog](/components/dialogs/dialog) when the interruption needs a titled sheet
+- Focused tasks that need a form, confirmation, or nested drill-down → [Dialog](/components/dialogs/dialog)
+- Rich anchored panels the user explores at leisure → [Popover](/components/overlays/popover)
+
+## Related
+
+- [Dialog](/components/dialogs/dialog) — modal edge sheets for tasks that interrupt the page
+- [Popover](/components/overlays/popover) — non-modal anchored panels with richer content
 
 ## Common examples
 

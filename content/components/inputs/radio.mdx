@@ -15,7 +15,26 @@ description: Single-choice option row for use inside RadioGroup and Fieldset.
   </Card>
 </Cards>
 
-`Radio` is one row in a mutually exclusive set — each option carries its own label and optional description, while `name`, validation, and group-level errors belong on an external `Field.Root` and [`Fieldset`](/components/inputs/fieldset), not on individual radios. Always nest options inside `RadioGroup` so Base UI keeps keyboard roving and selection in sync. Add Fieldset with `render={<RadioGroup />}` only when the group needs a shared legend or helper copy; otherwise `RadioGroup` may sit directly in `Field.Root`. Use `Radio` when exactly one choice is allowed; use [`Checkbox`](/components/inputs/checkbox) when multiple independent toggles fit the task, and [`Select`](/components/inputs/select) when the option list is long or needs grouping in a popup.
+Radio is one row in a mutually exclusive set. Each option carries its own label and optional description; `name`, validation, and group-level errors belong on an external `Field.Root` and [Fieldset](/components/inputs/fieldset), not on individual radios.
+
+Always nest options inside `RadioGroup` so Base UI keeps keyboard roving and selection in sync. Add Fieldset with `render={<RadioGroup />}` only when the group needs a shared legend or helper copy; otherwise `RadioGroup` may sit directly in `Field.Root`.
+
+## When to use
+
+- Exactly one choice from a short, visible list (plan, contact channel, payout method)
+- Options that benefit from a one-line description beside each control
+
+## When not to use
+
+- Several options can stay on at once → [Checkbox](/components/inputs/checkbox)
+- The list is long, grouped in a popup, or needs a closed trigger → [Select](/components/inputs/select)
+- Type-to-filter or free-form text → [Autocomplete](/components/inputs/autocomplete)
+
+## Related
+
+- [Fieldset](/components/inputs/fieldset) — legend and group helper for RadioGroup
+- [Checkbox](/components/inputs/checkbox) — independent multi-select options
+- [Select](/components/inputs/select) — closed-choice dropdown for longer lists
 
 ## Common examples
 

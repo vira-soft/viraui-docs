@@ -3,13 +3,35 @@ title: FitText
 description: Container-filling display type — scales font size to the available width with an optional max cap.
 ---
 
-FitText shrinks or grows headline copy to fill its container width using a reference layer that measures the untransformed text and a display layer that applies the fitted font size. Drop it inside a hero band, stat callout, or narrow sidebar where a fixed `Title` `size` would either overflow or leave dead space. `maxFontSize` caps how large the fit algorithm may grow — without it, short strings in wide containers can become enormous.
+FitText shrinks or grows headline copy to fill its container width. Drop it inside a hero band, stat callout, or narrow sidebar where a fixed [Title](/components/typography/title) size would either overflow or leave dead space.
 
-Children are plain text or inline nodes; pair with [Title](/components/typography/title) semantics separately if the line also belongs in the document outline (FitText root is a `div`, not a heading tag). Give the parent a defined width — flex children need `min-width: 0` or an explicit width constraint or the measurement pass cannot resolve. For ordinary paragraphs, stay on Text with fluid foundation sizing instead of FitText.
+It measures the untransformed text, then applies a fitted font size on a display layer. `maxFontSize` caps how large the fit may grow — without it, short strings in wide containers can become enormous. Children are plain text or inline nodes; the FitText root is a `div`, so pair with Title semantics separately if the line also belongs in the document outline.
+
+Give the parent a defined width. Flex children need `min-width: 0` or an explicit width constraint, or the measurement pass cannot resolve. For ordinary paragraphs, stay on [Text](/components/typography/text) with foundation fluid sizing instead.
+
+## When to use
+
+- KPI numbers, short hero words, or labels that must fill a known band width
+- Sidebars and tiles where a fixed Title step would overflow or look sparse
+- Display lines that need a maximum size cap via `maxFontSize`
+
+## When not to use
+
+- Normal body or helper paragraphs → [Text](/components/typography/text)
+- Headings with a fixed typescale step and semantic tag → [Title](/components/typography/title)
+- Truncation to a row count instead of scaling → [ClampText](/components/typography/clamp-text)
+
+## Related
+
+- [Title](/components/typography/title) — fixed heading and display presets
+- [Text](/components/typography/text) — body-scale running copy
+- [ClampText](/components/typography/clamp-text) — ellipsis by row count
 
 ## Common examples
 
-A dashboard stat label that fills the tile width without manual font-size tweaks.
+### Width-filling stat
+
+A dashboard stat label that fills the tile width without manual font-size tweaks. Keep unit suffixes or captions on muted [Text](/components/typography/text) below.
 
 <PreviewSlot label="FitText preview" />
 

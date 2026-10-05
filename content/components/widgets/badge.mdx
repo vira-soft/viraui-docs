@@ -3,9 +3,29 @@ title: Badge
 description: Wraps content with an animated corner status dot — toggle show, position, highlight color, and dot diameter.
 ---
 
-Badge wraps any child and optionally paints a decorative status dot on a corner. The child stays fully interactive — common pairings are [Avatar](/components/widgets/avatar), [IconButton](/components/actions/icon-button), or [Chip](/components/widgets/chip) — while `show` drives whether the dot and radial mask cutout appear. `position` picks a corner (`top-end` by default); `color` maps to a foundation highlight token via `--vui-badge-color`; `size` sets dot diameter through `--vui-badge-size`. Enter and exit animate the hole and dot in sequence, and the animation collapses immediately when `prefers-reduced-motion` is on. The dot is decorative — pair it with visible copy or an accessible name on the wrapped control when the status matters to everyone, not only sighted users who notice the glyph.
+Badge wraps any child and optionally paints a decorative status dot on a corner. The child stays fully interactive. Common hosts are [Avatar](/components/widgets/avatar), [IconButton](/components/actions/icon-button), or [Chip](/components/widgets/chip). `show` toggles the dot and the radial mask cutout; `position` picks the corner (`top-end` by default).
+
+`color` maps to a foundation highlight token; `size` sets the dot diameter. Enter and exit animate the hole and dot in sequence, and the motion collapses immediately when `prefers-reduced-motion` is on. The dot is decorative: pair it with visible copy or an accessible name on the wrapped control when the status matters to everyone.
+
+## When to use
+
+- Unread, online, or attention cues on an existing control
+- A corner glyph that should animate in and out with `show`
+
+## When not to use
+
+- A labeled status pill in a row → [Chip](/components/widgets/chip)
+- Help text that must be readable on its own → [Tooltip](/components/overlays/tooltip) or body copy
+
+## Related
+
+- [Chip](/components/widgets/chip) — compact labeled status
+- [Avatar](/components/widgets/avatar) — common host for presence dots
+- [IconButton](/components/actions/icon-button) — common host for unread dots
 
 ## Common examples
+
+### Status on a control
 
 Toggling `show` on an avatar documents the mask-and-dot choreography.
 

@@ -3,13 +3,36 @@ title: Separator
 description: Horizontal or vertical divider — thickness, orientation, and optional Stack padding.
 ---
 
-`Separator` draws a themed line between blocks — `orientation` picks horizontal versus vertical, `size` maps to line thickness (`s`, `m`, `l`), and optional padding props inset the line within a [`Stack`](/components/layout/stack) wrapper when the divider should not span the full content width. `variant` sets the border style (`solid`, `dashed`, and other CSS border styles). Pass `render` to replace the default `hr` root with a custom element while keeping Vira line styles. Use `Separator` inside stacks and toolbars where grouped content needs a visual break; prefer border props on [`Surface`](/components/layout/surface) when the edge belongs to a panel outline instead of inline content. Select dropdown option dividers belong on `Select.Separator`, not this layout primitive.
+`Separator` draws a themed line between blocks. Use it inside stacks and toolbars when grouped content needs a visual break.
+
+`orientation` picks horizontal versus vertical, `size` maps to line thickness (`s`, `m`, `l`), and optional padding props inset the line within a [`Stack`](/components/layout/stack) wrapper when the divider should not span the full content width. `variant` sets the border style (`solid`, `dashed`, and other CSS border styles). Pass `render` to replace the default `hr` root with a custom element while keeping Vira line styles.
+
+Prefer border props on [`Surface`](/components/layout/surface) when the edge belongs to a panel outline instead of inline content. Select dropdown option dividers belong on `Select.Separator`, not this layout primitive.
+
+## When to use
+
+- Horizontal breaks between stacked rows (settings lists, metric rows)
+- Vertical splits between toolbar action groups
+- An inset or dashed section rule that is not a panel outline
+
+## When not to use
+
+- The edge is the panel outline → [Surface](/components/layout/surface) `border`
+- A Select popup needs option group dividers → `Select.Separator`
+- Content should hit the panel edges while siblings stay padded → wrap Separator in [Bleed](/components/layout/bleed)
+
+## Related
+
+- [Stack](/components/layout/stack) — host for separator rows and toolbar strips
+- [Surface](/components/layout/surface) — panel borders instead of inline dividers
+- [Bleed](/components/layout/bleed) — edge-to-edge rules inside padded sections
+- [Select](/components/inputs/select) — popup option separators
 
 ## Common examples
 
 ### Between stacked rows
 
-Horizontal Separators between metric or settings rows are the usual placement — nest them in a Stack with token `rowGap`, and keep the panel chrome on Surface rather than drawing a card outline with Separator.
+Horizontal Separators between metric or settings rows are the usual placement. Nest them in a Stack with token `rowGap`, and keep the panel chrome on Surface rather than drawing a card outline with Separator.
 
 <Example preview={<SeparatorListDemo />}>
 
@@ -40,7 +63,7 @@ import { Separator, Stack, Surface, Text } from '@viraui/react';
 
 ### Vertical toolbar split
 
-`orientation="vertical"` splits action groups in a row toolbar — put the Separator between IconButton clusters so formatting tools stay visually separate from find and save.
+`orientation="vertical"` splits action groups in a row toolbar. Put the Separator between IconButton clusters so formatting tools stay visually separate from find and save.
 
 <Example preview={<SeparatorToolbarDemo />}>
 
@@ -101,7 +124,7 @@ import { Separator, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Axis padding tuples
 
-`hPadding` / `vPadding` also take a `[start, end]` tuple — inset one side only with `0`, or use different tokens when the rule must clear uneven content (status chip, trailing meta).
+`hPadding` / `vPadding` also take a `[start, end]` tuple. Inset one side only with `0`, or use different tokens when the rule must clear uneven content (status chip, trailing meta).
 
 <Example preview={<SeparatorAxisPaddingDemo />}>
 

@@ -1,15 +1,35 @@
 ---
 title: ClampText
-description: Multi-line truncation — rows limit with optional inline mode and render for custom roots.
+description: Multi-line truncation — row limit with optional inline mode and render for custom roots.
 ---
 
-ClampText applies `-webkit-line-clamp` through a `rows` prop (default `1`) so long strings ellipsize instead of breaking card layout. Set `inline` when the clamped span must sit inside running copy — inline mode uses `-webkit-inline-box` so the truncation flows with surrounding [Text](/components/typography/text). `render` swaps the root through Base UI semantics when the clamped node should be a `p`, `a`, or another element while keeping the same clamp styles.
+ClampText truncates overflowing copy to a fixed row count so long strings ellipsize instead of breaking card or table layout. Set `rows` for how many lines show (default `1`); put the full string in `title` when hover should reveal the untruncated value — ClampText does not expand on its own.
 
-Put the full string in `title` when hover should reveal the untruncated value — ClampText does not expand on its own. For single-line table cells and card titles, `rows={1}` is enough; descriptions in dense lists often need `rows={2}` or `rows={3}`. Nested composition works both ways: ClampText inside Title for a clamped heading line, or Title inside ClampText when the whole heading block must truncate as one unit.
+Use `inline` when the clamped span must sit inside running [Text](/components/typography/text). `render` swaps the root when the clamped node should be a `p`, `a`, or another element while keeping the same clamp styles. Nested composition works both ways: ClampText inside Title for a clamped heading line, or Title inside ClampText when the whole heading block must truncate as one unit.
+
+## When to use
+
+- Card titles and descriptions in fixed-height tiles
+- Table cells and dense list rows that must not wrap unbound
+- Linked titles that still need clean single-line truncation
+
+## When not to use
+
+- Copy that should wrap fully at the body scale → [Text](/components/typography/text)
+- Scaling a short display line to fill width → [FitText](/components/typography/fit-text)
+- Headings that always show in full → [Title](/components/typography/title) alone
+
+## Related
+
+- [Text](/components/typography/text) — body-scale running copy
+- [Title](/components/typography/title) — heading presets (often wrapped or nested)
+- [FitText](/components/typography/fit-text) — fit-to-width instead of ellipsis
 
 ## Common examples
 
-A two-line card description that ellipsizes inside a fixed-height tile.
+### Multi-line card description
+
+A two-line card description that ellipsizes inside a fixed-height tile. Pair with a one-line clamped title when both lines compete for space.
 
 <PreviewSlot label="ClampText preview" />
 

@@ -11,7 +11,7 @@
 3. Requirements as a bullet list: React platform, Base UI as sole required peer beyond React / React DOM with link to `https://base-ui.com`, short toolchain, foundation/icons optional with links.
 4. **Primary path — `<Steps>`**:
    1. **Install skills first** — titled `npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP` command (Setup owns this install entry). Explicit note that the editor (or agent session) must be **reloaded** after install so `viraui-setup` registers before any bootstrap prompt.
-   2. Tabbed copy-ready prompt fences (`tab="Setup"` / `tab="Verify"`): Setup uses `viraui-setup` for packages/peers, theme gate, theme/fonts/preflight order, and root providers — **do not** nest skills-pack install inside that prompt; Verify covers theme, preflight, providers, sample render.
+   2. Tabbed copy-ready prompt fences (`tab="Setup"` / `tab="Verify"`): Setup uses `viraui-setup` for packages/peers, user brand/theme choice then matching fonts (built-in theme fonts vs custom), theme/fonts/preflight order, and root providers — **do not** nest skills-pack install inside that prompt; Verify covers theme, preflight, providers, sample render.
 5. **Secondary path** (optional, demoted): short Manual fallback for packages/theme/CSS/providers when wiring by hand is unavoidable after skills are installed; checklist-style verify matching AI verify outcomes (no verify prompt fence on Manual). Do not present Manual as equal weight to the prompt path.
 6. No separate “How bootstrap works” essay before install — mechanism stays in the short lead and Manual fallback.
 7. Discursive English prose per `.cursor/rules/02-docs-consumer-voice.mdc`; no telegram stacks; sparse spaced em-dashes; consumer-useful only (FR-008).
@@ -22,7 +22,7 @@
 
 1. Exhaustive prop tables, per-framework import atlases, or full skills catalog.
 2. Treat `@viraui/foundation` / `@viraui/icons` as mandatory deps.
-3. Assume foundation/fonts install before theme choice answer.
+3. Frame brand/theme choice as a hard agent quiz that blocks foundation or font install. The user chooses brand/theme; font import follows that choice (built-in theme fonts vs custom).
 4. Make Manual the default or equal primary path.
 5. Put a copyable verify prompt on the Manual section.
 6. Leave stub/placeholder prompt text or “exact commands arrive later” copy.

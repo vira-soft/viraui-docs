@@ -3,11 +3,31 @@ title: AvatarGroup
 description: Overlapping avatars from a data array with optional max-visible truncation and overflow pill.
 ---
 
-AvatarGroup renders a row or column of [Avatar](/components/widgets/avatar) instances from an `avatars` array — each entry carries the same `src`, `alt`, and `fallback` props a lone avatar would, while `size` and `direction` apply uniformly. Avatars overlap along the inline or block axis so collaborators read as one cluster instead of a spaced list. When the list is longer than you want to show, set `maxVisible` to a positive count and pass `overflowText` (for example `+3`) to append a pill that matches the avatar corner radius. Omit `maxVisible` or leave overflow text unset when every face should render. The group root is a plain `div`; put names, counts, or actions beside it in layout primitives rather than inside the group.
+AvatarGroup turns an `avatars` array into a compact cluster of [Avatar](/components/widgets/avatar) faces. Each entry uses the same `src`, `alt`, and `fallback` shape as a lone avatar; `size` and `direction` apply to the whole row or column.
+
+Faces overlap on the inline or block axis so collaborators read as one unit. Set `maxVisible` and `overflowText` (for example `+3`) when the list is longer than the strip should show; omit those when every face should render. The group root is a plain `div` — put names, counts, or actions beside it in layout primitives, not inside the group.
+
+## When to use
+
+- Project or document collaborators in a tight strip
+- Overflow when only a few faces should stay visible
+
+## When not to use
+
+- A single identity → [Avatar](/components/widgets/avatar)
+- Spaced list rows where each face needs its own name → Avatar + [Stack](/components/layout/stack) per row
+
+## Related
+
+- [Avatar](/components/widgets/avatar) — one face with photo or fallback
+- [Badge](/components/widgets/badge) — status on a child (wrap a single avatar, not the group root)
+- [Stack](/components/layout/stack) — labels and actions beside the cluster
 
 ## Common examples
 
-Horizontal overlap with an overflow pill is the default collaboration pattern.
+### Overlap with overflow
+
+Horizontal overlap with an overflow pill is the default collaboration pattern. Prefer real photos in the array when faces represent people.
 
 <PreviewSlot label="AvatarGroup preview" />
 

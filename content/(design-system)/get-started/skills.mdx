@@ -5,17 +5,17 @@ description: How ViraUI skills work as agent playbooks, when each loads, and pro
 pageActions: false
 ---
 
-ViraUI skills are short playbooks your coding agent loads while it works in your React app. Each one steers the agent toward real ViraUI patterns — triggers, constraints, and what to change in your tree — and points at live agent specs in `@viraui/react` for prop and pattern detail.
-
-Skills and [MCP](/get-started/mcp) do different jobs: skills live in the project and guide how the agent edits the app (bootstrap, compose, audit, motion), while MCP connects the agent to these docs as searchable pages. Use both — skills for in-repo work, MCP when the agent needs a lookup.
+ViraUI skills are short playbooks your coding agent loads while it works in your React app. Each one steers the agent toward real ViraUI patterns: triggers, constraints, and what to change in your tree. For prop and pattern detail, the playbooks point at live agent specs in `@viraui/react`.
 
 ## Installation
 
-Follow the instructions in [Setup](/get-started/setup) to install the skills pack, **reload the editor** so the playbooks register, then paste the bootstrap prompt. Without that reload, the session often cannot see `viraui-setup` yet. After the pack is loaded, the agent usually picks the matching skill from the task you describe; name one in the prompt when you want a specific path.
+Follow [Setup](/get-started/setup) to install the skills pack, **reload the editor** so the playbooks register, then paste the bootstrap prompt. Without that reload, the session often cannot see `viraui-setup` yet.
+
+After the pack is loaded, the agent usually picks the matching skill from the task you describe. Name one in the prompt when you want a specific path.
 
 ## How skills route
 
-When you paste a prompt or describe a task, the agent reads the matching playbook and follows that contract while editing — you steer by naming the skill or by describing work that clearly maps to one. [Setup](/get-started/setup) already routes bootstrap through `viraui-setup`.
+When you paste a prompt or describe a task, the agent reads the matching playbook and follows that contract while editing. You steer by naming the skill or by describing work that clearly maps to one. [Setup](/get-started/setup) already routes bootstrap through `viraui-setup`.
 
 <Cards>
   <Card
@@ -50,44 +50,56 @@ When you paste a prompt or describe a task, the agent reads the matching playboo
 
 ### ✦ viraui-setup
 
-The agent loads this playbook on first bootstrap, when the theme gate still needs an answer, or when global styles look broken — missing theme or preflight imports, wrong CSS order, or another reset fighting Vira. The contract walks import order, root overlay providers, and theme choice until tokens and preflight resolve. Once wiring is healthy, routine UI work routes to `viraui-design`.
+The agent loads this playbook on first bootstrap, when you still need to choose a brand or theme look, or when global styles look broken (missing theme or preflight imports, wrong CSS order, or another reset fighting Vira). The contract walks import order, root overlay providers, and that brand/theme choice until tokens and preflight resolve.
+
+Once wiring is healthy, routine UI work routes to `viraui-design`.
 
 ```text tab="Bootstrap the app"
 Set up ViraUI in this project so the app looks themed and overlays work. Use viraui-setup if needed.
 ```
 ```text tab="Fix missing styles"
-Buttons render but look unstyled — find what's missing in the global setup and fix it so the UI picks up the theme. Use viraui-setup.
+Buttons render but look unstyled. Find what's missing in the global setup and fix it so the UI picks up the theme. Use viraui-setup.
 ```
 
 ### ✦ viraui-design
 
-This is the default route for compose and styling work after bootstrap looks healthy. The playbook keeps component choice, compound parts, layout, and public styling on documented `@viraui/react` patterns and `--vui-*` tokens. Dedicated accessibility audits route to `viraui-a11y`; if global styles are missing, fix bootstrap with `viraui-setup` first.
+This is the default route for compose and styling work after bootstrap looks healthy. The playbook keeps component choice, compound parts, layout, and public styling on documented `@viraui/react` patterns.
+
+Dedicated accessibility audits route to `viraui-a11y`. If global styles are missing, fix bootstrap with `viraui-setup` first.
 
 ```text tab="Build a settings form"
-Build a settings form with labeled fields (text input, toggle), sensible spacing, and Save/Cancel actions at the bottom.
+Build a settings form with labeled fields (text input, toggle), sensible spacing, and Save/Cancel actions at the bottom. Use viraui-design.
 ```
-```text tab="Restyle a Dialog"
-Restyle this dialog so the title, body, and actions have clearer hierarchy and comfortable spacing — keep it looking like ViraUI.
+```text tab="Compose a confirm Dialog"
+Add a confirmation dialog with ViraUI Dialog: title, short explanation, and Cancel plus Confirm in the footer. Use viraui-design.
 ```
 
 ### ✦ viraui-a11y
 
-Load this playbook when you want a structured audit rather than compose-as-you-go. The agent inspects focus order, labels, keyboard traps, and dialog behavior against documented widget patterns, then reports gaps. Screen-reader or keyboard debug and WCAG-oriented widget checks belong here; ordinary compose and light a11y questions while you build stay with `viraui-design`.
+Load this playbook when you want a structured audit rather than compose-as-you-go. The agent inspects focus order, labels, keyboard traps, and dialog behavior against documented widget patterns, then reports gaps.
+
+Screen-reader or keyboard debug and WCAG-oriented widget checks belong here. Ordinary compose and light a11y questions while you build stay with `viraui-design`.
 
 ```text tab="Audit a screen"
 Audit this screen for accessibility: focus order, labels, keyboard use, and dialog behavior. Report issues and fixes. Use viraui-a11y.
 ```
 ```text tab="Fix Dialog focus"
-When this dialog closes, keyboard focus lands in the wrong place — find and fix the focus behavior.
+When this dialog closes, keyboard focus lands in the wrong place. Find and fix the focus behavior. Use viraui-a11y.
 ```
 
 ### ✦ viraui-motion
 
-Reach for this when `viraui-design` is already composing a screen and you need motion that respects `prefers-reduced-motion`. The playbook covers transitions, hover and press feedback, overlay enter and exit, and duration or easing tokens on Vira parts or your own CSS — not component choice, bootstrap, or accessibility audits.
+Reach for this when `viraui-design` is already composing a screen and you need motion that respects reduced-motion preferences. The playbook covers transitions, hover and press feedback, overlay enter and exit, and timing on Vira parts or your own CSS.
+
+It is not for component choice, bootstrap, or accessibility audits.
 
 ```text tab="Staggered entrance"
-Animate these list items so they fade in from below one after another — subtle timing, and no motion when the user prefers reduced motion.
+Animate these list items so they fade in from below one after another — subtle timing, and no motion when the user prefers reduced motion. Use viraui-motion.
 ```
 ```text tab="Cascade reveal"
-On page load, reveal these cards in a short cascade — each fades up slightly after the last — without pulling in a motion library.
+On page load, reveal these cards in a short cascade — each fades up slightly after the last — without pulling in a motion library. Use viraui-motion.
 ```
+
+## Skills and MCP
+
+Skills live in the project and guide how the agent edits the app. [MCP](/get-started/mcp) connects the agent to these docs as searchable pages. Use skills for in-repo work; use MCP when the agent needs a grounded lookup against what is published here.
