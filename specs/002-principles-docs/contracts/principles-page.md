@@ -24,7 +24,7 @@
 2. Full ARIA APG how-to / pattern catalog.
 3. Named skill package IDs (e.g. `viraui-a11y`).
 4. App Studio / Pro / release-timeline claims for the canvas concept.
-5. Required next-step links to `/get-started`, `/why`, or `/components` (global nav may still list them).
+5. Required next-step links to `/get-started` or `/components` (global nav may still list them).
 6. Leave prior stub copy (“Stub: prefer skills…”) in the published body.
 
 ## Relationship to other contracts

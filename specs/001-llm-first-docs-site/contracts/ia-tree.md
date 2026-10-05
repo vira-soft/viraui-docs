@@ -4,7 +4,6 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 
 ```
 /                          → Introduction (Core + Pro overview)
-/why                       → why & how
 /principles                → principles
 /layers                    → layers & composition
 /get-started               → Get started overview

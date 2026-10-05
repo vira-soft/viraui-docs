@@ -1,34 +1,47 @@
 ---
-description: AI-centric consumer voice for public MDX — how ViraUI works + agent prompts, not study guides
+description: Human + AI-centric consumer voice for public MDX — decide/review with agents, not memorize APIs
 globs: content/**/*.mdx
 alwaysApply: false
 ---
 
 # Docs voice (consumer)
 
-Public MDX under `content/` is AI-centric. Humans read it to review agent work and to copy prompts. It is **not** a study guide where a person must learn the system by hand before shipping.
+Public MDX under `content/` is **AI-centric**: ViraUI is built so agents compose UI against a stable contract. **Humans** read these pages to decide, steer, and review that work — and to copy prompts. It is **not** a study guide where a person must memorize APIs, tokens, or prop inventories before shipping.
+
+Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
+
+## Voice split
+
+| Page kind | Voice |
+| --- | --- |
+| Design System intro | Product-story |
+| Get started / Foundation | How it works + prompt-first where required |
+| Components | Task-oriented (when / when not / vs siblings) |
 
 ## Do
 
-- Explain **how this ViraUI part works** in its own context (contract, wiring, behavior) — speak to the reader with “you” when natural, but prefer mechanism over imperative chore lists
-- Lead with copy-ready **configuration / compose prompts** (titled or tabbed fences) so the agent does the work; keep manual steps only when strictly necessary and secondary
+- Explain **how this ViraUI part works** and **when to reach for it** — speak to the reader with “you” when natural
+- Default path: agent does the work; human reviews. Docs help when choosing or doubting
+- Lead with copy-ready **configuration / compose prompts** on instructional and component pages (titled or tabbed fences); keep manual steps only when strictly necessary and secondary
 - Write **prompt examples as consumer intents**: the result the person wants in plain language. Skills and published specs teach the agent the ViraUI mechanics — the pasted prompt should not require memorizing token names, prop APIs, package paths, or skill internals
-- Write discursive paragraphs: connected prose, not stacks of short consecutive sentences
+- Prefer **short paragraphs** (about 2–3 in the lead before the next `##`) separated by blank lines — not one text wall
+- Use **bullets, Callouts, and headings** when they make the idea easier to assimilate than a long paragraph (comparisons, when/when-not, checklists)
 - Cross-link when another topic owns the detail; stay on this page’s job
-- Em-dashes sparingly, always with spaces: ` — `
+- Em-dashes **rarely**, always with spaces when used: ` — `
 
 ## Do not
 
-- Tutorialize as if the consumer must perform every step by hand (prefer prompt + how-it-works)
+- Tutorialize as if the consumer must perform every step by hand (prefer prompt + how-it-works / when-to-use)
 - Dump technical internals useless to a ViraUI consumer (package plumbing trivia, exhaustive prop dumps)
 - Put ViraUI internals into **example prompts**: token names (`--duration-*`, `--global-*`), compound part APIs, `Read @viraui/react/specs…`, import-order recipes, or “Use viraui-design” openers — unless the page’s job is naming a skill (Skills) or wiring MCP tools (MCP)
-- Abuse em-dashes or write telegraph-style sentence stacks
+- Habitual em-dashes or telegraph-style stacks of short sentences ending in periods
 - Digress into other products or adjacent topics when a link would do
 - Add “What’s next”, “Next steps”, or similar outbound tour sections
 - Meta / editorial asides about the page itself: “Keep this page for…”, “This page covers…”, “not documented here”, “out of scope on this page”, “we only document…”, “without a catalog to maintain…”
 - Talk to the author or agent about content boundaries inside consumer copy (put that in specs/contracts/rules)
 - Authoring hygiene for the LLM inside consumer prose: “omit defaults”, “leave prop X off”, “examples stay honest”, “do not invent props”, “skills own the live set” — those belong in skills/rules, not MDX. Show the good shape in code; explain the mechanism in prose
 - “Readers should…” / “Developers will…” when “you” or direct mechanism works
+- Maintain surface catalogs of parts/tokens (see `.cursor/rules/03-docs-no-surface-catalog.mdc`)
 
 ## Examples
 
@@ -36,7 +49,8 @@ Public MDX under `content/` is AI-centric. Humans read it to review agent work a
 | --- | --- |
 | Keep this page for ViraUI-custom helpers only. | These helpers are ViraUI-specific. The agent adds them when the app needs that behavior. |
 | Follow these five manual steps to install… | Install the skills pack, reload the editor, then paste the setup prompt. Manual wiring stays below only if you must do it by hand. |
-| Short. Punchy. One idea each. | Connected paragraphs that explain the contract, then a titled prompt fence for the agent. |
+| One dense paragraph that lists every prop and sibling. | Short lead on the job of the part, then bullets for when to use / when not. |
+| Short. Punchy. One idea each. | Connected sentences inside a short paragraph, or a tight bullet list — not a telegraph stack. |
 | What’s next: Themes → Skills → … | Link Themes or Skills inline where the mechanism needs them. |
 | Add hover with `--duration-fast` and `--easing-standard`; include `prefers-reduced-motion`. | Add a subtle hover animation on this custom card — not too fast — and respect reduced-motion settings. |
 | Use viraui-design. Read @viraui/react/specs for Button… | Add a footer with Save, Cancel, and Delete — Save primary, Delete destructive, show loading on Save while it runs. |

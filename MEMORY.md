@@ -54,11 +54,14 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 
 ## Product model
 
-- Human docs = how each part works + copy-ready agent prompts. **Not** exhaustive prop tables or human study guides.
+- Human docs for **humans who use LLMs as the central tool** — not LLM-only docs, not memorize-the-API study guides. Default path: agent does work, human reviews; docs help when deciding / doubting. Teach overview, capabilities, layers, when/why to pick a part.
+- Prose = use cases + when-to-use (+ when-not / vs siblings on component pages). Short paragraphs (lead ≈2–3). Bullets / Callouts / headings OK when they help assimilation — prefer lists over long paragraphs when list is clearer. No text walls, no surface catalogs. Em-dashes rare. No telegraph short-sentence stacks. Keep **Ask your agent** prompts. Deep API stays in `@viraui/react/specs` / skills.
+- Voice split: DS intro pages = product-story; component pages = task-oriented. Base UI Card stays top of ComponentPage body.
+- Voice contract: `page-shell.md` + `.cursor/rules/02-docs-consumer-voice.mdc` (update when this model drifts).
 - Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt.
-- Deep API authority stays in sibling `@viraui/react/specs` / skills — pages point agents there.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
-- Intro top-level: `/`, `/why`, `/principles`, `/layers`; separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Content rewrite branch `docs/human-llm-prose-rewrite`: contracts/voice first, then groups A→B→C then component categories; **1 commit per group**, single PR at end. Max 3 parallel agents.
 
 ## Context habits
 
@@ -83,12 +86,11 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Banner: docs under construction (in `press.config.tsx` `renderRoot`)
 - Sidebar CTA: `sidebar.footer` in `renderLayout` — "Get ViraUI Pro" → `https://viraui.dev/#pro` (both roots, below page tree)
 - MDX paths: Design System pages live under `content/(design-system)/` (folder group); Components under `content/components/`. Root `meta.json` lists both roots only.
-- `content/(design-system)/meta.json` lists `why` — `why.mdx` may still be missing (IA stub drift)
 - Principles (`002`): no product/timeline claim for “browser as canvas”; Figma OK as disposable low-fi only; a11y → generic skills + link `/get-started/skills`; next links `/layers` + `/get-started/skills` only
 - Layers (`003`): Cards use `layers-*` spotkit stack (one slab lit); intro Core Cards keep `foundation`/`components`/`motion`/`ai`
 - Intro Spotkit (`core-*` / `pro-*`): **no fade mask**; contained panels; composition centered in 160 (same treatment as `foundation-*`)
 - Setup (`004`): page = `content/(design-system)/get-started/setup.mdx` → `/get-started/setup` (not category `index`); icon `CubeSettings`; **skills install + editor reload before** bootstrap/verify prompts; Manual demoted
-- Consumer voice: `.cursor/rules/02-docs-consumer-voice.mdc` — AI-centric (mechanism + prompts); no What's next; spaced em-dashes ` — `
+- Consumer voice: `.cursor/rules/02-docs-consumer-voice.mdc` + `page-shell.md` — AI-centric tool, human decide/review; short paras / bullets OK; em-dash rare; no telegraph stacks; no What's next
 - Skills (`005`): page = `content/(design-system)/get-started/skills.mdx` → `/get-started/skills`; icon `OrbitSparkle`; orientation only (no install one-liner, no ask-agent fence); Setup owns install; brief MCP link required
 - Utilities (`006`): expandable group `content/(design-system)/get-started/utilities/` (`defaultOpen: false`); child `use-breakpoints.mdx` → `/get-started/utilities/use-breakpoints`; owns BreakpointsProvider / `useBreakpoints` live Examples (`breakpoints-demo`, no sandbox resize — `matchMedia` is document viewport); not under Layout; Base UI = link-out
 - Foundation overview (`007`): `/foundation` = lead → how-it-works → 8 Cards (title+image); title `Overview`; children = colors → motion → elevation → effects → typography → spacing → radius → icons

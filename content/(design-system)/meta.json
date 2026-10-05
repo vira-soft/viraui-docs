@@ -5,7 +5,6 @@
   "root": "docs",
   "pages": [
     "index",
-    "why",
     "principles",
     "layers",
     "---Get started---",
