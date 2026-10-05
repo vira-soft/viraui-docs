@@ -61,7 +61,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 - Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
-- Content rewrite branch `docs/human-llm-prose-rewrite`: contracts/voice first, then groups A→B→C then component categories; **1 commit per group**, single PR at end. Max 3 parallel agents.
+- Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
 
 ## Context habits
 
