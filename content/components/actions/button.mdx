@@ -1,6 +1,6 @@
 ---
 title: Button
-description: Labeled action and its link twin — size, variant, addon, pill, loading; ButtonLink for navigation with the same chrome.
+description: Labeled action control and its link twin — commit, cancel, and navigate with the same chrome.
 ---
 
 ## Base UI
@@ -15,13 +15,29 @@ description: Labeled action and its link twin — size, variant, addon, pill, lo
   </Card>
 </Cards>
 
-Button is the default **labeled** action control. Visible text children name what happens when you activate it; the control stays a real button for keyboard and assistive tech. Reach for [IconButton](/components/actions/icon-button) when there is no visible label.
+Button is the default **labeled** action control. Visible text names what happens when you activate it, and the control stays a real button for keyboard and assistive tech.
 
-When the affordance should navigate — in-app route or external URL — use **ButtonLink** instead. It shares the same visual chrome (`size`, `variant`, `addon`, `pill`, `loading`) but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on Button; Base UI keeps button semantics there.
+When the affordance should navigate (in-app route or external URL), use **ButtonLink** instead. It shares the same visual chrome but renders a native `<a>`, or a framework `Link` via `render`. Do not force `render={<a />}` on Button; Base UI keeps button semantics there.
 
-Variants follow intent, not decoration. Use the filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Size steps denser or roomier rows; `pill` rounds the control into a capsule when that shape fits the layout.
+Variants follow intent, not decoration: filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Optional `addon`, `pill`, and `loading` cover leading/trailing glyphs, capsule shape, and in-flight requests without jumping the layout.
 
-Optional `addon` slots accept a leading or trailing icon (or a small Chip / Avatar). Button CSS sizes SVG descendants — glyph size comes from the button, not per-icon CSS. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the label. On Button, loading also blocks activation; on ButtonLink there is no `disabled` prop — loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
+## When to use
+
+- A visible text label names the action (Save, Cancel, Delete, Download)
+- Footer or dialog strips where several labeled actions share a row
+- Navigation that should look like a button (`ButtonLink`) rather than plain text
+
+## When not to use
+
+- Icon-only chrome with no visible label → [IconButton](/components/actions/icon-button)
+- A control that stays pressed and may swap icons → [ToggleButton](/components/actions/toggle-button)
+- Tags, filters, or status pills that do not commit work → [Chip](/components/widgets/chip)
+
+## Related
+
+- [IconButton](/components/actions/icon-button) — compact icon-only actions and icon links
+- [ToggleButton](/components/actions/toggle-button) — pressed-state toolbar toggles and groups
+- [Chip](/components/widgets/chip) — compact labels and filter pills
 
 ## Common examples
 
@@ -48,7 +64,7 @@ Prefer one primary per region. Pair it with secondary cancel rather than two com
 
 ### Addons
 
-Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label.
+Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label. Button CSS sizes SVG descendants — glyph size comes from the button, not per-icon CSS.
 
 <Example preview={<ButtonAddonDemo />}>
 
@@ -106,7 +122,7 @@ import { Button, Stack, Surface, Text } from '@viraui/react';
 
 ### Loading
 
-Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
+Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control. On Button, loading also blocks activation; on ButtonLink there is no `disabled` prop — loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
 
 <Example preview={<ButtonLoadingDemo />}>
 
@@ -118,7 +134,7 @@ import { Button } from '@viraui/react';
 
 </Example>
 
-Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. On Button, loading also disables activation until you clear the flag.
+Keep the same label text during the wait (or a short “…”) so the announced name stays continuous.
 
 ### Action rows
 
@@ -184,7 +200,6 @@ import { ButtonLink } from '@viraui/react';
 </Example>
 
 Pass `href` for native or external URLs (`target` / `rel` when needed). Trailing addons suit “continue” and external destinations. Pass `render` for in-app framework routing. Icon-only navigation belongs on [IconButton](/components/actions/icon-button) (`IconButtonLink`).
-
 
 ## Ask your agent
 

@@ -1,6 +1,6 @@
 ---
 title: IconButton
-description: Icon-only button and its link twin. Same size, variant, pill, and loading chrome as Button; IconButtonLink for navigation. Requires an accessible name on every instance.
+description: Compact icon-only action and its link twin — same chrome as Button, with a required accessible name.
 ---
 
 ## Base UI
@@ -15,11 +15,29 @@ description: Icon-only button and its link twin. Same size, variant, pill, and l
   </Card>
 </Cards>
 
-IconButton wraps [Button](/components/actions/button) for compact, icon-only actions. Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name and every instance needs `aria-label` or `aria-labelledby`.
+IconButton is the compact, icon-only sibling of [Button](/components/actions/button). Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`.
 
-When the affordance should navigate (in-app route or external URL), use **IconButtonLink** instead. It shares the same visual chrome but renders a native `<a>` (or a framework `Link` via `render`). Do not force `render={<a />}` on `IconButton`; Base UI keeps button semantics there. Reach for [ToggleButton](/components/actions/toggle-button) when the control needs a persistent pressed state or icon swap after interaction.
+When the affordance should navigate (in-app route or external URL), use **IconButtonLink** instead. It shares the same visual chrome but renders a native `<a>`, or a framework `Link` via `render`. Do not force `render={<a />}` on IconButton; Base UI keeps button semantics there.
 
-Variants follow intent, not decoration (same rules as `Button`). Size steps denser or roomier chrome; `pill` rounds the control into a capsule when that shape fits the layout. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative `Spinner` over the icon. On IconButton, loading also blocks activation. On IconButtonLink there is no `disabled` prop: loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
+Variants follow the same intent rules as Button. Prefer flat in dense toolbars so icon actions stay quiet next to labeled commits. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the icon. On IconButton, loading also blocks activation; on IconButtonLink, loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
+
+## When to use
+
+- Toolbar or header chrome where space is tight and a glyph is enough
+- Icon-only navigation (`IconButtonLink`) with a clear destination name
+- Quiet secondary actions next to a labeled primary Button
+
+## When not to use
+
+- The action needs a visible text label → [Button](/components/actions/button)
+- The control stays pressed or swaps icons after activation → [ToggleButton](/components/actions/toggle-button)
+- Critical guidance that must stay visible without hover → put it in copy, not an icon alone ([Tooltip](/components/overlays/tooltip) can reinforce, not replace)
+
+## Related
+
+- [Button](/components/actions/button) — labeled actions and `ButtonLink`
+- [ToggleButton](/components/actions/toggle-button) — pressed-state icon toggles and groups
+- [Tooltip](/components/overlays/tooltip) — short hover/focus hints that match the accessible name
 
 ## Common examples
 
@@ -43,11 +61,9 @@ import { IconButton, Stack } from '@viraui/react';
 
 </Example>
 
-Prefer flat in dense toolbars so icon actions stay quiet next to labeled buttons.
-
 ### Sizes
 
-`size` steps the hit target and glyph together.
+`size` steps the hit target and glyph together. Match toolbar density: `s` in tight chrome, `l` when the icon sits alone as a primary control.
 
 <Example preview={<IconButtonSizesDemo />}>
 
@@ -64,8 +80,6 @@ import { IconButton, Stack } from '@viraui/react';
 
 </Example>
 
-Match toolbar density: `s` in tight chrome, `l` when the icon sits alone as a primary control.
-
 ### Loading
 
 Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
@@ -81,7 +95,7 @@ import { IconButton } from '@viraui/react';
 
 </Example>
 
-Keep the same accessible name during the wait so the announced name stays continuous. On IconButton, loading also disables activation until you clear the flag.
+Keep the same accessible name during the wait so the announced name stays continuous.
 
 ### Toolbars
 
@@ -108,7 +122,7 @@ If the action needs a visible text label, switch to [Button](/components/actions
 
 ### As a link
 
-Use IconButtonLink when activation should navigate. Same chrome as IconButton; different element (a native `<a>`, or a framework `Link` via `render`).
+Use IconButtonLink when activation should navigate. Same chrome as IconButton; different element — a native `<a>`, or a framework `Link` via `render`. The accessible name should say where the link goes, not only what the icon looks like.
 
 <Example preview={<IconButtonLinkDemo />}>
 
@@ -129,10 +143,6 @@ import { IconButtonLink, Stack } from '@viraui/react';
 </Stack>
 ```
 
-</Example>
-
-Pass `href` for native or external URLs (`target` / `rel` when needed). The accessible name should say where the link goes, not only what the icon looks like.
-
 ```tsx
 import Link from 'next/link';
 import { House } from '@phosphor-icons/react';
@@ -145,7 +155,9 @@ import { IconButtonLink } from '@viraui/react';
 />
 ```
 
-Pass `render` for in-app framework routing. Labeled navigation belongs on [Button](/components/actions/button) (`ButtonLink`).
+</Example>
+
+Pass `href` for native or external URLs (`target` / `rel` when needed). Pass `render` for in-app framework routing. Labeled navigation belongs on [Button](/components/actions/button) (`ButtonLink`).
 
 ## Ask your agent
 
