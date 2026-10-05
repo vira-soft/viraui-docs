@@ -19,7 +19,7 @@ description: Groups related radios or checkboxes with a legend and optional grou
 
 ## Common examples
 
-### Billing details section
+### Labeled section
 
 A Surface card with a Fieldset legend over related Textfields is the baseline field grouping — no `render` merge when children already own their labels.
 
@@ -41,7 +41,7 @@ import { Fieldset, Separator, Stack, Surface, Textfield } from '@viraui/react';
 
 </Example>
 
-### Delivery RadioGroup
+### Nested RadioGroup
 
 Choice groups that need a shared legend or description merge `RadioGroup` through `render` under `Field.Root`. Each option keeps its own `label` / `description`.
 
@@ -75,7 +75,7 @@ const [value, setValue] = useState('express');
 
 </Example>
 
-### Plan cards with group error
+### Group error
 
 Drive Fieldset `error` from `Field.Root` `invalid`. Keep `description` set — helper copy shows while valid; error replaces it when invalid. Surface owns the card chrome; highlight checked cards with `color`.
 

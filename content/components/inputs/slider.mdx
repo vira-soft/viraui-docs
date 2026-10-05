@@ -19,9 +19,9 @@ description: Range input for numeric values — single thumb or dual-thumb range
 
 ## Common examples
 
-### Amount with captions
+### Single thumb with captions
 
-A labeled single-thumb amount with `renderValue` and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
+A labeled single-thumb value with `renderValue` and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
 
 <Example preview={<SliderAmountDemo />}>
 
@@ -55,7 +55,7 @@ import { Slider, Stack, Text } from '@viraui/react';
 
 </Example>
 
-### Price range
+### Dual thumbs
 
 Pass a two-element array for dual thumbs. Name each thumb with `thumbAriaLabel`, and format the value slot with a `renderValue` function when currency or units need custom copy.
 
@@ -80,9 +80,9 @@ import { Slider } from '@viraui/react';
 
 </Example>
 
-### Control saturation
+### Controlled preview
 
-Keep the Slider controlled and wire `onValueChange` into whatever you are adjusting — here a photo preview follows saturation.
+Keep the Slider controlled and wire `onValueChange` into related UI — here a photo preview follows saturation.
 
 <Example preview={<SliderSaturationDemo />}>
 
@@ -163,7 +163,7 @@ const [brightness, setBrightness] = useState(86);
 
 </Example>
 
-### Linked equalizer
+### Linked vertical bands
 
 Vertical bands need a sized host (`style={{ blockSize }}` — Stack has no height prop) with `expandChildren` so the Slider grows and the band label opts out via `data-grow="false"`. Dragging one thumb can wave neighbors — freeze an anchor at gesture start, apply falloff by band distance, and commit with `onValueCommitted`. Preset buttons set the whole curve from outside.
 

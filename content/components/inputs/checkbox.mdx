@@ -21,7 +21,7 @@ Related options share a selection model through `CheckboxGroup`. Add [`Fieldset`
 
 ## Common examples
 
-### Email alerts group
+### Labeled group
 
 A Fieldset-backed `CheckboxGroup` with labeled preference rows is the default multi-select pattern. Each option keeps its own `label` / `description`; the group owns `value` and `onValueChange`.
 
@@ -63,7 +63,7 @@ const [value, setValue] = useState(['product', 'security']);
 
 </Example>
 
-### Form footer boolean
+### Standalone checkbox
 
 Standalone booleans under other fields wrap in their own `Field.Root` — no Fieldset without a shared legend.
 

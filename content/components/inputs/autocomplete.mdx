@@ -21,9 +21,9 @@ Pass list content as a render function over `items`, or compose `Autocomplete.Gr
 
 ## Common examples
 
-### Teammate search
+### Filterable options
 
-A labeled reviewer picker with search chrome and avatar item addons is the baseline suggest pattern. `itemToStringValue` maps each object to the string written into the input when a row is chosen. When that string matches a reviewer, `endAddon` shows their Avatar.
+A labeled Autocomplete with search chrome and item addons is the baseline suggest pattern. `itemToStringValue` maps each object to the string written into the input when a row is chosen. When that string matches an item, `endAddon` can mirror a related preview (here an Avatar).
 
 <Example preview={<AutocompleteReviewerDemo />}>
 
@@ -97,9 +97,9 @@ const selected = reviewers.find((person) => person.label === value);
 
 Buttons inside `endAddon` must use `type="button"` so they do not submit a parent form.
 
-### Free-form category
+### Free-form value
 
-Flat items still allow free-form text — the list suggests ledger labels while the input can keep a custom phrase. Prefer this over Select when the value does not have to be one of the options.
+Flat items still allow free-form text — the list suggests options while the input can keep a custom phrase. Prefer this over Select when the value does not have to be one of the options.
 
 <Example preview={<AutocompleteCategoryDemo />}>
 

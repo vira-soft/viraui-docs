@@ -1,0 +1,43 @@
+---
+description: Common-example H3 titles name the pattern / use case — not the demo’s product UI
+globs: content/**/*.mdx
+alwaysApply: false
+---
+
+# Docs: example section titles
+
+Under `## Common examples`, each `###` heading names the **pattern or use case** the section teaches. The live demo may show a concrete product scene (price filter, equalizer, teammate search) — that scene belongs in preview copy and prose, **not** in the heading.
+
+## Do
+
+- Title the capability or compose pattern: dual thumbs, grouped options, external label row, as a link, loading
+- Keep headings short and scannable (same voice as Button: Variants, Addons, Pill)
+- Let demo labels, `label` props, and the lead sentence under the heading carry the product story
+
+## Do not
+
+- Name the heading after incidental demo UI (Price range, Billing plans, Teammate search, Graphic equalizer)
+- Restate the component name alone (`### Slider`) or dump prop inventories into the title
+- Mirror Ask-your-agent tab labels into `###` headings — prompts stay consumer intents; example titles stay patterns
+
+## Examples
+
+| Avoid (demo UI) | Prefer (pattern / use case) |
+| --- | --- |
+| Price range | Dual thumbs |
+| Control saturation | Controlled preview |
+| Linked equalizer | Linked vertical bands |
+| Teammate search | Filterable options |
+| Free-form category | Free-form value |
+| Timezone groups | Grouped options |
+| Billing plans | Labeled group |
+| Email alerts group | Labeled group |
+| Billing details section | Labeled section |
+| Delivery RadioGroup | Nested RadioGroup |
+| Plan cards with group error | Group error |
+| Form footer boolean | Standalone checkbox |
+
+## Out of scope
+
+- Ask-your-agent `text tab="…"` labels — those stay plain-language consumer intents (see `.cursor/rules/02-docs-consumer-voice.mdc`)
+- Live demo product copy inside `src/components/demos/**`
