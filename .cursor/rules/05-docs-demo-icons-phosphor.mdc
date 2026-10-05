@@ -29,5 +29,5 @@ import { Download } from '@viraui/icons/react';
 ## Out of scope
 
 - Nav / frontmatter `icon:` strings resolved by `viraIconsPlugin`
-- Foundation `/foundation/icons` page may still show Lucide + Phosphor + sprite side-by-side to prove “any library”
+- Foundation `/foundation/iconography` page may still show Lucide + Phosphor + sprite side-by-side to prove “any library”
 - Built-in chrome inside `@viraui/react` (chevrons, checks, close) — not content glyphs

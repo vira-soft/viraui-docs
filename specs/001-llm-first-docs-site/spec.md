@@ -91,7 +91,7 @@ A maintainer keeps the docs source in the private `vira-soft/viraui-docs` GitHub
 - **FR-002**: Site messaging and information architecture MUST center LLM-first usage (agents/skills first; humans for advanced intervention).
 - **FR-003**: Setup scope MUST deliver navigable structure and page shells only; full editorial content and final prompt copy are out of scope for this feature (later content pass).
 - **FR-004**: Top-level nav MUST include: Introduction (home), why/how, principles, layers & composition, Get started (setup, skills, MCP), Foundation, and Components.
-- **FR-005**: Foundation MUST expose child pages for themes & brand, colors, motion, elevation, typography, plus stubs for other foundation topics already treated as first-class in the design system (e.g. space, radius, icons) so the tree is complete.
+- **FR-005**: Foundation MUST expose child pages for themes & brand, colors, motion, elevation, typography, plus stubs for other foundation topics already treated as first-class in the design system (e.g. space, radius, iconography) so the tree is complete.
 - **FR-006**: Components MUST start with an overview listing the same category set as Storybook: Actions, Dialogs, Effects, Inputs, Layout, Loading, Navigation, Overlays, Typography, Widgets.
 - **FR-007**: Each category MUST be a navigable, expandable group containing one page per public component in that category.
 - **FR-008**: Component pages MUST prioritize narrative, common-example interactive previews, and an LLM prompt region for descriptive props/usage guidance; they MUST NOT treat a 1:1 code prop table as the primary documentation surface.

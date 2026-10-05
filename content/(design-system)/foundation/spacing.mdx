@@ -42,6 +42,34 @@ Reach for raw spacing CSS only when layout props cannot express the distance: sc
 }
 ```
 
+## Beyond the largest step
+
+When the top of the scale still feels tight (hero band, tall marketing gap), extend the brand sheet with one more `--space-*` step instead of a raw pixel length:
+
+```css title="Extra step on the brand theme"
+:root {
+  --space-6xl: 8rem;
+}
+```
+
+Then reference it only in **your** CSS:
+
+```css title="Use the custom step in app CSS"
+.hero {
+  padding-block: var(--space-6xl);
+}
+```
+
+ViraUI layout props (`rowGap`, `hPadding`, and the rest) stay on the built-in scale names. A brand-only step is not wired into those props — agents and components will not pick it up. Keep custom steps for custom CSS; retune existing `--space-*` values (see Tune below) when the whole product needs roomier rhythm.
+
+For a one-off multiple of an existing step, `calc()` works the same way and still tracks the theme:
+
+```css title="Multiply an existing step"
+.hero {
+  padding-block: calc(var(--space-5xl) * 2);
+}
+```
+
 ## Tune
 
 App Studio in [ViraUI Pro](https://viraui.dev/#pro) is the easiest path when you want to reshape rhythm: tweak `--space-*` on a live ViraUI canvas, share the theme with the team, and export CSS that already matches the contract. Drop the export into the app as a [custom theme](/get-started/theming/custom-themes). Step names and layout props stay stable; only the resolved lengths change.

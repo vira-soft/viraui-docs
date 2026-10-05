@@ -34,7 +34,11 @@ Custom radius CSS is the escape hatch for hosts props cannot reach: raw wrappers
 
 ## Concentric corners
 
-Nested surfaces inside a padded, rounded parent need a smaller arc so each corner shares the same curvature. Copying the parent's token leaves a visible mismatch. Set `radius="auto"` on the nested host: it reads the nearest ancestor `Surface` radius and padding through React context and subtracts so the inner corner stays concentric, with no layout measurement in JavaScript.
+Nested surfaces inside a padded, rounded parent need a smaller arc so each corner shares the same curvature. Copying the parent's token leaves a visible mismatch.
+
+On ViraUI hosts, set `radius="auto"` on the nested surface: it reads the nearest ancestor `Surface` radius and padding through React context and subtracts so the inner corner stays concentric, with no layout measurement in JavaScript.
+
+Outside `Surface` (raw wrappers, third-party chrome), do the same math in CSS: outer `--radius-*` minus the parent's `--space-*` padding, clamped at zero.
 
 Toggle the demo below: equal radii reuse the outer token and look wrong at the corners; `auto` keeps the arcs aligned.
 
@@ -45,9 +49,21 @@ import { Button, Surface } from '@viraui/react';
 
 <Surface color={1} radius="2xl" hPadding="l" vPadding="l" border="all">
   <Surface color={2} radius="auto" hPadding="l" vPadding="l" border="all">
-    <Button variant="secondary">Use radius auto</Button>
+    <Button variant="secondary" />
   </Surface>
 </Surface>
+```
+
+```css title="Same concentric math with theme tokens"
+.outer {
+  --outer-padding: var(--space-l);
+  border-radius: var(--radius-2xl);
+  padding: var(--outer-padding);
+}
+
+.inner {
+  border-radius: max(0px, calc(var(--radius-2xl) - var(--outer-padding)));
+}
 ```
 
 </Example>

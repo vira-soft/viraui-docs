@@ -47,7 +47,7 @@ A reader who wants a specific concern (color, type, space, …) scans a card gri
 
 1. **Given** the Foundation overview, **When** the reader reaches the navigation region, **Then** they see one Cards grid covering every foundation child listed in the Foundation nav (excluding the overview itself).
 2. **Given** that grid, **When** they inspect a card, **Then** each card shows a title and an image (stand-in or final Spotkit)—no requirement for body copy on the card.
-3. **Given** a card title, **When** they activate the card, **Then** they land on the matching `/foundation/...` child page (colors, motion, elevation, effects, typography, spacing, radius, icons).
+3. **Given** a card title, **When** they activate the card, **Then** they land on the matching `/foundation/...` child page (colors, motion, elevation, effects, typography, spacing, radius, iconography).
 4. **Given** dedicated foundation Spotkit art is not ready yet, **When** this feature’s content pass ships, **Then** every topic card still shows an image via temporary stand-in spots (existing Core / shared illustrations), plus complete titles and hrefs; the follow-up Spotkit pass replaces stand-ins with the real foundation topic set.
 
 ---

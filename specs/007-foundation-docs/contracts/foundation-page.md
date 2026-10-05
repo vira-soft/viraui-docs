@@ -20,7 +20,7 @@
    | Typography | `/foundation/typography` | `foundation-typography` |
    | Spacing | `/foundation/spacing` | `foundation-space` |
    | Radius | `/foundation/radius` | `foundation-radius` |
-   | Icons | `/foundation/icons` | `foundation-icons` |
+   | Iconography | `/foundation/iconography` | `foundation-icons` |
 
 5. English AI-centric consumer voice per `.cursor/rules/02-docs-consumer-voice.mdc` and `001` page-shell — how Foundation works for humans steering agents; no meta “this page covers / keep this page / not documented here”; no “What’s next”.
 6. Remove prior stub copy (“Browse child topics…”) and any Ask-agent placeholder fence.
