@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { CopySimple, MagnifyingGlass } from "@phosphor-icons/react";
-import { Button, IconButton, Stack, Textfield } from "@viraui/react";
+import { CopySimple, Eye, EyeSlash, MagnifyingGlass } from "@phosphor-icons/react";
+import { Button, IconButton, Stack, Text, Textfield } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
@@ -73,6 +73,59 @@ export const TextfieldEmailDemo: React.FC = () => (
     </FieldShell>
   </SandboxShell>
 );
+
+/** Password field with reveal toggle and a Forgot password link above. */
+export const TextfieldPasswordDemo: React.FC = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  return (
+    <SandboxShell height={240} label="Password Textfield with reveal toggle">
+      <FieldShell>
+        <Stack rowGap="s">
+          <Stack direction="row" hAlign="space-between" vAlign="center">
+            <Text lineHeight="s" size="s" weight="semibold">
+              Password
+            </Text>
+            <Text
+              render={
+                <a
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                  }}
+                />
+              }
+              size="xs"
+            >
+              Forgot password?
+            </Text>
+          </Stack>
+          <Textfield
+            aria-label="Password"
+            autoComplete="current-password"
+            defaultValue="synth-horizon-42"
+            endAddon={
+              <IconButton
+                aria-label={visible ? "Hide password" : "Show password"}
+                icon={visible ? <EyeSlash /> : <Eye />}
+                size="s"
+                type="button"
+                variant="flat"
+                onClick={() => {
+                  setVisible((value) => !value);
+                }}
+              />
+            }
+            fullWidth
+            name="password"
+            placeholder="Enter your password"
+            type={visible ? "text" : "password"}
+          />
+        </Stack>
+      </FieldShell>
+    </SandboxShell>
+  );
+};
 
 /** Start and end addons inside the shared control group. */
 export const TextfieldAddonsDemo: React.FC = () => (

@@ -119,6 +119,7 @@ export {
   TextfieldDateTimeDemo,
   TextfieldEmailDemo,
   TextfieldFitContentDemo,
+  TextfieldPasswordDemo,
 } from "./textfield-demo";
 export {
   StackAxisPaddingDemo,

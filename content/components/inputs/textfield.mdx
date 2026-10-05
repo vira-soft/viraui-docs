@@ -120,6 +120,50 @@ import { Button, Stack, Textfield } from '@viraui/react';
 
 </Example>
 
+### Password reveal
+
+For sign-in, put the visible name and a Forgot password link in a parent `Stack` row above the control, omit `label` on Textfield, and name the input with `aria-label`. Toggle `type` between `password` and `text` from an `endAddon` `IconButton`.
+
+<Example preview={<TextfieldPasswordDemo />}>
+
+```tsx
+import { Eye, EyeSlash } from '@phosphor-icons/react';
+import { IconButton, Stack, Text, Textfield } from '@viraui/react';
+
+const [visible, setVisible] = useState(false);
+
+<Stack rowGap="s">
+  <Stack direction="row" hAlign="space-between" vAlign="center">
+    <Text lineHeight="s" size="s" weight="semibold">
+      Password
+    </Text>
+    <Text render={<a href="#" />} size="xs">
+      Forgot password?
+    </Text>
+  </Stack>
+  <Textfield
+    type={visible ? 'text' : 'password'}
+    aria-label="Password"
+    autoComplete="current-password"
+    fullWidth
+    name="password"
+    placeholder="Enter your password"
+    endAddon={
+      <IconButton
+        aria-label={visible ? 'Hide password' : 'Show password'}
+        icon={visible ? <EyeSlash /> : <Eye />}
+        size="s"
+        variant="flat"
+        type="button"
+        onClick={() => setVisible((value) => !value)}
+      />
+    }
+  />
+</Stack>
+```
+
+</Example>
+
 ### Form row
 
 Equal-width city / ZIP pairs share a parent `Stack` with `direction="row"` and `expandChildren` — do not invent width CSS on each field. Stack full-width fields above the row for street and suite.
@@ -204,6 +248,10 @@ Build a sign-in email field with a short helper about magic links, inline valida
 
 ```text tab="Field addons"
 Add three text fields: a search input with a magnifier start addon, an Amount to invest field with a $ prefix, and an Account holder field with a small Verify button in the end addon.
+```
+
+```text tab="Password reveal"
+Build a password field with a Forgot password link above on the right and a show/hide toggle on the end of the control.
 ```
 
 ```text tab="Shipping address"

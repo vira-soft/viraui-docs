@@ -17,11 +17,11 @@ description: In-page tab list and panels with a moving indicator and scrollable 
 
 ---
 
-Tabs keep related views on one screen. Compose a `Tabs.List` of `Tabs.Tab` triggers with matching `Tabs.Panel` children inside `Tabs.Viewport`. The root owns selection — `defaultValue` when the compound owns it, or `value` plus `onValueChange` when the URL, a wizard step, or another control drives the active tab.
+Tabs keep related views on one screen. Compose a `Tabs.List` of `Tabs.Tab` triggers with matching `Tabs.Panel` children inside `Tabs.Viewport`. The root owns selection — `defaultValue` when the compound owns it, or `value` plus `onValueChange` when the URL, a deep link, or another control drives the active tab.
 
 Each tab’s `value` pairs with exactly one panel of the same `value`. Only the selected panel stays mounted while the indicator moves under the active trigger. Long label sets scroll horizontally inside the list; that overflow is expected, not a layout bug.
 
-`listAlignment` aligns the tab row through the same stack contract as [Stack](/components/layout/stack). Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move without changing selection until click or Enter. Labels accept `addon` slots for icons or [Chip](/components/widgets/chip) badges; disabled tabs ignore activation.
+`listAlignment` aligns the segment chrome through the same stack contract as [Stack](/components/layout/stack) — prefer `center` for a compact list; use `stretch` when equal-width tabs should fill the row. Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move without changing selection until click or Enter. Labels accept `addon` slots for icons or [Chip](/components/widgets/chip) badges; disabled tabs ignore activation.
 
 ---
 
@@ -29,11 +29,12 @@ Each tab’s `value` pairs with exactly one panel of the same `value`. Only the 
 
 - Peer sections of the same screen (profile, billing, goals)
 - In-page wayfinding where content swaps without a route change
-- Selection that should sync to search params, a wizard step, or another control
+- Selection that should sync to search params, a deep link, or another control
 
 ## When not to use
 
 - Expand/collapse FAQs or stacked disclosures → [Accordion](/components/layout/accordion)
+- Ordered multi-step flows (continue / next / back) → a dedicated stepper, not Tabs
 - Primary app routes or top-level destinations → links and the router
 - Commands from a trigger → [Menu](/components/overlays/menu)
 
@@ -52,14 +53,14 @@ Each tab’s `value` pairs with exactly one panel of the same `value`. Only the 
 
 ### Tabbed panels
 
-A three-tab block with paired list triggers and viewport panels is the default in-page navigation pattern. Seed the active tab with `defaultValue` so the first panel mounts on load.
+A three-tab block with paired list triggers and viewport panels is the default in-page navigation pattern. Seed the active tab with `defaultValue`, and keep the list compact with `listAlignment="center"`.
 
 <Example preview={<TabsPanelsDemo />}>
 
 ```tsx
-import { Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
+import { Tabs, Text, Title } from '@viraui/react';
 
-<Tabs defaultValue="general">
+<Tabs defaultValue="general" listAlignment="center">
   <Tabs.List>
     <Tabs.Tab value="general">General</Tabs.Tab>
     <Tabs.Tab value="billing">Billing</Tabs.Tab>
@@ -67,16 +68,15 @@ import { Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
   </Tabs.List>
   <Tabs.Viewport>
     <Tabs.Panel value="general">
-      <Stack rowGap="m">
-        <Title />
-        <Text />
-        <Textfield label="Workspace name" />
-      </Stack>
+      <Title />
+      <Text />
     </Tabs.Panel>
     <Tabs.Panel value="billing">
+      <Title />
       <Text />
     </Tabs.Panel>
     <Tabs.Panel value="goals">
+      <Title />
       <Text />
     </Tabs.Panel>
   </Tabs.Viewport>
@@ -95,7 +95,7 @@ Put icons or Chip badges in `addon` without changing the accessible name — vis
 import { GearSix, Target } from '@phosphor-icons/react';
 import { Chip, Tabs, Text, Title } from '@viraui/react';
 
-<Tabs defaultValue="general">
+<Tabs defaultValue="general" listAlignment="center">
   <Tabs.List>
     <Tabs.Tab addon={<GearSix />} value="general">
       General
@@ -132,14 +132,14 @@ import { Chip, Tabs, Text, Title } from '@viraui/react';
 
 ### Stretch list
 
-`listAlignment="stretch"` fills the list chrome so equal-width tabs sit edge to edge — useful for two-option choosers inside a bordered surface.
+`listAlignment="stretch"` fills the list chrome so equal-width tabs sit edge to edge — useful for two-option choosers.
 
 <Example preview={<TabsStretchDemo />}>
 
 ```tsx
-import { Stack, Surface, Tabs, Text, Textfield } from '@viraui/react';
+import { Surface, Tabs, Text, Title } from '@viraui/react';
 
-<Surface border="all" color={1} overflow="hidden" radius="xl">
+<Surface border="all" color={1} hPadding="m" overflow="hidden" radius="m" vPadding="m">
   <Tabs defaultValue="local" listAlignment="stretch">
     <Tabs.List>
       <Tabs.Tab value="codespaces">Codespaces</Tabs.Tab>
@@ -147,13 +147,12 @@ import { Stack, Surface, Tabs, Text, Textfield } from '@viraui/react';
     </Tabs.List>
     <Tabs.Viewport>
       <Tabs.Panel value="codespaces">
+        <Title />
         <Text />
       </Tabs.Panel>
       <Tabs.Panel value="local">
-        <Stack rowGap="m">
-          <Textfield aria-label="Repository clone URL" readOnly />
-          <Text />
-        </Stack>
+        <Title />
+        <Text />
       </Tabs.Panel>
     </Tabs.Viewport>
   </Tabs>
@@ -185,7 +184,7 @@ const items = [
 ];
 
 <Stack maxWidth="20rem">
-  <Tabs defaultValue="overview">
+  <Tabs defaultValue="overview" listAlignment="center">
     <Tabs.List>
       {items.map((item) => (
         <Tabs.Tab key={item.value} value={item.value}>
@@ -208,37 +207,49 @@ const items = [
 
 ### Programmatic selection
 
-Drive selection with `value` and `onValueChange` when a panel action, URL param, or wizard step owns the active tab. Call the same setter from a Button inside a panel to jump to another tab.
+Drive selection with `value` and `onValueChange` when a panel action, URL param, or deep link owns the active tab. Call the same setter from a Button inside a panel to jump to a peer section — for example Profile → Billing — not as a step sequence.
 
 <Example preview={<TabsProgrammaticDemo />}>
 
 ```tsx
 import * as React from 'react';
-import { Button, Stack, Tabs, Text, Textfield, Title } from '@viraui/react';
+import { Button, Tabs, Text, Title } from '@viraui/react';
 
-const [tab, setTab] = React.useState('details');
+const [tab, setTab] = React.useState('profile');
 
-<Tabs value={tab} onValueChange={(next) => setTab(String(next))}>
+<Tabs
+  value={tab}
+  listAlignment="center"
+  onValueChange={(next) => setTab(String(next))}
+>
   <Tabs.List>
-    <Tabs.Tab value="details">Details</Tabs.Tab>
+    <Tabs.Tab value="profile">Profile</Tabs.Tab>
     <Tabs.Tab value="billing">Billing</Tabs.Tab>
-    <Tabs.Tab value="review">Review</Tabs.Tab>
+    <Tabs.Tab value="security">Security</Tabs.Tab>
   </Tabs.List>
   <Tabs.Viewport>
-    <Tabs.Panel value="details">
-      <Stack rowGap="m">
-        <Title />
-        <Text />
-        <Textfield label="Workspace name" />
-        <Button onClick={() => setTab('billing')} type="button">
-          Continue to billing
-        </Button>
-      </Stack>
+    <Tabs.Panel value="profile">
+      <Title />
+      <Text />
+      <Button
+        onClick={() => setTab('billing')}
+        type="button"
+        variant="secondary"
+      >
+        View billing plan
+      </Button>
     </Tabs.Panel>
     <Tabs.Panel value="billing">
+      <Title />
       <Text />
+      <Button
+        onClick={() => setTab('profile')}
+        type="button"
+        variant="secondary"
+      />
     </Tabs.Panel>
-    <Tabs.Panel value="review">
+    <Tabs.Panel value="security">
+      <Title />
       <Text />
     </Tabs.Panel>
   </Tabs.Viewport>
@@ -252,15 +263,15 @@ Set `activateOnFocus={false}` on `Tabs.List` when arrow-key focus should not cha
 ## Ask your agent
 
 ```text tab="Settings tabs"
-Add settings tabs with icons — General, Billing, Goals. General has profile fields; Billing shows plan summary with usage progress; Goals has two progress rows and a checkbox. Sync tab selection to URL search params if the screen already uses them.
+Add centered settings tabs — General, Billing, Goals — each with a short title and muted description. Use listAlignment center. Sync tab selection to URL search params if the screen already uses them.
 ```
 
 ```text tab="Clone chooser"
-Build a bordered card with two stretch-aligned tabs: Codespaces and Local. Local shows a read-only clone URL field and short helper copy. Codespaces shows a muted empty-state surface for creating a cloud workspace.
+Build a bordered card with medium radius and padding. Inside, two stretch-aligned tabs: Codespaces and Local. Each panel has a short title and muted helper copy.
 ```
 
-```text tab="Wizard continue"
-Make controlled tabs for a three-step flow: Details, Billing, Review. Inside Details, a primary Button sets the active tab to Billing. Inside Billing, another Button advances to Review. Review has a secondary Button that returns to Details.
+```text tab="Jump to billing"
+Make controlled account tabs — Profile, Billing, Security — with listAlignment center. On Profile, a secondary Button sets the active tab to Billing ("View billing plan"). On Billing, another secondary Button jumps back to Profile. Do not treat the tabs as a stepper.
 ```
 
 ```text tab="Scrollable admin"

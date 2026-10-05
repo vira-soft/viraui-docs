@@ -1,21 +1,14 @@
 "use client";
 
 import * as React from "react";
-import {
-  CreditCard,
-  GearSix,
-  Target,
-} from "@phosphor-icons/react";
+import { GearSix, Target } from "@phosphor-icons/react";
 import {
   Button,
   Chip,
-  LinearProgress,
   Stack,
   Surface,
-  Switch,
   Tabs,
   Text,
-  Textfield,
   Title,
 } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
@@ -24,49 +17,67 @@ type SandboxShellProps = {
   children: React.ReactNode;
   label: string;
   height?: number;
-  vAlign?: "start" | "center";
 };
 
 const SandboxShell: React.FC<SandboxShellProps> = ({
   children,
   label,
-  height = 420,
-  vAlign = "start",
+  height = 280,
 }) => (
   <ViraSandbox
     dialogShell={false}
     height={height}
     label={label}
-    vAlign={vAlign}
+    vAlign="center"
   >
     {children}
   </ViraSandbox>
 );
 
 const PanelFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <Stack fullWidth maxWidth="28rem" minWidth="16rem" rowGap="m">
+  <Stack fullWidth maxWidth="24rem" minWidth="16rem">
+    {children}
+  </Stack>
+);
+
+const PanelCopy: React.FC<{ title: string; description: string }> = ({
+  title,
+  description,
+}) => (
+  <Stack hAlign="center" rowGap="xs">
+    <Title align="center" render={<h3 />} size="3">
+      {title}
+    </Title>
+    <Text align="center" tone="muted">
+      {description}
+    </Text>
+  </Stack>
+);
+
+const PanelBody: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <Stack hAlign="center" rowGap="m" vPadding="m">
     {children}
   </Stack>
 );
 
 const SCROLLABLE_TABS = [
-  { label: "Overview", panel: "Workspace summary and quick actions.", value: "overview" },
-  { label: "Analytics", panel: "Traffic, adoption, and engagement trends.", value: "analytics" },
-  { label: "Reports", panel: "Scheduled exports and saved report views.", value: "reports" },
-  { label: "Team members", panel: "Roles, invites, and seat usage.", value: "team" },
-  { label: "Billing", panel: "Plans, invoices, and payment methods.", value: "billing" },
-  { label: "Security", panel: "SSO, audit logs, and access policies.", value: "security" },
-  { label: "Notifications", panel: "Email, in-app, and digest preferences.", value: "notifications" },
-  { label: "API keys", panel: "Tokens, scopes, and rotation history.", value: "api-keys" },
-  { label: "Webhooks", panel: "Delivery logs and endpoint configuration.", value: "webhooks" },
-  { label: "Integrations hub", panel: "Connected apps and sync status.", value: "integrations" },
+  { label: "Overview", panel: "Workspace summary.", value: "overview" },
+  { label: "Analytics", panel: "Adoption trends.", value: "analytics" },
+  { label: "Reports", panel: "Saved report views.", value: "reports" },
+  { label: "Team members", panel: "Roles and invites.", value: "team" },
+  { label: "Billing", panel: "Plans and invoices.", value: "billing" },
+  { label: "Security", panel: "SSO and audit logs.", value: "security" },
+  { label: "Notifications", panel: "Email and digests.", value: "notifications" },
+  { label: "API keys", panel: "Tokens and scopes.", value: "api-keys" },
+  { label: "Webhooks", panel: "Delivery endpoints.", value: "webhooks" },
+  { label: "Integrations hub", panel: "Connected apps.", value: "integrations" },
 ] as const;
 
-/** Default in-page tabbed panels — List / Viewport / Panel pairing. */
+/** Default in-page tabbed panels — centered list + paired panels. */
 export const TabsPanelsDemo: React.FC = () => (
   <SandboxShell label="Settings tabs with paired panels">
     <PanelFrame>
-      <Tabs defaultValue="general">
+      <Tabs defaultValue="general" listAlignment="center">
         <Tabs.List>
           <Tabs.Tab value="general">General</Tabs.Tab>
           <Tabs.Tab value="billing">Billing</Tabs.Tab>
@@ -74,78 +85,28 @@ export const TabsPanelsDemo: React.FC = () => (
         </Tabs.List>
         <Tabs.Viewport>
           <Tabs.Panel value="general">
-            <Stack rowGap="m" vPadding="m">
-              <Stack rowGap="xs">
-                <Title render={<h3 />} size="3">
-                  Profile & workspace
-                </Title>
-                <Text tone="muted">
-                  Manage how your team appears across projects.
-                </Text>
-              </Stack>
-              <Textfield
-                defaultValue="Northwind Labs"
-                label="Workspace name"
+            <PanelBody>
+              <PanelCopy
+                description="Workspace profile and digest preferences."
+                title="General"
               />
-              <Switch
-                defaultChecked
-                description="Weekly summary of workspace activity."
-                label="Email digests"
-              />
-            </Stack>
+            </PanelBody>
           </Tabs.Panel>
           <Tabs.Panel value="billing">
-            <Stack rowGap="m" vPadding="m">
-              <Stack rowGap="xs">
-                <Title render={<h3 />} size="3">
-                  Plan & billing
-                </Title>
-                <Text tone="muted">Pro renews on April 12, 2026.</Text>
-              </Stack>
-              <Surface
-                border="all"
-                color={1}
-                hPadding="m"
-                radius="m"
-                vPadding="m"
-              >
-                <Stack
-                  direction="row"
-                  hAlign="space-between"
-                  vAlign="center"
-                >
-                  <Stack rowGap="2xs">
-                    <Text weight="semibold">Pro plan</Text>
-                    <Text size="s" tone="muted">
-                      12 seats · billed monthly
-                    </Text>
-                  </Stack>
-                  <Chip variant="secondary">$29 / seat</Chip>
-                </Stack>
-              </Surface>
-            </Stack>
+            <PanelBody>
+              <PanelCopy
+                description="Plan summary and payment methods."
+                title="Billing"
+              />
+            </PanelBody>
           </Tabs.Panel>
           <Tabs.Panel value="goals">
-            <Stack rowGap="m" vPadding="m">
-              <Stack rowGap="xs">
-                <Title render={<h3 />} size="3">
-                  Quarterly goals
-                </Title>
-                <Text tone="muted">
-                  Track adoption targets for the design system rollout.
-                </Text>
-              </Stack>
-              <LinearProgress
-                label="Component coverage"
-                renderValue
-                value={74}
+            <PanelBody>
+              <PanelCopy
+                description="Quarterly adoption targets."
+                title="Goals"
               />
-              <LinearProgress
-                label="Storybook adoption"
-                renderValue
-                value={52}
-              />
-            </Stack>
+            </PanelBody>
           </Tabs.Panel>
         </Tabs.Viewport>
       </Tabs>
@@ -155,9 +116,9 @@ export const TabsPanelsDemo: React.FC = () => (
 
 /** Decorative start/end addons on tab labels. */
 export const TabsAddonsDemo: React.FC = () => (
-  <SandboxShell height={280} label="Tabs with icon and Chip addons">
+  <SandboxShell label="Tabs with icon and Chip addons">
     <PanelFrame>
-      <Tabs defaultValue="general">
+      <Tabs defaultValue="general" listAlignment="center">
         <Tabs.List>
           <Tabs.Tab addon={<GearSix />} value="general">
             General
@@ -175,28 +136,28 @@ export const TabsAddonsDemo: React.FC = () => (
         </Tabs.List>
         <Tabs.Viewport>
           <Tabs.Panel value="general">
-            <Stack rowGap="xs" vPadding="m">
-              <Title render={<h3 />} size="3">
-                General
-              </Title>
-              <Text tone="muted">Workspace profile and digest preferences.</Text>
-            </Stack>
+            <PanelBody>
+              <PanelCopy
+                description="Icons and chips stay decorative beside the label."
+                title="General"
+              />
+            </PanelBody>
           </Tabs.Panel>
           <Tabs.Panel value="billing">
-            <Stack rowGap="xs" vPadding="m">
-              <Title render={<h3 />} size="3">
-                Billing
-              </Title>
-              <Text tone="muted">Plan summary and payment methods.</Text>
-            </Stack>
+            <PanelBody>
+              <PanelCopy
+                description="Trailing Chip marks a new billing surface."
+                title="Billing"
+              />
+            </PanelBody>
           </Tabs.Panel>
           <Tabs.Panel value="goals">
-            <Stack rowGap="xs" vPadding="m">
-              <Title render={<h3 />} size="3">
-                Goals
-              </Title>
-              <Text tone="muted">Quarterly adoption targets.</Text>
-            </Stack>
+            <PanelBody>
+              <PanelCopy
+                description="Leading icon for the goals view."
+                title="Goals"
+              />
+            </PanelBody>
           </Tabs.Panel>
         </Tabs.Viewport>
       </Tabs>
@@ -206,9 +167,16 @@ export const TabsAddonsDemo: React.FC = () => (
 
 /** Stretch list fills the tab chrome width. */
 export const TabsStretchDemo: React.FC = () => (
-  <SandboxShell height={320} label="Stretch-aligned clone source tabs">
+  <SandboxShell label="Stretch-aligned clone source tabs">
     <PanelFrame>
-      <Surface border="all" color={1} overflow="hidden" radius="xl">
+      <Surface
+        border="all"
+        color={1}
+        hPadding="m"
+        overflow="hidden"
+        radius="m"
+        vPadding="m"
+      >
         <Tabs defaultValue="local" listAlignment="stretch">
           <Tabs.List>
             <Tabs.Tab value="codespaces">Codespaces</Tabs.Tab>
@@ -216,31 +184,20 @@ export const TabsStretchDemo: React.FC = () => (
           </Tabs.List>
           <Tabs.Viewport>
             <Tabs.Panel value="codespaces">
-              <Stack vPadding="m">
-                <Surface
-                  border="all"
-                  color={2}
-                  hPadding="m"
-                  radius="l"
-                  vPadding="l"
-                >
-                  <Text tone="muted">
-                    Create a cloud workspace from this repository.
-                  </Text>
-                </Surface>
-              </Stack>
+              <PanelBody>
+                <PanelCopy
+                  description="Create a cloud workspace from this repository."
+                  title="Codespaces"
+                />
+              </PanelBody>
             </Tabs.Panel>
             <Tabs.Panel value="local">
-              <Stack rowGap="m" vPadding={["m", 0]}>
-                <Textfield
-                  aria-label="Repository clone URL"
-                  readOnly
-                  value="https://github.com/vira-soft/vira-ui.git"
+              <PanelBody>
+                <PanelCopy
+                  description="Clone with the repository web URL."
+                  title="Local"
                 />
-                <Text size="s" tone="muted">
-                  Clone using the web URL.
-                </Text>
-              </Stack>
+              </PanelBody>
             </Tabs.Panel>
           </Tabs.Viewport>
         </Tabs>
@@ -253,7 +210,7 @@ export const TabsStretchDemo: React.FC = () => (
 export const TabsScrollableDemo: React.FC = () => (
   <SandboxShell height={240} label="Scrollable tab list overflow">
     <Stack fullWidth maxWidth="20rem" minWidth="16rem">
-      <Tabs defaultValue="overview">
+      <Tabs defaultValue="overview" listAlignment="center">
         <Tabs.List>
           {SCROLLABLE_TABS.map((item) => (
             <Tabs.Tab key={item.value} value={item.value}>
@@ -264,7 +221,9 @@ export const TabsScrollableDemo: React.FC = () => (
         <Tabs.Viewport>
           {SCROLLABLE_TABS.map((item) => (
             <Tabs.Panel key={item.value} value={item.value}>
-              <Text vPadding="m">{item.panel}</Text>
+              <PanelBody>
+                <Text align="center">{item.panel}</Text>
+              </PanelBody>
             </Tabs.Panel>
           ))}
         </Tabs.Viewport>
@@ -273,110 +232,67 @@ export const TabsScrollableDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** Controlled selection — panel action jumps to another tab. */
+/** Controlled selection — profile panel jumps to peer billing tab. */
 export const TabsProgrammaticDemo: React.FC = () => {
-  const [tab, setTab] = React.useState("details");
+  const [tab, setTab] = React.useState("profile");
 
   return (
-    <SandboxShell height={360} label="Programmatic tab change from panel action">
+    <SandboxShell label="Programmatic jump from profile to billing">
       <PanelFrame>
         <Tabs
+          listAlignment="center"
           onValueChange={(next) => {
             setTab(String(next));
           }}
           value={tab}
         >
           <Tabs.List>
-            <Tabs.Tab value="details">Details</Tabs.Tab>
+            <Tabs.Tab value="profile">Profile</Tabs.Tab>
             <Tabs.Tab value="billing">Billing</Tabs.Tab>
-            <Tabs.Tab value="review">Review</Tabs.Tab>
+            <Tabs.Tab value="security">Security</Tabs.Tab>
           </Tabs.List>
           <Tabs.Viewport>
-            <Tabs.Panel value="details">
-              <Stack rowGap="m" vPadding="m">
-                <Stack rowGap="xs">
-                  <Title render={<h3 />} size="3">
-                    Project details
-                  </Title>
-                  <Text tone="muted">
-                    Confirm the workspace name, then continue to billing.
-                  </Text>
-                </Stack>
-                <Textfield
-                  defaultValue="Northwind Labs"
-                  label="Workspace name"
+            <Tabs.Panel value="profile">
+              <PanelBody>
+                <PanelCopy
+                  description="Name, email, and avatar for this account."
+                  title="Profile"
                 />
-                <Stack direction="row" hAlign="end">
-                  <Button
-                    addon={<CreditCard />}
-                    onClick={() => {
-                      setTab("billing");
-                    }}
-                    type="button"
-                  >
-                    Continue to billing
-                  </Button>
-                </Stack>
-              </Stack>
-            </Tabs.Panel>
-            <Tabs.Panel value="billing">
-              <Stack rowGap="m" vPadding="m">
-                <Stack rowGap="xs">
-                  <Title render={<h3 />} size="3">
-                    Billing
-                  </Title>
-                  <Text tone="muted">
-                    Choose a seat plan before the final review.
-                  </Text>
-                </Stack>
-                <Surface
-                  border="all"
-                  color={1}
-                  hPadding="m"
-                  radius="m"
-                  vPadding="m"
-                >
-                  <Stack
-                    direction="row"
-                    hAlign="space-between"
-                    vAlign="center"
-                  >
-                    <Text weight="semibold">Pro plan</Text>
-                    <Chip variant="secondary">$29 / seat</Chip>
-                  </Stack>
-                </Surface>
-                <Stack direction="row" hAlign="end">
-                  <Button
-                    onClick={() => {
-                      setTab("review");
-                    }}
-                    type="button"
-                  >
-                    Continue to review
-                  </Button>
-                </Stack>
-              </Stack>
-            </Tabs.Panel>
-            <Tabs.Panel value="review">
-              <Stack rowGap="m" vPadding="m">
-                <Stack rowGap="xs">
-                  <Title render={<h3 />} size="3">
-                    Review
-                  </Title>
-                  <Text tone="muted">
-                    Everything looks ready. Jump back if you need edits.
-                  </Text>
-                </Stack>
                 <Button
                   onClick={() => {
-                    setTab("details");
+                    setTab("billing");
                   }}
                   type="button"
                   variant="secondary"
                 >
-                  Back to details
+                  View billing plan
                 </Button>
-              </Stack>
+              </PanelBody>
+            </Tabs.Panel>
+            <Tabs.Panel value="billing">
+              <PanelBody>
+                <PanelCopy
+                  description="Plan, seats, and invoices for this workspace."
+                  title="Billing"
+                />
+                <Button
+                  onClick={() => {
+                    setTab("profile");
+                  }}
+                  type="button"
+                  variant="secondary"
+                >
+                  Open profile
+                </Button>
+              </PanelBody>
+            </Tabs.Panel>
+            <Tabs.Panel value="security">
+              <PanelBody>
+                <PanelCopy
+                  description="Password, SSO, and active sessions."
+                  title="Security"
+                />
+              </PanelBody>
             </Tabs.Panel>
           </Tabs.Viewport>
         </Tabs>
