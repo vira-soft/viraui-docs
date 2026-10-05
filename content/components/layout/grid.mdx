@@ -51,7 +51,7 @@ import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Spanning items
 
-`Grid.Item` breaks the default 1×1 cell when a block needs more tracks. Prefer `fullWidth` for a banner across every column, or `column="span N"` for a partial span — placement stays on the item props.
+`Grid.Item` breaks the default 1×1 cell when a block needs more tracks. Prefer `fullWidth` for a banner across every column, or `row="span N"` / `column="span N"` for a partial span — placement stays on the item props.
 
 <Example preview={<GridItemSpanDemo />}>
 
@@ -62,6 +62,16 @@ import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
   <Grid.Item>
     <Elevator resting={1}>
       <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item row="span 2">
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m" style={{ height: '100%' }}>
         <Stack hPadding="l" vPadding="l" rowGap="s">
           <Title />
           <Text />
@@ -89,17 +99,68 @@ import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
       </Surface>
     </Elevator>
   </Grid.Item>
-  <Grid.Item column="span 2">
-    <Elevator resting={1}>
-      <Surface border="all" color={2} radius="m">
-        <Stack hPadding="l" vPadding="l" rowGap="s">
-          <Title />
-          <Text />
-        </Stack>
-      </Surface>
-    </Elevator>
-  </Grid.Item>
 </Grid>
+```
+
+</Example>
+
+### Bento grid
+
+Reach for asymmetric `column` / `row` spans when tiles should not share equal weight — feature boards, marketing mosaics, and dashboard walls where a hero cell sits beside shorter companions.
+
+<Example preview={<GridBentoDemo />}>
+
+```tsx
+import { Elevator, Grid, Stack, Surface } from '@viraui/react';
+
+const fillHeightStyle = { height: '100%' };
+
+<Stack fullWidth hAlign="center">
+  <Stack fullWidth maxWidth="22rem">
+    <Grid aria-hidden columns={3} columnGap="s" rowGap="s" rowMinHeight="3rem">
+      <Grid.Item column="span 2" row="span 2">
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item row="span 3">
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item row="span 2">
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item>
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item column="span 2">
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item>
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item>
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+      <Grid.Item>
+        <Elevator resting={1}>
+          <Surface border="all" color={2} radius="m" style={fillHeightStyle} />
+        </Elevator>
+      </Grid.Item>
+    </Grid>
+  </Stack>
+</Stack>
 ```
 
 </Example>
@@ -152,9 +213,13 @@ Build a two-column settings module grid with token gap and padding — Team acce
 ```
 
 ```text tab="Release banner"
-Build a two-column dashboard grid with a full-width release banner under the first row and a second row that spans both columns.
+Build a two-column dashboard grid with Deployments spanning two rows, Observability under Pull requests, and a full-width release banner below.
 ```
 
 ```text tab="Library wall"
 Build a responsive tile wall for library collections that auto-fills columns from a minimum track width — Brand kit, Screenshots, Motion, and similar cards.
+```
+
+```text tab="Bento"
+Build a three-column bento feature board where a hero tile spans two columns and two rows, a tall companion spans three rows, and supporting tiles fill the remaining tracks with a mix of single cells and column-span bands.
 ```

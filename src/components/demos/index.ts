@@ -134,6 +134,7 @@ export {
 } from "./surface-demo";
 export {
   GridAutoFillDemo,
+  GridBentoDemo,
   GridFixedColumnsDemo,
   GridItemSpanDemo,
 } from "./grid-demo";

@@ -32,9 +32,17 @@ type TileProps = {
   body: string;
 };
 
+const fillHeightStyle: React.CSSProperties = { height: "100%" };
+
 const Tile: React.FC<TileProps> = ({ body, title }) => (
   <Elevator resting={1}>
-    <Surface border="all" color={2} hoverColor={3} radius="m">
+    <Surface
+      border="all"
+      color={2}
+      hoverColor={3}
+      radius="m"
+      style={fillHeightStyle}
+    >
       <Stack hPadding="l" rowGap="s" vPadding="l">
         <Title render={<h3 />} size="5">
           {title}
@@ -81,7 +89,7 @@ export const GridFixedColumnsDemo: React.FC = () => (
       </Grid.Item>
       <Grid.Item>
         <Tile
-          body="Rotate API keys and review signed-in devices."
+          body="Rotate API keys and review signed-in devices here."
           title="Security"
         />
       </Grid.Item>
@@ -89,7 +97,7 @@ export const GridFixedColumnsDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** Grid.Item spans — column span and full-width banner. */
+/** Grid.Item spans — row span, full-width banner. */
 export const GridItemSpanDemo: React.FC = () => (
   <SandboxShell height={420} label="Grid with spanning items and full-width banner">
     <Grid
@@ -104,10 +112,16 @@ export const GridItemSpanDemo: React.FC = () => (
           title="Pull requests"
         />
       </Grid.Item>
+      <Grid.Item row="span 2">
+        <Tile
+          body="Staging is green — promote when checks finish. Last deploy shipped two hours ago."
+          title="Deployments"
+        />
+      </Grid.Item>
       <Grid.Item>
         <Tile
-          body="Staging is green — promote when checks finish."
-          title="Deployments"
+          body="Latency and error rates stay within budget."
+          title="Observability"
         />
       </Grid.Item>
       <Grid.Item fullWidth>
@@ -124,13 +138,61 @@ export const GridItemSpanDemo: React.FC = () => (
           </Surface>
         </Elevator>
       </Grid.Item>
-      <Grid.Item column="span 2">
-        <Tile
-          body="Latency and error rates stay within the weekly budget."
-          title="Observability"
-        />
-      </Grid.Item>
     </Grid>
+  </SandboxShell>
+);
+
+const EmptyCard: React.FC = () => (
+  <Elevator resting={1}>
+    <Surface
+      aria-hidden
+      border="all"
+      color={2}
+      radius="m"
+      style={{ ...fillHeightStyle, minBlockSize: "3.5rem" }}
+    />
+  </Elevator>
+);
+
+/** Cute minimal bento — centered 3-col empty cards with spans. */
+export const GridBentoDemo: React.FC = () => (
+  <SandboxShell height={480} label="Minimal centered bento Grid">
+    <Stack fullWidth hAlign="center">
+      <Stack fullWidth maxWidth="22rem">
+        <Grid
+          aria-hidden
+          columnGap="s"
+          columns={3}
+          rowGap="s"
+          rowMinHeight="3rem"
+        >
+          <Grid.Item column="span 2" row="span 2">
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item row="span 3">
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item row="span 2">
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item>
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item column="span 2">
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item>
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item>
+            <EmptyCard />
+          </Grid.Item>
+          <Grid.Item>
+            <EmptyCard />
+          </Grid.Item>
+        </Grid>
+      </Stack>
+    </Stack>
   </SandboxShell>
 );
 
@@ -152,22 +214,25 @@ export const GridAutoFillDemo: React.FC = () => (
       </Grid.Item>
       <Grid.Item>
         <Tile
-          body="Product shots ready for launch pages."
+          body="Product shots ready for launch and press."
           title="Screenshots"
         />
       </Grid.Item>
       <Grid.Item>
-        <Tile body="Looping clips for hero and empty states." title="Motion" />
+        <Tile
+          body="Looping clips for heroes and empty states."
+          title="Motion"
+        />
       </Grid.Item>
       <Grid.Item>
         <Tile
-          body="Icons and illustrations shared across surfaces."
+          body="Icons and illustrations shared across apps."
           title="Glyphs"
         />
       </Grid.Item>
       <Grid.Item>
         <Tile
-          body="Approved type ramps and sample compositions."
+          body="Approved type ramps and sample layouts."
           title="Type samples"
         />
       </Grid.Item>

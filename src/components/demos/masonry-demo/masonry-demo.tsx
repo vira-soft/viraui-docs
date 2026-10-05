@@ -22,8 +22,16 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   label,
   height = 480,
 }) => (
-  <ViraSandbox dialogShell={false} height={height} label={label} resizable>
-    {children}
+  <ViraSandbox
+    dialogShell={false}
+    height={height}
+    label={label}
+    resizable
+    vAlign="start"
+  >
+    <Stack fullWidth style={{ inlineSize: "100%" }}>
+      {children}
+    </Stack>
   </ViraSandbox>
 );
 
