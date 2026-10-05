@@ -5,6 +5,7 @@ import { House, SquaresFour, Sparkle } from "@phosphor-icons/react";
 import {
   BreakpointsProvider,
   ButtonLink,
+  Chip,
   Stack,
   Surface,
   Text,
@@ -24,7 +25,7 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   label,
   height = 200,
 }) => (
-  <ViraSandbox dialogShell={false} height={height} label={label} resizable>
+  <ViraSandbox dialogShell={false} height={height} label={label}>
     {children}
   </ViraSandbox>
 );
@@ -71,12 +72,12 @@ const DirectionNav: React.FC = () => {
         rowGap="s"
         vAlign={isWide ? "center" : "stretch"}
       >
-        <Stack rowGap="2xs">
+        <Stack rowGap="s">
           <Text weight="semibold">Vira Studio</Text>
           <Text size="s" tone="muted">
             {isWide
-              ? "Row nav — resize below the small threshold to stack"
-              : "Stacked nav — widen past small to go horizontal"}
+              ? "Row nav — small matches"
+              : "Stacked nav — below small"}
           </Text>
         </Stack>
         <Stack
@@ -124,35 +125,28 @@ const MatchRecordBoard: React.FC = () => {
   return (
     <Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
       <Stack rowGap="m">
-        <Stack rowGap="2xs">
+        <Stack rowGap="xs">
           <Title render={<h3 />} size="5">
-            Viewport board
+            Match board
           </Title>
           <Text size="s" tone="muted">
-            Full match record from the default provider map — resize the
-            browser to light more names.
+            Full name → boolean record from the default provider map.
           </Text>
         </Stack>
-        <Stack columnGap="xs" direction="row" wrap>
+        <Stack columnGap="xs" direction="row" rowGap="xs" wrap>
           {Object.keys(matches).map((name) => (
-            <Surface
+            <Chip
               key={name}
-              border="all"
-              color={matches[name] ? 2 : 1}
-              hPadding="s"
-              radius="m"
-              vPadding="xs"
+              variant={matches[name] ? "green" : "outline"}
             >
-              <Text size="s" weight={matches[name] ? "semibold" : "regular"}>
-                {name}
-              </Text>
-            </Surface>
+              {name}
+            </Chip>
           ))}
         </Stack>
         <Text size="s" tone="muted">
           {activeNames.length > 0
             ? `Matching now: ${activeNames.join(", ")}`
-            : "No min-width names match yet — widen the window."}
+            : "No min-width names match yet."}
         </Text>
       </Stack>
     </Surface>

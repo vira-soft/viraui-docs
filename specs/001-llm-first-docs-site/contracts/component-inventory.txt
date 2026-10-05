@@ -20,7 +20,6 @@ Inputs/Textarea
 Inputs/Textfield
 Layout/Accordion
 Layout/Bleed
-Layout/Breakpoints
 Layout/Elevator
 Layout/Grid
 Layout/Masonry

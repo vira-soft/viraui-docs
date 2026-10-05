@@ -3,7 +3,6 @@
   "pages": [
     "accordion",
     "bleed",
-    "breakpoints",
     "elevator",
     "grid",
     "masonry",

@@ -136,7 +136,7 @@ export const BleedDividerDemo: React.FC = () => (
     <PanelShell>
       <Surface border="all" color={1} overflow="hidden" radius="l">
         <Stack hPadding="m" rowGap="m" vPadding="l">
-          <Stack rowGap="2xs">
+          <Stack rowGap="xs">
             <Text size="s" weight="semibold">
               Workspace alerts
             </Text>
@@ -153,7 +153,7 @@ export const BleedDividerDemo: React.FC = () => (
             hAlign="space-between"
             vAlign="center"
           >
-            <Stack rowGap="2xs">
+            <Stack rowGap="xs">
               <Text size="s" weight="semibold">
                 Email digest
               </Text>

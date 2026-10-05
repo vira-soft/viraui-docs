@@ -1,6 +1,7 @@
 ---
 title: useBreakpoints
 description: Optional viewport match helpers when the React tree must branch — prefer CSS for layout-only shifts.
+pageActions: false
 ---
 
 ## Base UI utilities
@@ -9,15 +10,7 @@ ViraUI builds on [Base UI](https://base-ui.com). For direction, focus management
 
 `BreakpointsProvider` and `useBreakpoints` let the React tree **branch** at named min-width thresholds — swap markup, mount different components, or drive props CSS cannot express alone. Prefer CSS `@media` or container queries when the same elements can just shift with styles. The required overlay shell from [Setup](/get-started/setup) does not include these helpers; add them only when you need that kind of branch.
 
-Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider. Passing `breakpoints` on the provider **replaces** the default map entirely — it does not merge. Defaults are em-based names from `extra-small` through `extra-large` (the example below uses `small` at `48em`); the full table lives in `@viraui/react/specs` → `breakpoints`.
-
-## Ask an agent
-
-Paste a need like this when CSS alone cannot express the layout change:
-
-```text tab="Responsive header"
-On this page: primary nav stacks vertically on phones and sits in a row on larger screens. The feature grid below is one column by default and three columns from tablet size up. On large screens, make the main CTA bigger and show a secondary text link beside it — hide that link on smaller screens. Prefer CSS for style-only changes; branch the React tree only where layout or markup must change.
-```
+Wrap a client subtree with `BreakpointsProvider`, then call `useBreakpoints('small')` for one flag or `useBreakpoints()` for the full record. The hook only works under the provider. Passing `breakpoints` on the provider **replaces** the default map entirely — it does not merge. Defaults are em-based names from `extra-small` through `extra-large` (the example below uses `small` at `48em`); the full table lives in `@viraui/react/specs` → `breakpoints`. Matches come from `window.matchMedia` on the document that mounts the provider — not from a preview frame’s resize handle.
 
 ```tsx title="ResponsiveNav.tsx"
 'use client';
@@ -56,4 +49,162 @@ Custom names replace the defaults entirely — there is no partial merge:
 <BreakpointsProvider breakpoints={{ compact: '20em', wide: '50em' }}>
   {children}
 </BreakpointsProvider>
+```
+
+## Common examples
+
+### Direction flip
+
+A studio nav reads one named flag and flips Stack `direction` when that min-width matches — the provider must wrap every screen that calls the hook.
+
+<Example preview={<BreakpointsDirectionDemo />}>
+
+```tsx
+'use client';
+
+import { BreakpointsProvider, ButtonLink, Stack, Surface, Text, useBreakpoints } from '@viraui/react';
+
+function StudioNav() {
+  const isWide = useBreakpoints('small');
+
+  return (
+    <Surface border="all" color={1} hPadding="m" radius="l" vPadding="m">
+      <Stack
+        columnGap="xl"
+        direction={isWide ? 'row' : 'column'}
+        fullWidth
+        hAlign={isWide ? 'space-between' : 'stretch'}
+        render={<nav />}
+        rowGap="s"
+        vAlign={isWide ? 'center' : 'stretch'}
+      >
+        <Stack rowGap="s">
+          <Text />
+          <Text size="s" tone="muted" />
+        </Stack>
+        <Stack columnGap="xs" direction={isWide ? 'row' : 'column'} rowGap="xs">
+          <ButtonLink href="#" size="s" variant="secondary" />
+          <ButtonLink href="#" size="s" variant="secondary" />
+          <ButtonLink href="#" size="s" variant="secondary" />
+        </Stack>
+      </Stack>
+    </Surface>
+  );
+}
+
+<BreakpointsProvider>
+  <StudioNav />
+</BreakpointsProvider>
+```
+
+</Example>
+
+### Match record
+
+Call `useBreakpoints()` with no argument when several names drive the same subtree — you get the full name → boolean record for the provider’s current map. Matched names light as green chips.
+
+<Example preview={<BreakpointsRecordDemo />}>
+
+```tsx
+'use client';
+
+import { BreakpointsProvider, Chip, Stack, Surface, Text, Title, useBreakpoints } from '@viraui/react';
+
+function MatchBoard() {
+  const matches = useBreakpoints();
+
+  return (
+    <Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
+      <Stack rowGap="m">
+        <Title />
+        <Text size="s" tone="muted" />
+        <Stack columnGap="xs" direction="row" rowGap="xs" wrap>
+          {Object.keys(matches).map((name) => (
+            <Chip key={name} variant={matches[name] ? 'green' : 'outline'}>
+              {name}
+            </Chip>
+          ))}
+        </Stack>
+      </Stack>
+    </Surface>
+  );
+}
+
+<BreakpointsProvider>
+  <MatchBoard />
+</BreakpointsProvider>
+```
+
+</Example>
+
+### Custom map
+
+The `breakpoints` prop installs a product map for that provider instance. Named hooks must use those keys only — sparse overrides do not keep default names like `small`.
+
+<Example preview={<BreakpointsCustomMapDemo />}>
+
+```tsx
+'use client';
+
+import { BreakpointsProvider, ButtonLink, Stack, Surface, Text, Title, useBreakpoints } from '@viraui/react';
+
+const productBreakpoints = {
+  compact: '20em',
+  wide: '50em',
+};
+
+function ReleaseDesk() {
+  const isWide = useBreakpoints('wide');
+
+  return (
+    <Surface border="all" color={1} overflow="hidden" radius="l">
+      <Stack>
+        <Stack hPadding="l" rowGap="xs" vPadding="l">
+          <Title />
+          <Text size="s" tone="muted" />
+        </Stack>
+        <Surface color={2} hPadding="l" vPadding="m">
+          <Stack
+            columnGap="m"
+            direction={isWide ? 'row' : 'column'}
+            rowGap="s"
+            vAlign={isWide ? 'center' : 'stretch'}
+          >
+            <Text size="s" />
+            <Stack columnGap="s" direction={isWide ? 'row' : 'column'} rowGap="s">
+              <ButtonLink href="#" size="s" variant="secondary" />
+              <ButtonLink href="#" size="s" />
+            </Stack>
+          </Stack>
+        </Surface>
+      </Stack>
+    </Surface>
+  );
+}
+
+<BreakpointsProvider breakpoints={productBreakpoints}>
+  <ReleaseDesk />
+</BreakpointsProvider>
+```
+
+</Example>
+
+## Ask an agent
+
+Paste a need like this when CSS alone cannot express the layout change:
+
+```text tab="Responsive header"
+On this page: primary nav stacks vertically on phones and sits in a row on larger screens. The feature grid below is one column by default and three columns from tablet size up. On large screens, make the main CTA bigger and show a secondary text link beside it — hide that link on smaller screens. Prefer CSS for style-only changes; branch the React tree only where layout or markup must change.
+```
+
+```text tab="Responsive nav"
+Make this nav stack vertically on small screens and horizontally on larger ones. Mount breakpoint detection high enough that every screen that needs it sits underneath.
+```
+
+```text tab="Match board"
+Show which named viewport sizes currently match so people can see the active set — keep the labels in sync with whatever map the app uses.
+```
+
+```text tab="Product thresholds"
+This product only needs compact and wide cutoffs. Replace the default breakpoint map for the app shell and branch the release desk actions when wide matches — do not leave the old default names hanging around.
 ```
