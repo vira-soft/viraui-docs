@@ -177,7 +177,70 @@ import {
 
 </Example>
 
-Detached triggers and multiple triggers sharing one content surface use `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes.
+### Shared handle
+
+Detached or multi-trigger layouts share one content surface through `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes. Hover across the icons — same tooltip, morphing label.
+
+<Example preview={<TooltipHandleDemo />}>
+
+```tsx
+import { Bell, Pulse, User } from '@phosphor-icons/react';
+import { IconButton, Stack, Surface, Text, Tooltip } from '@viraui/react';
+
+const handle = Tooltip.createHandle<string>();
+
+<Tooltip.Provider>
+  <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+    <Stack columnGap="2xs" direction="row" vAlign="stretch">
+      <Tooltip.Trigger
+        handle={handle}
+        payload="Notifications"
+        render={
+          <IconButton
+            aria-label="Notifications"
+            icon={<Bell />}
+            size="s"
+            variant="flat"
+          />
+        }
+      />
+      <Tooltip.Trigger
+        handle={handle}
+        payload="Activity"
+        render={
+          <IconButton
+            aria-label="Activity"
+            icon={<Pulse />}
+            size="s"
+            variant="flat"
+          />
+        }
+      />
+      <Tooltip.Trigger
+        handle={handle}
+        payload="Profile"
+        render={
+          <IconButton
+            aria-label="Profile"
+            icon={<User />}
+            size="s"
+            variant="flat"
+          />
+        }
+      />
+    </Stack>
+  </Surface>
+  <Tooltip handle={handle}>
+    {({ payload }) => (
+      <Tooltip.Content>
+        <Text size="s">{payload}</Text>
+      </Tooltip.Content>
+    )}
+  </Tooltip>
+</Tooltip.Provider>
+```
+
+</Example>
 
 ## Ask your agent
 
@@ -187,4 +250,8 @@ Add a tooltip on the Bold button that repeats the label Bold. Use zero delay onl
 
 ```text tab="Toolbar tooltips"
 Add short tooltips on a bordered editor toolbar like the vertical Separator strip — Bold, Italic, Align left, then Find and Save, each flat IconButton size s. Match tooltip copy to each aria-label.
+```
+
+```text tab="Shared handle"
+Add a small icon strip — Notifications, Activity, Profile — that share one Tooltip via createHandle. Morph the hint from each trigger payload.
 ```
