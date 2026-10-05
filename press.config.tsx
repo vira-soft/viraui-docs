@@ -4,6 +4,7 @@ import { metaSchema, pageSchema } from "fumapress/adapters/mdx/schema";
 import { defineDocs } from "fumadocs-mdx/macro";
 import type { Folder } from "fumadocs-core/page-tree";
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
@@ -186,6 +187,7 @@ const config = defineConfig({
       async getMdxComponents() {
         return {
           ...defaultMdxComponents,
+          ImageZoom,
           Step,
           Steps,
           Tab,
