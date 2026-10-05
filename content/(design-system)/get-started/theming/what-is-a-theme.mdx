@@ -3,13 +3,22 @@ title: What is a theme
 description: How ViraUI theme CSS, tokens, and data-mode turn one stylesheet into your app’s look.
 ---
 
-A theme is one stylesheet of `--*` design tokens. Swap the import and the same `@viraui/react` components pick up a different brand — a [built-in preset](/get-started/theming/built-in-themes) from `@viraui/foundation`, or a [custom sheet](/get-started/theming/custom-themes). How that sheet lands in the app (import order, fonts, preflight) is covered in [Setup](/get-started/setup); what the tokens mean by name is in [Foundation](/foundation).
+A theme is one stylesheet of `--*` design tokens. Swap the import and the same `@viraui/react` components pick up a different brand: a [built-in preset](/get-started/theming/built-in-themes) from `@viraui/foundation`, or a [custom sheet](/get-started/theming/custom-themes).
+
+How that sheet lands in the app (import order, fonts, preflight) is covered in [Setup](/get-started/setup). What the tokens mean by name is in [Foundation](/foundation).
 
 ## Light and dark
 
-Light and dark are not separate themes — they are two modes of the same theme. Built-in presets pair both in one sheet with CSS [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark) — for example `--global-background: light-dark(…light…, …dark…)`. **Preflight** maps `data-mode` on the document root to `color-scheme`, so flipping the attribute resolves every paired token without swapping stylesheets.
+Light and dark are not separate themes. They are two modes of the same theme.
 
-`data-mode` accepts `light`, `dark`, or `inverted`. Use `light` or `dark` on the root for the active scheme; use `inverted` on a nested island when that subtree should flip against its parent. Preflight ignores `system` and `auto`, so the app (or a theme library) must always write `light` or `dark` into the attribute. Brand is which theme stylesheet you imported; mode is which side of that sheet’s `light-dark()` pairs resolves.
+Built-in presets pair both in one sheet with CSS [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark). For example, a background token holds both sides of the pair. **Preflight** maps `data-mode` on the document root to `color-scheme`, so flipping the attribute resolves every paired token without swapping stylesheets.
+
+`data-mode` accepts `light`, `dark`, or `inverted`:
+
+- Use `light` or `dark` on the root for the active scheme
+- Use `inverted` on a nested island when that subtree should flip against its parent
+
+Preflight ignores `system` and `auto`, so the app (or a theme library) must always write `light` or `dark` into the attribute. Brand is which theme stylesheet you imported. Mode is which side of that sheet’s `light-dark()` pairs resolves.
 
 ```tsx title="Mode on the document root"
 <html lang="en" data-mode="light">
@@ -17,7 +26,11 @@ Light and dark are not separate themes — they are two modes of the same theme.
 
 ### Custom themes
 
-A custom theme only needs `light-dark()` when it must support both modes. If the brand is single-mode, assign a normal CSS value to each token and skip the pairing. When both modes matter, put `light-dark()` on tokens that change with scheme (`--global-*`, `--highlight-*`, `--base-*`); mode-invariant tokens (space, radius, type scale, motion) can stay plain. Other pairing strategies work if every semantic token still resolves — just do not treat a second dark stylesheet as the brand swap. How to author and wire a custom sheet is on [Custom themes](/get-started/theming/custom-themes).
+A custom theme only needs `light-dark()` when it must support both modes. If the brand is single-mode, assign a normal CSS value to each token and skip the pairing.
+
+When both modes matter, put `light-dark()` on tokens that change with scheme. Mode-invariant tokens (space, radius, type scale, motion) can stay plain. Other pairing strategies work if every semantic token still resolves; do not treat a second dark stylesheet as the brand swap.
+
+How to author and wire a custom sheet is on [Custom themes](/get-started/theming/custom-themes).
 
 ## Wire mode in your app
 
