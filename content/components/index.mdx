@@ -1,51 +1,57 @@
 ---
 title: Overview
 icon: Bricks
-description: Composable UI components for screens you ship — actions, fields, overlays, and the rest, grouped by the job they do.
+description: Pick a ViraUI category by the job on the screen, then open a part or brief your agent.
 ---
 
-`@viraui/react` turns foundation tokens into the pieces you put on a screen: buttons that commit work, fields that collect data, overlays that float beside a trigger, and the rest of the catalog. Each category groups those pieces by job so your agent can map a settings form, a toolbar, or a dialog to the right family without guessing across the whole surface.
+Components groups `@viraui/react` by what a piece does on the screen: commit work, collect a value, interrupt the flow, float beside a trigger, and similar jobs. Start here when you know the region of the UI but not which family owns it.
+
+Name the job first, then open that category. Each part page explains when to reach for it, when to skip it, and how it sits next to siblings. Skills and package specs stay the live surface your agent reads while composing.
+
+## With your agent
+
+Describe the screen by region and intent (footer actions, form fields, in-page tabs, a confirm dialog). Your agent maps those jobs to ViraUI parts; you use these docs to choose a family, settle a doubt between siblings, or review what came back. Paste a screen brief below when you want a scoped recommendation before compose starts.
 
 <Cards>
   <Card title="Actions" href="/components/actions/button">
     <SpotIllustration name="components-actions" />
-    Controls that commit work on the page — labeled buttons, link-shaped actions, icon-only triggers, and toggles that keep the right semantics.
+    Controls that commit work or flip a binary choice on the page.
   </Card>
   <Card title="Dialogs" href="/components/dialogs/dialog">
     <SpotIllustration name="components-dialogs" />
-    Interrupt the flow for focused tasks or transient feedback — bottom sheets, modals, and toasts that claim attention without owning the route.
+    Focused interruptions and short-lived feedback that claim attention without owning the route.
   </Card>
   <Card title="Effects" href="/components/effects/beam">
     <SpotIllustration name="components-effects" />
-    Decorative motion and atmosphere layered on real content — beams, glow, blur, grain, and typewriter lines that stay ornamental.
+    Decorative motion and atmosphere layered on real content, kept ornamental.
   </Card>
   <Card title="Inputs" href="/components/inputs/autocomplete">
     <SpotIllustration name="components-inputs" />
-    Collect typed values and choices — text fields, selects, switches, and grouped options that share field chrome for labels and errors.
+    Typed values and choices that share field chrome for labels and errors.
   </Card>
   <Card title="Layout" href="/components/layout/accordion">
     <SpotIllustration name="components-layout" />
-    Structure pages and spacing — stacks, grids, surfaces, and bleed so rhythm stays on the theme scale instead of ad hoc CSS.
+    Structure, spacing, and surfaces so rhythm stays on the theme scale.
   </Card>
   <Card title="Loading" href="/components/loading/linear-progress">
     <SpotIllustration name="components-loading" />
-    Hold space while data arrives — skeletons, spinners, and progress bars that keep layout stable during fetch.
+    Hold space while data arrives so layout stays stable during fetch.
   </Card>
   <Card title="Navigation" href="/components/navigation/tabs">
     <SpotIllustration name="components-navigation" />
-    Move through content in place — tab lists and related patterns that switch views without leaving the page.
+    Move through content in place without leaving the page.
   </Card>
   <Card title="Overlays" href="/components/overlays/menu">
     <SpotIllustration name="components-overlays" />
-    Surface interactive and contextual actions — menus, popovers, and tooltips that float beside a trigger.
+    Contextual actions and hints that float beside a trigger.
   </Card>
   <Card title="Typography" href="/components/typography/clamp-text">
     <SpotIllustration name="components-typography" />
-    Set body, headings, and text treatments — fluid type, clamps, fit lines, and shimmer for readable hierarchy.
+    Body, headings, and text treatments for readable hierarchy.
   </Card>
   <Card title="Widgets" href="/components/widgets/annotate">
     <SpotIllustration name="components-widgets" />
-    Compact status at a glance — avatars, badges, chips, and meters that sit beside content without stealing focus.
+    Compact status at a glance that sits beside content without stealing focus.
   </Card>
 </Cards>
 
@@ -54,5 +60,5 @@ description: Composable UI components for screens you ship — actions, fields, 
 ```text tab="Explore the components"
 I'm building a settings screen with a sidebar tab list, form fields, and a footer action row.
 
-Which parts of the ViraUI catalog fit each region — when should I use in-page tabs versus route navigation, text fields versus dropdowns, labeled buttons versus icon-only actions? Keep the answer scoped to this screen.
+Which ViraUI families fit each region — when should I use in-page tabs versus route navigation, text fields versus dropdowns, labeled buttons versus icon-only actions? Keep the answer scoped to this screen.
 ```
