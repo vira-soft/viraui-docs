@@ -191,3 +191,15 @@ export {
   TabsScrollableDemo,
   TabsStretchDemo,
 } from "./tabs-demo";
+export {
+  MenuAccountDemo,
+  MenuActionsDemo,
+  MenuMoreDemo,
+} from "./menu-demo";
+export {
+  PopoverFocusTrapDemo,
+  PopoverHandleDemo,
+  PopoverNotificationsDemo,
+  PopoverSheetDemo,
+} from "./popover-demo";
+export { TooltipLabelDemo, TooltipToolbarDemo } from "./tooltip-demo";

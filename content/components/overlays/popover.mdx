@@ -51,7 +51,7 @@ Content portals out of the DOM flow, picks a side from available space, and dism
 
 A titled sheet with trigger, body stack, and `Popover.Close` is the default non-modal panel. Keep body copy short; put dense command lists in Menu instead.
 
-<PreviewSlot label="Popover preview" />
+<Example preview={<PopoverSheetDemo />}>
 
 ```tsx
 import { Button, Popover, Stack, Text } from '@viraui/react';
@@ -61,13 +61,131 @@ import { Button, Popover, Stack, Text } from '@viraui/react';
   <Popover.Sheet title="Options" description="Choose an action">
     <Stack rowGap="m">
       <Text />
-      <Popover.Close render={<Button variant="flat">Done</Button>} />
+      <Popover.Close render={<Button variant="secondary">Done</Button>} />
     </Stack>
   </Popover.Sheet>
 </Popover>
 ```
 
-Interactive panels can set `modal="trap-focus"` so tab cycles stay inside the sheet while it is open. Detached or multi-trigger layouts share one sheet through `Popover.createHandle()`; payload render props morph content when the active trigger changes. Do not wrap [Menu](/components/overlays/menu) in Popover.
+</Example>
+
+### Notifications
+
+Open a short status panel from an icon-only [IconButton](/components/actions/icon-button). Match the accessible name on the trigger to what the sheet is about.
+
+<Example preview={<PopoverNotificationsDemo />}>
+
+```tsx
+import { Bell } from '@phosphor-icons/react';
+import { Button, IconButton, Popover, Stack, Text } from '@viraui/react';
+
+<Popover>
+  <Popover.Trigger
+    render={
+      <IconButton
+        aria-label="Open notifications"
+        icon={<Bell />}
+        variant="secondary"
+      />
+    }
+  />
+  <Popover.Sheet title="Notifications" description="You are all caught up">
+    <Stack rowGap="m">
+      <Text />
+      <Popover.Close render={<Button variant="secondary">Dismiss</Button>} />
+    </Stack>
+  </Popover.Sheet>
+</Popover>
+```
+
+</Example>
+
+### Focus trap
+
+Interactive panels can set `modal="trap-focus"` so tab cycles stay inside the sheet while it is open. Use this when the sheet includes a text field or other controls that should not leak focus to the page.
+
+<Example preview={<PopoverFocusTrapDemo />}>
+
+```tsx
+import { Button, Popover, Stack, Textfield } from '@viraui/react';
+
+<Popover modal="trap-focus">
+  <Popover.Trigger render={<Button>Sign in</Button>} />
+  <Popover.Sheet title="Sign in" description="Focus stays inside the popover while open.">
+    <Stack rowGap="m">
+      <Textfield label="Email" placeholder="you@example.com" />
+      <Stack direction="row" columnGap="s">
+        <Button>Submit</Button>
+        <Button variant="secondary">Reset</Button>
+        <Popover.Close render={<Button variant="flat">Close</Button>} />
+      </Stack>
+    </Stack>
+  </Popover.Sheet>
+</Popover>
+```
+
+</Example>
+
+### Shared handle
+
+Detached or multi-trigger layouts share one sheet through `Popover.createHandle()`; payload render props morph content when the active trigger changes. Here each team row is the trigger — hover or click the whole card. Do not wrap [Menu](/components/overlays/menu) in Popover.
+
+<Example preview={<PopoverHandleDemo />}>
+
+```tsx
+import { useState } from 'react';
+import { Avatar, Button, Popover, Stack, Surface, Text } from '@viraui/react';
+
+const handle = Popover.createHandle();
+
+<>
+  <Popover.Trigger
+    closeDelay={100}
+    handle={handle}
+    openOnHover
+    payload={{ name: 'Sarah Chen', role: 'Product Design' }}
+    render={
+      <Surface
+        color={2}
+        hPadding="m"
+        radius="m"
+        render={<button type="button" />}
+        vPadding="m"
+      />
+    }
+  >
+    <Stack direction="row" columnGap="m" vAlign="center">
+      <Avatar alt="Sarah Chen" fallback="SC" size="s" src="/avatar.jpg" />
+      <Stack rowGap="s">
+        <Text weight="semibold">Sarah Chen</Text>
+        <Text size="s" tone="muted">
+          Product Design
+        </Text>
+      </Stack>
+    </Stack>
+  </Popover.Trigger>
+  <Popover handle={handle}>
+    {({ payload }) =>
+      payload ? (
+        <Popover.Sheet title={payload.name} description={payload.role} headerAlign="center">
+          <Stack hAlign="center" rowGap="m">
+            <Text />
+            <Popover.Close
+              render={
+                <Button size="s" variant="secondary">
+                  View profile
+                </Button>
+              }
+            />
+          </Stack>
+        </Popover.Sheet>
+      ) : null
+    }
+  </Popover>
+</>
+```
+
+</Example>
 
 ## Ask your agent
 
@@ -76,5 +194,13 @@ Add an Options popover from a secondary button — title Options, short descript
 ```
 
 ```text tab="Notifications sheet"
-Add a notifications popover from an icon-only bell button. Title Notifications, description "You are all caught up", short status body, and a Dismiss button. If the panel needs a text field, trap focus inside while open.
+Add a notifications popover from an icon-only bell button. Title Notifications, description "You are all caught up", short status body, and a Dismiss button.
+```
+
+```text tab="Sign-in trap"
+Add a Sign in popover with modal trap-focus, an Email text field, Submit, Reset, and Close. Tab should stay inside the sheet while it is open.
+```
+
+```text tab="Team profile handle"
+Add a team directory where hovering or clicking a whole member row opens one shared Popover sheet via createHandle. Morph the sheet title, role, bio, and email from the active member payload.
 ```

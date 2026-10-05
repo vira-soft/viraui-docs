@@ -49,52 +49,172 @@ Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; exclusi
 
 ## Common examples
 
-### Separated commands
+### Row more-menu
 
-A compact action menu with a separator between primary and secondary commands is the default pattern. Static header content may sit inside `Menu.Popup` beside items when it stays non-interactive so roving focus remains on menu rows.
+An [IconButton](/components/actions/icon-button) more-menu on a list row is the default compact pattern. Keep a separator before the destructive row so primary commands stay grouped.
 
-<PreviewSlot label="Menu preview" />
+<Example preview={<MenuMoreDemo />}>
 
 ```tsx
-import { Button, Menu } from '@viraui/react';
+import { Archive, Copy, DotsThreeVertical, PencilSimple, Trash } from '@phosphor-icons/react';
+import { IconButton, Menu, Stack, Surface, Text } from '@viraui/react';
+
+<Surface border="all" color={2} hPadding="m" radius="m" vPadding="m">
+  <Stack direction="row" hAlign="space-between" vAlign="center">
+    <Stack rowGap="s">
+      <Text weight="semibold">Q2 payout report</Text>
+      <Text size="s" tone="muted">
+        PDF · Updated 2 hours ago
+      </Text>
+    </Stack>
+    <Menu>
+      <Menu.Trigger
+        render={
+          <IconButton
+            aria-label="More actions for Q2 payout report"
+            icon={<DotsThreeVertical />}
+            size="s"
+            variant="flat"
+          />
+        }
+      />
+      <Menu.Popup align="end" side="bottom">
+        <Menu.Item addon={<PencilSimple aria-hidden />}>Rename</Menu.Item>
+        <Menu.Item addon={<Copy aria-hidden />}>Duplicate</Menu.Item>
+        <Menu.Item addon={<Archive aria-hidden />}>Archive</Menu.Item>
+        <Menu.Separator />
+        <Menu.Item addon={<Trash aria-hidden />} sentiment="destructive">
+          Delete
+        </Menu.Item>
+      </Menu.Popup>
+    </Menu>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Account chip
+
+Use a [Surface](/components/layout/surface) chip as the trigger when the open control is an account row. Keep the profile summary on the trigger — the popup stays a short command list.
+
+<Example preview={<MenuAccountDemo />}>
+
+```tsx
+import { CaretDown, CreditCard, SignOut, User } from '@phosphor-icons/react';
+import { Avatar, Menu, Stack, Surface, Text } from '@viraui/react';
 
 <Menu>
-  <Menu.Trigger render={<Button>Actions</Button>} />
-  <Menu.Popup>
-    <Menu.Item>Edit</Menu.Item>
-    <Menu.Item>Duplicate</Menu.Item>
+  <Menu.Trigger
+    render={
+      <Surface
+        border="all"
+        color={1}
+        hPadding="s"
+        radius="m"
+        render={<button type="button" />}
+        vPadding="s"
+      />
+    }
+  >
+    <Stack direction="row" hAlign="space-between" vAlign="center">
+      <Stack direction="row" columnGap="s" vAlign="center">
+        <Avatar alt="Maya Chen" fallback="MC" size="s" src="/avatar.jpg" />
+        <Stack rowGap="s">
+          <Text weight="semibold">Maya Chen</Text>
+          <Text size="s" tone="muted">
+            maya@ledger.io
+          </Text>
+        </Stack>
+      </Stack>
+      <CaretDown aria-hidden size={16} />
+    </Stack>
+  </Menu.Trigger>
+  <Menu.Popup align="start" side="bottom">
+    <Menu.Item addon={<User aria-hidden />}>Account</Menu.Item>
+    <Menu.Item addon={<CreditCard aria-hidden />}>Billing</Menu.Item>
     <Menu.Separator />
-    <Menu.Item>Archive</Menu.Item>
+    <Menu.Item addon={<SignOut aria-hidden />} sentiment="destructive">
+      Log out
+    </Menu.Item>
   </Menu.Popup>
 </Menu>
 ```
 
-### Exclusive choices
+</Example>
 
-Use `Menu.RadioGroup` with `Menu.RadioItem` when the open menu should show which sort or view is active. Match toolbar button style to neighbors.
+### Advanced Actions
+
+Groups, checkbox view toggles, a radio sort, and a Share submenu cover denser toolbar menus. Match the trigger button style to neighbors.
+
+<Example preview={<MenuActionsDemo />}>
 
 ```tsx
+import { Archive, CaretDown, Copy, Eye, LinkSimple, PencilSimple, Trash } from '@phosphor-icons/react';
 import { Button, Menu } from '@viraui/react';
 
 <Menu>
-  <Menu.Trigger render={<Button variant="secondary">Sort</Button>} />
-  <Menu.Popup>
-    <Menu.RadioGroup defaultValue="asc" label="Order">
-      <Menu.RadioItem value="asc">Ascending</Menu.RadioItem>
-      <Menu.RadioItem value="desc">Descending</Menu.RadioItem>
+  <Menu.Trigger
+    render={
+      <Button addon={<CaretDown aria-hidden />} size="s" variant="secondary">
+        Actions
+      </Button>
+    }
+  />
+  <Menu.Popup align="end" side="bottom">
+    <Menu.Group label="Edit">
+      <Menu.Item addon={<PencilSimple aria-hidden />} note="⌘E">
+        Rename report
+      </Menu.Item>
+      <Menu.Item addon={<Copy aria-hidden />} note="⌘D">
+        Duplicate
+      </Menu.Item>
+      <Menu.Item addon={<Archive aria-hidden />}>Archive</Menu.Item>
+    </Menu.Group>
+    <Menu.Separator />
+    <Menu.Group label="View">
+      <Menu.CheckboxItem addon={<Eye aria-hidden />} defaultChecked>
+        Show totals row
+      </Menu.CheckboxItem>
+      <Menu.CheckboxItem>Compact table rows</Menu.CheckboxItem>
+    </Menu.Group>
+    <Menu.Separator />
+    <Menu.RadioGroup defaultValue="date" label="Sort by">
+      <Menu.RadioItem value="date">Date</Menu.RadioItem>
+      <Menu.RadioItem value="amount">Amount</Menu.RadioItem>
+      <Menu.RadioItem value="recipient">Recipient</Menu.RadioItem>
     </Menu.RadioGroup>
+    <Menu.Separator />
+    <Menu.Submenu>
+      <Menu.SubmenuTrigger addon={<LinkSimple aria-hidden />}>Share</Menu.SubmenuTrigger>
+      <Menu.Popup side="inline-end">
+        <Menu.LinkItem href="#">Copy link</Menu.LinkItem>
+        <Menu.Item note="⌘⇧E">Export PDF</Menu.Item>
+        <Menu.Item>Send to team</Menu.Item>
+      </Menu.Popup>
+    </Menu.Submenu>
+    <Menu.Separator />
+    <Menu.Item addon={<Trash aria-hidden />} sentiment="destructive">
+      Delete report
+    </Menu.Item>
   </Menu.Popup>
 </Menu>
 ```
+
+</Example>
 
 Detached triggers share one menu through `Menu.createHandle()` when the open control sits outside the root tree.
 
 ## Ask your agent
 
-```text tab="Actions menu"
-Add an Actions menu on a button with Edit, Duplicate, and Archive separated from each other. Keep it small — no submenu on the first pass.
+```text tab="Row more-menu"
+Add a more-actions IconButton on each report row. Menu items: Rename, Duplicate, Archive, then a separator and destructive Delete. Give the button an aria-label that includes the report title.
 ```
 
-```text tab="Sort menu"
-Add a Sort menu with Ascending and Descending choices that stay selected while the menu is open. Match toolbar button style to neighbors.
+```text tab="Account chip"
+Add an account menu opened from a Surface chip with avatar, name, and email on the trigger. Popup items: Account, Billing, and destructive Log out — no profile header inside the menu.
+```
+
+```text tab="Advanced Actions"
+Add an Actions menu on a secondary button with Edit group (Rename, Duplicate, Archive), View checkboxes, Sort-by radio items, a Share submenu (Copy link, Export PDF, Send to team), and destructive Delete report.
 ```

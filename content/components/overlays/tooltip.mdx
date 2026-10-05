@@ -49,9 +49,9 @@ Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`. The trigger accept
 
 ### Matching label
 
-A labeled button with matching hint text is the baseline pattern. Prefer the provider default delay in product UI; zero delay is for demos only.
+A labeled button with matching hint text is the baseline pattern. Prefer the provider default delay in product UI; zero delay is for demos only. The demos below wrap `Tooltip.Provider` locally so the sandbox stays self-contained — in an app, mount the provider once at the root.
 
-<PreviewSlot label="Tooltip preview" />
+<Example preview={<TooltipLabelDemo />}>
 
 ```tsx
 import { Button, Text, Tooltip } from '@viraui/react';
@@ -66,6 +66,117 @@ import { Button, Text, Tooltip } from '@viraui/react';
 </Tooltip.Provider>
 ```
 
+</Example>
+
+### Icon-only toolbar
+
+Repeat each control’s `aria-label` in the tooltip so hover matches what screen readers hear. Same bordered toolbar chrome as the vertical [Separator](/components/layout/separator) editor strip. Do not hide essential instructions in tooltips alone.
+
+<Example preview={<TooltipToolbarDemo />}>
+
+```tsx
+import {
+  FloppyDisk,
+  MagnifyingGlass,
+  TextAlignLeft,
+  TextB,
+  TextItalic,
+} from '@phosphor-icons/react';
+import {
+  IconButton,
+  Separator,
+  Stack,
+  Surface,
+  Text,
+  Tooltip,
+} from '@viraui/react';
+
+<Tooltip.Provider>
+  <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+    <Stack columnGap="2xs" direction="row" vAlign="stretch">
+      <Tooltip>
+        <Tooltip.Trigger
+          render={
+            <IconButton
+              aria-label="Bold"
+              icon={<TextB />}
+              size="s"
+              variant="flat"
+            />
+          }
+        />
+        <Tooltip.Content>
+          <Text size="s">Bold</Text>
+        </Tooltip.Content>
+      </Tooltip>
+      <Tooltip>
+        <Tooltip.Trigger
+          render={
+            <IconButton
+              aria-label="Italic"
+              icon={<TextItalic />}
+              size="s"
+              variant="flat"
+            />
+          }
+        />
+        <Tooltip.Content>
+          <Text size="s">Italic</Text>
+        </Tooltip.Content>
+      </Tooltip>
+      <Tooltip>
+        <Tooltip.Trigger
+          render={
+            <IconButton
+              aria-label="Align left"
+              icon={<TextAlignLeft />}
+              size="s"
+              variant="flat"
+            />
+          }
+        />
+        <Tooltip.Content>
+          <Text size="s">Align left</Text>
+        </Tooltip.Content>
+      </Tooltip>
+      <Separator orientation="vertical" />
+      <Tooltip>
+        <Tooltip.Trigger
+          render={
+            <IconButton
+              aria-label="Find in document"
+              icon={<MagnifyingGlass />}
+              size="s"
+              variant="flat"
+            />
+          }
+        />
+        <Tooltip.Content>
+          <Text size="s">Find in document</Text>
+        </Tooltip.Content>
+      </Tooltip>
+      <Tooltip>
+        <Tooltip.Trigger
+          render={
+            <IconButton
+              aria-label="Save draft"
+              icon={<FloppyDisk />}
+              size="s"
+              variant="flat"
+            />
+          }
+        />
+        <Tooltip.Content>
+          <Text size="s">Save draft</Text>
+        </Tooltip.Content>
+      </Tooltip>
+    </Stack>
+  </Surface>
+</Tooltip.Provider>
+```
+
+</Example>
+
 Detached triggers and multiple triggers sharing one content surface use `Tooltip.createHandle()`; payload render props swap copy when the active trigger changes.
 
 ## Ask your agent
@@ -74,6 +185,6 @@ Detached triggers and multiple triggers sharing one content surface use `Tooltip
 Add a tooltip on the Bold button that repeats the label Bold. Use zero delay only in this demo.
 ```
 
-```text tab="Tooltips to icon-only"
-Add short tooltips on each icon-only toolbar control that lacks visible text. Do not hide essential instructions in tooltips alone — duplicate key guidance in visible copy.
+```text tab="Toolbar tooltips"
+Add short tooltips on a bordered editor toolbar like the vertical Separator strip — Bold, Italic, Align left, then Find and Save, each flat IconButton size s. Match tooltip copy to each aria-label.
 ```
