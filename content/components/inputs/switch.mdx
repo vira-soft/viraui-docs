@@ -15,16 +15,125 @@ description: Toggle control for immediate on/off settings with label and helper 
   </Card>
 </Cards>
 
-`Switch` maps a boolean setting to a sliding toggle — checked state, disabled, and change handlers pass through Base UI `Switch`, while label, description, and error copy use the same field row layout as `Checkbox` and `Radio`. Prefer `Switch` when the change applies immediately (feature flags, dark mode, notification mute) rather than on form submit; use `Checkbox` when the value is part of a larger form batch or when multiple independent options can be on at once. Wrap in `Field.Root` when validation or naming is required.
+`Switch` maps a boolean setting to a sliding toggle. Checked state, disabled, and change handlers pass through Base UI `Switch`, while `label`, `description`, and `error` use the same field-row layout as [`Checkbox`](/components/inputs/checkbox) and [`Radio`](/components/inputs/radio). Unlike those controls, Switch already owns its `Field.Root` — pass `name`, `invalid`, and validation props on Switch itself; do not wrap it in another field root. Prefer Switch when the change applies immediately (feature flags, notification mute, effect toggles); use Checkbox when the value is part of a larger form batch or when several independent options can stay on at once. `size` scales the track and label (`s` by default, or `m`).
 
 ## Common examples
 
-A settings panel with three labeled immediate-toggle rows stacked on Surface is the default Switch layout.
+### Preferences rows
 
-<PreviewSlot label="Switch preview" />
+A bordered Surface with stacked labeled Switches is the default settings panel. Each row keeps its own `label` / `description`; the change takes effect as soon as the thumb moves.
+
+<Example preview={<SwitchPreferencesDemo />}>
+
+```tsx
+import { Stack, Surface, Switch, Text, Title } from '@viraui/react';
+
+const [values, setValues] = useState({
+  push: true,
+  email: true,
+  marketing: false,
+});
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack hPadding="l" rowGap="m" vPadding="l">
+    <Stack rowGap="xs">
+      <Title />
+      <Text />
+    </Stack>
+
+    <Switch
+      checked={values.push}
+      onCheckedChange={(next) =>
+        setValues((current) => ({ ...current, push: next }))
+      }
+      label="Push notifications"
+      description="Alerts on this device when something needs attention."
+      name="push"
+    />
+    <Switch
+      checked={values.email}
+      onCheckedChange={(next) =>
+        setValues((current) => ({ ...current, email: next }))
+      }
+      label="Email digests"
+      description="A weekly summary of activity in your inbox."
+      name="email"
+    />
+    {/* more Switch rows */}
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Surface card
+
+`hPadding` / `vPadding` let the control fill a bordered `Surface`. Drive `Surface` `color` from checked state when the whole card should read as on.
+
+<Example preview={<SwitchSurfaceCardDemo />}>
+
+```tsx
+import { Surface, Switch } from '@viraui/react';
+
+const [checked, setChecked] = useState(true);
+
+<Surface border="all" color={checked ? 3 : 1} radius="m">
+  <Switch
+    checked={checked}
+    onCheckedChange={setChecked}
+    hPadding="m"
+    vPadding="m"
+    label="Shadows"
+    description="Elevate interactive surfaces across the editor."
+    name="shadows"
+  />
+</Surface>
+```
+
+</Example>
+
+### Trailing control
+
+When copy lives outside the control — a title stack on the left, power toggle on the right — use a row `Stack` with `hAlign="space-between"`. An unlabeled Switch needs `aria-label`.
+
+<Example preview={<SwitchHeaderControlDemo />}>
+
+```tsx
+import { Stack, Switch, Text, Title } from '@viraui/react';
+
+const [enabled, setEnabled] = useState(true);
+
+<Stack
+  columnGap="m"
+  direction="row"
+  hAlign="space-between"
+  vAlign="start"
+>
+  <Stack rowGap="xs">
+    <Title />
+    <Text />
+  </Stack>
+  <Switch
+    aria-label="Enable equalizer"
+    checked={enabled}
+    onCheckedChange={setEnabled}
+    name="eq-power"
+  />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Switch settings"
-Build a settings panel with three toggles: Push notifications, Email digests, and Marketing. Each row gets a label and muted description in a card layout.
+```text tab="Notification settings"
+Build a notifications settings card with three toggles: Push notifications, Email digests, and Marketing. Each row gets a short label and muted description; changes should apply immediately.
+```
+
+```text tab="Effect card"
+Add a bordered card with a Shadows toggle that highlights when on. Put padding on the switch so it fills the card.
+```
+
+```text tab="Header power"
+Build a section header with a title and short subtitle on the left, and an unlabeled equalizer power switch on the right that still has an accessible name.
 ```

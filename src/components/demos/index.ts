@@ -98,3 +98,8 @@ export {
   SliderRangeDemo,
   SliderSaturationDemo,
 } from "./slider-demo";
+export {
+  SwitchHeaderControlDemo,
+  SwitchPreferencesDemo,
+  SwitchSurfaceCardDemo,
+} from "./switch-demo";

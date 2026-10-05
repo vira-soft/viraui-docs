@@ -100,13 +100,13 @@ const [value, setValue] = useState('email');
 
 ### Surface cards
 
-`hPadding` / `vPadding` let each control fill a bordered `Surface`. Drive `Surface` `color` from the selected value when the whole card should read as chosen. Lay cards in a row with `Stack` `direction="row"` and `expandChildren`.
+`hPadding` / `vPadding` let each control fill a bordered `Surface`. Keep a resting `color` on every card and raise it when selected — toggling `color` on/off changes fill and can read as a layout jump. Equal columns use [`Grid`](/components/layout/grid) `columns={2}`, not a row `Stack` with uneven content widths.
 
 <Example preview={<RadioSurfaceCardsDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
-import { Fieldset, Radio, RadioGroup, Stack, Surface } from '@viraui/react';
+import { Fieldset, Grid, Radio, RadioGroup, Surface } from '@viraui/react';
 
 const [value, setValue] = useState('bank');
 
@@ -115,11 +115,11 @@ const [value, setValue] = useState('bank');
     label="Receiving method"
     render={<RadioGroup value={value} onValueChange={setValue} />}
   >
-    <Stack columnGap="m" direction="row" expandChildren vAlign="start">
+    <Grid columnGap="m" columns={2}>
       <Surface
         border="all"
+        color={value === 'bank' ? 3 : 1}
         radius="m"
-        {...(value === 'bank' ? { color: 3 } : {})}
       >
         <Radio
           label="Bank transfer"
@@ -131,8 +131,8 @@ const [value, setValue] = useState('bank');
       </Surface>
       <Surface
         border="all"
+        color={value === 'paypal' ? 3 : 1}
         radius="m"
-        {...(value === 'paypal' ? { color: 3 } : {})}
       >
         <Radio
           label="PayPal"
@@ -142,7 +142,7 @@ const [value, setValue] = useState('bank');
           vPadding="m"
         />
       </Surface>
-    </Stack>
+    </Grid>
   </Fieldset>
 </Field.Root>
 ```

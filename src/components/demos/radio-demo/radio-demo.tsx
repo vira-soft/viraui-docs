@@ -4,6 +4,7 @@ import * as React from "react";
 import { Field } from "@base-ui/react";
 import {
   Fieldset,
+  Grid,
   Radio,
   RadioGroup,
   Separator,
@@ -212,13 +213,13 @@ export const RadioSurfaceCardsDemo: React.FC = () => {
               />
             }
           >
-            <Stack columnGap="m" direction="row" expandChildren vAlign="start">
+            <Grid columnGap="m" columns={2}>
               {PAYOUT_OPTIONS.map((option) => (
                 <Surface
                   key={option.value}
                   border="all"
+                  color={value === option.value ? 3 : 1}
                   radius="m"
-                  {...(value === option.value ? { color: 3 } : {})}
                 >
                   <Radio
                     description={option.description}
@@ -229,7 +230,7 @@ export const RadioSurfaceCardsDemo: React.FC = () => {
                   />
                 </Surface>
               ))}
-            </Stack>
+            </Grid>
           </Fieldset>
         </Field.Root>
       </FieldShell>
