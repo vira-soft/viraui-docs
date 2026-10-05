@@ -3,19 +3,35 @@ title: Skeleton
 description: Loading placeholders — fixed blocks or Skeleton.Overlay shaped to the content they replace.
 ---
 
-Skeleton paints neutral placeholder blocks while real content is still fetching. Set explicit `width` and `height` (or let flex layout stretch them) for free-form rows — avatar circles use `radius="full"` on square dimensions. When the final layout already exists in markup, wrap the real node in `Skeleton.Overlay`: the overlay reads the child bounding box and paints a shimmer mask on top, so placeholders stay aligned when copy wraps or media aspect ratios differ.
+Skeleton paints neutral placeholder blocks while real content is still fetching. Size free-form rows with explicit `width` and `height` (or let flex stretch them); avatar circles use `radius="full"` on square dimensions.
 
-Theme [radius](/foundation/radius) props round skeleton corners like other surfaces. Mark the hosting region `aria-busy="true"` (and an accessible name when the whole card loads) so assistive tech knows content is provisional. For view-transition handoffs from loading to loaded, put `view-transition-name: skeleton-overlay` on the transitioning wrapper — the overlay and revealed content can share one morph. Shimmer respects `prefers-reduced-motion`; disable animation with `animate={false}` when a static block reads better.
+When the final layout already exists in markup, wrap that node in `Skeleton.Overlay`. The overlay measures the child and paints a shimmer mask on top, so placeholders stay aligned when copy wraps or media aspect ratios differ. Theme [radius](/foundation/radius) rounds corners like other surfaces. Mark the hosting region `aria-busy="true"` (and an accessible name when a whole card loads) so assistive tech knows content is provisional. Shimmer respects `prefers-reduced-motion`; set `animate={false}` when a static block reads better.
+
+## When to use
+
+- Content structure is known and you want layout to stay stable while data loads
+- Card, list, or profile chrome that should not collapse into a blank hole
+- Real Title / Text / media already in the tree and the pulse should match their box (`Skeleton.Overlay`)
+
+## When not to use
+
+- A short opaque wait with no layout to reserve → [Spinner](/components/loading/spinner)
+- A task with known or indeterminate percent along a track → [LinearProgress](/components/loading/linear-progress)
+- Inline loading copy inside a sentence → [Shimmer](/components/typography/shimmer) on Text / Title
+
+## Related
+
+- [Spinner](/components/loading/spinner) — compact busy indicator for short waits
+- [LinearProgress](/components/loading/linear-progress) — determinate or indeterminate track progress
+- [Shimmer](/components/typography/shimmer) — loading treatment on live text, not layout blocks
 
 ## Common examples
 
-Text lines plus an avatar row mirror a profile header before data resolves.
+### Avatar and text lines
+
+A profile header before data resolves: circular avatar beside two text lines inside a bordered card. The Surface carries `aria-busy` and an accessible name; Skeleton roots stay decorative.
 
 <PreviewSlot label="Skeleton preview" />
-
-```text tab="Profile skeleton"
-Show a loading profile row: circular avatar placeholder beside two text lines, inside a bordered card. Mark the region as loading for screen readers.
-```
 
 ```tsx
 import { Skeleton, Stack, Surface } from '@viraui/react';
@@ -32,6 +48,10 @@ import { Skeleton, Stack, Surface } from '@viraui/react';
 ```
 
 ## Ask your agent
+
+```text tab="Profile skeleton"
+Show a loading profile row: circular avatar placeholder beside two text lines, inside a bordered card. Mark the region as loading for screen readers.
+```
 
 ```text tab="Card skeleton"
 While this card's data is pending, show loading overlays on the headline and supporting text so layout size matches the loaded state. Clear loading state when fetch completes.

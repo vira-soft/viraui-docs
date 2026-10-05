@@ -1,36 +1,53 @@
 ---
 title: Spinner
-description: Inline busy indicator — theme variants and sizes; wrap with status semantics when the wait matters.
+description: Compact busy indicator for short waits — theme variants and sizes; wrap with status semantics when the wait matters.
 ---
 
-Spinner is a compact animated indicator for short waits where a full skeleton layout would be heavier than the task. It renders as an SVG with `variant` choices (`bars`, `dot-grid`, `dots`) and `size` steps (`s`, `m`, `l`) that inherit theme motion tokens. Decorative spinners inside buttons or beside labels can stay `aria-hidden` when surrounding copy already conveys the state.
+Spinner is a compact animated indicator for short waits where reserving a full skeleton layout would be heavier than the task. Decorative spinners inside buttons or beside labels can stay `aria-hidden` when surrounding copy already conveys the state. Prefer the control's own `loading` prop on [Button](/components/actions/button) or [IconButton](/components/actions/icon-button) rather than nesting a manual Spinner.
 
-When the spinner **is** the primary status signal, wrap it in an element with `role="status"` and an accessible name — for example `aria-label="Loading content"` on a wrapper div — so screen readers announce the wait. Pair with visible text when the delay may run long; spinners alone do not explain what is loading. For determinate or indeterminate progress along a track, use [LinearProgress](/components/loading/linear-progress) instead.
+When the spinner is the primary status signal, pair it with visible text that names the work, or wrap it in an element with `role="status"` and an accessible name. Spinners alone do not explain what is loading. For progress along a track, use [LinearProgress](/components/loading/linear-progress); for layout placeholders, use [Skeleton](/components/loading/skeleton).
+
+## When to use
+
+- Short opaque waits where layout does not need reserved structure
+- Busy chrome inside a button or chip (prefer `loading` / addon patterns the control already owns)
+- A panel status row with muted helper copy under the indicator
+
+## When not to use
+
+- You need the page structure to stay put while content loads → [Skeleton](/components/loading/skeleton)
+- Upload, export, or sync progress with a track metaphor → [LinearProgress](/components/loading/linear-progress)
+- Nesting a second Spinner inside Button / IconButton when `loading` already injects one
+
+## Related
+
+- [Skeleton](/components/loading/skeleton) — layout-preserving placeholders
+- [LinearProgress](/components/loading/linear-progress) — track progress with percent or indeterminate state
+- [Button](/components/actions/button) — `loading` owns in-flight chrome on labeled actions
 
 ## Common examples
 
-A centered status region is the usual pattern when content is fetching.
+### Centered status
+
+A centered status region with muted supporting text is the usual pattern when a panel is fetching. Keep the Spinner decorative (`aria-hidden`) and let the visible copy name the wait.
 
 <PreviewSlot label="Spinner preview" />
-
-```text tab="Centered loader"
-Center a loading indicator in this panel with muted supporting text below: "Fetching latest data." Announce the wait to screen readers.
-```
 
 ```tsx
 import { Spinner, Stack, Text } from '@viraui/react';
 
-<Stack rowGap="s" hAlign="center" vPadding="l">
-  <div aria-label="Loading content" role="status">
-    <Spinner size="l" variant="bars" />
-  </div>
+<Stack rowGap="s" hAlign="center" role="status" vPadding="l">
+  <Spinner aria-hidden size="l" variant="bars" />
   <Text tone="muted" size="s" align="center">
     Fetching latest data
   </Text>
 </Stack>
 ```
-
 ## Ask your agent
+
+```text tab="Centered loader"
+Center a loading indicator in this panel with muted supporting text below: "Fetching latest data." Announce the wait to screen readers.
+```
 
 ```text tab="Submit spinner"
 While this form submits, show a spinner on the Save button and disable it until the request finishes. Keep the label Submit — add visible delay copy if the wait runs long.

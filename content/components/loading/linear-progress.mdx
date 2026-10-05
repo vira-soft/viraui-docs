@@ -15,19 +15,37 @@ description: Accessible progress bar — determinate value, indeterminate sync, 
   </Card>
 </Cards>
 
-LinearProgress renders a horizontal track with a filled indicator and exposes a native `progressbar` role. Pass `value` between `min` and `max` for determinate work — uploads, quotas, onboarding checklists — and set `renderValue` when the percentage or a custom formatter should appear beside the label. Set `value={null}` for indeterminate progress while duration is unknown; the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
+LinearProgress renders a horizontal track with a filled indicator and exposes a native `progressbar` role. Pass `value` between `min` and `max` for determinate work (uploads, quotas, onboarding checklists) and set `renderValue` when the percentage or a custom formatter should appear beside the label. Set `value={null}` for indeterminate progress while duration is unknown; the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
 
-`label` names the bar for accessibility; add `description` when supporting copy helps. You can omit visible label text and supply `aria-label` on the root for compact inline bars. The indicator animates with theme [motion](/foundation/motion) tokens; completed runs can sit at `value={100}` with `renderValue` until you clear the row. Use [Skeleton](/components/loading/skeleton) when structure matters more than percent complete; use [Spinner](/components/loading/spinner) for compact opaque waits without a track metaphor.
+`label` names the bar for accessibility; add `description` when supporting copy helps. You can omit visible label text and supply `aria-label` on the root for compact inline bars. The indicator animates with theme [motion](/foundation/motion) tokens.
+
+## When to use
+
+- A task with a known percent or bounded `value` / `min` / `max` (upload, export, checklist)
+- Background work whose duration is unknown (`value={null}`)
+- A labeled track where the percent itself should be visible (`renderValue`)
+
+## When not to use
+
+- Static capacity or score within a range (storage, quota) → [Meter](/components/widgets/meter)
+- Layout placeholders while content structure loads → [Skeleton](/components/loading/skeleton)
+- A short opaque wait with no track metaphor → [Spinner](/components/loading/spinner)
+- An interactive value the user drags → [Slider](/components/inputs/slider)
+
+## Related
+
+- [Meter](/components/widgets/meter) — read-only fill level for capacity and scores
+- [Skeleton](/components/loading/skeleton) — structure-preserving placeholders
+- [Spinner](/components/loading/spinner) — compact busy chrome without a track
+- [Slider](/components/inputs/slider) — adjustable values on a track
 
 ## Common examples
+
+### Labeled determinate
 
 An upload row with label and rendered percentage is the default determinate shape.
 
 <PreviewSlot label="LinearProgress preview" />
-
-```text tab="Upload progress"
-Show upload progress at 40% with label Upload and supporting copy "Uploading selected files" below.
-```
 
 ```tsx
 import { LinearProgress, Stack } from '@viraui/react';
@@ -38,6 +56,10 @@ import { LinearProgress, Stack } from '@viraui/react';
 ```
 
 ## Ask your agent
+
+```text tab="Upload progress"
+Show upload progress at 40% with label Upload and supporting copy "Uploading selected files" below.
+```
 
 ```text tab="Sync progress"
 Add a background sync row labeled Syncing with indeterminate progress and helper text "Checking for updates." Wire to real job progress when the API exposes a percent.
