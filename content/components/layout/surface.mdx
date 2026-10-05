@@ -3,7 +3,30 @@ title: Surface
 description: Themed container — color ramp, radius, border sides, and padding on one host.
 ---
 
-`Surface` is the primary panel host in ViraUI — `color` maps onto the theme base ramp (`1`–`3` or named tokens), `radius` reads [radius](/foundation/radius) steps, and `border` picks which sides get a contrast edge. Horizontal and vertical padding use the spacing scale; nested surfaces can set `radius="auto"` so inner corners stay [concentric](/foundation/radius) with the parent's padding and rounding. `Surface` also publishes radius context descendants consume — menus, nested cards, and glow shells rely on it. Surface has no gap prop: nest a [`Stack`](/components/layout/stack) for child spacing, or pass `render={<Surface … />}` on Stack so chrome and layout share one DOM node. Pair with [`Elevator`](/components/layout/elevator) when the panel needs animated shadow lift — Surface itself has no elevation prop. Use `Surface` wherever a region needs a distinct background plane instead of bare page chrome.
+`Surface` is the primary panel host in ViraUI. Use it wherever a region needs a distinct background plane instead of bare page chrome.
+
+`color` maps onto the theme base ramp (`1`–`3` or named tokens), `radius` reads [radius](/foundation/radius) steps, and `border` picks which sides get a contrast edge. Horizontal and vertical padding use the spacing scale; nested surfaces can set `radius="auto"` so inner corners stay [concentric](/foundation/radius) with the parent's padding and rounding. Surface also publishes radius context that menus, nested cards, and glow shells consume.
+
+Surface has no gap prop: nest a [`Stack`](/components/layout/stack) for child spacing, or pass `render={<Surface … />}` on Stack so chrome and layout share one DOM node. Pair with [`Elevator`](/components/layout/elevator) when the panel needs animated shadow lift; Surface itself has no elevation prop.
+
+## When to use
+
+- A region needs a themed background, border, radius, or token padding
+- Nested panels should step through the color ramp or keep concentric corners
+- Chrome and flex layout should share one node via Stack `render`
+
+## When not to use
+
+- You only need direction, gap, and alignment → [Stack](/components/layout/stack)
+- The job is resting / hover shadow without a Surface elevation prop → [Elevator](/components/layout/elevator)
+- Content should break out of parent padding → [Bleed](/components/layout/bleed)
+
+## Related
+
+- [Stack](/components/layout/stack) — flex gaps and alignment inside or as the Surface host
+- [Elevator](/components/layout/elevator) — elevation hooks on the Surface root
+- [Bleed](/components/layout/bleed) — pull media or rules past Surface padding
+- [Separator](/components/layout/separator) — inline dividers inside stacked content
 
 ## Common examples
 
@@ -42,7 +65,7 @@ import { Stack, Surface, Text } from '@viraui/react';
 
 ### Border sides
 
-`border` accepts one side or a list — a right edge on a rail, bottom edges between rows — instead of drawing every edge. Omit the prop when the panel should stay borderless.
+`border` accepts one side or a list: a right edge on a rail, bottom edges between rows, instead of drawing every edge. Omit the prop when the panel should stay borderless.
 
 <Example preview={<SurfaceBorderSidesDemo />}>
 
@@ -74,7 +97,7 @@ import { Stack, Surface, Text } from '@viraui/react';
 
 ### Nested concentric
 
-Set a large token `radius` on the outer host and `radius="auto"` on nested planes so each inset corner stays concentric with the parent's padding. A third nested Surface makes the step-down easier to see — reusing the same token on every layer leaves a flat double-radius look.
+Set a large token `radius` on the outer host and `radius="auto"` on nested planes so each inset corner stays concentric with the parent's padding. A third nested Surface makes the step-down easier to see; reusing the same token on every layer leaves a flat double-radius look.
 
 <Example preview={<SurfaceNestedConcentricDemo />}>
 
@@ -103,7 +126,7 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Token padding
 
-`hPadding` / `vPadding` inset the Surface on the spacing scale; Stack owns gaps between children. Compose with `render={<Surface … />}` when flex layout and chrome should share one node — a tinted footer strip can still be a nested Surface.
+`hPadding` / `vPadding` inset the Surface on the spacing scale; Stack owns gaps between children. Compose with `render={<Surface … />}` when flex layout and chrome should share one node. A tinted footer strip can still be a nested Surface.
 
 <Example preview={<SurfacePaddingComposeDemo />}>
 
@@ -128,7 +151,7 @@ import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
 ### Axis padding tuples
 
-Pass a `[start, end]` tuple when start and end should use different tokens — never invent `paddingBlock*` / `paddingInline*` CSS for those cases. Use `0` on one side only when that edge is intentionally flush (media, shared seam); keep a token when text must clear a border.
+Pass a `[start, end]` tuple when start and end should use different tokens; never invent `paddingBlock*` / `paddingInline*` CSS for those cases. Use `0` on one side only when that edge is intentionally flush (media, shared seam); keep a token when text must clear a border.
 
 <Example preview={<SurfaceAxisPaddingDemo />}>
 
