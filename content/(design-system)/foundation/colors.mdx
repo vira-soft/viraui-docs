@@ -4,13 +4,15 @@ icon: Palette2
 description: Semantic color tokens on the theme. Retune globals and highlights and product UI follows.
 ---
 
-Color ships as CSS custom properties on your [theme](/get-started/theming/what-is-a-theme). Product CSS and components read **semantic** names (`--global-*`, `--highlight-*`) so chrome and status stay meaningful when the brand or light/dark mode changes.
+Color ships as CSS custom properties on your [theme](/get-started/theming/what-is-a-theme). Start with **global** tokens for most text, backgrounds, and surfaces. Pair them with **highlights** when color carries meaning, and with **primitives** (`--color-*`) when the swatch must stay the same in light and dark.
 
-Stepped primitives (`--color-*`) exist for theme authoring. Wire them into semantics on a [custom theme](/get-started/theming/custom-themes); do not reach for them on everyday product surfaces. `@viraui/react` already binds to the semantics, so retune the theme and backgrounds, actions, status, and chrome follow.
+`@viraui/react` already binds to these names. Retune the [theme](/get-started/theming/what-is-a-theme) and chrome, actions, and status follow.
 
 ## Global
 
-App chrome: page background, body text, primary actions, muted copy, disabled states, borders. Reach for these in product CSS when you build a custom surface that should track brand chrome, not to restyle page chrome or ViraUI actions that already bind to them.
+`--global-*` are the main colors for product UI: page and panel backgrounds, body and muted text, primary actions, borders, disabled states, and similar chrome. Names are plain and job-shaped (`--global-background`, `--global-text`, `--global-primary`, …) so you can pick the right token without memorizing a palette.
+
+Use them for most custom surfaces that should track brand chrome across modes. ViraUI parts already read the same names, so you do not restyle those controls with globals. Combine globals with [highlights](#highlight) for status or accent meaning, and with [primitives](#primitives) when a color must not flip between light and dark.
 
 <GlobalColorTokens />
 
@@ -23,7 +25,9 @@ App chrome: page background, body text, primary actions, muted copy, disabled st
 
 ## Highlight
 
-Named status and accent colors for meaning: success, danger, tags, decorative badges. Components such as `Badge`, `Chip`, `Text` tones, and `Beam` map prop colors onto these tokens (`red` → `--highlight-red`, and so on). Pick a highlight when the color carries **meaning**, not generic chrome.
+Named status and accent colors for meaning: success, danger, tags, decorative badges. Components such as `Badge`, `Chip`, `Text` tones, and `Beam` map prop colors onto these tokens (`red` → `--highlight-red`, and so on).
+
+Reach for a highlight when the color carries meaning next to global chrome, not as a replacement for backgrounds and body text.
 
 <HighlightColorTokens />
 
@@ -36,9 +40,9 @@ Named status and accent colors for meaning: success, danger, tags, decorative ba
 
 ## Primitives
 
-`--color-{palette}-{step}` are the stepped ramps themes wire into semantics (steps `0`–`70` by tens). Values stay fixed across light and dark; they do not flip with `data-mode`. Built-in themes ship named palettes; browse the ramps below when you author or extend a sheet.
+`--color-{palette}-{step}` are stepped ramps (steps `0`–`70` by tens). Values stay fixed across light and dark; they do not flip with `data-mode`. Built-in themes ship named palettes; browse the ramps below when you author a sheet or need a mode-stable swatch beside globals and highlights.
 
-Prefer promoting one-offs to `--global-*` or `--highlight-*` so components stay on the semantic contract.
+On a [custom theme](/get-started/theming/custom-themes), themes also wire these ramps into `--global-*` and `--highlight-*`. Prefer those semantics for mode-aware chrome; use `--color-*` in product CSS when the color must stay constant between modes.
 
 <PrimitiveColorTokens />
 
