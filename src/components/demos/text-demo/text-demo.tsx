@@ -60,11 +60,11 @@ export const TextNestedTonesDemo: React.FC = () => (
     <Stack fullWidth maxWidth="28rem">
       <Text size="l" tone="muted">
         Deploy finished with{" "}
-        <Text tone="danger" weight="semibold">
+        <Text tone="danger">
           3 failing checks
         </Text>{" "}
         and{" "}
-        <Text tone="positive" weight="semibold">
+        <Text tone="positive">
           18 passing
         </Text>
         . Review the failed jobs before you merge.
