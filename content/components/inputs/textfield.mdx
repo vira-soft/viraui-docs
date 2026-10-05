@@ -15,16 +15,175 @@ description: Single-line text input with label, helper copy, validation, and opt
   </Card>
 </Cards>
 
-`Textfield` wraps a native input in Vira's shared field layout — label, description, and error copy render through the same `FieldLabel` and `FieldHelperCopy` pattern as other inputs, and optional `startAddon` / `endAddon` slots sit beside the control without becoming second fields. Value, placeholder, disabled state, and validation pass through Base UI `Field` and `Input`; you declare the whole row in JSX instead of hand-wiring `aria-labelledby` and error regions. Use addons for prefix text or trailing icon buttons — buttons inside `endAddon` must use `type="button"` so they do not submit parent forms.
+`Textfield` wraps a native input in Vira's shared field layout — label, description, and error copy render through the same `FieldLabel` and `FieldHelperCopy` pattern as other inputs, and optional `startAddon` / `endAddon` slots sit beside the control without becoming second fields. Value, placeholder, disabled state, and validation pass through Base UI `Field` and `Input`; you declare the whole row in JSX instead of hand-wiring `aria-labelledby` and error regions. Use `fullWidth` to span a form column — prefer that prop over inventing `width: 100%` CSS. `fitContent` grows the control inline with its value while block height stays fixed. Reach for `Textfield` for single-line identifiers (email, amount, search); use [`Textarea`](/components/inputs/textarea) when the value spans multiple lines. Group several related fields under [`Fieldset`](/components/inputs/fieldset) when they share a section legend — a lone Textfield does not need Fieldset.
 
 ## Common examples
 
-A labeled field with helper copy and an end-addon icon shows the standard input row.
+### Labeled field
 
-<PreviewSlot label="Textfield preview" />
+A labeled email with helper copy and Field validation is the baseline single-line input. Pair it with a submit button in a `Stack`; Textarea-style multi-line bodies belong on [`Textarea`](/components/inputs/textarea).
+
+<Example preview={<TextfieldEmailDemo />}>
+
+```tsx
+import { Button, Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Textfield
+    type="email"
+    autoComplete="email"
+    fullWidth
+    label="Email"
+    description="We will send a magic link — no password required."
+    name="email"
+    placeholder="your@email.com"
+    validationMode="onChange"
+    validate={(value) => {
+      const trimmed = String(value ?? '').trim();
+      if (!trimmed) return 'Enter an email address.';
+      if (!trimmed.includes('@')) return 'Enter a valid email address.';
+      return null;
+    }}
+  />
+  <Button />
+</Stack>
+```
+
+</Example>
+
+### Addons
+
+`startAddon` and `endAddon` decorate the shared control group — prefix text, a search glyph, or a small action. Buttons inside addons must use `type="button"` and typically `size="s"` so they do not submit parent forms.
+
+<Example preview={<TextfieldAddonsDemo />}>
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Button, Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Textfield
+    type="search"
+    aria-label="Search holdings or tickers"
+    fullWidth
+    placeholder="Search holdings or tickers…"
+    startAddon={<MagnifyingGlass aria-hidden size={16} />}
+  />
+  <Textfield
+    fullWidth
+    label="Amount to invest"
+    defaultValue="1,000.00"
+    startAddon={<>$</>}
+  />
+  <Textfield
+    fullWidth
+    label="Account holder"
+    defaultValue="Synthetic Horizons Music LLC"
+    endAddon={
+      <Button size="s" variant="secondary" type="button" aria-label="Verify">
+        Verify
+      </Button>
+    }
+  />
+</Stack>
+```
+
+</Example>
+
+### Form row
+
+Equal-width city / ZIP pairs share a parent `Stack` with `direction="row"` and `expandChildren` — do not invent width CSS on each field. Stack full-width fields above the row for street and suite.
+
+<Example preview={<TextfieldAddressDemo />}>
+
+```tsx
+import { Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Textfield fullWidth label="Street address" required defaultValue="123 Main Street" />
+  <Textfield fullWidth label="Apt / Suite" defaultValue="Apt 4B" />
+  <Stack columnGap="m" direction="row" expandChildren>
+    <Textfield label="City" defaultValue="San Francisco" />
+    <Textfield label="ZIP Code" defaultValue="94102" />
+  </Stack>
+</Stack>
+```
+
+</Example>
+
+### Date and time
+
+Pass native `type` values that ship pickers in Chrome, Safari, and Firefox — `date`, `time`, and `datetime-local`. Skip `month` and `week`; those fall back to plain text in Safari and Firefox. Values use the browser’s ISO forms (`YYYY-MM-DD`, `HH:MM`, `YYYY-MM-DDTHH:MM`).
+
+<Example preview={<TextfieldDateTimeDemo />}>
+
+```tsx
+import { Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Stack columnGap="m" direction="row" expandChildren>
+    <Textfield type="date" label="Date" name="date" defaultValue="2026-10-05" />
+    <Textfield type="time" label="Time" name="time" defaultValue="09:30" />
+  </Stack>
+  <Textfield
+    type="datetime-local"
+    fullWidth
+    label="Date and time"
+    name="datetime-local"
+    defaultValue="2026-10-05T09:30"
+  />
+</Stack>
+```
+
+</Example>
+
+### Fit content
+
+`fitContent` sets `field-sizing: content` so the control grows inline with its value. Pair with `readOnly` and an `endAddon` copy action for share codes and clone URLs.
+
+<Example preview={<TextfieldFitContentDemo />}>
+
+```tsx
+import { CopySimple } from '@phosphor-icons/react';
+import { IconButton, Textfield } from '@viraui/react';
+
+<Textfield
+  fitContent
+  readOnly
+  aria-label="Preset share code"
+  value="vira-preset-abc123"
+  endAddon={
+    <IconButton
+      aria-label="Copy preset code"
+      icon={<CopySimple />}
+      size="s"
+      variant="flat"
+      type="button"
+    />
+  }
+/>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Sign-in form"
-Build a sign-in form with email and password fields, a "Remember me" checkbox, and a primary submit button. Add labels and short helper copy; show validation errors inline.
+```text tab="Magic link"
+Build a sign-in email field with a short helper about magic links, inline validation after edit, and a Send magic link button under it.
+```
+
+```text tab="Field addons"
+Add three text fields: a search input with a magnifier start addon, an Amount to invest field with a $ prefix, and an Account holder field with a small Verify button in the end addon.
+```
+
+```text tab="Shipping address"
+Build a shipping address form with street, apt/suite, and a city + ZIP row that shares width evenly.
+```
+
+```text tab="Date and time"
+Add date, time, and datetime-local textfields for a scheduling form. Use only types with native pickers in Chrome, Safari, and Firefox — skip month and week.
+```
+
+```text tab="Share code"
+Add a read-only share code textfield that shrink-wraps to its value and has a copy icon button on the end.
 ```

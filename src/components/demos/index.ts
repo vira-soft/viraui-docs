@@ -108,3 +108,10 @@ export {
   TextareaMessageDemo,
   TextareaResizeDemo,
 } from "./textarea-demo";
+export {
+  TextfieldAddonsDemo,
+  TextfieldAddressDemo,
+  TextfieldDateTimeDemo,
+  TextfieldEmailDemo,
+  TextfieldFitContentDemo,
+} from "./textfield-demo";
