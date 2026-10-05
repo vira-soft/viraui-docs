@@ -58,7 +58,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Prose = use cases + when-to-use (+ when-not / vs siblings on component pages). Short paragraphs (lead ≈2–3). Bullets / Callouts / headings OK when they help assimilation — prefer lists over long paragraphs when list is clearer. No text walls, no surface catalogs. Em-dashes rare. No telegraph short-sentence stacks. Keep **Ask your agent** prompts. Deep API stays in `@viraui/react/specs` / skills.
 - Voice split: DS intro pages = product-story; component pages = task-oriented. Base UI Card stays top of ComponentPage body.
 - Voice contract: `page-shell.md` + `.cursor/rules/02-docs-consumer-voice.mdc` (update when this model drifts).
-- Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt.
+- Setup order: install skills pack → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt. Brand/theme = user choice; font import follows (built-in theme fonts vs custom) — not a hard “theme gate” that blocks foundation/font install.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 - Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
 - Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
