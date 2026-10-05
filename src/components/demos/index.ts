@@ -166,3 +166,18 @@ export {
   AccordionExclusiveDemo,
   AccordionMultipleDemo,
 } from "./accordion-demo";
+export {
+  LinearProgressGoalDemo,
+  LinearProgressIndeterminateDemo,
+  LinearProgressLabeledDemo,
+} from "./linear-progress-demo";
+export {
+  SkeletonAvatarTextDemo,
+  SkeletonEqualActionsDemo,
+  SkeletonOverlayDemo,
+} from "./skeleton-demo";
+export {
+  SpinnerButtonLoadingDemo,
+  SpinnerCenteredDemo,
+  SpinnerChipDemo,
+} from "./spinner-demo";

@@ -15,13 +15,13 @@ description: Accessible progress bar — determinate value, indeterminate sync, 
   </Card>
 </Cards>
 
-LinearProgress renders a horizontal track with a filled indicator and exposes a native `progressbar` role. Pass `value` between `min` and `max` for determinate work (uploads, quotas, onboarding checklists) and set `renderValue` when the percentage or a custom formatter should appear beside the label. Set `value={null}` for indeterminate progress while duration is unknown; the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
+`LinearProgress` shows task progress on a compact horizontal track with a native `progressbar` role. Pass a numeric `value` when the percent is known (uploads, exports, checklists). Set `value={null}` while duration is unknown — the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
 
-`label` names the bar for accessibility; add `description` when supporting copy helps. You can omit visible label text and supply `aria-label` on the root for compact inline bars. The indicator animates with theme [motion](/foundation/motion) tokens.
+`label` names the bar for accessibility; add `description` for supporting copy under the track, and `renderValue` when the percent (or a custom formatter) should sit beside the label. For a compact bar with no visible label, supply `aria-label` on the root instead. The indicator animates with theme [motion](/foundation/motion) tokens.
 
 ## When to use
 
-- A task with a known percent or bounded `value` / `min` / `max` (upload, export, checklist)
+- A task with a known percent or bounded numeric value (upload, export, checklist)
 - Background work whose duration is unknown (`value={null}`)
 - A labeled track where the percent itself should be visible (`renderValue`)
 
@@ -43,24 +43,75 @@ LinearProgress renders a horizontal track with a filled indicator and exposes a 
 
 ### Labeled determinate
 
-An upload row with label and rendered percentage is the default determinate shape.
+An upload or export row with `label`, a numeric `value`, and `renderValue` is the usual determinate shape. Optional `description` adds muted helper copy under the track.
 
-<PreviewSlot label="LinearProgress preview" />
+<Example preview={<LinearProgressLabeledDemo />}>
 
 ```tsx
-import { LinearProgress, Stack } from '@viraui/react';
+import { LinearProgress } from '@viraui/react';
 
-<Stack rowGap="m" minWidth="16rem">
-  <LinearProgress label="Upload" value={40} min={0} max={100} renderValue />
-</Stack>
+<LinearProgress
+  label="Upload"
+  description="Uploading selected files."
+  renderValue
+  value={42}
+/>
 ```
+
+</Example>
+
+### Indeterminate sync
+
+When the job is running but the percent is unknown, pass `value={null}`. Keep a visible `label` and helper copy so the row still explains what is in flight.
+
+<Example preview={<LinearProgressIndeterminateDemo />}>
+
+```tsx
+import { LinearProgress } from '@viraui/react';
+
+<LinearProgress
+  label="Syncing"
+  description="Checking for updates."
+  value={null}
+/>
+```
+
+</Example>
+
+### Track-only card
+
+Inside a goal or summary card, drop the visible `label` and name the bar with `aria-label`. Surrounding [Surface](/components/layout/surface) and [Text](/components/typography/text) carry the headline and caption row.
+
+<Example preview={<LinearProgressGoalDemo />}>
+
+```tsx
+import { LinearProgress, Stack, Surface, Text } from '@viraui/react';
+
+<Surface color={2} hPadding="m" radius="m" vPadding="m">
+  <Stack rowGap="m">
+    <Text family="mono" size="xs" tone="muted" />
+    <Text size="2xl" />
+    <LinearProgress aria-label="Retirement progress" value={65} />
+    <Stack columnGap="s" direction="row" hAlign="space-between" vAlign="center">
+      <Text tone="muted" />
+      <Text weight="semibold" />
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Upload progress"
-Show upload progress at 40% with label Upload and supporting copy "Uploading selected files" below.
+Show upload progress at about 40% with label Upload and supporting copy under the bar that files are uploading.
 ```
 
-```text tab="Sync progress"
-Add a background sync row labeled Syncing with indeterminate progress and helper text "Checking for updates." Wire to real job progress when the API exposes a percent.
+```text tab="Sync indeterminate"
+Add a background sync row labeled Syncing with indeterminate progress and helper text that it is checking for updates. Wire to a real percent when the API exposes one.
+```
+
+```text tab="Goal card track"
+Build a savings goal card with a headline amount, a compact progress track with no visible label, and a caption row for percent achieved and dollars saved.
 ```

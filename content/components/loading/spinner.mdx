@@ -3,14 +3,16 @@ title: Spinner
 description: Compact busy indicator for short waits — theme variants and sizes; wrap with status semantics when the wait matters.
 ---
 
-Spinner is a compact animated indicator for short waits where reserving a full skeleton layout would be heavier than the task. Decorative spinners inside buttons or beside labels can stay `aria-hidden` when surrounding copy already conveys the state. Prefer the control's own `loading` prop on [Button](/components/actions/button) or [IconButton](/components/actions/icon-button) rather than nesting a manual Spinner.
+`Spinner` is a compact animated indicator for short waits where a full skeleton layout would be heavier than the task. It is decorative by design: it does not hide itself from assistive technology, and it does not announce what is loading on its own.
 
-When the spinner is the primary status signal, pair it with visible text that names the work, or wrap it in an element with `role="status"` and an accessible name. Spinners alone do not explain what is loading. For progress along a track, use [LinearProgress](/components/loading/linear-progress); for layout placeholders, use [Skeleton](/components/loading/skeleton).
+When the spinner is the primary status signal, pair it with visible text that names the work, or wrap it in an element with `role="status"`. Decorative instances inside chips or beside labels should stay `aria-hidden` when surrounding copy already conveys the state. Prefer the control's own `loading` prop on [Button](/components/actions/button) or [IconButton](/components/actions/icon-button) rather than nesting a manual Spinner.
+
+For progress along a track, use [LinearProgress](/components/loading/linear-progress); for layout placeholders, use [Skeleton](/components/loading/skeleton).
 
 ## When to use
 
 - Short opaque waits where layout does not need reserved structure
-- Busy chrome inside a button or chip (prefer `loading` / addon patterns the control already owns)
+- Busy chrome inside a chip (small Spinner as `addon`) when the label already names the state
 - A panel status row with muted helper copy under the indicator
 
 ## When not to use
@@ -31,18 +33,54 @@ When the spinner is the primary status signal, pair it with visible text that na
 
 A centered status region with muted supporting text is the usual pattern when a panel is fetching. Keep the Spinner decorative (`aria-hidden`) and let the visible copy name the wait.
 
-<PreviewSlot label="Spinner preview" />
+<Example preview={<SpinnerCenteredDemo />}>
 
 ```tsx
 import { Spinner, Stack, Text } from '@viraui/react';
 
 <Stack rowGap="s" hAlign="center" role="status" vPadding="l">
-  <Spinner aria-hidden size="l" variant="bars" />
-  <Text tone="muted" size="s" align="center">
+  <Spinner aria-hidden />
+  <Text align="center" size="s" tone="muted">
     Fetching latest data
   </Text>
 </Stack>
 ```
+
+</Example>
+
+### Chip addon
+
+Put a small Spinner on a non-interactive Chip when a status label is already in progress. The Chip label stays the accessible name; the Spinner is only visual chrome at `addonPosition="end"`.
+
+<Example preview={<SpinnerChipDemo />}>
+
+```tsx
+import { Chip, Spinner } from '@viraui/react';
+
+<Chip addon={<Spinner aria-hidden size="s" />} addonPosition="end" variant="blue">
+  Deploying
+</Chip>
+```
+
+</Example>
+
+### Button loading
+
+For in-flight actions, set `loading` on the Button. The control owns the Spinner overlay, width lock, and busy semantics — do not nest a separate Spinner inside the label.
+
+<Example preview={<SpinnerButtonLoadingDemo />}>
+
+```tsx
+import { Button, Stack } from '@viraui/react';
+
+<Stack columnGap="m" direction="row">
+  <Button>Save</Button>
+  <Button loading>Save</Button>
+</Stack>
+```
+
+</Example>
+
 ## Ask your agent
 
 ```text tab="Centered loader"
@@ -50,5 +88,9 @@ Center a loading indicator in this panel with muted supporting text below: "Fetc
 ```
 
 ```text tab="Submit spinner"
-While this form submits, show a spinner on the Save button and disable it until the request finishes. Keep the label Submit — add visible delay copy if the wait runs long.
+While this form submits, show a spinner on the Save button and disable it until the request finishes. Keep the label Save.
+```
+
+```text tab="Chip status"
+Show a non-interactive Deploying status chip with a small spinner at the end of the label.
 ```
