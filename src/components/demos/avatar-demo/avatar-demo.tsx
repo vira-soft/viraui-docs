@@ -32,10 +32,9 @@ export const AvatarNameRowDemo: React.FC = () => (
       <Avatar
         alt="Lara Thompson"
         fallback="LT"
-        size="m"
         src="https://mockmind-api.uifaces.co/content/human/80.jpg"
       />
-      <Stack rowGap="2xs">
+      <Stack rowGap="xs">
         <Text weight="semibold">Lara Thompson</Text>
         <Text size="s" tone="muted">
           Design lead
@@ -49,8 +48,8 @@ export const AvatarNameRowDemo: React.FC = () => (
 export const AvatarFallbackDemo: React.FC = () => (
   <SandboxShell height={160} label="Avatar fallback initials without a photo">
     <Stack columnGap="m" direction="row" vAlign="center">
-      <Avatar fallback="NP" size="m" />
-      <Stack rowGap="2xs">
+      <Avatar fallback="NP" />
+      <Stack rowGap="xs">
         <Text weight="semibold">Noah Patel</Text>
         <Text size="s" tone="muted">
           No photo on file

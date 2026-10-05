@@ -52,9 +52,9 @@ import { Annotate, Text } from '@viraui/react';
 
 </Example>
 
-### End side
+### Top end
 
-Pick one other `side` when the note should sit beside the phrase instead of above it. Do not fan out every compass point.
+Pick one other `side` when the note should sit toward a corner instead of dead-center above. Tint arrow and label with `color`. Do not fan out every compass point.
 
 <Example preview={<AnnotateEndDemo />}>
 
@@ -64,12 +64,14 @@ import { Annotate, Stack, Text } from '@viraui/react';
 <Stack rowGap="m">
   <Text>
     Ship the{' '}
-    <Annotate note="New this week" side="end">
+    <Annotate color="blue" note="New this week" side="top-end">
       public changelog
     </Annotate>
     .
   </Text>
-  <Text />
+  <Text size="s" tone="muted">
+    The notes are new this week. The arrow is decoration only.
+  </Text>
 </Stack>
 ```
 
@@ -81,6 +83,6 @@ import { Annotate, Stack, Text } from '@viraui/react';
 Highlight the words "unlimited storage" in this pricing copy with a short note "Best value" above. Repeat the benefit in surrounding body text so screen readers are not relying on the decorative note alone.
 ```
 
-```text tab="Note on the side"
-Call out "public changelog" with a short "New this week" note to the right of the phrase. Repeat that it is new in the sentence so the decorative note is not the only copy.
+```text tab="Top-end note"
+Call out "public changelog" with a short blue "New this week" note at top-end. Repeat that it is new in the sentence so the decorative note is not the only copy.
 ```

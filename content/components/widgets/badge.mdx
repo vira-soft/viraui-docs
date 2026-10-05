@@ -38,17 +38,19 @@ Wrap an [Avatar](/components/widgets/avatar) and toggle `show` when presence cha
 <Example preview={<BadgePresenceDemo />}>
 
 ```tsx
-import { Avatar, Badge, Switch } from '@viraui/react';
+import { Avatar, Badge, Stack, Switch } from '@viraui/react';
 
-<Badge color="green" show>
-  <Avatar
-    alt="Lara Thompson"
-    fallback="LT"
-    size="m"
-    src="https://mockmind-api.uifaces.co/content/human/80.jpg"
-  />
-</Badge>
-<Switch label="Online" />
+<Stack hAlign="center" rowGap="m">
+  <Badge color="green" show>
+    <Avatar
+      alt="Lara Thompson"
+      fallback="LT"
+      size="m"
+      src="https://mockmind-api.uifaces.co/content/human/80.jpg"
+    />
+  </Badge>
+  <Switch label="Online" />
+</Stack>
 ```
 
 </Example>
@@ -63,7 +65,7 @@ The [IconButton](/components/actions/icon-button) keeps `aria-label`. Other corn
 import { Bell } from '@phosphor-icons/react';
 import { Badge, IconButton } from '@viraui/react';
 
-<Badge show>
+<Badge color="yellow" show>
   <IconButton aria-label="Notifications" icon={<Bell />} />
 </Badge>
 ```

@@ -58,7 +58,7 @@ import { Chip, Stack } from '@viraui/react';
 
 ```tsx
 import { CheckCircle, Tag } from '@phosphor-icons/react';
-import { Chip, Stack } from '@viraui/react';
+import { Chip, Spinner, Stack } from '@viraui/react';
 
 <Stack columnGap="s" direction="row" wrap>
   <Chip addon={<CheckCircle />} variant="outline">
@@ -66,6 +66,13 @@ import { Chip, Stack } from '@viraui/react';
   </Chip>
   <Chip addon={<Tag />} addonPosition="end" variant="outline">
     Billing
+  </Chip>
+  <Chip
+    addon={<Spinner aria-hidden size="s" variant="dots" />}
+    addonPosition="end"
+    variant="blue"
+  >
+    Syncing
   </Chip>
 </Stack>
 ```
@@ -100,7 +107,7 @@ Add a status chip on each invoice row — Paid, Pending, or Overdue. Keep labels
 ```
 
 ```text tab="Chip with icon"
-Add a Verified chip with a small check icon before the label, and a Billing chip with a tag icon after the label. The icons are decoration — the words carry the meaning.
+Add a Verified chip with a small check icon before the label, a Billing chip with a tag icon after the label, and a blue Syncing chip with a dots Spinner at the end. The addons are decoration — the words carry the meaning.
 ```
 
 ```text tab="Chip as link"

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ArrowSquareOut, CheckCircle, Tag } from "@phosphor-icons/react";
-import { Chip, Stack } from "@viraui/react";
+import { Chip, Spinner, Stack } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
@@ -46,6 +46,13 @@ export const ChipAddonDemo: React.FC = () => (
       </Chip>
       <Chip addon={<Tag />} addonPosition="end" variant="outline">
         Billing
+      </Chip>
+      <Chip
+        addon={<Spinner aria-hidden size="s" variant="dots" />}
+        addonPosition="end"
+        variant="blue"
+      >
+        Syncing
       </Chip>
     </Stack>
   </SandboxShell>

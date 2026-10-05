@@ -58,12 +58,13 @@ import { Avatar, Stack, Text } from '@viraui/react';
   <Avatar
     alt="Lara Thompson"
     fallback="LT"
-    size="m"
     src="https://mockmind-api.uifaces.co/content/human/80.jpg"
   />
-  <Stack rowGap="2xs">
-    <Text />
-    <Text size="s" tone="muted" />
+  <Stack rowGap="xs">
+    <Text weight="semibold">Lara Thompson</Text>
+    <Text size="s" tone="muted">
+      Design lead
+    </Text>
   </Stack>
 </Stack>
 ```
@@ -80,10 +81,12 @@ Omit `src` only when teaching initials. The required `fallback` then becomes the
 import { Avatar, Stack, Text } from '@viraui/react';
 
 <Stack columnGap="m" direction="row" vAlign="center">
-  <Avatar fallback="NP" size="m" />
-  <Stack rowGap="2xs">
-    <Text />
-    <Text size="s" tone="muted" />
+  <Avatar fallback="NP" />
+  <Stack rowGap="xs">
+    <Text weight="semibold">Noah Patel</Text>
+    <Text size="s" tone="muted">
+      No photo on file
+    </Text>
   </Stack>
 </Stack>
 ```
@@ -92,7 +95,7 @@ import { Avatar, Stack, Text } from '@viraui/react';
 
 ### Two sizes
 
-Default size is `s`. Reach for `m` in a name row or a slightly larger toolbar face — skip an xs-through-l catalog.
+Default size is `s`. Reach for `m` when the face needs a bit more presence in a toolbar — skip an xs-through-l catalog.
 
 <Example preview={<AvatarSizesDemo />}>
 

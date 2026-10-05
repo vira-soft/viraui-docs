@@ -35,8 +35,8 @@ export const BadgePresenceDemo: React.FC = () => {
   };
 
   return (
-    <SandboxShell height={240} label="Online badge on avatar with toggle">
-      <Stack columnGap="l" direction="row" vAlign="center">
+    <SandboxShell height={280} label="Online badge on avatar with toggle">
+      <Stack hAlign="center" rowGap="m">
         <Badge color="green" show={online}>
           <Avatar
             alt="Lara Thompson"
@@ -58,7 +58,7 @@ export const BadgePresenceDemo: React.FC = () => {
 /** Unread dot on IconButton — name lives on the button, not the badge. */
 export const BadgeUnreadDemo: React.FC = () => (
   <SandboxShell height={180} label="Unread badge on notifications IconButton">
-    <Badge show>
+    <Badge color="yellow" show>
       <IconButton aria-label="Notifications" icon={<Bell />} />
     </Badge>
   </SandboxShell>

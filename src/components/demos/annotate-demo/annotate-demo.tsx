@@ -41,13 +41,13 @@ export const AnnotateMarkDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** End-side placement — one other compass point, not an eight-side catalog. */
+/** Top-end placement with highlight color — one other compass point, not a catalog. */
 export const AnnotateEndDemo: React.FC = () => (
-  <SandboxShell height={360} label="Annotate note on the end side">
+  <SandboxShell height={360} label="Annotate note on the top-end side">
     <Stack hPadding="2xl" rowGap="m" vPadding="2xl">
       <Text>
         Ship the{" "}
-        <Annotate note="New this week" side="end">
+        <Annotate color="blue" note="New this week" side="top-end">
           public changelog
         </Annotate>
         .
