@@ -59,7 +59,7 @@ export const SeparatorListDemo: React.FC = () => (
   <SandboxShell height={260} label="Horizontal Separators between fund metrics">
     <PanelShell>
       <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack rowGap="s">
+        <Stack rowGap="m">
           {METRIC_ROWS.map((row, index) => (
             <React.Fragment key={row.label}>
               {index > 0 ? <Separator /> : null}
@@ -129,7 +129,7 @@ export const SeparatorThicknessDemo: React.FC = () => (
   >
     <PanelShell>
       <Surface border="all" color={1} overflow="hidden" radius="l">
-        <Stack rowGap="m" vPadding="l">
+        <Stack rowGap="l" vPadding="l">
           <Stack hPadding="l" rowGap="xs">
             <Title render={<h2 />} size="6">
               Claimable balance
@@ -139,7 +139,7 @@ export const SeparatorThicknessDemo: React.FC = () => (
             </Text>
           </Stack>
           <Separator hPadding="l" size="m" variant="dashed" />
-          <Stack hPadding="l" rowGap="s">
+          <Stack hPadding="l" rowGap="m">
             <Stack
               columnGap="m"
               direction="row"

@@ -18,13 +18,22 @@ import { Stack, Surface, Text } from '@viraui/react';
 
 <Stack rowGap="s">
   <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-    <Text />
+    <Stack rowGap="xs">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Stack>
   </Surface>
   <Surface border="all" color={2} hPadding="m" radius="m" vPadding="m">
-    <Text />
+    <Stack rowGap="xs">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Stack>
   </Surface>
   <Surface border="all" color={3} hPadding="m" radius="m" vPadding="m">
-    <Text />
+    <Stack rowGap="xs">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Stack>
   </Surface>
 </Stack>
 ```
@@ -42,14 +51,18 @@ import { Stack, Surface, Text } from '@viraui/react';
 
 <Surface border="all" color={1} overflow="hidden" radius="l">
   <Stack direction="row" expandChildren>
-    <Surface border="right" color={2} hPadding="m" vPadding="m">
-      <Text />
+    <Surface border="right" color={2} hPadding="l" vPadding="l">
+      <Stack rowGap="s">
+        <Text />
+        <Text />
+        <Text />
+      </Stack>
     </Surface>
     <Stack expandChildren>
-      <Surface border="bottom" hPadding="m" vPadding="s">
+      <Surface border="bottom" hPadding="l" vPadding="m">
         <Text />
       </Surface>
-      <Surface hPadding="m" vPadding="s">
+      <Surface hPadding="l" vPadding="m">
         <Text />
       </Surface>
     </Stack>
@@ -61,24 +74,26 @@ import { Stack, Surface, Text } from '@viraui/react';
 
 ### Nested concentric
 
-Set a token `radius` on the outer host and `radius="auto"` on the nested plane so inner corners stay concentric with the parent's padding. Reusing the same token on both layers leaves a flat double-radius look.
+Set a large token `radius` on the outer host and `radius="auto"` on nested planes so each inset corner stays concentric with the parent's padding. A third nested Surface makes the step-down easier to see — reusing the same token on every layer leaves a flat double-radius look.
 
 <Example preview={<SurfaceNestedConcentricDemo />}>
 
 ```tsx
 import { Button, Stack, Surface, Text, Title } from '@viraui/react';
 
-<Surface border="all" color={1} hPadding="m" radius="l" vPadding="m">
+<Surface border="all" color={1} hPadding="l" radius="2xl" vPadding="l">
   <Stack rowGap="m">
-    <Stack rowGap="2xs">
+    <Stack rowGap="xs">
       <Title />
       <Text />
     </Stack>
-    <Surface border="all" color={2} hPadding="m" radius="auto" vPadding="m">
-      <Stack direction="row" hAlign="space-between" vAlign="center">
-        <Text />
-        <Button />
-      </Stack>
+    <Surface border="all" color={2} hPadding="s" radius="auto" vPadding="s">
+      <Surface border="all" color={3} hPadding="m" radius="auto" vPadding="m">
+        <Stack direction="row" hAlign="space-between" vAlign="center">
+          <Text />
+          <Button />
+        </Stack>
+      </Surface>
     </Surface>
   </Stack>
 </Surface>

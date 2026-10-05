@@ -74,7 +74,7 @@ export const SurfaceColorRampDemo: React.FC = () => (
             radius="m"
             vPadding="m"
           >
-            <Stack rowGap="2xs">
+            <Stack rowGap="xs">
               <Text size="s" weight="semibold">
                 {panel.title}
               </Text>
@@ -97,16 +97,16 @@ const FILE_ROWS = [
 
 /** Contrast borders on selected sides — rail edge and list dividers. */
 export const SurfaceBorderSidesDemo: React.FC = () => (
-  <SandboxShell height={300} label="Surface border sides on rail and file list">
+  <SandboxShell height={320} label="Surface border sides on rail and file list">
     <PanelShell maxInlineSize="32rem">
       <Surface border="all" color={1} overflow="hidden" radius="l">
         <Stack direction="row" expandChildren>
           <Surface
             border="right"
             color={2}
-            hPadding="m"
-            vPadding="m"
-            render={<Stack minWidth="8rem" rowGap="xs" />}
+            hPadding="l"
+            vPadding="l"
+            render={<Stack minWidth="8rem" rowGap="s" />}
           >
             <Text size="xs" weight="semibold">
               Assets
@@ -123,8 +123,8 @@ export const SurfaceBorderSidesDemo: React.FC = () => (
               <Surface
                 key={row.name}
                 border={index < FILE_ROWS.length - 1 ? "bottom" : undefined}
-                hPadding="m"
-                vPadding="s"
+                hPadding="l"
+                vPadding="m"
               >
                 <Stack
                   columnGap="m"
@@ -148,19 +148,19 @@ export const SurfaceBorderSidesDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** Outer token radius with nested `radius="auto"` inset plane. */
+/** Outer token radius with nested `radius="auto"` inset planes. */
 export const SurfaceNestedConcentricDemo: React.FC = () => (
-  <SandboxShell height={320} label="Nested Surfaces with concentric radius auto">
+  <SandboxShell height={380} label="Nested Surfaces with concentric radius auto">
     <PanelShell maxInlineSize="24rem">
       <Surface
         border="all"
         color={1}
-        hPadding="m"
-        radius="l"
-        vPadding="m"
+        hPadding="l"
+        radius="2xl"
+        vPadding="l"
       >
         <Stack rowGap="m">
-          <Stack rowGap="2xs">
+          <Stack rowGap="xs">
             <Title render={<h2 />} size="6">
               Invite teammates
             </Title>
@@ -171,28 +171,36 @@ export const SurfaceNestedConcentricDemo: React.FC = () => (
           <Surface
             border="all"
             color={2}
-            hPadding="m"
+            hPadding="s"
             radius="auto"
-            vPadding="m"
+            vPadding="s"
           >
-            <Stack
-              columnGap="m"
-              direction="row"
-              hAlign="space-between"
-              vAlign="center"
+            <Surface
+              border="all"
+              color={3}
+              hPadding="m"
+              radius="auto"
+              vPadding="m"
             >
-              <Stack rowGap="2xs">
-                <Text size="s" weight="semibold">
-                  Editor seats
-                </Text>
-                <Text size="s" tone="muted">
-                  3 of 5 seats used
-                </Text>
+              <Stack
+                columnGap="m"
+                direction="row"
+                hAlign="space-between"
+                vAlign="center"
+              >
+                <Stack rowGap="xs">
+                  <Text size="s" weight="semibold">
+                    Editor seats
+                  </Text>
+                  <Text size="s" tone="muted">
+                    3 of 5 seats used
+                  </Text>
+                </Stack>
+                <Button size="s" type="button" variant="secondary">
+                  Invite
+                </Button>
               </Stack>
-              <Button size="s" type="button" variant="secondary">
-                Invite
-              </Button>
-            </Stack>
+            </Surface>
           </Surface>
         </Stack>
       </Surface>

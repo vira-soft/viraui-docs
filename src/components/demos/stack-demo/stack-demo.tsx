@@ -99,7 +99,7 @@ export const StackColumnDemo: React.FC = () => (
                   size="s"
                   src={person.src}
                 />
-                <Stack rowGap="2xs">
+                <Stack rowGap="xs">
                   <Text weight="semibold">{person.name}</Text>
                   <Text size="s" tone="muted">
                     {person.role}
