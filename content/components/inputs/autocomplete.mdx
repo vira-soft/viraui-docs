@@ -25,7 +25,7 @@ Pass list content as a render function over `items`, or compose `Autocomplete.Gr
 
 A labeled reviewer picker with search chrome and avatar item addons is the baseline suggest pattern. `itemToStringValue` maps each object to the string written into the input when a row is chosen. When that string matches a reviewer, `endAddon` shows their Avatar.
 
-<AutocompleteReviewerDemo />
+<Example preview={<AutocompleteReviewerDemo />}>
 
 ```tsx
 import { MagnifyingGlass } from '@phosphor-icons/react';
@@ -93,13 +93,15 @@ const selected = reviewers.find((person) => person.label === value);
 </Autocomplete>
 ```
 
+</Example>
+
 Buttons inside `endAddon` must use `type="button"` so they do not submit a parent form.
 
 ### Free-form category
 
 Flat items still allow free-form text — the list suggests ledger labels while the input can keep a custom phrase. Prefer this over Select when the value does not have to be one of the options.
 
-<AutocompleteCategoryDemo />
+<Example preview={<AutocompleteCategoryDemo />}>
 
 ```tsx
 import { MagnifyingGlass } from '@phosphor-icons/react';
@@ -128,11 +130,13 @@ const expenseCategories = [
 </Autocomplete>
 ```
 
+</Example>
+
 ### Grouped options
 
 Grouped `items` pair with `Autocomplete.Group` and `Autocomplete.Collection` so each section keeps its own heading and nested rows.
 
-<AutocompleteGroupedDemo />
+<Example preview={<AutocompleteGroupedDemo />}>
 
 ```tsx
 import { MagnifyingGlass } from '@phosphor-icons/react';
@@ -175,11 +179,13 @@ const transferDesks = [
 </Autocomplete>
 ```
 
+</Example>
+
 ### Async status
 
 When results load outside the control, set `filter={null}` and drive `items` from your fetch. Keep root `status` mounted — swap Spinner and muted copy inside it while the request runs. Clear or omit `empty` while pending so the no-match copy does not flash over the spinner.
 
-<AutocompleteAsyncDemo />
+<Example preview={<AutocompleteAsyncDemo />}>
 
 ```tsx
 import { MagnifyingGlass } from '@phosphor-icons/react';
@@ -214,6 +220,8 @@ const empty = pending ? undefined : 'No articles for that query.';
   )}
 </Autocomplete>
 ```
+
+</Example>
 
 In iframe previews, shadow roots, or custom overlay hosts, pass `container` on Autocomplete so the popup portals into that document instead of the default body.
 

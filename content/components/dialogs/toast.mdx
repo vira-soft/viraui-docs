@@ -25,7 +25,7 @@ Optional actions on a banner are `Toast.Action` only. The stack defaults to `bot
 
 Mount the provider once, keep a portal region in the tree, and call `add` from any action under that provider. Multiple banners stack in the viewport; `close()` without an id clears the queue.
 
-<ToastStackedDemo />
+<Example preview={<ToastStackedDemo />}>
 
 ```tsx
 import { Button, Stack, Toast } from '@viraui/react';
@@ -70,13 +70,15 @@ function SaveActions() {
 }
 ```
 
+</Example>
+
 Pass `position` on `Toast.Viewport` when the stack should live in another corner (for example `bottom-left`).
 
 ### Undo action
 
 Banner children are limited to `Toast.Action`. Use the default Button chrome, or pass `render` when the action needs a different variant. Closing the toast from the action handler ends the undo window.
 
-<ToastUndoDemo />
+<Example preview={<ToastUndoDemo />}>
 
 ```tsx
 import { Button, Toast } from '@viraui/react';
@@ -127,11 +129,13 @@ function DeleteWithUndo() {
 }
 ```
 
+</Example>
+
 ### Anchored
 
 For feedback tied to a specific control, set `Toast.Viewport` to `position="anchored"`, wrap each banner in `Toast.Positioner`, and pass `positionerProps.anchor` (plus optional `sideOffset` and a short `timeout`) when calling `add`. Turn off `dismissable` when the toast should disappear on its own.
 
-<ToastAnchoredDemo />
+<Example preview={<ToastAnchoredDemo />}>
 
 ```tsx
 import { useRef } from 'react';
@@ -191,6 +195,8 @@ function CopyLink() {
   );
 }
 ```
+
+</Example>
 
 ## Ask your agent
 

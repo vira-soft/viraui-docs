@@ -17,7 +17,7 @@ Glow tracks the pointer and paints CSS variables on every move. Prefer one focal
 
 A small set of cards with shared `globalHighlight` is the baseline Glow pattern. Move the pointer across the row — the arc follows and the gradient stays consistent across shells.
 
-<GlowGridDemo />
+<Example preview={<GlowGridDemo />}>
 
 ```tsx
 import { Glow, Stack, Surface, Text, Title, type GlowProps } from '@viraui/react';
@@ -31,7 +31,7 @@ const glowProps: GlowProps = {
   radius: 'l',
 };
 
-<Stack columnGap="m" direction="row" rowGap="m" wrap>
+<Stack columnGap="m" direction="row" hAlign="center" maxWidth="36rem" rowGap="m" wrap>
   <Glow {...glowProps}>
     <Surface border="all" color={2} hPadding="l" radius="auto" vPadding="l">
       <Stack maxWidth="12rem" rowGap="s">
@@ -51,13 +51,15 @@ const glowProps: GlowProps = {
 </Stack>
 ```
 
+</Example>
+
 Set `globalHighlight={false}` when each card should own an independent gradient path.
 
 ### Rainbow highlight
 
 `rainbowColors` switches to a multi-stop palette and forces shared attachment off — useful for a single featured card that should feel distinct from a shared grid.
 
-<GlowRainbowDemo />
+<Example preview={<GlowRainbowDemo />}>
 
 ```tsx
 import { Glow, Stack, Surface, Text, Title } from '@viraui/react';
@@ -72,11 +74,13 @@ import { Glow, Stack, Surface, Text, Title } from '@viraui/react';
 </Glow>
 ```
 
+</Example>
+
 ### Report rows
 
 Tight `proximity` and a flush ring (`borderOffset={0}`, thin `borderWidth`) suit pill list rows inside a list shell. Glow stays decorative — row actions own the accessible labels.
 
-<GlowReportRowDemo />
+<Example preview={<GlowReportRowDemo />}>
 
 ```tsx
 import { DotsThreeVertical } from '@phosphor-icons/react';
@@ -117,6 +121,8 @@ import { Glow, IconButton, Stack, Surface, Text, Title } from '@viraui/react';
   </Stack>
 </Surface>
 ```
+
+</Example>
 
 Glow hides under coarse pointers and `prefers-reduced-motion`. Do not use it as keyboard focus or status chrome.
 

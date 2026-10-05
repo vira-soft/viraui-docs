@@ -17,7 +17,7 @@ ProgressiveBlur paints several `backdrop-filter` layers. Prefer one or two edge 
 
 A tall scroll article with images is the usual ProgressiveBlur composition. Keep the blur band inside the scrollport (sticky zero-height shell + `100cqb` viewport) so the scrollbar stays sharp, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above the blur in z-order.
 
-<ProgressiveBlurBottomDemo />
+<Example preview={<ProgressiveBlurBottomDemo />}>
 
 ```tsx
 import { Button, ProgressiveBlur, Stack, Surface } from '@viraui/react';
@@ -83,13 +83,15 @@ const bottomBlurStyle = {
 </Surface>
 ```
 
+</Example>
+
 `direction="bottom"` is the default — set it only when the code should read the edge explicitly.
 
 ### Top fade under sticky chrome
 
 Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. Keep the blur inside the scrollport with the same sticky zero-height shell so the scrollbar stays sharp. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
 
-<ProgressiveBlurTopDemo />
+<Example preview={<ProgressiveBlurTopDemo />}>
 
 ```tsx
 import { ProgressiveBlur, Stack, Surface, Text, Title } from '@viraui/react';
@@ -160,11 +162,13 @@ const topBlurStyle = {
 </Surface>
 ```
 
+</Example>
+
 ### Dual-edge long read
 
 Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Mount both bands in the same sticky scrollport shell so neither covers the scrollbar. Reuse the same tinted top band as the sticky-chrome example.
 
-<ProgressiveBlurDualDemo />
+<Example preview={<ProgressiveBlurDualDemo />}>
 
 ```tsx
 import { Button, ProgressiveBlur, Stack, Surface, Title } from '@viraui/react';
@@ -253,6 +257,8 @@ const bottomBlurStyle = {
   </Stack>
 </Surface>
 ```
+
+</Example>
 
 Tune `blur` when the veil feels too soft or too heavy; reach for `easing` or `steps` only when banding shows at the defaults.
 

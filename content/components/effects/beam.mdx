@@ -17,7 +17,7 @@ Beam keeps continuous motion on screen and can be heavy on CPU and memory. Prefe
 
 A featured card with a rotating colorful border is the usual Beam composition. `fitContent` keeps the shell tight to the card; `radius="auto"` on the inner Surface matches the Beam corners.
 
-<BeamBorderDemo />
+<Example preview={<BeamBorderDemo />}>
 
 ```tsx
 import { Beam, Button, Stack, Surface, Text, Title } from '@viraui/react';
@@ -33,13 +33,15 @@ import { Beam, Button, Stack, Surface, Text, Title } from '@viraui/react';
 </Beam>
 ```
 
+</Example>
+
 `size="s"` tightens the border beam for compact chrome; other variants ignore `size`.
 
 ### Line under a CTA
 
 Wrap only the secondary action when a traveling bottom edge should call attention without a full border spin.
 
-<BeamLineDemo />
+<Example preview={<BeamLineDemo />}>
 
 ```tsx
 import { Beam, Button, ButtonLink, Stack, Text } from '@viraui/react';
@@ -53,11 +55,13 @@ import { Beam, Button, ButtonLink, Stack, Text } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Pulse accent
 
 `pulse-outside` breathes a bloom around the child — useful for empty-state icons and quiet focal marks. `pulse-inside` keeps the bloom clipped to the shell.
 
-<BeamPulseDemo />
+<Example preview={<BeamPulseDemo />}>
 
 ```tsx
 import { Sparkle } from '@phosphor-icons/react';
@@ -82,6 +86,8 @@ import { Beam, Stack, Surface, Text, Title } from '@viraui/react';
   </Stack>
 </Stack>
 ```
+
+</Example>
 
 Beam is decorative only — accessible names and status live on the content inside, not on the shell.
 

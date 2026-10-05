@@ -67,8 +67,9 @@ export const GlowGridDemo: React.FC = () => (
     <Stack
       columnGap="m"
       direction="row"
+      hAlign="center"
+      maxWidth="36rem"
       rowGap="m"
-      style={{ maxInlineSize: "36rem" }}
       wrap
     >
       <Glow {...glowProps}>

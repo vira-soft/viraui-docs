@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Inbox, UserGroup } from "lucide-react";
-import { TrayIcon, UsersThreeIcon } from "@phosphor-icons/react";
+import { UserGroup } from "lucide-react";
+import { TrayIcon } from "@phosphor-icons/react";
 import { Stack, Surface, Text, Title } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
@@ -80,7 +80,7 @@ export const IconsEmptyStatesDemo: React.FC<IconsEmptyStatesDemoProps> = ({
       <EmptyStateCard
         icon={<TrayIcon size={ICON_SIZE} weight="duotone" />}
         title="No messages"
-        description="@phosphor-icons/react"
+        description="phosphor-icons"
       />
     </ViraSandbox>
 

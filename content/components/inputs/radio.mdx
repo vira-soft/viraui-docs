@@ -23,7 +23,7 @@ description: Single-choice option row for use inside RadioGroup and Fieldset.
 
 A Fieldset-backed `RadioGroup` with labeled plan rows is the default single-choice pattern. Each option keeps its own `label` / `description`; the group owns `value` and `onValueChange`.
 
-<RadioPlansDemo />
+<Example preview={<RadioPlansDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -59,11 +59,13 @@ const [value, setValue] = useState('starter');
 </Field.Root>
 ```
 
+</Example>
+
 ### Without Fieldset
 
 When every option already has a visible label and the group needs no shared legend, put `RadioGroup` directly under `Field.Root`.
 
-<RadioContactDemo />
+<Example preview={<RadioContactDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -94,11 +96,13 @@ const [value, setValue] = useState('email');
 </Field.Root>
 ```
 
+</Example>
+
 ### Surface cards
 
 `hPadding` / `vPadding` let each control fill a bordered `Surface`. Drive `Surface` `color` from the selected value when the whole card should read as chosen. Lay cards in a row with `Stack` `direction="row"` and `expandChildren`.
 
-<RadioSurfaceCardsDemo />
+<Example preview={<RadioSurfaceCardsDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -142,6 +146,8 @@ const [value, setValue] = useState('bank');
   </Fieldset>
 </Field.Root>
 ```
+
+</Example>
 
 ## Ask your agent
 

@@ -27,7 +27,7 @@ Variants follow intent, not decoration (same rules as `Button`). Size steps dens
 
 Pick the variant from what the action means on that surface. A bare IconButton is already primary; reach for another variant when the action is not the commit. Every control still needs an accessible name.
 
-<IconButtonVariantsDemo />
+<Example preview={<IconButtonVariantsDemo />}>
 
 ```tsx
 import { Gear, MagnifyingGlass, ShareNetwork, Trash } from '@phosphor-icons/react';
@@ -41,13 +41,15 @@ import { IconButton, Stack } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 Prefer flat in dense toolbars so icon actions stay quiet next to labeled buttons.
 
 ### Sizes
 
 `size` steps the hit target and glyph together.
 
-<IconButtonSizesDemo />
+<Example preview={<IconButtonSizesDemo />}>
 
 ```tsx
 import { Gear } from '@phosphor-icons/react';
@@ -60,13 +62,15 @@ import { IconButton, Stack } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 Match toolbar density: `s` in tight chrome, `l` when the icon sits alone as a primary control.
 
 ### Loading
 
 Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
 
-<IconButtonLoadingDemo />
+<Example preview={<IconButtonLoadingDemo />}>
 
 ```tsx
 import { ArrowsClockwise } from '@phosphor-icons/react';
@@ -75,13 +79,15 @@ import { IconButton } from '@viraui/react';
 <IconButton aria-label="Refreshing" icon={<ArrowsClockwise />} loading />
 ```
 
+</Example>
+
 Keep the same accessible name during the wait so the announced name stays continuous. On IconButton, loading also disables activation until you clear the flag.
 
 ### Toolbars
 
 Toolbar strips live in a Surface: Stack row of IconButtons inside, with gap and alignment on the Stack (not per-button CSS). Flat variants keep the strip quiet; reserve destructive for irreversible actions.
 
-<IconButtonToolbarDemo />
+<Example preview={<IconButtonToolbarDemo />}>
 
 ```tsx
 import { Gear, ShareNetwork, Trash } from '@phosphor-icons/react';
@@ -96,13 +102,15 @@ import { IconButton, Stack, Surface } from '@viraui/react';
 </Surface>
 ```
 
+</Example>
+
 If the action needs a visible text label, switch to [Button](/components/actions/button). Do not force a caption beside `icon`.
 
 ### As a link
 
 Use IconButtonLink when activation should navigate. Same chrome as IconButton; different element (a native `<a>`, or a framework `Link` via `render`).
 
-<IconButtonLinkDemo />
+<Example preview={<IconButtonLinkDemo />}>
 
 ```tsx
 import { ArrowSquareOut, House } from '@phosphor-icons/react';
@@ -120,6 +128,8 @@ import { IconButtonLink, Stack } from '@viraui/react';
   />
 </Stack>
 ```
+
+</Example>
 
 Pass `href` for native or external URLs (`target` / `rel` when needed). The accessible name should say where the link goes, not only what the icon looks like.
 

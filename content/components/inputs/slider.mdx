@@ -23,7 +23,7 @@ description: Range input for numeric values — single thumb or dual-thumb range
 
 A labeled single-thumb amount with `renderValue` and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
 
-<SliderAmountDemo />
+<Example preview={<SliderAmountDemo />}>
 
 ```tsx
 import { Slider, Stack, Text } from '@viraui/react';
@@ -53,11 +53,13 @@ import { Slider, Stack, Text } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Price range
 
 Pass a two-element array for dual thumbs. Name each thumb with `thumbAriaLabel`, and format the value slot with a `renderValue` function when currency or units need custom copy.
 
-<SliderRangeDemo />
+<Example preview={<SliderRangeDemo />}>
 
 ```tsx
 import { Slider } from '@viraui/react';
@@ -76,11 +78,13 @@ import { Slider } from '@viraui/react';
 />
 ```
 
+</Example>
+
 ### Control saturation
 
 Keep the Slider controlled and wire `onValueChange` into whatever you are adjusting — here a photo preview follows saturation.
 
-<SliderSaturationDemo />
+<Example preview={<SliderSaturationDemo />}>
 
 ```tsx
 import { Slider, Stack, Surface } from '@viraui/react';
@@ -107,11 +111,13 @@ const [saturation, setSaturation] = useState(100);
 </Stack>
 ```
 
+</Example>
+
 ### External label row
 
 When the visible name lives beside the track — icon, title, trailing percent — omit `label` on Slider and pass `aria-label` / `thumbAriaLabel` so the thumb stays named. Parent `Stack` `expandChildren` grows the track. Give the value a `minInlineSize` so single- and triple-digit percents do not shift the layout.
 
-<SliderBrightnessDemo />
+<Example preview={<SliderBrightnessDemo />}>
 
 ```tsx
 import { Sun } from '@phosphor-icons/react';
@@ -155,11 +161,13 @@ const [brightness, setBrightness] = useState(86);
 </Surface>
 ```
 
+</Example>
+
 ### Linked equalizer
 
 Vertical bands need a sized host (`style={{ blockSize }}` — Stack has no height prop) with `expandChildren` so the Slider grows and the band label opts out via `data-grow="false"`. Dragging one thumb can wave neighbors — freeze an anchor at gesture start, apply falloff by band distance, and commit with `onValueCommitted`. Preset buttons set the whole curve from outside.
 
-<SliderEqualizerDemo />
+<Example preview={<SliderEqualizerDemo />}>
 
 ```tsx
 import { Button, Slider, Stack, Surface, Text } from '@viraui/react';
@@ -216,6 +224,8 @@ const [levels, setLevels] = useState([50, 50, 50, 50, 50, 50, 50]);
   </Surface>
 </Stack>
 ```
+
+</Example>
 
 ## Ask your agent
 

@@ -23,7 +23,7 @@ description: Single-choice dropdown with field chrome, grouped options, and an e
 
 A labeled timezone dropdown with field chrome, grouped regions, and a divider between groups is the default closed-choice pattern. Pass `items` so the trigger can resolve each value to a display label.
 
-<SelectTimezoneDemo />
+<Example preview={<SelectTimezoneDemo />}>
 
 ```tsx
 import { Select } from '@viraui/react';
@@ -56,11 +56,13 @@ const timezoneItems = {
 </Select>
 ```
 
+</Example>
+
 ### Beside Textfield
 
 Equal-width form rows share a parent `Stack` with `direction="row"` and `expandChildren` — pair Select with [`Textfield`](/components/inputs/textfield) for city/state or similar address fields.
 
-<SelectAddressDemo />
+<Example preview={<SelectAddressDemo />}>
 
 ```tsx
 import { Select, Stack, Textfield } from '@viraui/react';
@@ -79,11 +81,13 @@ const stateItems = {
 </Stack>
 ```
 
+</Example>
+
 ### Option addons
 
 `Select.Option` `addon` takes a leading decorative node. Drive root `addon` from the selected value so the trigger shows the same icon. Set `alignListWithTrigger={false}` when options use a leading addon so the popup is not forced to the trigger width. Pass `label` when the option children are a multi-line stack so the accessible name stays short.
 
-<SelectThemeDemo />
+<Example preview={<SelectThemeDemo />}>
 
 ```tsx
 import { Lightning, Moon } from '@phosphor-icons/react';
@@ -134,11 +138,13 @@ const [value, setValue] = useState('vivid');
 </Select>
 ```
 
+</Example>
+
 ### Long scrolling list
 
 When the option set outgrows the popup, the list scrolls inside the elevated surface and Base UI scroll arrows appear at the edges — no extra props.
 
-<SelectLongListDemo />
+<Example preview={<SelectLongListDemo />}>
 
 ```tsx
 import { Select } from '@viraui/react';
@@ -164,6 +170,8 @@ const items = Object.fromEntries(
   ))}
 </Select>
 ```
+
+</Example>
 
 In iframe previews, shadow roots, or custom overlay hosts, pass `container` on Select so the popup portals into that document instead of the default body.
 

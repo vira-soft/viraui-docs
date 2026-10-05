@@ -25,7 +25,7 @@ Snap points and swipe dismissal live on the `Dialog` root when the sheet should 
 
 A confirmation sheet with trigger, titled sheet, and footer actions is the default interruption pattern. Wrap dismiss and commit buttons in `Dialog.Close` so both paths close the sheet.
 
-<DialogConfirmDemo />
+<Example preview={<DialogConfirmDemo />}>
 
 ```tsx
 import { Trash } from '@phosphor-icons/react';
@@ -52,13 +52,15 @@ import { Button, Dialog, Stack } from '@viraui/react';
 </Dialog>
 ```
 
+</Example>
+
 Prefer an explicit footer action as the primary close path rather than relying only on backdrop press or swipe.
 
 ### Close button
 
 Turn on `showCloseButton` when the sheet needs the chrome dismiss control in the header (read-only notices, catch-up panels). Footer `Dialog.Close` actions remain optional when that glyph is enough.
 
-<DialogCloseButtonDemo />
+<Example preview={<DialogCloseButtonDemo />}>
 
 ```tsx
 import { Button, Dialog } from '@viraui/react';
@@ -74,13 +76,15 @@ import { Button, Dialog } from '@viraui/react';
 </Dialog>
 ```
 
+</Example>
+
 The drag handle stays on by default; set `showHandle={false}` when the sheet should not invite swipe resize.
 
 ### Nested sheets
 
 Nest another `Dialog` inside `Dialog.Sheet` children for drill-down flows. Each layer keeps its own trigger, title, and close controls. Escape and the topmost close dismiss only the front sheet; the parent stays open underneath.
 
-<DialogNestedDemo />
+<Example preview={<DialogNestedDemo />}>
 
 ```tsx
 import { Button, Dialog, Stack, Text } from '@viraui/react';
@@ -113,11 +117,13 @@ import { Button, Dialog, Stack, Text } from '@viraui/react';
 </Dialog>
 ```
 
+</Example>
+
 ### Snap points
 
 Pass `snapPoints` (and controlled `snapPoint` / `onSnapPointChange`, or `defaultSnapPoint`) on the `Dialog` root when the sheet should settle at more than one height. Two points cover preview → full: the preview snap shows a short excerpt plus Read more; that control moves the sheet to full and then disappears so it only exists on the intermediate step.
 
-<DialogSnapPointsDemo />
+<Example preview={<DialogSnapPointsDemo />}>
 
 ```tsx
 import { useState } from 'react';
@@ -176,6 +182,8 @@ function TermsDialog() {
   );
 }
 ```
+
+</Example>
 
 ## Ask your agent
 

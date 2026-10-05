@@ -25,7 +25,7 @@ Related options share a selection model through `CheckboxGroup`. Add [`Fieldset`
 
 A Fieldset-backed `CheckboxGroup` with labeled preference rows is the default multi-select pattern. Each option keeps its own `label` / `description`; the group owns `value` and `onValueChange`.
 
-<CheckboxPreferencesDemo />
+<Example preview={<CheckboxPreferencesDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -61,11 +61,13 @@ const [value, setValue] = useState(['product', 'security']);
 </Field.Root>
 ```
 
+</Example>
+
 ### Form footer boolean
 
 Standalone booleans under other fields wrap in their own `Field.Root` — no Fieldset without a shared legend.
 
-<CheckboxFormFooterDemo />
+<Example preview={<CheckboxFormFooterDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -80,11 +82,13 @@ import { Checkbox, Stack, Textfield } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Surface card
 
 `hPadding` / `vPadding` let the control fill a bordered `Surface`. Drive `Surface` `color` from checked state when the whole card should read as selected.
 
-<CheckboxSurfaceCardDemo />
+<Example preview={<CheckboxSurfaceCardDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -106,11 +110,13 @@ const [checked, setChecked] = useState(false);
 </Field.Root>
 ```
 
+</Example>
+
 ### Select all
 
 Lists of independent options stay one `Field.Root` + `Checkbox` per row. Drive a select-all row with Base UI `indeterminate` when some — but not all — children are checked.
 
-<CheckboxSelectAllDemo />
+<Example preview={<CheckboxSelectAllDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -152,6 +158,8 @@ const someChecked = selected.length > 0 && !allChecked;
   </Stack>
 </Surface>
 ```
+
+</Example>
 
 ## Ask your agent
 

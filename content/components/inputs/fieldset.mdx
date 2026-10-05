@@ -23,7 +23,7 @@ description: Groups related radios or checkboxes with a legend and optional grou
 
 A Surface card with a Fieldset legend over related Textfields is the baseline field grouping — no `render` merge when children already own their labels.
 
-<FieldsetBillingDemo />
+<Example preview={<FieldsetBillingDemo />}>
 
 ```tsx
 import { Fieldset, Separator, Stack, Surface, Textfield } from '@viraui/react';
@@ -39,11 +39,13 @@ import { Fieldset, Separator, Stack, Surface, Textfield } from '@viraui/react';
 </Surface>
 ```
 
+</Example>
+
 ### Delivery RadioGroup
 
 Choice groups that need a shared legend or description merge `RadioGroup` through `render` under `Field.Root`. Each option keeps its own `label` / `description`.
 
-<FieldsetDeliveryDemo />
+<Example preview={<FieldsetDeliveryDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -71,11 +73,13 @@ const [value, setValue] = useState('express');
 </Field.Root>
 ```
 
+</Example>
+
 ### Plan cards with group error
 
 Drive Fieldset `error` from `Field.Root` `invalid`. Keep `description` set — helper copy shows while valid; error replaces it when invalid. Surface owns the card chrome; highlight checked cards with `color`.
 
-<FieldsetPlanErrorDemo />
+<Example preview={<FieldsetPlanErrorDemo />}>
 
 ```tsx
 import { Field } from '@base-ui/react';
@@ -130,6 +134,8 @@ const empty = value.length === 0;
   </Fieldset>
 </Field.Root>
 ```
+
+</Example>
 ## Ask your agent
 
 ```text tab="Billing details"

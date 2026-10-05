@@ -17,7 +17,7 @@ When `prefers-reduced-motion: reduce` is active, Typewriter skips straight to th
 
 Nest Typewriter in a display Title for marketing heroes. `preserveSpace` holds the line box through type/delete; an underscore caret and themed `caretColor` match the auth compose pattern.
 
-<TypewriterHeroDemo />
+<Example preview={<TypewriterHeroDemo />}>
 
 ```tsx
 import { Button, Stack, Title, Typewriter } from '@viraui/react';
@@ -44,13 +44,15 @@ const heroTexts: string[] = [
 </Stack>
 ```
 
+</Example>
+
 Keep `texts` at module scope (or otherwise stable). Inline arrays recreate on every parent render and restart the cycle.
 
 ### Colored caret
 
 String `children` type once under a static Title. `caret="underscore"` with `caretColor` lifts the mark above muted copy so the cursor reads as a highlight accent while the phrase stays quiet.
 
-<TypewriterMutedDemo />
+<Example preview={<TypewriterMutedDemo />}>
 
 ```tsx
 import { Stack, Text, Title, Typewriter } from '@viraui/react';
@@ -65,11 +67,13 @@ import { Stack, Text, Title, Typewriter } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Reserved space
 
 `preserveSpace` plus a constrained `maxWidth` on Text keeps multi-line height steady while phrases cycle. `caret="none"` softens the reveal when a blinking mark would compete with body rhythm.
 
-<TypewriterWrapDemo />
+<Example preview={<TypewriterWrapDemo />}>
 
 ```tsx
 import { Stack, Surface, Text, Title, Typewriter } from '@viraui/react';
@@ -96,6 +100,8 @@ const wrapTexts: string[] = [
   </Stack>
 </Surface>
 ```
+
+</Example>
 
 Typewriter is decorative motion on labeled copy — parent Title/Text (or a surrounding region) owns the accessible name and any busy semantics.
 

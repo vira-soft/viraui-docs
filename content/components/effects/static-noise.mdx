@@ -17,7 +17,7 @@ StaticNoise runs SVG turbulence and is memory-heavy. Prefer one focal overlay pe
 
 A gradient hero with a fixed grain wash is the usual StaticNoise composition. Content sits above the figure so CTAs stay clickable while the plate still blends through the scene.
 
-<StaticNoiseHeroDemo />
+<Example preview={<StaticNoiseHeroDemo />}>
 
 ```tsx
 import { Button, Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
@@ -52,13 +52,15 @@ const contentStyle = {
 </Surface>
 ```
 
+</Example>
+
 `opacity={0.28}` lifts the grain a notch above the default so it reads on a dark gradient.
 
 ### Living static
 
 `animate` cycles seed frames for a living grain plate — useful on a single vibrant product card where the atmosphere should feel awake without a motion accent like [Beam](/components/effects/beam).
 
-<StaticNoiseAnimatedDemo />
+<Example preview={<StaticNoiseAnimatedDemo />}>
 
 ```tsx
 import { Button, Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
@@ -91,11 +93,13 @@ const contentStyle = {
 </Surface>
 ```
 
+</Example>
+
 ### Soft-light on photography
 
 Raise `baseFrequency` and switch `mixBlendMode` to `soft-light` when grain should sit like film over a photo instead of a hard difference plate. Caption chrome stays above the overlay.
 
-<StaticNoisePhotoDemo />
+<Example preview={<StaticNoisePhotoDemo />}>
 
 ```tsx
 import { Stack, StaticNoise, Surface, Text, Title } from '@viraui/react';
@@ -142,6 +146,8 @@ const overlayStyle = {
   </Stack>
 </Surface>
 ```
+
+</Example>
 
 StaticNoise is decorative only — accessible names and actions live on the content above it, not on the grain plate.
 

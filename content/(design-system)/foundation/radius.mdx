@@ -36,11 +36,7 @@ Nested surfaces inside a padded, rounded parent need a smaller arc so each corne
 
 Toggle the demo below: equal radii reuse the outer token and look wrong at the corners; `auto` keeps the arcs aligned.
 
-<RadiusConcentricDemo />
-
-```text tab="Nested corners"
-Nest a padded inner panel inside a large rounded outer panel. Inner corners should stay concentric with the outer curve — don't just copy the same corner size.
-```
+<Example preview={<RadiusConcentricDemo />}>
 
 ```tsx
 import { Button, Surface } from '@viraui/react';
@@ -51,6 +47,13 @@ import { Button, Surface } from '@viraui/react';
   </Surface>
 </Surface>
 ```
+
+</Example>
+
+```text tab="Nested corners"
+Nest a padded inner panel inside a large rounded outer panel. Inner corners should stay concentric with the outer curve — don't just copy the same corner size.
+```
+
 
 Outermost surfaces still need an explicit step — `auto` only resolves when an ancestor provides radius context. Nested menus, select options, and glow shells already lean on this pattern; prefer `auto` over duplicating the parent token.
 

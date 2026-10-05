@@ -20,7 +20,7 @@ Plane content — page backgrounds, cards, flat controls — usually sits at the
 
 Elevation APIs control **shadows only**. Most surfaces do not ship with an elevation prop. Wrap a valid element child with `Elevator`, or call `getElevationProps` on a host you already own. Reach for raw `data-elevation*` only when those utilities do not fit. Set `z-index` separately when paint order must change.
 
-<ElevatorDemo mode="light" />
+<Example preview={<ElevatorDemo mode="light" />}>
 
 ```tsx
 import { Elevator, Surface } from '@viraui/react';
@@ -31,12 +31,16 @@ import { Elevator, Surface } from '@viraui/react';
   </Surface>
 </Elevator>
 ```
+
+</Example>
+
 ```text tab="Hover-lift card"
 Give this card a subtle shadow that lifts a bit more on hover. Shadows only — don't change stacking order.
 ```
 ```text tab="Popover depth"
 This popover should look elevated above the page but sit below modals and drawers. The sticky header should stay under modal overlays.
 ```
+
 
 ## Tune
 

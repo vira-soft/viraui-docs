@@ -25,7 +25,7 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 
 `restingIcon` is required. Pair it with `pressedIcon` when the pressed state should read as a different glyph (fill weight, lock open, sun after moon). Omit `pressedIcon` when the same icon is enough and only `aria-pressed` / variant carry the state.
 
-<ToggleButtonIconsDemo />
+<Example preview={<ToggleButtonIconsDemo />}>
 
 ```tsx
 import { Heart, PushPin } from '@phosphor-icons/react';
@@ -45,11 +45,13 @@ import { Stack, ToggleButton } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Pressed variant
 
 Default resting chrome is flat. Pass `pressedVariant` when the pressed state should look filled or secondary so the on state reads clearly in a quiet toolbar. Turn on `interpolateIcons` for a short crossfade and rotate between the two icons instead of an instant swap.
 
-<ToggleButtonPressedVariantDemo />
+<Example preview={<ToggleButtonPressedVariantDemo />}>
 
 ```tsx
 import { Moon, Sun } from '@phosphor-icons/react';
@@ -64,11 +66,13 @@ import { ToggleButton } from '@viraui/react';
 />
 ```
 
+</Example>
+
 ### On press
 
 `onPressedChange` is the hook for side effects when the pressed state flips: persist a favorite, fire analytics, show a toast, or celebrate the moment. The demo below uses a short confetti burst as a stand-in for that reaction; swap the body of the callback for whatever the product needs.
 
-<ToggleButtonSparkDemo />
+<Example preview={<ToggleButtonSparkDemo />}>
 
 ```tsx
 import { Heart } from '@phosphor-icons/react';
@@ -86,11 +90,13 @@ import { ToggleButton } from '@viraui/react';
 />
 ```
 
+</Example>
+
 ### In a group
 
 ToggleGroup coordinates exclusive pressed values across ToggleButton children. Give each child a `value`; use `defaultValue` (or controlled `value` / `onValueChange`) as a `string[]`. Flat alone barely shows pressed, so pair with `pressedVariant` (or a `pressedIcon`) when the on state must read clearly. Wrap the group in a Surface when you want a bordered toolbar shell; spacing between items is owned by the group.
 
-<ToggleGroupSingleDemo />
+<Example preview={<ToggleGroupSingleDemo />}>
 
 ```tsx
 import { TextAlignCenter, TextAlignLeft, TextAlignRight } from '@phosphor-icons/react';
@@ -120,11 +126,13 @@ import { Surface, ToggleButton, ToggleGroup } from '@viraui/react';
 </Surface>
 ```
 
+</Example>
+
 ### Multi-select
 
 Turn on `multiple` when several children can stay pressed together (formatting toolbars). Values still move as `string[]`.
 
-<ToggleGroupMultipleDemo />
+<Example preview={<ToggleGroupMultipleDemo />}>
 
 ```tsx
 import { TextB, TextItalic, TextUnderline } from '@phosphor-icons/react';
@@ -153,6 +161,8 @@ import { Surface, ToggleButton, ToggleGroup } from '@viraui/react';
   </ToggleGroup>
 </Surface>
 ```
+
+</Example>
 
 ## Ask your agent
 

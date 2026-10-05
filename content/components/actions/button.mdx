@@ -29,7 +29,7 @@ Optional `addon` slots accept a leading or trailing icon (or a small Chip / Avat
 
 Pick the variant from what the action means on that surface. A bare Button is already primary; reach for another variant when the action is not the commit.
 
-<ButtonVariantsDemo />
+<Example preview={<ButtonVariantsDemo />}>
 
 ```tsx
 import { Button, Stack } from '@viraui/react';
@@ -42,13 +42,15 @@ import { Button, Stack } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 Prefer one primary per region. Pair it with secondary cancel rather than two competing filled actions.
 
 ### Addons
 
 Pass icons through `addon`, not as lone children. Leading is the default; set `addonPosition="end"` when the glyph trails the label.
 
-<ButtonAddonDemo />
+<Example preview={<ButtonAddonDemo />}>
 
 ```tsx
 import { Download, FloppyDisk, Trash } from '@phosphor-icons/react';
@@ -65,13 +67,15 @@ import { Button, Stack } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 If the control has no visible text, switch to [IconButton](/components/actions/icon-button) with an accessible name — do not empty Button children and hope the icon is enough.
 
 ### Pill
 
 `pill` rounds the control into a capsule. Nest it in a full-radius [Surface](/components/layout/surface) bar when the action should read as chrome inside a strip rather than a free-floating button — put supporting copy on one side and the capsule CTA on the other so the row stays balanced.
 
-<ButtonPillDemo />
+<Example preview={<ButtonPillDemo />}>
 
 ```tsx
 import { Download } from '@phosphor-icons/react';
@@ -98,11 +102,13 @@ import { Button, Stack, Surface, Text } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### Loading
 
 Turn on `loading` while the request runs. Width stays stable so the layout does not jump when the Spinner appears; the Spinner itself stays decorative because `aria-busy` already marks the control.
 
-<ButtonLoadingDemo />
+<Example preview={<ButtonLoadingDemo />}>
 
 ```tsx
 import { Button } from '@viraui/react';
@@ -110,13 +116,15 @@ import { Button } from '@viraui/react';
 <Button loading>Publishing…</Button>
 ```
 
+</Example>
+
 Keep the same label text during the wait (or a short “…”) so the announced name stays continuous. On Button, loading also disables activation until you clear the flag.
 
 ### Action rows
 
 Footer and dialog strips are Stack rows of Buttons — gap and alignment live on the Stack, not on per-button width CSS. Here the three actions share the strip equally: `fullWidth` fills the parent, `expandChildren` grows each Button on the main axis.
 
-<ButtonActionRowDemo />
+<Example preview={<ButtonActionRowDemo />}>
 
 ```tsx
 import { FloppyDisk } from '@phosphor-icons/react';
@@ -129,11 +137,13 @@ import { Button, Stack } from '@viraui/react';
 </Stack>
 ```
 
+</Example>
+
 ### As a link
 
 Use ButtonLink when activation should navigate. Same chrome as Button; different element — a native `<a>`, or a framework `Link` via `render`.
 
-<ButtonLinkDemo />
+<Example preview={<ButtonLinkDemo />}>
 
 ```tsx
 import { ArrowRight, ArrowSquareOut, BookOpen } from '@phosphor-icons/react';
@@ -164,8 +174,6 @@ import { ButtonLink, Stack } from '@viraui/react';
 </Stack>
 ```
 
-Pass `href` for native or external URLs (`target` / `rel` when needed). Trailing addons suit “continue” and external destinations.
-
 ```tsx
 import Link from 'next/link';
 import { ButtonLink } from '@viraui/react';
@@ -173,7 +181,9 @@ import { ButtonLink } from '@viraui/react';
 <ButtonLink render={<Link href="/docs" />}>Documentation</ButtonLink>
 ```
 
-Pass `render` for in-app framework routing. Icon-only navigation belongs on [IconButton](/components/actions/icon-button) (`IconButtonLink`).
+</Example>
+
+Pass `href` for native or external URLs (`target` / `rel` when needed). Trailing addons suit “continue” and external destinations. Pass `render` for in-app framework routing. Icon-only navigation belongs on [IconButton](/components/actions/icon-button) (`IconButtonLink`).
 
 
 ## Ask your agent
