@@ -72,3 +72,39 @@ export const TextNestedTonesDemo: React.FC = () => (
     </Stack>
   </SandboxShell>
 );
+
+/** Relaxed leading on multi-line body copy. */
+export const TextLineHeightDemo: React.FC = () => (
+  <SandboxShell label="Text with relaxed lineHeight">
+    <Stack fullWidth hAlign="center">
+      <Text
+        align="center"
+        lineHeight="l"
+        maxWidth="36ch"
+        render={<p />}
+        size="s"
+      >
+        Northwind Analytics keeps shared dashboards, scheduled exports, and
+        access reviews in one workspace so regional teams can publish without
+        duplicating reports.
+      </Text>
+    </Stack>
+  </SandboxShell>
+);
+
+/** Letter-spacing via the `tracking` prop. */
+export const TextTrackingDemo: React.FC = () => (
+  <SandboxShell label="Text with wide tracking">
+    <Stack fullWidth hAlign="center">
+      <Text
+        align="center"
+        size="s"
+        tracking="0.12em"
+        transform="uppercase"
+        weight="semibold"
+      >
+        Field notes
+      </Text>
+    </Stack>
+  </SandboxShell>
+);

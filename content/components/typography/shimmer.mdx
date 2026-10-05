@@ -5,9 +5,11 @@ description: Moving highlight sweep across text — duration, spread, and angle 
 
 Shimmer wraps inline copy in a sweep highlight across the glyphs. Reach for it when the string is already known but should feel in motion — loading placeholders, emphasis lines, or “generating” states while an agent streams.
 
-Duration, spread, and angle tune the sweep; `highlightColor` overrides the default lightness boost derived from `currentColor`. Because the effect is decorative, pair Shimmer with visible status copy or an `aria-busy` region when it marks a loading state — the sweep alone does not explain what is loading.
+Duration, spread, and angle tune the sweep. By default the highlight lightens `currentColor`, so host the string in muted [Text](/components/typography/text) (`tone="muted"`) or muted [Title](/components/typography/title) (`color="var(--global-muted)"`). Pure white or near-white `currentColor` leaves no room for that boost — the sweep disappears even though the glyphs stay readable. Pass `highlightColor` when you need a deliberate peak that is not a lightness step from the host.
 
-Respect reduced motion: swap to static muted [Text](/components/typography/text) when motion would distract. Prefer [Skeleton](/components/loading/skeleton) when the content shape is unknown and you need a block placeholder instead of animated known copy.
+Because the effect is decorative, pair Shimmer with visible status copy or an `aria-busy` region when it marks a loading state — the sweep alone does not explain what is loading.
+
+Respect reduced motion: swap to static muted Text when motion would distract. Prefer [Skeleton](/components/loading/skeleton) when the content shape is unknown and you need a block placeholder instead of animated known copy.
 
 ---
 
@@ -16,19 +18,21 @@ Respect reduced motion: swap to static muted [Text](/components/typography/text)
 - Known status strings that should feel active while work is in progress
 - Short emphasis lines where a gradient sweep reads as “live”
 - Inline labels next to streaming or generating UI
+- Muted host color (or an explicit `highlightColor`) so the sweep stays visible on dark surfaces
 
 ## When not to use
 
 - Unknown layout placeholders before content arrives → [Skeleton](/components/loading/skeleton)
 - Ordinary static body or heading copy → [Text](/components/typography/text) / [Title](/components/typography/title)
+- Default white foreground as the only color with no `highlightColor` — the lightness boost has nowhere to go
 - Nested inside [ClampText](/components/typography/clamp-text) unless you accept the clip interacting with the moving gradient
 
 ---
 
 ## Related
 
-- [Text](/components/typography/text) — static body copy for reduced-motion fallbacks
-- [Title](/components/typography/title) — heading hosts that can wrap Shimmer children
+- [Text](/components/typography/text) — muted host (`tone="muted"`) and reduced-motion fallback
+- [Title](/components/typography/title) — muted heading host (`color="var(--global-muted)"`) for Shimmer children
 - [Skeleton](/components/loading/skeleton) — block placeholders when the string is not ready
 - [Motion](/foundation/motion) — duration and reduced-motion foundation
 
@@ -38,7 +42,7 @@ Respect reduced motion: swap to static muted [Text](/components/typography/text)
 
 ### Streaming status label
 
-A single-line status label with shimmer while an agent response streams. Keep a static muted explanation beside or below it, then replace with normal answer text when content arrives.
+A single-line status label with shimmer while an agent response streams. Keep the shimmering line on muted Text, add a static muted explanation beside or below it, then replace with normal answer text when content arrives.
 
 <Example preview={<ShimmerStatusDemo />}>
 
@@ -54,11 +58,13 @@ import { Shimmer, Stack, Surface, Text } from '@viraui/react';
   hPadding="m"
   vPadding="m"
 >
-  <Stack rowGap="2xs">
-    <Text>
+  <Stack rowGap="m">
+    <Text tone="muted">
       <Shimmer>Summarizing your request…</Shimmer>
     </Text>
-    <Text />
+    <Text size="s" tone="muted">
+      This usually takes a few seconds. You can keep editing the prompt.
+    </Text>
   </Stack>
 </Surface>
 ```
@@ -67,18 +73,26 @@ import { Shimmer, Stack, Surface, Text } from '@viraui/react';
 
 ### Shimmer in a heading
 
-Wrap Shimmer in [Title](/components/typography/title) when the loading string should occupy heading space. Mark the surrounding region busy; leave Shimmer readable.
+Wrap Shimmer in a muted Title when the loading string should occupy heading space. Mark the surrounding region busy; leave Shimmer readable.
 
 <Example preview={<ShimmerTitleDemo />}>
 
 ```tsx
 import { Shimmer, Stack, Text, Title } from '@viraui/react';
 
-<Stack aria-busy="true" aria-label="Generating weekly report" role="region">
-  <Title render={<h2 />} size="3">
+<Stack
+  aria-busy="true"
+  aria-label="Generating weekly report"
+  role="region"
+  rowGap="s"
+>
+  <Title color="var(--global-muted)" render={<h2 />} size="3">
     <Shimmer>Generating weekly report…</Shimmer>
   </Title>
-  <Text />
+  <Text size="s" tone="muted">
+    The heading stays in place so the layout does not jump when the real title
+    arrives.
+  </Text>
 </Stack>
 ```
 
@@ -87,9 +101,9 @@ import { Shimmer, Stack, Text, Title } from '@viraui/react';
 ## Ask your agent
 
 ```text tab="AI shimmer label"
-While this assistant panel waits, show a shimmering "Summarizing your request…" label and a static muted line explaining the wait. Replace with normal answer text when content arrives.
+While this assistant panel waits, show a shimmering muted "Summarizing your request…" label and a static muted line explaining the wait. Replace with normal answer text when content arrives.
 ```
 
 ```text tab="Shimmer heading"
-While the weekly report title is generating, keep a heading-sized shimmering placeholder so the layout does not jump, and mark the region as busy.
+While the weekly report title is generating, keep a muted heading-sized shimmering placeholder so the layout does not jump, and mark the region as busy.
 ```

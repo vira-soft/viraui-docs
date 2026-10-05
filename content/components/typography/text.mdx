@@ -5,7 +5,7 @@ description: Body-scale copy — size, tone, weight, and layout for semantic inl
 
 Text is the default running-copy primitive on the body typescale. Reach for it for helper lines, descriptions, labels, and any sentence that is not a heading.
 
-`size` and `tone` cover most look choices; `weight`, `lineHeight`, `align`, `maxWidth`, and `whiteSpace` handle layout. Default root is `span` — pass `render` when the copy needs a `p`, `label`, `code`, or other element while keeping Text styling. Prefer `tone` over a literal `color` so theme changes stay centralized.
+`size` and `tone` cover most look choices; `weight`, `lineHeight`, `tracking`, `align`, `maxWidth`, and `whiteSpace` handle layout. Default root is `span` — pass `render` when the copy needs a `p`, `label`, `code`, or other element while keeping Text styling. Prefer `tone` over a literal `color` so theme changes stay centralized. Use `tracking` instead of CSS `letter-spacing` on the same Text root.
 
 For headings, use [Title](/components/typography/title) instead of bumping Text `size`. Fluid viewport clamp and the foundation typography gate are covered on [Typography](/foundation/typography).
 
@@ -102,6 +102,52 @@ import { Text } from '@viraui/react';
 
 </Example>
 
+### Line height
+
+`lineHeight` picks a foundation leading token (`none` | `xs` | `s` | `m` | `l`). Root Text defaults to `m`; omit it on nested Text so leading inherits from the outer copy.
+
+<Example preview={<TextLineHeightDemo />}>
+
+```tsx
+import { Text } from '@viraui/react';
+
+<Text
+  align="center"
+  lineHeight="l"
+  maxWidth="36ch"
+  render={<p />}
+  size="s"
+>
+  Northwind Analytics keeps shared dashboards, scheduled exports, and
+  access reviews in one workspace so regional teams can publish without
+  duplicating reports.
+</Text>
+```
+
+</Example>
+
+### Letter spacing
+
+Set letter-spacing with `tracking` — a CSS length such as `0.12em`. Prefer this prop over CSS `letter-spacing` on the same Text root. Pair wide tracking with `transform="uppercase"` for section labels.
+
+<Example preview={<TextTrackingDemo />}>
+
+```tsx
+import { Text } from '@viraui/react';
+
+<Text
+  align="center"
+  size="s"
+  tracking="0.12em"
+  transform="uppercase"
+  weight="semibold"
+>
+  Field notes
+</Text>
+```
+
+</Example>
+
 ## Ask your agent
 
 ```text tab="Muted helper line"
@@ -114,4 +160,12 @@ Turn the workspace policy blurb into a real paragraph, and the workspace name ca
 
 ```text tab="Nested status tones"
 In the deploy summary, keep the sentence muted and mark failing checks as danger and passing checks as positive — same size as the surrounding line.
+```
+
+```text tab="Relaxed leading"
+Give this card description lineHeight l, size s, centered, and a ~36ch measure so the paragraph reads with more air.
+```
+
+```text tab="Tracked section label"
+Turn the field notes eyebrow into a centered uppercase Text label with tracking 0.12em. Use the tracking prop, not CSS letter-spacing.
 ```

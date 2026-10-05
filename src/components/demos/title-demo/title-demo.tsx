@@ -28,8 +28,8 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
 /** Page hero Title as h1 with balanced wrap and helper Text. */
 export const TitleSemanticPageDemo: React.FC = () => (
   <SandboxShell height={260} label="Semantic page title with helper copy">
-    <Stack fullWidth maxWidth="28rem" rowGap="s">
-      <Title balanced render={<h1 />} size="1">
+    <Stack fullWidth maxWidth="28rem" rowGap="m">
+      <Title balanced lineHeight="s" render={<h1 />} size="1">
         Ship the next release without the guesswork
       </Title>
       <Text maxWidth="42ch" size="s" tone="muted">
@@ -43,7 +43,7 @@ export const TitleSemanticPageDemo: React.FC = () => (
 /** Quiet visual size on a semantic h1. */
 export const TitleVisualVsSemanticDemo: React.FC = () => (
   <SandboxShell label="Quiet visual size on a semantic page heading">
-    <Stack fullWidth maxWidth="22rem" rowGap="2xs">
+    <Stack fullWidth maxWidth="22rem" rowGap="s">
       <Title render={<h1 />} size="5">
         Notifications
       </Title>

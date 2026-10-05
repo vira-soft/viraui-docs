@@ -114,6 +114,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Base UI handoff Card: first body section after frontmatter (before lead narrative), only when sibling `meta.xml` has `<base_ui href>` (or via `shared_contract`). Copy `href` verbatim — rule `.cursor/rules/07-docs-base-ui-card.mdc`
 - MDX code fences: incidental content → self-closing placeholders — `.cursor/rules/06-docs-code-fence-placeholders.mdc` (+ `page-shell.md`). Live demos keep real consumer copy.
 - Docs Avatars: prefer photo `src` (`mockmind-api.uifaces.co/content/human/{n}.jpg`); keep required `fallback` but do not stage initials-only faces unless teaching missing/broken image — `.cursor/rules/08-docs-demo-avatars.mdc`
+- Shimmer demos: host in muted color (`Text tone="muted"` / `Title color="var(--global-muted)"`). Default white `currentColor` in dark mode → highlight `l+0.35` clamps to white → sweep invisible. Matches DS patterns + Storybook.
 - Vite RSC: `lucide-react` → `optimizeDeps.exclude` in `vite.config.ts` (else “inconsistently optimized” warn)
 - Generated / install: `dist/`, `node_modules/`, `.tokensave/`, `.pnpm-store/` — do not hand-edit
 

@@ -220,9 +220,11 @@ export {
   TooltipToolbarDemo,
 } from "./tooltip-demo";
 export {
+  TextLineHeightDemo,
   TextMutedHelperDemo,
   TextNestedTonesDemo,
   TextSemanticRootDemo,
+  TextTrackingDemo,
 } from "./text-demo";
 export { TitleSemanticPageDemo, TitleVisualVsSemanticDemo } from "./title-demo";
 export {

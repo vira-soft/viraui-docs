@@ -45,8 +45,8 @@ A page hero with a visual size preset and `render={<h1 />}` plus balanced wrappi
 ```tsx
 import { Stack, Text, Title } from '@viraui/react';
 
-<Stack rowGap="s">
-  <Title balanced render={<h1 />} size="1">
+<Stack rowGap="m">
+  <Title balanced lineHeight="s" render={<h1 />} size="1">
     Ship the next release without the guesswork
   </Title>
   <Text />
@@ -64,7 +64,7 @@ The document outline and the visual preset do not have to match. A quieter `size
 ```tsx
 import { Stack, Text, Title } from '@viraui/react';
 
-<Stack rowGap="2xs">
+<Stack rowGap="s">
   <Title render={<h1 />} size="5">
     Notifications
   </Title>

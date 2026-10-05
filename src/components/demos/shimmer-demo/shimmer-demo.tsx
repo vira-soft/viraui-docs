@@ -38,8 +38,8 @@ export const ShimmerStatusDemo: React.FC = () => (
       role="region"
       vPadding="m"
     >
-      <Stack maxWidth="20rem" rowGap="2xs">
-        <Text>
+      <Stack maxWidth="20rem" rowGap="m">
+        <Text tone="muted">
           <Shimmer>Summarizing your request…</Shimmer>
         </Text>
         <Text size="s" tone="muted">
@@ -59,9 +59,9 @@ export const ShimmerTitleDemo: React.FC = () => (
       fullWidth
       maxWidth="24rem"
       role="region"
-      rowGap="2xs"
+      rowGap="s"
     >
-      <Title render={<h2 />} size="3">
+      <Title color="var(--global-muted)" render={<h2 />} size="3">
         <Shimmer>Generating weekly report…</Shimmer>
       </Title>
       <Text size="s" tone="muted">
