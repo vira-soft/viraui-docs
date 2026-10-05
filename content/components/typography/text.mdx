@@ -1,15 +1,39 @@
 ---
 title: Text
-description: Body-scale copy — size, tone, weight, line height, trim, and render for semantic inline or block roots.
+description: Body-scale copy — size, tone, weight, and layout for semantic inline or block roots.
 ---
 
-Text is the default running-copy primitive on the body typescale. `size` steps from `xs` through `4xl`; `tone` maps to semantic color roles (`muted`, `interactive`, status highlights) without hand-picking hex values. `weight`, `lineHeight`, `align`, `maxWidth`, and `whiteSpace` cover most layout needs; `balanced` enables nicer wrapping on short marketing lines. `family` switches between body and mono — reach for mono on code snippets and data, not headings. Pass `fluid` for viewport clamp between size steps; omit it (default) to lock each step at its `--font-scale-body-*` token. Theme `--effect-fluid-typography: initial` still locks all Text globally (`xs` stays fixed either way).
+Text is the default running-copy primitive on the body typescale. Reach for it for helper lines, descriptions, labels, and any sentence that is not a heading.
 
-Default root is `span`. Use `render` when the copy needs a different element (`p`, `label`, `code`) while keeping Text styling. `trim` applies `text-box` edge trimming when the browser supports it so stacked lines sit tighter in flex layouts. Literal `color` is an escape hatch — prefer `tone` so theme changes stay centralized. For headings, use [Title](/components/typography/title) instead of bumping Text `size`. For the fluid gate details, see [Typography](/foundation/typography).
+`size` and `tone` cover most look choices; `weight`, `lineHeight`, `align`, `maxWidth`, and `whiteSpace` handle layout. Default root is `span` — pass `render` when the copy needs a `p`, `label`, `code`, or other element while keeping Text styling. Prefer `tone` over a literal `color` so theme changes stay centralized.
+
+For headings, use [Title](/components/typography/title) instead of bumping Text `size`. Fluid viewport clamp and the foundation typography gate are covered on [Typography](/foundation/typography).
+
+## When to use
+
+- Supporting copy under a section or control
+- Body paragraphs, captions, and inline labels that share the body scale
+- Mono snippets or data lines via `family` when the line is not a heading
+- Semantic roots (`p`, `label`, `code`) that still need Text styling
+
+## When not to use
+
+- Page or section headings → [Title](/components/typography/title)
+- Copy that must fill a tile width → [FitText](/components/typography/fit-text)
+- Overflow that should ellipsize to a fixed row count → [ClampText](/components/typography/clamp-text)
+
+## Related
+
+- [Title](/components/typography/title) — heading and display presets
+- [ClampText](/components/typography/clamp-text) — multi-line truncation
+- [FitText](/components/typography/fit-text) — container-filling display type
+- [Typography](/foundation/typography) — scale, fluid gate, and tokens
 
 ## Common examples
 
-Muted supporting copy under a section heading is the baseline Text pattern.
+### Muted helper line
+
+Muted supporting copy under a section heading is the baseline Text pattern. Keep the line on the body scale; do not fake a heading with oversized Text.
 
 <PreviewSlot label="Text preview" />
 
