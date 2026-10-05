@@ -9,7 +9,7 @@ Stable hooks apps set for mode, layout, elevation, vibrancy, and link opt-out. P
 | Attribute                  | Values                           | Use                                                              |
 | -------------------------- | -------------------------------- | ---------------------------------------------------------------- |
 | `data-mode`                | `light`, `dark`, `inverted`      | Scope runtime color scheme; `inverted` contrasts a nested island |
-| `data-no-link-style`       | presence                         | Keep component/custom chrome on an anchor                        |
+| `data-no-link-style`       | presence                         | Opt out of preflight link chrome (only opt-out; class does **not** suppress) |
 | `data-elevation`           | `0`–`4`                          | Resting shadow on raw DOM                                        |
 | `data-elevation-hover`     | `0`–`4`                          | Hover shadow paired with resting elevation                       |
 | `data-elevation-direction` | `bottom`, `top`, `left`, `right` | Shadow cast direction                                            |
@@ -36,7 +36,7 @@ Stable hooks apps set for mode, layout, elevation, vibrancy, and link opt-out. P
 
 - `data-elevation*` needs `--effect-shadows` on the active theme — do not hand-roll `box-shadow`.
 - `data-vibrant` needs `--effect-vibrancy` — do not hand-roll `backdrop-filter`.
-- `data-no-link-style` = custom link chrome, not prose links.
+- `data-no-link-style` = only opt-out for preflight link chrome (interactive color + animated underline). Class on `<a>` does **not** suppress. Prose `Text`/`Title` as `<a>` keep underline; chrome links (`ButtonLink`, `Chip`, `Menu.LinkItem`, custom Surface-as-a) set the attr.
 
 Per-component state attributes are separate contracts — only hooks documented by that component’s guide; never infer from DOM output.
 
