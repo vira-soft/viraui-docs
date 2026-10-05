@@ -3,16 +3,135 @@ title: Masonry
 description: Multi-column masonry layout — responsive column counts from breakpoint map.
 ---
 
-`Masonry` distributes children into a variable-height column grid — each child is a `Masonry.Item`, and the root measures its inline size to pick a column count from `breakpointCols`. The default map steps from one column on narrow viewports up to six on very wide screens; pass your own `breakpointCols` object to replace that schedule — keys are min-width pixel thresholds, and the largest matching breakpoint wins. Layout runs in the client after mount; prefer [`Grid`](/components/layout/grid) when every row shares the same height. Masonry fits image galleries, tag clouds, and card feeds where tile height varies.
+`Masonry` distributes children into a variable-height column grid — each child is a `Masonry.Item`, and the root measures its inline size to pick a column count from `breakpointCols`. The default map opens more columns as the root grows; pass your own `breakpointCols` object to replace that schedule — keys are min-width pixel thresholds against the Masonry root's content-box, and the largest matching breakpoint wins. Layout runs in the client after mount, so the first paint matches the `default` column count until `ResizeObserver` settles. Prefer [`Grid`](/components/layout/grid) when every row shares the same height. Masonry fits image galleries, tag clouds, and card feeds where tile height varies — compose each item as Elevator → [`Surface`](/components/layout/surface) → [`Stack`](/components/layout/stack) for chrome and spacing, and set `gap` from the spacing scale instead of custom column margins.
 
 ## Common examples
 
-A responsive image gallery with variable-height tiles on Surface hosts is the baseline Masonry layout.
+### Responsive gallery
 
-<PreviewSlot label="Masonry preview" />
+A photo wall with uneven tile heights is the baseline Masonry layout. The built-in schedule applies unless you pass `breakpointCols` — one column by default, then more as the root grows.
+
+<Example preview={<MasonryResponsiveGalleryDemo />}>
+
+```tsx
+import { Elevator, Masonry, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Masonry aria-label="Workspace photo gallery" gap="m">
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} overflow="hidden" radius="m">
+        <Stack>
+          <img alt="" height={160} src="…" width={480} />
+          <Stack hPadding="m" rowGap="2xs" vPadding="m">
+            <Title />
+            <Text />
+          </Stack>
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} overflow="hidden" radius="m">
+        <Stack>
+          <img alt="" height={240} src="…" width={480} />
+          <Stack hPadding="m" rowGap="2xs" vPadding="m">
+            <Title />
+            <Text />
+          </Stack>
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+</Masonry>
+```
+
+</Example>
+
+### Custom breakpoints
+
+Replace the default map when the wall should open columns at different root widths. Keys may arrive unsorted — the largest matching min-width still wins — and thresholds are measured on the Masonry root, not the viewport.
+
+<Example preview={<MasonryCustomBreakpointsDemo />}>
+
+```tsx
+import { Elevator, Masonry, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Masonry
+  aria-label="Campus zones"
+  breakpointCols={{ default: 1, 640: 2, 1152: 3 }}
+  gap="l"
+>
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" rowGap="s" vPadding="l">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" rowGap="s" vPadding="l">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+</Masonry>
+```
+
+</Example>
+
+### Variable-height tiles
+
+Pack presentational Surface cards with uneven copy length so column flow stays visible. Reach for Grid instead when every tile should share a row height or needs spans and placement.
+
+<Example preview={<MasonryVariableHeightDemo />}>
+
+```tsx
+import { Elevator, Masonry, Stack, Surface, Text } from '@viraui/react';
+
+<Masonry aria-label="Editorial card wall" gap="l">
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} hoverColor={3} radius="m">
+        <Stack hPadding="l" rowGap="s" vPadding="l">
+          <Text />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+  <Masonry.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} hoverColor={3} radius="m">
+        <Stack hPadding="l" rowGap="s" vPadding="l">
+          <Text />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Masonry.Item>
+</Masonry>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Image gallery"
-Build an image gallery with eight placeholder tiles in a masonry layout.
+Build an image gallery with eight placeholder tiles in a masonry layout — uneven photo heights, short captions under each shot.
+```
+
+```text tab="Breakpoint schedule"
+Build a masonry card wall that stays one column until the host is wide, then opens to two and three columns at custom widths.
+```
+
+```text tab="Editorial wall"
+Build an editorial card wall with variable-height Surface tiles — short and long copy mixed so the columns stay uneven.
 ```

@@ -3,16 +3,128 @@ title: Stack
 description: Flex layout host — direction, gap, alignment, and padding through theme tokens.
 ---
 
-`Stack` is the default flex container for ViraUI screens — children flow in a row or column with `direction`, `rowGap` and `columnGap` mapped to [spacing](/foundation/spacing) tokens, and `hAlign` / `vAlign` for cross-axis alignment. Padding props accept the same step names as `Surface` and `Grid`; pass `render` to replace the root element when the stack should be a `nav`, `section`, or other semantic host. Prefer `Stack` over raw flex CSS so gap and padding stay on the theme scale and your agent can reshape layouts through props instead of one-off stylesheets.
+`Stack` is the default flex container for ViraUI screens — children flow in a column or row with `direction`, `rowGap` and `columnGap` mapped to [spacing](/foundation/spacing) tokens, and `hAlign` / `vAlign` for axis alignment from the consumer point of view. Padding props take the same step names as [`Surface`](/components/layout/surface); pass a `[start, end]` tuple when only one side needs inset. Prefer `expandChildren` and `fullWidth` when a row of actions or a panel shell should fill space along the main axis. Pass `render` to replace the default `div` when the stack should be a `header`, `nav`, `section`, or other semantic host while keeping the same layout hooks. Reach for [`Grid`](/components/layout/grid) or [`Masonry`](/components/layout/masonry) when the layout is two-dimensional rather than a single flex axis.
 
 ## Common examples
 
-A vertical card list with token gap and nested stacks is the usual layout pattern.
+### Column list
 
-<PreviewSlot label="Stack preview" />
+A vertical card list with token `rowGap` is the usual screen pattern — each row is its own nested Stack for media, copy, and a trailing action.
+
+<Example preview={<StackColumnDemo />}>
+
+```tsx
+import { Avatar, Button, Stack, Surface, Text } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
+    <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+      <Stack columnGap="m" direction="row" vAlign="center">
+        <Avatar alt="" fallback="SC" size="s" src="…" />
+        <Stack rowGap="2xs">
+          <Text />
+          <Text size="s" tone="muted" />
+        </Stack>
+      </Stack>
+      <Button size="s" variant="secondary" />
+    </Stack>
+  </Surface>
+  {/* more cards */}
+</Stack>
+```
+
+</Example>
+
+### Equal-width row
+
+`direction="row"` plus `expandChildren` grows direct children along the main axis so Cancel, Delete, and Save share the strip evenly — pair with `fullWidth` when the stack itself must fill the parent.
+
+<Example preview={<StackEqualRowDemo />}>
+
+```tsx
+import { FloppyDisk, Trash } from '@phosphor-icons/react';
+import { Button, Stack } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" expandChildren fullWidth>
+  <Button variant="secondary" />
+  <Button addon={<Trash />} variant="destructive" />
+  <Button addon={<FloppyDisk />} />
+</Stack>
+```
+
+</Example>
+
+### Nested padding
+
+Outer and inner Stacks own section gaps and token padding — header copy, body controls, and a footer bar stay on the spacing scale without custom flex CSS.
+
+<Example preview={<StackNestedDemo />}>
+
+```tsx
+import { Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack rowGap="m">
+    <Stack hPadding="l" rowGap="xs" vPadding="l">
+      <Title />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Surface color={2} hPadding="l" vPadding="m">
+      <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+        <Button variant="secondary" />
+        <Button />
+      </Stack>
+    </Surface>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Semantic root
+
+`render` swaps the default `div` for a native landmark while Stack still owns direction, gap, and padding — useful for page chrome and nested `nav` clusters.
+
+<Example preview={<StackSemanticDemo />}>
+
+```tsx
+import { ButtonLink, Stack, Text } from '@viraui/react';
+
+<Stack
+  columnGap="s"
+  direction="row"
+  fullWidth
+  hAlign="space-between"
+  hPadding="m"
+  render={<header />}
+  vAlign="center"
+  vPadding="m"
+>
+  <Text />
+  <Stack columnGap="xs" direction="row" render={<nav />} vAlign="center">
+    <ButtonLink href="#" size="s" variant="secondary" />
+    <ButtonLink href="#" size="s" variant="flat" />
+    <ButtonLink href="#" size="s" variant="flat" />
+  </Stack>
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Card list"
-Build a vertical card list with comfortable spacing — each card has a title and body paragraph.
+```text tab="Teammate list"
+Build a vertical list of teammate cards with comfortable spacing — each card has an avatar, name, role, and a Details button on the right.
+```
+
+```text tab="Footer actions"
+Add a full-width footer row where Cancel, Delete, and Save share the strip evenly — Delete destructive, Save with a save icon.
+```
+
+```text tab="Settings panel"
+Compose a settings panel with a title and short description, then a footer bar with Reset and Save — nest stacks so padding and gaps stay on the theme scale.
+```
+
+```text tab="Page header"
+Build a page header with the product name on the left and Hub, Studio, and Prompts links on the right — use semantic header and nav roots instead of plain divs.
 ```

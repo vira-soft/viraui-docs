@@ -9,7 +9,12 @@ export { MotionDemoIntuitive } from "./motion-demo-intuitive";
 export { MotionDemoPlayful } from "./motion-demo-playful";
 export { MotionDemoFunctional } from "./motion-demo-functional";
 export { MotionDemoEvocative } from "./motion-demo-evocative";
-export { ElevatorDemo } from "./elevator-demo";
+export {
+  ElevatorDemo,
+  ElevatorDirectionDemo,
+  ElevatorRestingDemo,
+} from "./elevator-demo";
+
 export { RadiusConcentricDemo } from "./radius-concentric-demo";
 export { IconsEmptyStatesDemo } from "./icons-empty-states-demo";
 export { TypographyFluidDemo } from "./typography-fluid-demo";
@@ -115,3 +120,45 @@ export {
   TextfieldEmailDemo,
   TextfieldFitContentDemo,
 } from "./textfield-demo";
+export {
+  StackColumnDemo,
+  StackEqualRowDemo,
+  StackNestedDemo,
+  StackSemanticDemo,
+} from "./stack-demo";
+export {
+  SurfaceBorderSidesDemo,
+  SurfaceColorRampDemo,
+  SurfaceNestedConcentricDemo,
+  SurfacePaddingComposeDemo,
+} from "./surface-demo";
+export {
+  GridAutoFillDemo,
+  GridFixedColumnsDemo,
+  GridItemSpanDemo,
+} from "./grid-demo";
+export {
+  MasonryCustomBreakpointsDemo,
+  MasonryResponsiveGalleryDemo,
+  MasonryVariableHeightDemo,
+} from "./masonry-demo";
+export {
+  SeparatorListDemo,
+  SeparatorThicknessDemo,
+  SeparatorToolbarDemo,
+} from "./separator-demo";
+export {
+  BleedAmountDemo,
+  BleedDividerDemo,
+  BleedFullDemo,
+} from "./bleed-demo";
+export {
+  BreakpointsCustomMapDemo,
+  BreakpointsDirectionDemo,
+  BreakpointsRecordDemo,
+} from "./breakpoints-demo";
+export {
+  AccordionAttachedDemo,
+  AccordionExclusiveDemo,
+  AccordionMultipleDemo,
+} from "./accordion-demo";

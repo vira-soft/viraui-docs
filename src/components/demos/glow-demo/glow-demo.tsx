@@ -63,13 +63,14 @@ const glowProps: GlowProps = {
 
 /** Shared pointer glow across a small feature grid. */
 export const GlowGridDemo: React.FC = () => (
-  <SandboxShell height={400} label="Feature cards with shared pointer glow">
+  <SandboxShell height={520} label="Feature cards with shared pointer glow">
     <Stack
       columnGap="m"
       direction="row"
       hAlign="center"
       maxWidth="36rem"
       rowGap="m"
+      vPadding="xl"
       wrap
     >
       <Glow {...glowProps}>

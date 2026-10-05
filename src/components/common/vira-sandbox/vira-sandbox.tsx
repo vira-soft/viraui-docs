@@ -52,6 +52,13 @@ html, body {
   overflow: hidden;
   position: relative;
 }
+/* Content-sized iframe: let the document grow with the portal root. */
+html[data-vira-sandbox-auto-height],
+html[data-vira-sandbox-auto-height] body {
+  block-size: auto;
+  min-block-size: 0;
+  overflow: visible;
+}
 /* Theme tokens say "Geist Variable"; Google CSS registers "Geist". */
 :root {
   --font-family-heading: Geist, "Geist Variable", system-ui, sans-serif;
@@ -62,6 +69,9 @@ html, body {
   min-block-size: 100%;
   position: relative;
   isolation: isolate;
+}
+html[data-vira-sandbox-auto-height] #vira-sandbox-root {
+  min-block-size: 0;
 }
 `;
 
@@ -132,7 +142,8 @@ export type ViraSandboxProps = {
   /** Inner padding around children. */
   padded?: boolean;
   /**
-   * Fixed preview canvas height in pixels (iframe + portal body).
+   * Minimum preview canvas height in pixels. Iframe grows with portal
+   * content so padded/centered demos keep equal whitespace (never clip it).
    * @defaultValue 200
    */
   height?: number;
@@ -142,8 +153,15 @@ export type ViraSandboxProps = {
    */
   minHeight?: number;
   /**
-   * Vertical alignment of portal children inside the canvas.
-   * @defaultValue start
+   * Horizontal CSS `resize` on the iframe. Height still tracks portal content.
+   * @defaultValue false
+   */
+  resizable?: boolean;
+  /**
+   * Alignment of portal children inside the canvas (block + inline).
+   * Prefer `center` so demos sit in equal whitespace; use `start` only when
+   * the pattern needs top/edge anchoring (full-bleed media, tall scroll).
+   * @defaultValue center
    */
   vAlign?: "start" | "center";
   className?: string;
@@ -165,14 +183,20 @@ export function ViraSandbox({
   padded = true,
   height,
   minHeight,
-  vAlign = "start",
+  resizable = false,
+  vAlign = "center",
   className = "",
   style,
 }: ViraSandboxProps) {
   const canvasHeight = height ?? minHeight ?? 200;
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  /** Until user drags CSS resize, iframe width always tracks wrapper 100%. */
+  const followWrapperWidthRef = useRef(true);
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
   const [frameDoc, setFrameDoc] = useState<Document | null>(null);
+  const [contentHeight, setContentHeight] = useState(canvasHeight);
+  const [wrapperWidth, setWrapperWidth] = useState<number | null>(null);
   const [autoMode, setAutoMode] = useState<"light" | "dark">(() =>
     typeof document !== "undefined" &&
     document.documentElement.classList.contains("dark")
@@ -197,12 +221,14 @@ export function ViraSandbox({
 
   const srcDoc = useMemo(() => {
     const modeAttr = mode ? ` data-mode="${mode}"` : "";
+    // Always auto-height so ResizeObserver can read true content size (fixed
+    // 100% html/body clamps scrollHeight and eats centered padding).
     const links = FRAME_STYLESHEET_HREFS.map(
       (href) =>
         `<link rel="stylesheet" href="${href}" data-vira-sandbox="frame" />`,
     ).join("\n  ");
     return `<!DOCTYPE html>
-<html${modeAttr}>
+<html${modeAttr} data-vira-sandbox-auto-height="">
 <head>
   <meta charset="utf-8" />
   <base target="_parent" />
@@ -230,6 +256,7 @@ export function ViraSandbox({
     }
 
     doc.documentElement.setAttribute("data-mode", mode);
+    doc.documentElement.setAttribute("data-vira-sandbox-auto-height", "");
 
     setFrameDoc(doc);
     setMountNode(root);
@@ -249,12 +276,76 @@ export function ViraSandbox({
     frameDoc.documentElement.setAttribute("data-mode", mode);
   }, [frameDoc, mode]);
 
+  // Grow iframe with content (floor = canvasHeight) so center + padding never clip.
   useEffect(() => {
     if (!mountNode || !iframeRef.current) {
       return;
     }
-    iframeRef.current.style.height = `${canvasHeight}px`;
+
+    const iframe = iframeRef.current;
+    const measureEl = mountNode.firstElementChild ?? mountNode;
+    const sync = () => {
+      const next = Math.max(
+        measureEl.scrollHeight,
+        mountNode.scrollHeight,
+        canvasHeight,
+      );
+      setContentHeight(next);
+      iframe.style.height = `${next}px`;
+    };
+
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(measureEl);
+    if (measureEl !== mountNode) {
+      ro.observe(mountNode);
+    }
+    return () => ro.disconnect();
   }, [mountNode, canvasHeight]);
+
+  // Follow wrapper width until user manually resizes; always cap at wrapper 100%.
+  useEffect(() => {
+    if (!resizable) {
+      followWrapperWidthRef.current = true;
+      return;
+    }
+    const wrapper = wrapperRef.current;
+    const iframe = iframeRef.current;
+    if (!wrapper || !iframe) {
+      return;
+    }
+
+    const syncWrapperWidth = () => {
+      const next = wrapper.clientWidth;
+      setWrapperWidth(next);
+      if (followWrapperWidthRef.current || iframe.offsetWidth > next) {
+        iframe.style.width = `${next}px`;
+      }
+    };
+
+    // CSS resize handle is on the iframe — pointerup after drag decides follow vs lock.
+    const onPointerDown = () => {
+      const onPointerUp = () => {
+        const max = wrapper.clientWidth;
+        followWrapperWidthRef.current =
+          Math.abs(iframe.offsetWidth - max) <= 1;
+        if (followWrapperWidthRef.current) {
+          iframe.style.width = `${max}px`;
+        }
+        window.removeEventListener("pointerup", onPointerUp);
+      };
+      window.addEventListener("pointerup", onPointerUp);
+    };
+
+    syncWrapperWidth();
+    const wrapperRo = new ResizeObserver(syncWrapperWidth);
+    wrapperRo.observe(wrapper);
+    iframe.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      wrapperRo.disconnect();
+      iframe.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [resizable, mountNode]);
 
   const docContext = useMemo(
     () => ({
@@ -265,6 +356,7 @@ export function ViraSandbox({
   );
 
   const centered = "center" === vAlign;
+  const frameHeight = contentHeight;
 
   const body = (
     <div
@@ -274,7 +366,8 @@ export function ViraSandbox({
         flexDirection: "column",
         justifyContent: centered ? "center" : "flex-start",
         alignItems: centered ? "center" : "stretch",
-        blockSize: canvasHeight,
+        inlineSize: "100%",
+        minBlockSize: canvasHeight,
         padding: padded ? "1.25rem" : 0,
         pointerEvents: inert ? "none" : undefined,
       }}
@@ -285,6 +378,7 @@ export function ViraSandbox({
 
   return (
     <div
+      ref={wrapperRef}
       className={`not-prose mb-3 -mx-1 overflow-hidden rounded-lg border border-fd-border/60 bg-fd-muted/40 ${className}`}
       style={style}
       role="img"
@@ -297,11 +391,20 @@ export function ViraSandbox({
         onLoad={attach}
         style={{
           display: "block",
-          width: "100%",
-          height: canvasHeight,
+          ...(resizable
+            ? {
+                maxWidth: wrapperWidth ?? "100%",
+                minWidth: "12rem",
+                overflow: "auto",
+                resize: "horizontal",
+              }
+            : {
+                width: "100%",
+                overflow: "hidden",
+              }),
+          height: frameHeight,
           border: 0,
           background: "transparent",
-          overflow: "hidden"
         }}
       />
       {mountNode

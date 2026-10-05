@@ -3,16 +3,99 @@ title: Elevator
 description: Apply resting and hover elevation hooks to child roots — no wrapper element.
 ---
 
-`Elevator` is a renderless helper — it walks valid element children and merges [elevation](/foundation/elevation) data attributes (`data-elevation`, `data-elevation-hover`, `data-elevation-direction`) onto each child's root so preflight shadow styles activate without a wrapping `div`. Set `resting` for the default level and optional `hover` for pointer elevation; `direction` controls which edge casts the shadow. Invalid nodes pass through unchanged. Popup lists in [`Select`](/components/inputs/select) and [`Autocomplete`](/components/inputs/autocomplete) already sit on elevated surfaces — use `Elevator` when a custom child needs the same shadow contract.
+`Elevator` is a renderless helper — it walks valid element children and merges [elevation](/foundation/elevation) data attributes (`data-elevation`, `data-elevation-hover`, `data-elevation-direction`) onto each child's root so preflight shadow styles activate without a wrapping `div`. Set `resting` for the default level and optional `hover` for pointer elevation; `direction` controls which edge casts the shadow. Invalid nodes pass through unchanged. Popup lists in [`Select`](/components/inputs/select) and [`Autocomplete`](/components/inputs/autocomplete) already sit on elevated surfaces — use `Elevator` when a custom child needs the same shadow contract. [`Surface`](/components/layout/surface) has no elevation prop of its own.
 
 ## Common examples
 
-A Surface card with resting and hover elevation on the child root shows the renderless shadow contract.
+### Resting shadow
 
-<PreviewSlot label="Elevator preview" />
+A feature card with only `resting` keeps a steady soft shadow — useful for static tiles and placeholder shells that should not lift on hover.
+
+<Example preview={<ElevatorRestingDemo />}>
+
+```tsx
+import { Elevator, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Elevator resting={1}>
+  <Surface
+    border="all"
+    color={1}
+    hPadding="l"
+    radius="l"
+    render={<Stack rowGap="s" minWidth="16rem" />}
+    vPadding="l"
+  >
+    <Title />
+    <Text size="s" tone="muted" />
+  </Surface>
+</Elevator>
+```
+
+</Example>
+
+### Hover lift
+
+Pair `resting` with `hover` so the child root steps up on pointer hover — the usual interactive card pattern.
+
+<Example preview={<ElevatorDemo />}>
+
+```tsx
+import { Elevator, Stack, Surface, Text } from '@viraui/react';
+
+<Elevator resting={1} hover={4}>
+  <Surface
+    border="all"
+    color={1}
+    hPadding="l"
+    radius="m"
+    render={<Stack rowGap="s" minWidth="14rem" />}
+    vPadding="l"
+  >
+    <Text />
+    <Text size="s" tone="muted" />
+  </Surface>
+</Elevator>
+```
+
+</Example>
+
+### Cast direction
+
+`direction` picks which edge casts the shadow — default is bottom for page cards; `top` suits floating bars that sit above content.
+
+<Example preview={<ElevatorDirectionDemo />}>
+
+```tsx
+import { Elevator, Stack, Surface, Text } from '@viraui/react';
+
+<Stack columnGap="l" direction="row" wrap>
+  <Elevator resting={2}>
+    <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Surface>
+  </Elevator>
+  <Elevator resting={2} direction="top">
+    <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
+      <Text />
+      <Text size="s" tone="muted" />
+    </Surface>
+  </Elevator>
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Hover-lift card"
 Make this card lift slightly on hover — subtle shadow increase toward the bottom. One wrapper around the card, no extra divs.
+```
+
+```text tab="Static raised panel"
+Give this feature panel a soft resting shadow only — it should not lift when the pointer moves over it.
+```
+
+```text tab="Floating bar cast"
+This floating toolbar sits above the page — cast its shadow upward so depth reads from the content below.
 ```

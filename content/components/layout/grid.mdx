@@ -3,16 +3,158 @@ title: Grid
 description: CSS Grid host — fixed columns, auto-fill tracks, and token gap and padding.
 ---
 
-`Grid` lays out children on a CSS Grid with Vira-owned props instead of hand-written `grid-template` rules. Set `columns` for a fixed track count, or use `filling` with `colMinWidth` for responsive auto-fill; `Grid.Item` spans rows and columns when a cell needs to break the default 1×1 placement. Gap and padding props read the same [spacing](/foundation/spacing) tokens as [`Stack`](/components/layout/stack). Pass `render` when the grid root should be a semantic element. Reach for `Grid` when two-dimensional placement matters — dashboards, form columns, media tiles — and `Stack` when a single flex axis is enough.
+`Grid` lays out children on a CSS Grid with Vira-owned props instead of hand-written `grid-template` rules. Set `columns` for a fixed track count — bare `columns={N}` builds fluid `1fr` tracks — or leave `columns` unset and use `filling` with `colMinWidth` for responsive auto-fill / auto-fit. Gap and padding props read the same [spacing](/foundation/spacing) tokens as [`Stack`](/components/layout/stack); `hPadding` and `vPadding` also accept `[start, end]` tuples for one-sided inset. `Grid.Item` owns placement — `fullWidth` / `fullHeight`, `column` / `row` spans, or `subgrid` when a cell should inherit parent tracks. Pass `render` when the grid or an item should be a semantic element. Reach for `Grid` when two-dimensional placement matters — dashboards, form columns, media tiles — and prefer [`Stack`](/components/layout/stack) when a single flex axis is enough.
 
 ## Common examples
 
-A two-column grid with token gap and a spanning Grid.Item covers the default placement pattern.
+### Fixed columns
 
-<PreviewSlot label="Grid preview" />
+A fixed track count keeps cards in even columns. Pair `columnGap` / `rowGap` with `hPadding` / `vPadding` so spacing stays on the theme scale.
+
+<Example preview={<GridFixedColumnsDemo />}>
+
+```tsx
+import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Grid
+  aria-label="Workspace modules"
+  columns={2}
+  columnGap="m"
+  rowGap="m"
+  hPadding="m"
+  vPadding="m"
+>
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+</Grid>
+```
+
+</Example>
+
+### Spanning items
+
+`Grid.Item` breaks the default 1×1 cell when a block needs more tracks. Prefer `fullWidth` for a banner across every column, or `column="span N"` for a partial span — placement stays on the item props.
+
+<Example preview={<GridItemSpanDemo />}>
+
+```tsx
+import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Grid aria-label="Release dashboard" columns={2} columnGap="m" rowGap="m">
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item fullWidth>
+    <Elevator resting={1}>
+      <Surface border="all" color={3} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item column="span 2">
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+</Grid>
+```
+
+</Example>
+
+### Auto-fill tracks
+
+When `columns` is unset, `filling` defaults to `'fill'` and builds `repeat(auto-fill, …)` tracks sized from `colMinWidth` (default `10rem`). Pass `filling="fit"` for auto-fit, or `false` to skip the filling attribute. Tracks reflow as the host width changes — useful for media walls and card libraries.
+
+<Example preview={<GridAutoFillDemo />}>
+
+```tsx
+import { Elevator, Grid, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Grid
+  aria-label="Library collections"
+  filling="fill"
+  colMinWidth="10rem"
+  columnGap="m"
+  rowGap="m"
+>
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+  <Grid.Item>
+    <Elevator resting={1}>
+      <Surface border="all" color={2} radius="m">
+        <Stack hPadding="l" vPadding="l" rowGap="s">
+          <Title />
+          <Text />
+        </Stack>
+      </Surface>
+    </Elevator>
+  </Grid.Item>
+</Grid>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Settings grid"
-Build a two-column settings page: form fields on the left, live preview card on the right.
+```text tab="Settings modules"
+Build a two-column settings module grid with token gap and padding — Team access, Notifications, Billing, and Security cards.
+```
+
+```text tab="Release banner"
+Build a two-column dashboard grid with a full-width release banner under the first row and a second row that spans both columns.
+```
+
+```text tab="Library wall"
+Build a responsive tile wall for library collections that auto-fills columns from a minimum track width — Brand kit, Screenshots, Motion, and similar cards.
 ```

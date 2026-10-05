@@ -15,16 +15,108 @@ description: Expandable sections — single or multiple open panels with optiona
   </Card>
 </Cards>
 
-`Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack) — each `Accordion.Item` pairs a trigger header with collapsible content, and `value` / `onValueChange` control which panels stay open. Set `multiple` when more than one section can be expanded at once; leave it off for exclusive disclosure patterns like FAQs. Items can render on [`Surface`](/components/layout/surface) hosts — `islands` toggles separated cards versus a single attached block with corner radius only on the first and last rows. Keyboard and aria behavior come from Base UI; you compose items and copy in JSX.
+`Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack) — each `Accordion.Item` owns the trigger header and collapsible panel, so you pass a `trigger` label and panel children instead of composing public Header / Trigger / Panel parts. Root `value`, `defaultValue`, and `onValueChange` come from Base UI; set `multiple` when several sections can stay open — exclusive FAQs stay single-open by default. Items wrap [`Surface`](/components/layout/surface) by default — `color`, `border`, and `radius` forward to that host, and root `islands` toggles separated cards versus an attached block with corner radius only on the first and last rows. Keyboard and aria behavior stay upstream; you compose items, copy, and surrounding chrome in JSX.
 
 ## Common examples
 
-An FAQ block with exclusive open panels and Surface islands is the default disclosure pattern.
+### Exclusive open
 
-<PreviewSlot label="Accordion preview" />
+One open panel at a time is the default disclosure pattern — useful for FAQs where each answer replaces the previous. Items keep Surface islands with gap between cards; nest the accordion under a titled panel when the group needs chrome.
+
+<Example preview={<AccordionExclusiveDemo />}>
+
+```tsx
+import { Accordion, Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack rowGap="l">
+    <Stack hPadding="m" rowGap="l" vPadding="m">
+      <Stack rowGap="xs">
+        <Title />
+        <Text size="s" tone="muted" />
+      </Stack>
+      <Accordion defaultValue={['tax-docs']}>
+        <Accordion.Item border="all" color={2} trigger="When do payouts arrive?" value="arrival-timing">
+          <Text tone="muted" />
+        </Accordion.Item>
+        <Accordion.Item border="all" color={2} trigger="What fees apply?" value="fees">
+          <Text tone="muted" />
+        </Accordion.Item>
+        <Accordion.Item border="all" color={2} trigger="Tax documents" value="tax-docs">
+          <Text tone="muted" />
+        </Accordion.Item>
+      </Accordion>
+    </Stack>
+    <Surface color={2} hPadding="l" vPadding="m">
+      <Stack direction="row" hAlign="space-between" vAlign="center">
+        <Button variant="secondary" />
+        <Button />
+      </Stack>
+    </Surface>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Multiple open
+
+Pass `multiple` so several panels can stay expanded together — handy for settings groups where readers compare related answers. Seed open sections with `defaultValue` as an array of item values.
+
+<Example preview={<AccordionMultipleDemo />}>
+
+```tsx
+import { Accordion, Text } from '@viraui/react';
+
+<Accordion defaultValue={['notifications', 'exports']} multiple>
+  <Accordion.Item border="all" color={1} trigger="Email notifications" value="notifications">
+    <Text tone="muted" />
+  </Accordion.Item>
+  <Accordion.Item border="all" color={1} trigger="Security & sessions" value="security">
+    <Text tone="muted" />
+  </Accordion.Item>
+  <Accordion.Item border="all" color={1} trigger="Data exports" value="exports">
+    <Text tone="muted" />
+  </Accordion.Item>
+</Accordion>
+```
+
+</Example>
+
+### Attached block
+
+Set `islands={false}` when Surface items should read as one attached block — corner radius stays on the outer edges of the first and last rows instead of gapped islands. Leave `islands` on (the default) for separated cards.
+
+<Example preview={<AccordionAttachedDemo />}>
+
+```tsx
+import { Accordion, Text } from '@viraui/react';
+
+<Accordion defaultValue={['billing']} islands={false}>
+  <Accordion.Item border="all" color={1} trigger="Billing contact" value="billing">
+    <Text tone="muted" />
+  </Accordion.Item>
+  <Accordion.Item border="all" color={1} trigger="Locale & currency" value="locale">
+    <Text tone="muted" />
+  </Accordion.Item>
+  <Accordion.Item border="all" color={1} trigger="Retention policy" value="retention">
+    <Text tone="muted" />
+  </Accordion.Item>
+</Accordion>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="FAQ accordion"
-Build an FAQ accordion — billing, shipping, returns — one section open at a time. Each question is a heading; each answer is body copy.
+```text tab="Payout FAQ"
+Build a payout help panel with an FAQ accordion — When do payouts arrive?, What fees apply?, and Tax documents — only one section open at a time. Put a short title and description above the questions, and View all statements plus Contact support in a footer bar.
+```
+
+```text tab="Settings sections"
+Build an account settings accordion where Email notifications, Security & sessions, and Data exports can stay open together — open notifications and exports by default.
+```
+
+```text tab="Attached workspace defaults"
+Build a workspace defaults accordion for Billing contact, Locale & currency, and Retention policy as one attached block without gaps between sections — open Billing contact first.
 ```

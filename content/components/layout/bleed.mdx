@@ -3,16 +3,104 @@ title: Bleed
 description: Pull content past parent padding — token amount or full viewport edge bleed.
 ---
 
-`Bleed` applies negative inline margin so children escape a padded parent without reworking the outer layout — set `amount` to a [spacing](/foundation/spacing) token for a controlled pull, or `full` to reach the viewport edges and ignore `amount`. Typical uses include edge-to-edge hero media inside a padded [`Stack`](/components/layout/stack), carousels that should kiss the screen sides, and full-bleed dividers under inset content. The wrapper is a plain `div`; it does not change child sizing — only the offset from the parent's content box.
+`Bleed` applies negative inline margin so children escape a padded parent without reworking the outer layout — set `amount` to a [spacing](/foundation/spacing) token for a controlled pull, or `full` to reach the viewport edges and ignore `amount`. Match `amount` to the parent [`Stack`](/components/layout/stack) or [`Surface`](/components/layout/surface) `hPadding` token so media, dividers, or trailing controls kiss the chrome while siblings stay inset. Typical uses include edge-to-edge hero bands inside a padded section, carousels that should meet the screen sides, and full-width rules under inset copy. The wrapper is a plain `div`; it offsets from the parent's content box and does not resize its children.
 
 ## Common examples
 
-A padded section with full-bleed hero media breaking past inline margins is the baseline pull pattern.
+### Matched amount
 
-<PreviewSlot label="Bleed preview" />
+Pair `amount` with the same spacing step as the parent's `hPadding` so a media band or callout breaks out of a padded [`Surface`](/components/layout/surface) without dropping padding for the rest of the card.
+
+<Example preview={<BleedAmountDemo />}>
+
+```tsx
+import { Bleed, Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack hPadding="l" rowGap="m" vPadding="l">
+    <Stack rowGap="xs">
+      <Title />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Bleed amount="l">
+      <img alt="" src="…" style={{ display: 'block', inlineSize: '100%', blockSize: '8rem', objectFit: 'cover' }} />
+    </Bleed>
+    <Text size="s" />
+    <Button size="s" variant="secondary" />
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Viewport edge
+
+`full` stretches the child to the viewport width from a centered, padded layout — useful for hero media that should ignore section margins while title and body stay on the spacing scale.
+
+<Example preview={<BleedFullDemo />}>
+
+```tsx
+import { Bleed, Button, Stack, Text, Title } from '@viraui/react';
+
+<Stack rowGap="l">
+  <Stack hPadding="l" rowGap="xs">
+    <Text size="xs" tone="muted" />
+    <Title />
+    <Text size="s" tone="muted" />
+  </Stack>
+  <Bleed full>
+    <img alt="" src="…" style={{ display: 'block', inlineSize: '100%', blockSize: '10rem', objectFit: 'cover' }} />
+  </Bleed>
+  <Stack hPadding="l" rowGap="m">
+    <Text size="s" />
+    <Button size="s" />
+  </Stack>
+</Stack>
+```
+
+</Example>
+
+### Edge-to-edge divider
+
+Wrap a [`Separator`](/components/layout/separator) in `Bleed` with `amount` matched to the section `hPadding` so the rule hits the panel edges while the rows above and below keep their inset.
+
+<Example preview={<BleedDividerDemo />}>
+
+```tsx
+import { Bleed, Button, Separator, Stack, Surface, Text } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack hPadding="m" rowGap="m" vPadding="l">
+    <Stack rowGap="2xs">
+      <Text size="s" weight="semibold" />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Bleed amount="m">
+      <Separator />
+    </Bleed>
+    <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+      <Stack rowGap="2xs">
+        <Text size="s" weight="semibold" />
+        <Text size="xs" tone="muted" />
+      </Stack>
+      <Button size="s" variant="secondary" />
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
 
 ## Ask your agent
 
+```text tab="Release card media"
+Build a release-notes card with padded title and summary, a cover image that bleeds to the card edges, then body copy and a secondary Read full notes button — keep the image breakout on the spacing scale with the card padding.
+```
+
 ```text tab="Full-bleed hero"
-Build a page section with padded content and a hero image that bleeds edge to edge while the rest of the section keeps normal margins.
+Build a page section with padded intro copy and a hero image that spans edge to edge while the rest of the section keeps normal margins.
+```
+
+```text tab="Section divider"
+Compose a settings panel with a title and short description, then a horizontal rule that hits the panel edges, then a row with Email digest details and a Configure button — keep sibling rows padded.
 ```

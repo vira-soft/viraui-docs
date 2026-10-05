@@ -3,16 +3,128 @@ title: Surface
 description: Themed container — color ramp, radius, border sides, and padding on one host.
 ---
 
-`Surface` is the primary panel host in ViraUI — `color` maps onto the theme base ramp (`1`–`3` or named tokens), `radius` reads [radius](/foundation/radius) steps, and `border` picks which sides get a contrast edge. Horizontal and vertical padding use the spacing scale; nested surfaces can set `radius="auto"` so inner corners stay [concentric](/foundation/radius) with the parent's padding and rounding. `Surface` also publishes radius context descendants consume — menus, nested cards, and glow shells rely on it. Use `Surface` wherever a region needs a distinct background plane instead of bare page chrome.
+`Surface` is the primary panel host in ViraUI — `color` maps onto the theme base ramp (`1`–`3` or named tokens), `radius` reads [radius](/foundation/radius) steps, and `border` picks which sides get a contrast edge. Horizontal and vertical padding use the spacing scale; nested surfaces can set `radius="auto"` so inner corners stay [concentric](/foundation/radius) with the parent's padding and rounding. `Surface` also publishes radius context descendants consume — menus, nested cards, and glow shells rely on it. Surface has no gap prop: nest a [`Stack`](/components/layout/stack) for child spacing, or pass `render={<Surface … />}` on Stack so chrome and layout share one DOM node. Pair with [`Elevator`](/components/layout/elevator) when the panel needs animated shadow lift — Surface itself has no elevation prop. Use `Surface` wherever a region needs a distinct background plane instead of bare page chrome.
 
 ## Common examples
 
-A nested card stack with color ramp, radius auto, and token padding shows the default panel composition.
+### Color ramp
 
-<PreviewSlot label="Surface preview" />
+`color` picks a base ramp layer so stacked panels read as separate planes. A short workspace board shows layers `1`–`3` on the theme ramp.
+
+<Example preview={<SurfaceColorRampDemo />}>
+
+```tsx
+import { Stack, Surface, Text } from '@viraui/react';
+
+<Stack rowGap="s">
+  <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
+    <Text />
+  </Surface>
+  <Surface border="all" color={2} hPadding="m" radius="m" vPadding="m">
+    <Text />
+  </Surface>
+  <Surface border="all" color={3} hPadding="m" radius="m" vPadding="m">
+    <Text />
+  </Surface>
+</Stack>
+```
+
+</Example>
+
+### Border sides
+
+`border` accepts one side or a list — a right edge on a rail, bottom edges between rows — instead of drawing every edge. Omit the prop when the panel should stay borderless.
+
+<Example preview={<SurfaceBorderSidesDemo />}>
+
+```tsx
+import { Stack, Surface, Text } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack direction="row" expandChildren>
+    <Surface border="right" color={2} hPadding="m" vPadding="m">
+      <Text />
+    </Surface>
+    <Stack expandChildren>
+      <Surface border="bottom" hPadding="m" vPadding="s">
+        <Text />
+      </Surface>
+      <Surface hPadding="m" vPadding="s">
+        <Text />
+      </Surface>
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Nested concentric
+
+Set a token `radius` on the outer host and `radius="auto"` on the nested plane so inner corners stay concentric with the parent's padding. Reusing the same token on both layers leaves a flat double-radius look.
+
+<Example preview={<SurfaceNestedConcentricDemo />}>
+
+```tsx
+import { Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="m" radius="l" vPadding="m">
+  <Stack rowGap="m">
+    <Stack rowGap="2xs">
+      <Title />
+      <Text />
+    </Stack>
+    <Surface border="all" color={2} hPadding="m" radius="auto" vPadding="m">
+      <Stack direction="row" hAlign="space-between" vAlign="center">
+        <Text />
+        <Button />
+      </Stack>
+    </Surface>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Token padding
+
+`hPadding` / `vPadding` inset the Surface on the spacing scale; Stack owns gaps between children. Compose with `render={<Surface … />}` when flex layout and chrome should share one node — a tinted footer strip can still be a nested Surface.
+
+<Example preview={<SurfacePaddingComposeDemo />}>
+
+```tsx
+import { Button, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Stack render={<Surface border="all" color={1} overflow="hidden" radius="l" />}>
+  <Stack hPadding="l" rowGap="m" vPadding="l">
+    <Title />
+    <Text />
+  </Stack>
+  <Surface color={2} hPadding="l" vPadding="m">
+    <Stack direction="row" hAlign="space-between">
+      <Button variant="secondary" />
+      <Button />
+    </Stack>
+  </Surface>
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="Nested surfaces"
-Build a nested card: outer container with border and generous padding, inner inset area with a button inside.
+```text tab="Workspace panels"
+Build three stacked workspace panels that step through lighter and deeper background layers — Overview, Active sprint, and Needs attention — each with a short status line.
+```
+
+```text tab="Asset browser"
+Build an asset browser card with a left rail separated by a right border and a file list whose rows divide with bottom borders only.
+```
+
+```text tab="Invite card"
+Build an invite teammates card with a rounded outer panel and an inset seats summary that keeps concentric corners with the parent padding. Include an Invite button in the inset area.
+```
+
+```text tab="Defaults panel"
+Build a workspace defaults panel: title and two setting rows in the body, Reset and Save in a tinted footer strip. Use one host for the card chrome and flex layout, and token padding instead of custom CSS.
 ```

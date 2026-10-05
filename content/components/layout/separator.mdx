@@ -3,16 +3,112 @@ title: Separator
 description: Horizontal or vertical divider — thickness, orientation, and optional Stack padding.
 ---
 
-`Separator` draws a themed line between blocks — `orientation` picks horizontal versus vertical, `size` maps to line thickness (`s`, `m`, `l`), and optional padding props inset the line within a [`Stack`](/components/layout/stack) wrapper when the divider should not span the full content width. Pass `render` to replace the default `hr` root with a custom element while keeping Vira line styles. Use `Separator` inside stacks and toolbars where grouped content needs a visual break; prefer border props on [`Surface`](/components/layout/surface) when the edge belongs to a panel outline instead of inline content.
+`Separator` draws a themed line between blocks — `orientation` picks horizontal versus vertical, `size` maps to line thickness (`s`, `m`, `l`), and optional padding props inset the line within a [`Stack`](/components/layout/stack) wrapper when the divider should not span the full content width. `variant` sets the border style (`solid`, `dashed`, and other CSS border styles). Pass `render` to replace the default `hr` root with a custom element while keeping Vira line styles. Use `Separator` inside stacks and toolbars where grouped content needs a visual break; prefer border props on [`Surface`](/components/layout/surface) when the edge belongs to a panel outline instead of inline content. Select dropdown option dividers belong on `Select.Separator`, not this layout primitive.
 
 ## Common examples
 
-A settings list with horizontal dividers between stacked rows is the usual separator placement.
+### Between stacked rows
 
-<PreviewSlot label="Separator preview" />
+Horizontal Separators between metric or settings rows are the usual placement — nest them in a Stack with token `rowGap`, and keep the panel chrome on Surface rather than drawing a card outline with Separator.
+
+<Example preview={<SeparatorListDemo />}>
+
+```tsx
+import { Separator, Stack, Surface, Text } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
+  <Stack rowGap="s">
+    <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+      <Text />
+      <Text weight="semibold" />
+    </Stack>
+    <Separator />
+    <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+      <Text />
+      <Text weight="semibold" />
+    </Stack>
+    <Separator />
+    <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+      <Text />
+      <Text weight="semibold" />
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Vertical toolbar split
+
+`orientation="vertical"` splits action groups in a row toolbar — put the Separator between IconButton clusters so formatting tools stay visually separate from find and save.
+
+<Example preview={<SeparatorToolbarDemo />}>
+
+```tsx
+import { FloppyDisk, MagnifyingGlass, TextAlignLeft, TextB, TextItalic } from '@phosphor-icons/react';
+import { IconButton, Separator, Stack, Surface } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <Stack columnGap="2xs" direction="row" vAlign="stretch">
+    <IconButton aria-label="Bold" icon={<TextB />} size="s" variant="flat" />
+    <IconButton aria-label="Italic" icon={<TextItalic />} size="s" variant="flat" />
+    <IconButton aria-label="Align left" icon={<TextAlignLeft />} size="s" variant="flat" />
+    <Separator orientation="vertical" />
+    <IconButton aria-label="Find" icon={<MagnifyingGlass />} size="s" variant="flat" />
+    <IconButton aria-label="Save" icon={<FloppyDisk />} size="s" variant="flat" />
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+### Thickness and inset
+
+`size` thickens the rule; `hPadding` (or `vPadding` for vertical) insets the line inside the Stack wrapper so a section break can sit under a title without spanning the full panel edge. Pair a medium dashed rule for the section break with a default thin Separator above totals when line items need a quieter split.
+
+<Example preview={<SeparatorThicknessDemo />}>
+
+```tsx
+import { Separator, Stack, Surface, Text, Title } from '@viraui/react';
+
+<Surface border="all" color={1} overflow="hidden" radius="l">
+  <Stack rowGap="m" vPadding="l">
+    <Stack hPadding="l" rowGap="xs">
+      <Title />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Separator hPadding="l" size="m" variant="dashed" />
+    <Stack hPadding="l" rowGap="s">
+      <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+        <Text size="s" tone="muted" />
+        <Text family="mono" size="s" />
+      </Stack>
+      <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+        <Text size="s" tone="muted" />
+        <Text family="mono" size="s" />
+      </Stack>
+      <Separator />
+      <Stack columnGap="m" direction="row" hAlign="space-between" vAlign="center">
+        <Text size="s" tone="muted" />
+        <Text family="mono" size="s" weight="semibold" />
+      </Stack>
+    </Stack>
+  </Stack>
+</Surface>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Settings list"
 Build a settings list inside a card — three text rows with thin dividers between each.
+```
+
+```text tab="Editor toolbar"
+Add an editor toolbar with bold, italic, and align on the left, then find and save on the right — put a vertical divider between the two groups.
+```
+
+```text tab="Claim totals"
+Compose a claimable balance panel with a title and short description, a medium dashed rule inset from the edges, then royalty rows and a thin divider above the total.
 ```
