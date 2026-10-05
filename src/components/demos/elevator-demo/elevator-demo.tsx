@@ -85,11 +85,11 @@ export const ElevatorRestingDemo: React.FC = () => (
         border="all"
         color={1}
         hPadding="l"
-        radius="l"
+        radius="m"
         render={<Stack rowGap="s" minWidth="16rem" />}
         vPadding="l"
       >
-        <Title render={<h3 />} size="5">
+        <Title render={<h3 />} lineHeight="xs" size="5">
           Atlas workspace
         </Title>
         <Text size="s" tone="muted">
