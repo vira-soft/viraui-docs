@@ -3,19 +3,39 @@ title: Beam
 description: Animated border shell — rotating edge, traveling line, or pulse glow around a child Surface.
 ---
 
-Beam paints motion around whatever you put inside — a featured promo card, a secondary CTA, or an empty-state icon. The root is a transparent [Surface](/components/layout/surface) that only sets `radius`; nest the real card as a child Surface with `radius="auto"` so both share one corner curve. Pick `variant` for the family: `border` spins a highlight around the edge, `line` runs a glow along the bottom, and `pulse-outside` / `pulse-inside` breathe a radial bloom. `color` maps to theme tokens (`primary`, a highlight name, or `colorful` for a multi-stop palette); tune `duration`, `strength`, `brightness`, and `saturation` when the default read feels too loud or too quiet.
+Beam paints continuous motion around a child — a featured promo, a secondary CTA, or an empty-state icon. The root is a transparent [Surface](/components/layout/surface) that only sets `radius`; nest the real card as a child Surface with `radius="auto"` so both share one corner curve.
 
-`animate` toggles the effect with a fade rather than an abrupt cut — `onActivate` and `onDeactivate` fire when those fades finish. Off-screen beams pause so background tabs do not keep spinning. Set `fitContent` when the shell should shrink-wrap the card instead of stretching full width. Prefer Beam for rare focal accents; pointer-following highlights belong on [Glow](/components/effects/glow).
+Pick the motion family with `variant`: a spinning border, a traveling line along the bottom, or a breathing pulse inside or outside the shell. Theme `color`, plus optional duration and strength knobs, keep the accent loud or quiet. Prefer Beam for rare focal moments; pointer-following highlights belong on [Glow](/components/effects/glow).
+
+Off-screen beams pause so background tabs do not keep spinning. `fitContent` shrink-wraps the shell when the card should not stretch full width.
 
 <Callout type="warn" title="Performance cost">
 Beam keeps continuous motion on screen and can be heavy on CPU and memory. Prefer one focal instance per view. Do not wrap every card in a grid — reserve it for a single hero or CTA moment.
 </Callout>
 
+## When to use
+
+- One featured card or CTA that should draw the eye without changing layout
+- A quiet empty-state mark that needs a soft breathing accent
+- Continuous spin, travel, or pulse — not a pointer-driven rim
+
+## When not to use
+
+- Pointer-following border highlight → [Glow](/components/effects/glow)
+- Loading shimmer on static copy → [Shimmer](/components/typography/shimmer)
+- Decorating every card in a dense grid (pick one focal Beam instead)
+
+## Related
+
+- [Glow](/components/effects/glow) — pointer-driven rim highlight
+- [Surface](/components/layout/surface) — shell and nested card radius
+- [Shimmer](/components/typography/shimmer) — moving highlight across text
+
 ## Common examples
 
 ### Featured border
 
-A featured card with a rotating colorful border is the usual Beam composition. `fitContent` keeps the shell tight to the card; `radius="auto"` on the inner Surface matches the Beam corners.
+A rotating colorful border is the usual Beam composition. `fitContent` keeps the shell tight to the card; `radius="auto"` on the inner Surface matches the Beam corners.
 
 <Example preview={<BeamBorderDemo />}>
 
