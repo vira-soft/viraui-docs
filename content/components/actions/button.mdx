@@ -15,11 +15,15 @@ description: Labeled action control and its link twin — commit, cancel, and na
   </Card>
 </Cards>
 
+---
+
 Button is the default **labeled** action control. Visible text names what happens when you activate it, and the control stays a real button for keyboard and assistive tech.
 
 When the affordance should navigate (in-app route or external URL), use **ButtonLink** instead. It shares the same visual chrome but renders a native `<a>`, or a framework `Link` via `render`. Do not force `render={<a />}` on Button; Base UI keeps button semantics there.
 
 Variants follow intent, not decoration: filled primary for the one commit action on a surface, secondary for cancel or peer choices, flat when the control should sit quietly in chrome, and destructive only when the action removes or cannot be undone. Optional `addon`, `pill`, and `loading` cover leading/trailing glyphs, capsule shape, and in-flight requests without jumping the layout.
+
+---
 
 ## When to use
 
@@ -33,11 +37,15 @@ Variants follow intent, not decoration: filled primary for the one commit action
 - A control that stays pressed and may swap icons → [ToggleButton](/components/actions/toggle-button)
 - Tags, filters, or status pills that do not commit work → [Chip](/components/widgets/chip)
 
+---
+
 ## Related
 
 - [IconButton](/components/actions/icon-button) — compact icon-only actions and icon links
 - [ToggleButton](/components/actions/toggle-button) — pressed-state toolbar toggles and groups
 - [Chip](/components/widgets/chip) — compact labels and filter pills
+
+---
 
 ## Common examples
 

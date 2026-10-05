@@ -15,9 +15,13 @@ description: Toggle control for immediate on/off settings with label and helper 
   </Card>
 </Cards>
 
+---
+
 Switch maps a boolean setting to a sliding toggle. Checked state, disabled, and change handlers pass through Base UI; `label`, `description`, and `error` use the same field-row layout as [Checkbox](/components/inputs/checkbox) and [Radio](/components/inputs/radio).
 
 Unlike those controls, Switch already owns its `Field.Root`. Pass `name`, `invalid`, and validation props on Switch itself; do not wrap it in another field root. `size` scales the track and label (`s` by default, or `m`).
+
+---
 
 ## When to use
 
@@ -30,11 +34,15 @@ Unlike those controls, Switch already owns its `Field.Root`. Pass `name`, `inval
 - Exactly one choice from a set → [Radio](/components/inputs/radio)
 - A pressed toolbar control that may swap icons → [ToggleButton](/components/actions/toggle-button)
 
+---
+
 ## Related
 
 - [Checkbox](/components/inputs/checkbox) — form-batch and multi-select booleans
 - [Radio](/components/inputs/radio) — mutually exclusive options
 - [ToggleButton](/components/actions/toggle-button) — pressed-state toolbar toggles
+
+---
 
 ## Common examples
 

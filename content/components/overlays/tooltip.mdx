@@ -15,9 +15,13 @@ description: Supplementary hint on hover or focus — Trigger plus Content, shar
   </Card>
 </Cards>
 
+---
+
 Tooltip shows a short hint when someone hovers or focuses a trigger. It is never the only place critical information should live. Wrap the app once in `Tooltip.Provider` at the root (same overlay shell as [Setup](/get-started/setup)) so open and close delays stay consistent across every tooltip on the page.
 
 Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`. The trigger accepts any control through `render`, including [IconButton](/components/actions/icon-button) with an `aria-label` when the glyph alone would be ambiguous. Content stays brief — a [Text](/components/typography/text) node or a short phrase. For icon-only controls, repeat the accessible name in the tooltip so sighted hover matches what screen readers hear.
+
+---
 
 ## When to use
 
@@ -31,11 +35,15 @@ Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`. The trigger accept
 - A list of commands from a trigger → [Menu](/components/overlays/menu)
 - Essential instructions that must stay visible without hover → put them in on-page copy
 
+---
+
 ## Related
 
 - [Popover](/components/overlays/popover) — anchored interactive panels
 - [Menu](/components/overlays/menu) — command lists from a trigger
 - [IconButton](/components/actions/icon-button) — common host for icon-only tooltips
+
+---
 
 ## Common examples
 

@@ -15,9 +15,13 @@ description: Accessible progress bar — determinate value, indeterminate sync, 
   </Card>
 </Cards>
 
+---
+
 `LinearProgress` shows task progress on a compact horizontal track with a native `progressbar` role. Pass a numeric `value` when the percent is known (uploads, exports, checklists). Set `value={null}` while duration is unknown — the root gets `data-indeterminate` and omits `aria-valuenow` until a number returns.
 
 `label` names the bar for accessibility; add `description` for supporting copy under the track, and `renderValue` when the percent (or a custom formatter) should sit beside the label. For a compact bar with no visible label, supply `aria-label` on the root instead. The indicator animates with theme [motion](/foundation/motion) tokens.
+
+---
 
 ## When to use
 
@@ -32,12 +36,16 @@ description: Accessible progress bar — determinate value, indeterminate sync, 
 - A short opaque wait with no track metaphor → [Spinner](/components/loading/spinner)
 - An interactive value the user drags → [Slider](/components/inputs/slider)
 
+---
+
 ## Related
 
 - [Meter](/components/widgets/meter) — read-only fill level for capacity and scores
 - [Skeleton](/components/loading/skeleton) — structure-preserving placeholders
 - [Spinner](/components/loading/spinner) — compact busy chrome without a track
 - [Slider](/components/inputs/slider) — adjustable values on a track
+
+---
 
 ## Common examples
 

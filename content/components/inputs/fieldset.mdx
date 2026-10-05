@@ -15,9 +15,13 @@ description: Groups related radios or checkboxes with a legend and optional grou
   </Card>
 </Cards>
 
+---
+
 Fieldset gives a cluster of controls a visible legend plus optional group-level description and error copy. Use it when [Radio](/components/inputs/radio) or [Checkbox](/components/inputs/checkbox) options need a shared group name, or when several labeled fields share one section heading.
 
 Pass `render` to merge the fieldset root with `RadioGroup` or `CheckboxGroup` so the group and legend stay one accessible unit. Group validation and `name` still live on `Field.Root` above the fieldset; individual options keep their own labels. Border and card chrome belong on [Surface](/components/layout/surface), not on Fieldset.
+
+---
 
 ## When to use
 
@@ -30,11 +34,15 @@ Pass `render` to merge the fieldset root with `RadioGroup` or `CheckboxGroup` so
 - Card border, radius, or fill → wrap with [Surface](/components/layout/surface)
 - Immediate settings toggles that do not need a group legend → [Switch](/components/inputs/switch) rows alone
 
+---
+
 ## Related
 
 - [Radio](/components/inputs/radio) — mutually exclusive options inside Fieldset
 - [Checkbox](/components/inputs/checkbox) — multi-select options inside Fieldset
 - [Surface](/components/layout/surface) — border and card chrome around the group
+
+---
 
 ## Common examples
 

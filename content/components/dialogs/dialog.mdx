@@ -15,9 +15,13 @@ description: Edge sheet for focused tasks that interrupt the page — confirmati
   </Card>
 </Cards>
 
+---
+
 Dialog opens a bottom edge sheet for tasks that need attention without leaving the page. Compose `Dialog.Trigger` (usually a Button or IconButton via `render`), a titled `Dialog.Sheet`, and `Dialog.Close` for actions that should dismiss. Portal, backdrop, handle, and heading chrome live inside the sheet — they are not separate public parts.
 
 Pass `title` for assistive technologies, and add `description` when the heading alone is thin. Snap points and swipe dismissal live on the `Dialog` root when the sheet should drag between heights. Nest another Dialog inside `Dialog.Sheet` for drill-down settings; Escape closes only the topmost layer. Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell should push aside behind an open sheet.
+
+---
 
 ## When to use
 
@@ -31,11 +35,15 @@ Pass `title` for assistive technologies, and add `description` when the heading 
 - Non-blocking save, undo, or status feedback → [Toast](/components/dialogs/toast)
 - Long reading that belongs on its own route rather than a sheet
 
+---
+
 ## Related
 
 - [Toast](/components/dialogs/toast) — brief, non-blocking feedback after an action
 - [Popover](/components/overlays/popover) — anchored panels that do not block the page
 - [Menu](/components/overlays/menu) — command lists anchored to a trigger
+
+---
 
 ## Common examples
 

@@ -7,6 +7,8 @@ AvatarGroup turns an `avatars` array into a compact cluster of [Avatar](/compone
 
 Faces overlap on the inline or block axis so collaborators read as one unit. Set `maxVisible` and `overflowText` (for example `+3`) when the list is longer than the strip should show; omit those when every face should render. The group root is a plain `div` — put names, counts, or actions beside it in layout primitives, not inside the group.
 
+---
+
 ## When to use
 
 - Project or document collaborators in a tight strip
@@ -17,11 +19,15 @@ Faces overlap on the inline or block axis so collaborators read as one unit. Set
 - A single identity → [Avatar](/components/widgets/avatar)
 - Spaced list rows where each face needs its own name → Avatar + [Stack](/components/layout/stack) per row
 
+---
+
 ## Related
 
 - [Avatar](/components/widgets/avatar) — one face with photo or fallback
 - [Badge](/components/widgets/badge) — status on a child (wrap a single avatar, not the group root)
 - [Stack](/components/layout/stack) — labels and actions beside the cluster
+
+---
 
 ## Common examples
 

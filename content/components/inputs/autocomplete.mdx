@@ -15,9 +15,13 @@ description: Combobox with filterable suggestions, field chrome, and an elevated
   </Card>
 </Cards>
 
+---
+
 Autocomplete combines a text input with a filterable popup. Type to narrow `items`, pick a row, or keep free-form text when the list is only a suggestion.
 
 Field label, description, error copy, and `startAddon` / `endAddon` chrome match [Textfield](/components/inputs/textfield); options render as `Autocomplete.Item` rows on an elevated `Surface` like [Select](/components/inputs/select). Pass list content as a render function over `items`, or compose `Autocomplete.Group` with `Autocomplete.Collection` for sectioned results. Keep root `status` mounted and update its children when async messaging changes; clear or omit `empty` while pending so no-match copy does not flash over a spinner. Fill a form column from a parent [Stack](/components/layout/stack) with `fullWidth` / `expandChildren` — Autocomplete has no `fullWidth` prop of its own.
+
+---
 
 ## When to use
 
@@ -31,11 +35,15 @@ Field label, description, error copy, and `startAddon` / `endAddon` chrome match
 - Open text with no suggestion list → [Textfield](/components/inputs/textfield)
 - A short, always-visible single choice → [Radio](/components/inputs/radio)
 
+---
+
 ## Related
 
 - [Select](/components/inputs/select) — closed-choice popup without filtering
 - [Textfield](/components/inputs/textfield) — single-line text without a suggestion list
 - [Radio](/components/inputs/radio) — visible mutually exclusive options
+
+---
 
 ## Common examples
 

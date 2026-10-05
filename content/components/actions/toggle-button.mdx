@@ -15,11 +15,15 @@ description: Icon-only two-state toggle and its group — pressed icons, variant
   </Card>
 </Cards>
 
+---
+
 ToggleButton is the icon-only control with a persistent pressed state. Pass `restingIcon` (required); optional `pressedIcon` swaps in when pressed, otherwise the resting glyph stays. Every instance needs `aria-label` or `aria-labelledby`.
 
 `variant` defaults to flat at rest; `pressedVariant` can shift the treatment while pressed so the on state reads clearly in a quiet toolbar. `interpolateIcons` opts into a short crossfade and rotate between icons; otherwise the swap is instant. Reach for [IconButton](/components/actions/icon-button) when there is no pressed state to keep.
 
 When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value` plus an accessible name; the group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` for multi-select. Label the group with `aria-label` or `aria-labelledby` so assistive tech understands the cluster.
+
+---
 
 ## When to use
 
@@ -34,12 +38,16 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 - Tabbed panel navigation → [Tabs](/components/navigation/tabs)
 - A labeled commit action (Save, Delete) → [Button](/components/actions/button)
 
+---
+
 ## Related
 
 - [IconButton](/components/actions/icon-button) — fire-and-forget icon actions
 - [Button](/components/actions/button) — labeled commits and cancel rows
 - [Switch](/components/inputs/switch) — labeled on/off settings
 - [Tabs](/components/navigation/tabs) — switching content panels
+
+---
 
 ## Common examples
 

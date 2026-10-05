@@ -15,9 +15,13 @@ description: Read-only progress bar with optional label, description, and format
   </Card>
 </Cards>
 
+---
+
 `Meter` shows a scalar value on a track with Base UI meter semantics. `value`, `min`, and `max` feed an accessible meter that users do not drag. Optional `label` uses the shared field-label pattern; `description` adds muted helper copy below the track; `renderValue` shows the current amount beside the label (`true` for default formatting, or a function for custom text).
 
 The indicator width follows `value` automatically. Reach for Meter when the fill level is known and read-only — storage quotas, completion percentages, capacity. Use [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for in-progress tasks or indeterminate work.
+
+---
 
 ## When to use
 
@@ -29,11 +33,15 @@ The indicator width follows `value` automatically. Reach for Meter when the fill
 - Interactive adjustment → [Slider](/components/inputs/slider)
 - In-progress or indeterminate task progress → [LinearProgress](/components/loading/linear-progress)
 
+---
+
 ## Related
 
 - [Slider](/components/inputs/slider) — editable value on a track
 - [LinearProgress](/components/loading/linear-progress) — task progress bars
 - [Spinner](/components/loading/spinner) — compact in-flight wait states
+
+---
 
 ## Common examples
 

@@ -38,6 +38,8 @@ Published mirror when checkout unavailable: `@viraui/react/specs` / guide `baseU
     Upstream API and behavior for the Base UI primitive this control wraps.
   </Card>
 </Cards>
+
+---
 ```
 
 ## Rules
@@ -46,4 +48,5 @@ Published mirror when checkout unavailable: `@viraui/react/specs` / guide `baseU
 - `title` = Base UI component name derived from that URL’s last path segment (e.g. `drawer` → `Drawer`, `toggle-group` → `Toggle Group`)
 - Always set `external` on the Card
 - One Card only; no “What’s next” tour
+- After the Cards block, put a thematic break (`---`) before the lead narrative (same rhythm as after lead / when-not / Related — see `page-shell.md`)
 - Voice stays consumer-facing; Card body explains upstream pass-through, not authoring instructions

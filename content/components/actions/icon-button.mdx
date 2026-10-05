@@ -15,11 +15,15 @@ description: Compact icon-only action and its link twin — same chrome as Butto
   </Card>
 </Cards>
 
+---
+
 IconButton is the compact, icon-only sibling of [Button](/components/actions/button). Pass the glyph through `icon`; `size`, `variant`, `pill`, and `loading` follow the same chrome. The icon alone is not a name — every instance needs `aria-label` or `aria-labelledby`.
 
 When the affordance should navigate (in-app route or external URL), use **IconButtonLink** instead. It shares the same visual chrome but renders a native `<a>`, or a framework `Link` via `render`. Do not force `render={<a />}` on IconButton; Base UI keeps button semantics there.
 
 Variants follow the same intent rules as Button. Prefer flat in dense toolbars so icon actions stay quiet next to labeled commits. When `loading` is on, the control keeps its width, sets `aria-busy`, and shows a decorative Spinner over the icon. On IconButton, loading also blocks activation; on IconButtonLink, loading sets `aria-disabled` / `aria-busy` while the link stays activatable.
+
+---
 
 ## When to use
 
@@ -33,11 +37,15 @@ Variants follow the same intent rules as Button. Prefer flat in dense toolbars s
 - The control stays pressed or swaps icons after activation → [ToggleButton](/components/actions/toggle-button)
 - Critical guidance that must stay visible without hover → put it in copy, not an icon alone ([Tooltip](/components/overlays/tooltip) can reinforce, not replace)
 
+---
+
 ## Related
 
 - [Button](/components/actions/button) — labeled actions and `ButtonLink`
 - [ToggleButton](/components/actions/toggle-button) — pressed-state icon toggles and groups
 - [Tooltip](/components/overlays/tooltip) — short hover/focus hints that match the accessible name
+
+---
 
 ## Common examples
 

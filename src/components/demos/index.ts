@@ -183,3 +183,10 @@ export {
   SpinnerCenteredDemo,
   SpinnerChipDemo,
 } from "./spinner-demo";
+export {
+  TabsAddonsDemo,
+  TabsPanelsDemo,
+  TabsProgrammaticDemo,
+  TabsScrollableDemo,
+  TabsStretchDemo,
+} from "./tabs-demo";

@@ -9,6 +9,8 @@ description: Themed container — color ramp, radius, border sides, and padding 
 
 Surface has no gap prop: nest a [`Stack`](/components/layout/stack) for child spacing, or pass `render={<Surface … />}` on Stack so chrome and layout share one DOM node. Pair with [`Elevator`](/components/layout/elevator) when the panel needs animated shadow lift; Surface itself has no elevation prop.
 
+---
+
 ## When to use
 
 - A region needs a themed background, border, radius, or token padding
@@ -21,12 +23,16 @@ Surface has no gap prop: nest a [`Stack`](/components/layout/stack) for child sp
 - The job is resting / hover shadow without a Surface elevation prop → [Elevator](/components/layout/elevator)
 - Content should break out of parent padding → [Bleed](/components/layout/bleed)
 
+---
+
 ## Related
 
 - [Stack](/components/layout/stack) — flex gaps and alignment inside or as the Surface host
 - [Elevator](/components/layout/elevator) — elevation hooks on the Surface root
 - [Bleed](/components/layout/bleed) — pull media or rules past Surface padding
 - [Separator](/components/layout/separator) — inline dividers inside stacked content
+
+---
 
 ## Common examples
 

@@ -7,6 +7,8 @@ ClampText truncates overflowing copy to a fixed row count so long strings ellips
 
 Use `inline` when the clamped span must sit inside running [Text](/components/typography/text). `render` swaps the root when the clamped node should be a `p`, `a`, or another element while keeping the same clamp styles. Nested composition works both ways: ClampText inside Title for a clamped heading line, or Title inside ClampText when the whole heading block must truncate as one unit.
 
+---
+
 ## When to use
 
 - Card titles and descriptions in fixed-height tiles
@@ -19,11 +21,15 @@ Use `inline` when the clamped span must sit inside running [Text](/components/ty
 - Scaling a short display line to fill width → [FitText](/components/typography/fit-text)
 - Headings that always show in full → [Title](/components/typography/title) alone
 
+---
+
 ## Related
 
 - [Text](/components/typography/text) — body-scale running copy
 - [Title](/components/typography/title) — heading presets (often wrapped or nested)
 - [FitText](/components/typography/fit-text) — fit-to-width instead of ellipsis
+
+---
 
 ## Common examples
 

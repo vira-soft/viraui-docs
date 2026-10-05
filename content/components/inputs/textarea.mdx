@@ -15,9 +15,13 @@ description: Multi-line text input with label, helper copy, and validation throu
   </Card>
 </Cards>
 
+---
+
 Textarea is the multi-line control for notes, message bodies, bios, and other long-form values. It uses the same field layout as [Textfield](/components/inputs/textfield) for label, description, and error copy, so long answers match the rest of the form.
 
 Pass `rows`, `placeholder`, and standard textarea attributes on the control; validation flows through Base UI `Field` the same way as single-line inputs. `fitContent` grows the control with its value; `resize` opts into a native drag handle (`vertical`, `horizontal`, or `both`) when users need more room. Width fill comes from a parent [Stack](/components/layout/stack) with `fullWidth` / `expandChildren` — Textarea has no `fullWidth` prop and no addon slots.
+
+---
 
 ## When to use
 
@@ -29,10 +33,14 @@ Pass `rows`, `placeholder`, and standard textarea attributes on the control; val
 - Single-line identifiers or short values → [Textfield](/components/inputs/textfield)
 - Prefix, search glyph, or trailing action chrome → Textfield addons (Textarea has none)
 
+---
+
 ## Related
 
 - [Textfield](/components/inputs/textfield) — single-line input with optional addons
 - [Fieldset](/components/inputs/fieldset) — section legend when several fields share a group
+
+---
 
 ## Common examples
 

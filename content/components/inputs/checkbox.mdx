@@ -15,9 +15,13 @@ description: Boolean option row with label and helper copy — standalone or ins
   </Card>
 </Cards>
 
+---
+
 Checkbox is a single on/off option with label and helper copy beside the control. Standalone rows need an external `Field.Root` from `@base-ui/react` for naming and validation; Checkbox does not own a field root the way [Textfield](/components/inputs/textfield) does.
 
 Related options share a selection model through `CheckboxGroup`. Add [Fieldset](/components/inputs/fieldset) with `render={<CheckboxGroup />}` only when the group needs a legend or shared description; otherwise `CheckboxGroup` may sit directly in `Field.Root`. Checked, indeterminate, disabled, and change handlers pass through Base UI; `size` scales the control and label.
+
+---
 
 ## When to use
 
@@ -31,11 +35,15 @@ Related options share a selection model through `CheckboxGroup`. Add [Fieldset](
 - Exactly one choice is allowed → [Radio](/components/inputs/radio)
 - A long closed list in a popup → [Select](/components/inputs/select)
 
+---
+
 ## Related
 
 - [Fieldset](/components/inputs/fieldset) — legend and group helper for CheckboxGroup
 - [Switch](/components/inputs/switch) — immediate on/off settings
 - [Radio](/components/inputs/radio) — mutually exclusive options
+
+---
 
 ## Common examples
 

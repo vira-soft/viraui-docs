@@ -15,11 +15,15 @@ description: Expandable sections — single or multiple open panels with optiona
   </Card>
 </Cards>
 
+---
+
 `Accordion` wraps Base UI accordion primitives in a column [`Stack`](/components/layout/stack). Each `Accordion.Item` owns the trigger header and collapsible panel, so you pass a `trigger` label and panel children instead of composing public Header / Trigger / Panel parts.
 
 Root `value`, `defaultValue`, and `onValueChange` come from Base UI. Set `multiple` when several sections can stay open; exclusive FAQs stay single-open by default. Items wrap [`Surface`](/components/layout/surface) by default: `color`, `border`, and `radius` forward to that host, and root `islands` toggles separated cards versus an attached block with corner radius only on the first and last rows.
 
 Keyboard and aria behavior stay upstream. You compose items, copy, and surrounding chrome in JSX.
+
+---
 
 ## When to use
 
@@ -33,12 +37,16 @@ Keyboard and aria behavior stay upstream. You compose items, copy, and surroundi
 - A single boolean or short disclosure that is not a section list → details/summary or a custom Stack row
 - Content that should always stay visible → plain [Stack](/components/layout/stack) / [Surface](/components/layout/surface)
 
+---
+
 ## Related
 
 - [Stack](/components/layout/stack) — column host Accordion builds on
 - [Surface](/components/layout/surface) — island / attached item chrome
 - [Tabs](/components/navigation/tabs) — peer panels that stay in view when selected
 - [Separator](/components/layout/separator) — static breaks when collapse is not needed
+
+---
 
 ## Common examples
 

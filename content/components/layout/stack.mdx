@@ -9,6 +9,8 @@ Children flow in a column or row. `direction`, `rowGap`, and `columnGap` map to 
 
 Prefer `expandChildren` and `fullWidth` when a row of actions or a panel shell should fill the main axis. Pass `render` to swap the default `div` for a `header`, `nav`, `section`, or other semantic host while keeping the same layout hooks.
 
+---
+
 ## When to use
 
 - One flex axis is enough (vertical list, toolbar row, card internals)
@@ -22,12 +24,16 @@ Prefer `expandChildren` and `fullWidth` when a row of actions or a panel shell s
 - Uneven tile heights in a column wall → [Masonry](/components/layout/masonry)
 - Background, border, or radius chrome alone → [Surface](/components/layout/surface) (nest Stack inside for gaps)
 
+---
+
 ## Related
 
 - [Grid](/components/layout/grid) — CSS Grid tracks, spans, and auto-fill
 - [Masonry](/components/layout/masonry) — variable-height column walls
 - [Surface](/components/layout/surface) — themed panel chrome around a Stack
 - [Separator](/components/layout/separator) — visual breaks between stacked rows
+
+---
 
 ## Common examples
 

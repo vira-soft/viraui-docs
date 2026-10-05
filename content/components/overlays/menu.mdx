@@ -15,9 +15,13 @@ description: Command menu anchored to a trigger — items, groups, submenus, and
   </Card>
 </Cards>
 
+---
+
 Menu opens a list of actions or choices from a trigger click (or equivalent activation). Portal mounting, collision-aware positioning, typeahead, and roving keyboard focus ship with the compound — compose `Menu.Trigger` with `Menu.Popup` and the item parts you need.
 
 Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; exclusive picks use `Menu.RadioGroup` with `Menu.RadioItem`; persistent toggles use `Menu.CheckboxItem`. Groups, separators, and nested `Menu.Submenu` trees cover denser toolbars. Triggers accept any control through `render`, including custom chrome such as a [Surface](/components/layout/surface) account chip. Do not wrap Menu in [Popover](/components/overlays/popover) — Menu already owns the floating surface contract.
+
+---
 
 ## When to use
 
@@ -32,12 +36,16 @@ Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; exclusi
 - A task that should block the page → [Dialog](/components/dialogs/dialog)
 - A closed form field that shows the current value in a trigger → [Select](/components/inputs/select)
 
+---
+
 ## Related
 
 - [Popover](/components/overlays/popover) — anchored panels with chrome and interactive body content
 - [Tooltip](/components/overlays/tooltip) — short hover/focus hints
 - [Dialog](/components/dialogs/dialog) — modal edge sheets that interrupt the page
 - [Select](/components/inputs/select) — single-choice field with value in the trigger
+
+---
 
 ## Common examples
 

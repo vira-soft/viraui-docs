@@ -15,9 +15,13 @@ description: Range input for numeric values — single thumb or dual-thumb range
   </Card>
 </Cards>
 
+---
+
 Slider exposes a draggable thumb on a track for choosing one number or a min–max pair between `min`, `max`, and `step`. Label, description, and error copy follow the shared field pattern; orientation, disabled state, and value change handlers pass through Base UI.
 
 Pass a two-element `value` / `defaultValue` array for range mode; the component detects dual thumbs automatically. Show the live number with `renderValue` (`true` for default mono formatting, or a function that owns the value slot). The track fills its container — grow it with a parent [Stack](/components/layout/stack) `expandChildren` or a sized host, not fixed pixel lengths.
+
+---
 
 ## When to use
 
@@ -30,11 +34,15 @@ Pass a two-element `value` / `defaultValue` array for range mode; the component 
 - A read-only fill level the user does not drag → [Meter](/components/widgets/meter)
 - Indeterminate or route-level loading → [LinearProgress](/components/loading/linear-progress)
 
+---
+
 ## Related
 
 - [Select](/components/inputs/select) — named closed choices
 - [Radio](/components/inputs/radio) — short visible single-choice sets
 - [Meter](/components/widgets/meter) — read-only scalar on a track
+
+---
 
 ## Common examples
 

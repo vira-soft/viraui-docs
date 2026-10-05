@@ -15,9 +15,13 @@ description: Circular identity image with required fallback initials or node whe
   </Card>
 </Cards>
 
+---
+
 Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` when a photo exists; always supply `fallback` (initials or a short node) so Base UI can render that layer when the image is missing or fails.
 
 `size` picks the footprint and scales the fallback label through the shared [Text](/components/typography/text) map. The root stays a non-growing `span`, so avatars hold steady in toolbars and list rows. Pair a single face with a name in [Stack](/components/layout/stack); use [AvatarGroup](/components/widgets/avatar-group) when several identities should overlap on one line.
+
+---
 
 ## When to use
 
@@ -29,11 +33,15 @@ Avatar shows a person or entity in a fixed circular frame. Pass `src` and `alt` 
 - Several overlapping collaborators → [AvatarGroup](/components/widgets/avatar-group)
 - A clickable chrome control with no face → [IconButton](/components/actions/icon-button)
 
+---
+
 ## Related
 
 - [AvatarGroup](/components/widgets/avatar-group) — overlapping faces with overflow
 - [Badge](/components/widgets/badge) — status dot on an avatar
 - [Stack](/components/layout/stack) — name + avatar rows
+
+---
 
 ## Common examples
 

@@ -9,6 +9,8 @@ When the final layout already exists in markup, wrap that node in `Skeleton.Over
 
 Mark the hosting region `aria-busy` (and an accessible name when a whole card loads) so assistive tech knows content is provisional — Skeleton roots stay decorative. The pulse respects `prefers-reduced-motion`; set `animate={false}` when a static block reads better. For an Overlay reveal wipe, put `view-transition-name: skeleton-overlay` on a CSS class wrapping the skeleton and loaded content.
 
+---
+
 ## When to use
 
 - Content structure is known and you want layout to stay stable while data loads
@@ -21,11 +23,15 @@ Mark the hosting region `aria-busy` (and an accessible name when a whole card lo
 - A task with known or indeterminate percent along a track → [LinearProgress](/components/loading/linear-progress)
 - Loading should give hint about the current loading status → [Shimmer](/components/typography/shimmer) on Text / Title
 
+---
+
 ## Related
 
 - [Spinner](/components/loading/spinner) — compact busy indicator for short waits
 - [LinearProgress](/components/loading/linear-progress) — determinate or indeterminate track progress
 - [Shimmer](/components/typography/shimmer) — loading treatment on live text, not layout blocks
+
+---
 
 ## Common examples
 
