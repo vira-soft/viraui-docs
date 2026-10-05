@@ -167,10 +167,12 @@ export {
   AccordionMultipleDemo,
 } from "./accordion-demo";
 export {
+  LinearProgressCustomValueDemo,
   LinearProgressGoalDemo,
   LinearProgressIndeterminateDemo,
   LinearProgressLabeledDemo,
 } from "./linear-progress-demo";
+export { MeterCustomValueDemo, MeterLabeledDemo } from "./meter-demo";
 export {
   SkeletonAvatarTextDemo,
   SkeletonEqualActionsDemo,

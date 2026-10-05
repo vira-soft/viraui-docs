@@ -59,7 +59,7 @@ export const SliderAmountDemo: React.FC = () => (
           label="Minimum payout"
           max={10000}
           min={50}
-          renderValue
+          renderValue={(formattedValues) => `$${formattedValues[0]}`}
           step={50}
         />
         <Stack

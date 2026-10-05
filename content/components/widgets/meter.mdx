@@ -15,9 +15,9 @@ description: Read-only progress bar with optional label, description, and format
   </Card>
 </Cards>
 
-Meter shows a scalar value on a track with Base UI meter semantics. `value`, `min`, and `max` feed an accessible `progressbar` that users do not drag. Optional `label` uses the shared field-label pattern; `description` adds muted helper copy below the track; `renderValue` shows the current amount beside the label (boolean for default formatting, or a function for custom text).
+`Meter` shows a scalar value on a track with Base UI meter semantics. `value`, `min`, and `max` feed an accessible meter that users do not drag. Optional `label` uses the shared field-label pattern; `description` adds muted helper copy below the track; `renderValue` shows the current amount beside the label (`true` for default formatting, or a function for custom text).
 
-The indicator width follows `value` automatically. Reach for Meter when the fill level is known and read-only — storage quotas, completion percentages, capacity. Use [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for indeterminate or route-level loading without a numeric model.
+The indicator width follows `value` automatically. Reach for Meter when the fill level is known and read-only — storage quotas, completion percentages, capacity. Use [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for in-progress tasks or indeterminate work.
 
 ## When to use
 
@@ -27,24 +27,60 @@ The indicator width follows `value` automatically. Reach for Meter when the fill
 ## When not to use
 
 - Interactive adjustment → [Slider](/components/inputs/slider)
-- Indeterminate or route loading without a numeric model → [LinearProgress](/components/loading/linear-progress)
+- In-progress or indeterminate task progress → [LinearProgress](/components/loading/linear-progress)
 
 ## Related
 
 - [Slider](/components/inputs/slider) — editable value on a track
-- [LinearProgress](/components/loading/linear-progress) — loading bars without a meter model
+- [LinearProgress](/components/loading/linear-progress) — task progress bars
 - [Spinner](/components/loading/spinner) — compact in-flight wait states
 
 ## Common examples
 
 ### Labeled value
 
-A labeled meter with optional value readout is the baseline dashboard pattern.
+A labeled meter with `renderValue` is the baseline dashboard pattern. Optional `description` clarifies what the fill represents.
 
-<PreviewSlot label="Meter preview" />
+<Example preview={<MeterLabeledDemo />}>
+
+```tsx
+import { Meter } from '@viraui/react';
+
+<Meter
+  label="Storage"
+  description="74 GB of 100 GB used."
+  renderValue
+  value={74}
+/>
+```
+
+</Example>
+
+### Custom value slot
+
+Pass a function to `renderValue` when the readout needs units instead of the default formatted string. The callback receives the Base UI formatted string and the numeric `value`.
+
+<Example preview={<MeterCustomValueDemo />}>
+
+```tsx
+import { Meter } from '@viraui/react';
+
+<Meter
+  label="Storage used"
+  description="42 GB of 100 GB used."
+  value={42}
+  renderValue={(_formatted, value) => `${value} GB`}
+/>
+```
+
+</Example>
 
 ## Ask your agent
 
 ```text tab="Storage meter"
 Add a storage-used meter on this account settings card — used GB out of 100 GB cap, with short description of what counts toward the quota. Read-only here, not editable.
+```
+
+```text tab="Custom value units"
+Show storage used as "42 GB" beside the label via a custom renderValue formatter, with description for the remaining capacity.
 ```

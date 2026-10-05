@@ -60,6 +60,27 @@ import { LinearProgress } from '@viraui/react';
 
 </Example>
 
+### Custom value slot
+
+Pass a function to `renderValue` when the readout needs units or counts instead of the default percent string. The callback receives the Base UI formatted string and the numeric `value` (`null` while indeterminate).
+
+<Example preview={<LinearProgressCustomValueDemo />}>
+
+```tsx
+import { LinearProgress } from '@viraui/react';
+
+<LinearProgress
+  label="Export"
+  description="Batch export running."
+  value={64}
+  renderValue={(_formatted, value) =>
+    value == null ? '…' : `${value} of 100 files`
+  }
+/>
+```
+
+</Example>
+
 ### Indeterminate sync
 
 When the job is running but the percent is unknown, pass `value={null}`. Keep a visible `label` and helper copy so the row still explains what is in flight.
@@ -106,6 +127,10 @@ import { LinearProgress, Stack, Surface, Text } from '@viraui/react';
 
 ```text tab="Upload progress"
 Show upload progress at about 40% with label Upload and supporting copy under the bar that files are uploading.
+```
+
+```text tab="Custom value units"
+Show export progress at 64 of 100 files — custom value text beside the label, not a bare percent.
 ```
 
 ```text tab="Sync indeterminate"

@@ -40,7 +40,7 @@ Pass a two-element `value` / `defaultValue` array for range mode; the component 
 
 ### Single thumb with captions
 
-A labeled single-thumb value with `renderValue` and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
+A labeled single-thumb value with a custom `renderValue` formatter and sibling min/max captions under the track is the default numeric filter pattern. Captions stay as `Text` in a row — not track CSS.
 
 <Example preview={<SliderAmountDemo />}>
 
@@ -54,7 +54,7 @@ import { Slider, Stack, Text } from '@viraui/react';
     min={50}
     max={10000}
     step={50}
-    renderValue
+    renderValue={(formattedValues) => `$${formattedValues[0]}`}
   />
   <Stack
     columnGap="s"

@@ -39,6 +39,22 @@ export const LinearProgressLabeledDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** Custom `renderValue` formatter — units beside the label. */
+export const LinearProgressCustomValueDemo: React.FC = () => (
+  <SandboxShell label="LinearProgress with custom renderValue units">
+    <Stack fullWidth maxWidth="20rem" minWidth="16rem" rowGap="m">
+      <LinearProgress
+        description="Batch export running."
+        label="Export"
+        renderValue={(_formatted, value) =>
+          value == null ? "…" : `${value} of 100 files`
+        }
+        value={64}
+      />
+    </Stack>
+  </SandboxShell>
+);
+
 /** Indeterminate sync row — duration unknown. */
 export const LinearProgressIndeterminateDemo: React.FC = () => (
   <SandboxShell label="Indeterminate LinearProgress for background sync">
