@@ -177,7 +177,6 @@ export const AccordionAttachedDemo: React.FC = () => (
           <Accordion.Item
             key={item.value}
             border="all"
-            color={1}
             trigger={item.trigger}
             value={item.value}
           >
