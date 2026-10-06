@@ -1,0 +1,158 @@
+---
+title: Prose
+description: Heading-aware document rhythm for direct heading and block children.
+---
+
+Prose is the grouping region for long-form copy. It adds space between its **direct** children so a heading into a paragraph is tighter than paragraph into paragraph. Font size and color stay on [Title](/components/typography/title) and [Text](/components/typography/text). Prose does not style lists, links, or bullets.
+
+Headings and paragraphs join that spacing only as Prose’s own children with real tags (`render={<h2 />}`, `render={<p />}`). Default Title and Text are `span`, so they get no heading or paragraph gap. Native `ul`, `ol`, and `blockquote` are one spaced block each. If you wrap blocks in a `div`, that wrapper can take a block gap; headings and paragraphs inside it do not. Use `render={<article />}` when the region is the document landmark.
+
+Reach for [Stack](/components/layout/stack) `rowGap` for cards, toolbars, and form rows. One even gap cannot split heading cadence. `align` on Prose is `text-align` for the copy, not a centered layout shell.
+
+---
+
+## When to use
+
+- Articles, docs, and changelog regions whose direct children are headings and blocks
+- Density via `gap` (`s` / `m` / `l`, default `l`)
+- One region `align` so Title and Text that omit `align` inherit it
+
+## When not to use
+
+- Cards, toolbars, and form rows → [Stack](/components/layout/stack)
+- Restyling type, lists, or links → Title, Text, or your CSS
+- Parsing or sanitizing Markdown — Prose only spaces matching children
+
+---
+
+## Related
+
+- [Title](/components/typography/title) — heading tags and display size
+- [Text](/components/typography/text) — body paragraphs and inline copy
+- [Stack](/components/layout/stack) — flex gaps for cards and rows, not article cadence
+- [Typography](/foundation/typography) — scale, fluid gate, and tokens
+
+---
+
+## Common examples
+
+### Article blocks
+
+An `article` with Title and Text as heading and paragraph tags is the baseline. Default `gap` is `l`. Title inside Prose uses `lineHeight="s"`.
+
+<Example preview={<ProseArticleDemo />}>
+
+```tsx
+import { Prose, Text, Title } from '@viraui/react';
+
+<Prose render={<article />}>
+  <Title size="2" lineHeight="s" render={<h2 />} />
+  <Text render={<p />} />
+  <Text render={<p />} />
+</Prose>
+```
+
+</Example>
+
+### Native lists and quotes
+
+A list or blockquote is one sibling of the headings and paragraphs. Items inside the list do not get a second Prose gap.
+
+<Example preview={<ProseNativeBlocksDemo />}>
+
+```tsx
+import { Prose, Text, Title } from '@viraui/react';
+
+<Prose>
+  <Title size="2" lineHeight="s" render={<h2 />} />
+  <Text render={<p />} />
+  <ul>
+    <li>
+      <Text />
+    </li>
+    <li>
+      <Text />
+    </li>
+  </ul>
+  <blockquote>
+    <Text />
+  </blockquote>
+</Prose>
+```
+
+</Example>
+
+### Density and region align
+
+`gap="s"` tightens heading and block spacing. One Prose `align` sets `text-align` for the region. Title and Text that do not set `align` inherit it.
+
+<Example preview={<ProseDensityAlignDemo />}>
+
+```tsx
+import { Prose, Text, Title } from '@viraui/react';
+
+<Prose gap="s" align="center">
+  <Title size="3" lineHeight="s" render={<h3 />} />
+  <Text render={<p />} />
+</Prose>
+```
+
+</Example>
+
+### Body leading
+
+Prose only spaces *between* blocks. Line height stays on Title and Text. Keep Title on `lineHeight="s"` so the heading sits tight above the next block; set Text `lineHeight` per paragraph.
+
+<Example preview={<ProseLineHeightDemo />}>
+
+```tsx
+import { Prose, Text, Title } from '@viraui/react';
+
+<Prose>
+  <Title size="2" lineHeight="s" render={<h2 />} />
+  <Text render={<p />} lineHeight="l" />
+  <Text render={<p />} lineHeight="s" />
+</Prose>
+```
+
+</Example>
+
+### Span hosts stay out
+
+Default Title and Text are `span` hosts, so they skip heading and block gaps. Pass `render` for `h1`–`h6` or `p` when the node should join the rhythm.
+
+<Example preview={<ProseSpanHostsDemo />}>
+
+```tsx
+import { Prose, Text, Title } from '@viraui/react';
+
+<Prose>
+  <Title size="4" lineHeight="s" />
+  <Text />
+  <Text render={<p />} />
+</Prose>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Article blocks"
+Turn this changelog into an article with real headings and paragraphs that use heading-aware spacing — not one even gap between every block.
+```
+
+```text tab="Native lists and quotes"
+In this help article, keep the heading and paragraphs, then add a short bullet list and a quote as native blocks in the same rhythm.
+```
+
+```text tab="Density and region align"
+Make this notes block compact and centered as a whole region, without setting alignment on every heading and paragraph.
+```
+
+```text tab="Body leading"
+Keep the section heading tight and give the first paragraph more air than the second, without changing how the article spaces those blocks.
+```
+
+```text tab="Span hosts stay out"
+This intro mixes a span heading, a span line, and a real paragraph — only the paragraph should pick up document spacing.
+```

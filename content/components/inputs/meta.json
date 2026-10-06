@@ -4,6 +4,7 @@
     "autocomplete",
     "checkbox",
     "fieldset",
+    "otp-field",
     "radio",
     "select",
     "slider",

@@ -57,7 +57,7 @@ Presence attribute. When theme sets `--effect-vibrancy`, preflight applies vibra
 
 ## data-no-link-style
 
-Boolean presence on anchors — **only** way to opt out of preflight link chrome (interactive color + animated underline on hover/focus). Class on the anchor does **not** suppress. Prose links (bare `<a>`, `Text`/`Title` as `<a>`) omit it; chrome components set it.
+Boolean on anchors to opt out of default preflight link styling (links inside buttons / custom chrome).
 
 ## Elevation attributes
 
