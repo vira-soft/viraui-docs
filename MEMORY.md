@@ -116,6 +116,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Docs Avatars: prefer photo `src` (`mockmind-api.uifaces.co/content/human/{n}.jpg`); keep required `fallback` but do not stage initials-only faces unless teaching missing/broken image — `.cursor/rules/08-docs-demo-avatars.mdc`
 - Shimmer demos: host in muted color (`Text tone="muted"` / `Title color="var(--global-muted)"`). Default white `currentColor` in dark mode → highlight `l+0.35` clamps to white → sweep invisible. Matches DS patterns + Storybook.
 - Vite RSC: `lucide-react` → `optimizeDeps.exclude` in `vite.config.ts` (else “inconsistently optimized” warn)
+- Docs consume **npm** `@viraui/react` / `@viraui/foundation` (lockfile). Do **not** `pnpm link` sibling `../vira-ui` — Vite realpath `/@fs/.../vira-ui/packages/react` is outside `server.fs.allow` → blank site. After accidental link: `pnpm i`, `rm -rf node_modules/.vite`, restart `pnpm dev`. Unreleased comps (Prose, OTPField) stay off live demos until npm ships.
 - Generated / install: `dist/`, `node_modules/`, `.tokensave/`, `.pnpm-store/` — do not hand-edit
 
 ## Quality (owning spec wins)
