@@ -38,7 +38,7 @@ Reach for [Stack](/components/layout/stack) `rowGap` for cards, toolbars, and fo
 
 ### Article blocks
 
-An `article` with Title and Text as heading and paragraph tags is the baseline. Default `gap` is `l`. Title inside Prose uses `lineHeight="s"`.
+An `article` with Title and Text as heading and paragraph tags is the baseline. Default `gap` is `l`. Title inside Prose uses `lineHeight="s"`. Add a smaller Title with `render={<h3 />}` for a subheading. Native inline marks (`kbd`, `del`, `ins`) keep preflight chrome inside the paragraph.
 
 <Example preview={<ProseArticleDemo />}>
 
@@ -48,7 +48,10 @@ import { Prose, Text, Title } from '@viraui/react';
 <Prose render={<article />}>
   <Title size="2" lineHeight="s" render={<h2 />} />
   <Text render={<p />} />
-  <Text render={<p />} />
+  <Title size="4" lineHeight="s" render={<h3 />} />
+  <Text render={<p />}>
+    Press <kbd>⌘S</kbd>, then <del>draft</del> <ins>ship</ins>.
+  </Text>
 </Prose>
 ```
 
@@ -138,7 +141,7 @@ import { Prose, Text, Title } from '@viraui/react';
 ## Ask your agent
 
 ```text tab="Article blocks"
-Turn this changelog into an article with real headings and paragraphs that use heading-aware spacing — not one even gap between every block.
+Turn this changelog into an article with real headings, a subheading, and paragraphs that use heading-aware spacing — not one even gap between every block. Keep keyboard, deleted, and inserted marks as native inline tags in the body.
 ```
 
 ```text tab="Native lists and quotes"

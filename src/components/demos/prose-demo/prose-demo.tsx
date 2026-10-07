@@ -35,7 +35,7 @@ const ArticleShell: React.FC<{ children: React.ReactNode }> = ({
 
 /** Article region with Title/Text as real heading and paragraph tags. */
 export const ProseArticleDemo: React.FC = () => (
-  <SandboxShell height={360} label="Article with heading-aware Prose rhythm">
+  <SandboxShell height={480} label="Article with heading-aware Prose rhythm">
     <ArticleShell>
       <Prose render={<article />}>
         <Title lineHeight="s" render={<h2 />} size="2">
@@ -45,9 +45,13 @@ export const ProseArticleDemo: React.FC = () => (
           Prose spaces direct heading and block children with em gaps. Title and
           Text keep type; this wrapper does not paint font size or color.
         </Text>
+        <Title lineHeight="s" render={<h3 />} size="4">
+          Inline marks stay on the page
+        </Title>
         <Text render={<p />}>
-          Body after body uses the block gap. The first child keeps no extra
-          start margin.
+          Body after a subheading still uses the heading gap. Shortcut{" "}
+          <kbd>⌘S</kbd> saves the pass. The status flipped from{" "}
+          <del>draft</del> to <ins>shipped</ins>.
         </Text>
       </Prose>
     </ArticleShell>
