@@ -9,7 +9,7 @@ description: >-
 license: MIT
 metadata:
   author: equinusocio
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
 # CSS authoring
@@ -32,11 +32,13 @@ When force majeure applies, follow the local project pattern for that conflict o
 
 ## Router
 
-Read sibling refs **before** writing matching styles:
+Read sibling refs **before** writing matching styles. Load **only** matching refs — not the whole folder upfront.
 
 | When | Read |
 | --- | --- |
-| Creating or editing stylesheets / CSS modules / component CSS (classes, nesting, selectors, colors, gradients, motion, `@property`) | [`authoring.md`](authoring.md) |
+| Classes, nesting, Baseline/browserslist, shorthand/longhand, vendor prefixes, useless resets | [`authoring.md`](authoring.md) |
+| Hardcoded colors, gradients, OKLCH/OKLAB, relative colors / alpha (no `color-mix` misuse) | [`colors.md`](colors.md) |
+| Animations, transitions, `@property`, `*.props.css` | [`motion.md`](motion.md) |
 
 If the task mixes concerns, read every matching ref.
 

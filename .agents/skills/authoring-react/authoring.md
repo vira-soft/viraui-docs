@@ -1,6 +1,15 @@
 # React components
 
-Apply whenever creating or editing React components.
+Apply whenever creating or editing React components (shape, props, markup, handlers).
+
+Load on demand — do **not** pull every sibling for every task:
+
+| Concern | Read |
+| --- | --- |
+| DOM / imperative escapes / third-party mount | [`dom.md`](dom.md) |
+| CSS imports, `className`, `dynamicStyle`, `data-*` | [`presentation.md`](presentation.md) |
+| JS/TS/JSX syntax constraints | [`style.md`](style.md) |
+| Folders / file placement | [`filesystem.md`](filesystem.md) |
 
 ## Shape
 
@@ -43,7 +52,40 @@ import type { CSSProperties, FC, ComponentPropsWithRef } from 'react'
 ## Props type
 
 - Every component has a **`ComponentNameProps`** type. Export it when callers need it outside the module (reuse, inference, wrapping). Otherwise leave it unexported.
-- Do **not** export helper or file-internal types unless consumers need them, or they are already surfaced through other exported types (composition, indexed access, `typeof`, etc.). See also type-export guidance in [`style.md`](style.md).
+- Prefer exporting the **component props type** (`BadgeProps`) over satellite types (variant unions, option aliases, etc.). Consumers take nested pieces via indexed access: `BadgeProps['variant']`.
+- When a union (or other alias) appears **only once** on the props type, **inline it** — do not create a separate named type.
+
+```tsx
+// Prefer — union once; export only BadgeProps
+export type BadgeProps = React.ComponentPropsWithRef<"span"> & {
+  /**
+   * Visual status treatment.
+   * @defaultValue 'neutral'
+   */
+  variant?: "neutral" | "positive" | "negative";
+};
+
+export const Badge: React.FC<BadgeProps> = ({
+  children,
+  className,
+  variant = "neutral",
+  ...otherProps
+}) => (
+  <span {...otherProps} className={clsx(styles.Badge, className)} data-variant={variant}>
+    {children}
+  </span>
+);
+
+// Avoid — unnecessary ChipVariants alias + export
+export type ChipVariants = "neutral" | "positive" | "negative";
+
+export type BadgeProps = React.ComponentPropsWithRef<"span"> & {
+  variant?: ChipVariants;
+};
+```
+
+- If a separate alias is still useful inside the file (reused across several props/helpers), keep it **unexported**. Consumers reach it via the props type (`BadgeProps['variant']`), not a second public export.
+- Do **not** export helper or file-internal types unless consumers need them as a first-class public API, or they are already surfaced through other exported types (composition, indexed access, `typeof`, etc.). See also type-export guidance in [`style.md`](style.md).
 - Prefer props that **extend the HTML (or component) props of the outermost wrapper** — the element/component that receives the props spread.
 - Use **`React.ComponentPropsWithRef`** / **`React.ComponentPropsWithoutRef`** as appropriate. In React 19, **`ref` is a normal prop** (no `forwardRef` required for that reason alone).
 - Props must always have a TSDoc comment that describes them and an `@defaultValue` marker with the default value assigned to the prop
@@ -132,25 +174,6 @@ return (
 const myConst = condition ?? condition2
 ```
 
-## CSS imports
-
-- CSS modules: import as `styles`.
-- Plain CSS: side-effect import (no binding).
-
-```tsx
-import styles from './my-component.module.css'
-
-const MyComponent: React.FC = () => <div className={styles.MyClass} />
-```
-
-```tsx
-import './my-component.css'
-
-const MyComponent: React.FC = () => <div className="MyComponent" />
-```
-
-For styling conventions, use the `authoring-css` skill when present. For JS/TS/JSX syntax and lint-style constraints, see [`style.md`](style.md).
-
 ## TypeScript path aliases and imports
 
 - When TypeScript path aliases are configured in the project, always use them where applicable.
@@ -182,62 +205,15 @@ const MyComponent: React.FC<MyComponentProps> = ({
 }
 ```
 
-## className on the outer wrapper
-
-- If the outermost wrapper gets a CSS class: destructure `className` from props and apply it on that element.
-- If the project has a class-merge utility (`clsx`, `cn`, etc.), use it. Otherwise **do not** destructure `className` — let it pass through the spread.
-
-```tsx
-const MyComponent: React.FC<MyComponentProps> = ({
-  className,
-  ...otherProps
-}) => <div className={clsx(styles.MyComponent, className)} {...otherProps} />
-```
-
-## Dynamic `style` and custom attributes
-
-- Prefer controlling CSS via **custom HTML attributes** (`data-*`) and **`dynamicStyle`**.
-- When the component manipulates `style`: destructure it from props, build `dynamicStyle` as `React.CSSProperties`, pass it to the element.
-- **Never** put raw CSS properties (e.g. `color`, `padding`, `margin`, `transform`) in `dynamicStyle` or other dynamic inline styles — always set **CSS custom properties** (`--*`) and consume them in CSS with `var()`.
-- Decide `useMemo` (or not) when inline style identity would cause excess re-renders.
-- Place `...style` first or last deliberately (defaults vs consumer overwrite).
-
-```tsx
-const MyComponent: React.FC<MyComponentProps> = ({
-  style,
-  amount,
-  full,
-  ...otherProps
-}) => {
-  const dynamicStyle: React.CSSProperties = {
-    ...style,
-    ...(amount && !full && { '--vui-bleed-amount': `var(--space-${amount})` }),
-    // or ...style at the end to allow consumer overwrite
-  }
-
-  // [data-prop] is then used in css to customize style
-  return <div style={dynamicStyle} data-prop={prop1} {...otherProps} />
-}
-```
-
-## `data-*` attribute values
-
-- Custom HTML attributes (`data-*`) always receive the strings **`"true"`** or **`"false"`**.
-- Do **not** toggle attribute presence with booleans (`<div {...(bool && { "data-prop": bool })} />`).
-
-```tsx
-// data-prop becomes [data-prop="true"] or [data-prop="false"].
-<div style={dynamicStyle} data-prop={prop1} {...otherProps} />
-```
-
-Folder and file placement: see [`filesystem.md`](filesystem.md).
+Folder and file placement: see [`filesystem.md`](filesystem.md). Presentation (`className` / style / `data-*`): see [`presentation.md`](presentation.md). DOM escapes: see [`dom.md`](dom.md).
 
 ## Checklist
 
 - [ ] `const` named arrow function
 - [ ] `React.FC` with props generic
 - [ ] React utility types via `React.*` — no named imports (`FC`, `CSSProperties`, `ComponentPropsWithRef`, …)
-- [ ] `ComponentNameProps` (export only if callers need it; no unused internal type exports)
+- [ ] `ComponentNameProps` (export only if callers need it; no satellite union/alias exports — use `Props['prop']`)
+- [ ] One-shot unions inlined on the prop; file-local aliases stay unexported
 - [ ] Custom props: TSDoc + `@defaultValue` matching assigned default
 - [ ] Prop types reused via indexed access / `typeof` — no redeclared copies
 - [ ] Extends `React.ComponentPropsWithRef` / `React.ComponentPropsWithoutRef` of the outer wrapper when spreading
@@ -245,12 +221,10 @@ Folder and file placement: see [`filesystem.md`](filesystem.md).
 - [ ] Defaults in param list when possible
 - [ ] Markup: `&&` for null branch; flat ternary otherwise
 - [ ] Prefer `??` where applicable
-- [ ] CSS modules → `styles` import; plain CSS → side-effect import
 - [ ] Use configured TypeScript path aliases where applicable; otherwise recommend configuring them
 - [ ] Avoid deep imports; import through the relative `index` module when available
-- [ ] Outer wrapper `className`: merge with project util, else leave on spread
 - [ ] Prefer project tools over custom/extra scripting
 - [ ] Performance considered (memo / Suspense / etc. when warranted)
 - [ ] No inline callbacks in JSX — named handlers in body
-- [ ] Prefer `data-*` + `dynamicStyle: React.CSSProperties` (+ memo when needed); `dynamicStyle` sets only `--*` custom props, never raw CSS properties
-- [ ] `data-*` values are `"true"` / `"false"` strings, not booleans
+- [ ] Presentation rules when touching class/style/`data-*` → [`presentation.md`](presentation.md)
+- [ ] DOM / imperative rules when touching the DOM → [`dom.md`](dom.md)

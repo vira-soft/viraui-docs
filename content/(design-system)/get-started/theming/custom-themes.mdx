@@ -32,16 +32,19 @@ ViraUI Pro sits on top of Core. Join the waitlist on [viraui.dev](https://viraui
 
 ## Ask your agent
 
-When Studio is not an option, paste a prompt for a ViraUI-compatible brand sheet wired like any other custom theme (theme → fonts → preflight at the app root). Describe the product look in plain language. The agent should produce a **complete** theme CSS with `light-dark()` pairs on scheme-sensitive tokens, not a partial token dump.
+When Studio is not an option, the agent can wire a ViraUI-compatible brand the same way as any other custom theme (theme → fonts → preflight at the app root). Light and dark should both work from `light-dark()` pairs on scheme-sensitive tokens.
 
-```text tab="Custom theme"
-Create a custom ViraUI look for this project and wire it at the app root. I want: [describe brand — colors, mood, typography, density]. Light and dark should both work from one theme file. Save the theme in the app and make sure components render with the new brand end to end.
-```
+Two alternatives — pick one:
 
-A wired custom sheet looks like this once the agent (or Studio export) has produced it:
+1. **One complete sheet** — copy a [built-in preset](/get-started/theming/built-in-themes) (for example `vira.css`) into the app, change the token values in that file, and import it as the theme. Same shape if the agent builds a fresh full sheet from scratch. No second override file.
+2. **Base + overrides** — keep importing the preset (or any full theme), then add a small CSS file that only redefines the keys you change.
 
-```tsx title="Custom theme.css"
-import './vira-theme.css';
+### One complete sheet
+
+Import the forked (or agent-built) file as the theme — same order as any other brand:
+
+```tsx title="Full theme sheet"
+import './vira-theme.css'; // forked preset or fresh full sheet
 import '@fontsource-variable/geist/wght.css'; // match families in your theme
 import '@viraui/react/preflight.css';
 ```
@@ -55,7 +58,9 @@ import '@viraui/react/preflight.css';
 }
 ```
 
-Only after a **complete** theme is already loaded, you may layer a few semantic overrides:
+### Base + overrides
+
+Only after a **complete** theme is already loaded, layer a few semantic overrides:
 
 ```tsx title="Base theme + partial overrides"
 import '@viraui/foundation/vira.css'; // or your full custom sheet
@@ -75,5 +80,5 @@ import '@viraui/react/preflight.css';
 Scoped wrappers work the same way when only a subtree should rebrand. Full brand swaps replace the complete theme CSS import, not `data-mode`.
 
 <Callout type="warn" title="Load a complete theme">
-Components expect **every** semantic token from the theme contract, not a handful of overrides alone. Ship a **full** theme CSS (Studio export, agent-built sheet, or a [built-in preset](/get-started/theming/built-in-themes)), **or** import a base theme first and only then layer partial `:root` overrides. A partial sheet with no base theme leaves missing variables and broken UI.
+Components expect **every** semantic token from the theme contract, not a handful of overrides alone. Ship a **full** theme CSS (Studio export, forked preset, or agent-built sheet), **or** import a base theme first and only then layer partial `:root` overrides. A partial sheet with no base theme leaves missing variables and broken UI.
 </Callout>
