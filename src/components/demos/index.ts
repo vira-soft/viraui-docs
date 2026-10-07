@@ -249,3 +249,9 @@ export {
   OtpFieldLabeledDemo,
   OtpFieldMaskedDemo,
 } from "./otp-field-demo";
+export {
+  BuiltInThemeCinderDemo,
+  BuiltInThemeSunburstDemo,
+  BuiltInThemeViraCondensedDemo,
+  BuiltInThemeViraDemo,
+} from "./built-in-themes-demo";

@@ -1,6 +1,7 @@
 "use client";
 
 import { Dialog } from "@viraui/react";
+import * as React from "react";
 import {
   createContext,
   useCallback,
@@ -13,7 +14,10 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import themeCssUrl from "@viraui/foundation/vira.css?url";
+import viraThemeCssUrl from "@viraui/foundation/vira.css?url";
+import viraCondensedThemeCssUrl from "@viraui/foundation/vira-condensed.css?url";
+import sunburstThemeCssUrl from "@viraui/foundation/sunburst.css?url";
+import cinderThemeCssUrl from "@viraui/foundation/cinder.css?url";
 import preflightCssUrl from "@viraui/react/preflight.css?url";
 
 /**
@@ -27,22 +31,61 @@ const COMPONENT_CSS_URLS = Object.values(
   ),
 ) as string[];
 
-const FRAME_STYLESHEET_HREFS = [
-  themeCssUrl,
-  preflightCssUrl,
-  ...COMPONENT_CSS_URLS,
-];
-
-/** Built-in foundation sheets — extend when theme swap lands. */
-export type ViraSandboxTheme = "vira";
+/** Built-in foundation sheets loaded into the iframe. */
+export type ViraSandboxTheme =
+  | "vira"
+  | "vira-condensed"
+  | "sunburst"
+  | "cinder";
 
 /** `data-mode` on the iframe `<html>` — force or inherit parent docs theme. */
 export type ViraSandboxMode = "light" | "dark" | "inverted";
 
+const THEME_CSS_URL: Record<ViraSandboxTheme, string> = {
+  vira: viraThemeCssUrl,
+  "vira-condensed": viraCondensedThemeCssUrl,
+  sunburst: sunburstThemeCssUrl,
+  cinder: cinderThemeCssUrl,
+};
+
 const GEIST_FONT_HREF =
   "https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&display=swap";
+const GEIST_MONO_FONT_HREF =
+  "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap";
+const MERRIWEATHER_FONT_HREF =
+  "https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap";
+const OXANIUM_FONT_HREF =
+  "https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap";
 
-const SANDBOX_BASE_CSS = `
+/** Theme tokens name `* Variable`; Google CSS registers the short family. */
+const THEME_FONT_HREFS: Record<ViraSandboxTheme, readonly string[]> = {
+  vira: [GEIST_FONT_HREF, GEIST_MONO_FONT_HREF],
+  "vira-condensed": [GEIST_FONT_HREF, GEIST_MONO_FONT_HREF],
+  sunburst: [MERRIWEATHER_FONT_HREF],
+  cinder: [OXANIUM_FONT_HREF],
+};
+
+const THEME_FONT_REMAP_CSS: Record<ViraSandboxTheme, string> = {
+  vira: `:root {
+  --font-family-heading: Geist, "Geist Variable", system-ui, sans-serif;
+  --font-family-body: Geist, "Geist Variable", system-ui, sans-serif;
+  --font-family-mono: "Geist Mono", "Geist Mono Variable", ui-monospace, monospace;
+}`,
+  "vira-condensed": `:root {
+  --font-family-heading: Geist, "Geist Variable", system-ui, sans-serif;
+  --font-family-body: Geist, "Geist Variable", system-ui, sans-serif;
+  --font-family-mono: "Geist Mono", "Geist Mono Variable", ui-monospace, monospace;
+}`,
+  sunburst: `:root {
+  --font-family-heading: Merriweather, "Merriweather Variable", Georgia, serif;
+}`,
+  cinder: `:root {
+  --font-family-heading: Oxanium, "Oxanium Variable", system-ui, sans-serif;
+  --font-family-body: Oxanium, "Oxanium Variable", system-ui, sans-serif;
+}`,
+};
+
+const SANDBOX_LAYOUT_CSS = `
 html, body {
   margin: 0;
   min-block-size: 100%;
@@ -59,11 +102,6 @@ html[data-vira-sandbox-auto-height] body {
   min-block-size: 0;
   overflow: visible;
 }
-/* Theme tokens say "Geist Variable"; Google CSS registers "Geist". */
-:root {
-  --font-family-heading: Geist, "Geist Variable", system-ui, sans-serif;
-  --font-family-body: Geist, "Geist Variable", system-ui, sans-serif;
-}
 #vira-sandbox-root {
   box-sizing: border-box;
   min-block-size: 100%;
@@ -75,6 +113,11 @@ html[data-vira-sandbox-auto-height] #vira-sandbox-root {
 }
 `;
 
+const frameStylesheetHrefs = (theme: ViraSandboxTheme) => [
+  THEME_CSS_URL[theme],
+  preflightCssUrl,
+  ...COMPONENT_CSS_URLS,
+];
 type SandboxDocContextValue = {
   document: Document | null;
   window: Window | null;
@@ -123,11 +166,66 @@ function DialogShell({ children }: { children: ReactNode }) {
   );
 }
 
+type SandboxErrorBoundaryProps = {
+  children: ReactNode;
+};
+
+type SandboxErrorBoundaryState = {
+  hasError: boolean;
+  message: string;
+};
+
+/** Keep portal crashes inside the iframe — do not blank the docs page. */
+class SandboxErrorBoundary extends React.Component<
+  SandboxErrorBoundaryProps,
+  SandboxErrorBoundaryState
+> {
+  state: SandboxErrorBoundaryState = { hasError: false, message: "" };
+
+  static getDerivedStateFromError(error: unknown): SandboxErrorBoundaryState {
+    const message =
+      error instanceof Error
+        ? error.message
+        : typeof error === "string"
+          ? error
+          : "Unknown error";
+    return { hasError: true, message };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.error("[ViraSandbox]", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div
+          style={{
+            boxSizing: "border-box",
+            padding: "1.25rem",
+            color: "var(--global-muted, CanvasText)",
+            fontFamily: "system-ui, sans-serif",
+            fontSize: "0.875rem",
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          Preview failed to render.
+          {this.state.message ? `\n${this.state.message}` : null}
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export type ViraSandboxProps = {
   children: ReactNode;
   /** Accessible name for the canvas chrome. */
   label?: string;
-  /** Foundation theme sheet (reserved for multi-theme swap). */
+  /**
+   * Built-in foundation theme sheet for the iframe.
+   * @defaultValue 'vira'
+   */
   theme?: ViraSandboxTheme;
   /**
    * Force `data-mode` on the iframe `<html>` (`light` | `dark` | `inverted`).
@@ -176,7 +274,7 @@ export type ViraSandboxProps = {
 export function ViraSandbox({
   children,
   label = "ViraUI preview",
-  theme: _theme = "vira",
+  theme = "vira",
   mode: modeProp,
   dialogShell = true,
   inert = false,
@@ -197,12 +295,13 @@ export function ViraSandbox({
   const [frameDoc, setFrameDoc] = useState<Document | null>(null);
   const [contentHeight, setContentHeight] = useState(canvasHeight);
   const [wrapperWidth, setWrapperWidth] = useState<number | null>(null);
-  const [autoMode, setAutoMode] = useState<"light" | "dark">(() =>
-    typeof document !== "undefined" &&
-    document.documentElement.classList.contains("dark")
-      ? "dark"
-      : "light",
-  );
+  /** Skip iframe `srcDoc` on SSR — huge theme+component CSS payloads abort RSC streams. */
+  const [clientReady, setClientReady] = useState(false);
+  const [autoMode, setAutoMode] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    setClientReady(true);
+  }, []);
 
   useEffect(() => {
     if (modeProp) {
@@ -223,10 +322,19 @@ export function ViraSandbox({
     const modeAttr = mode ? ` data-mode="${mode}"` : "";
     // Always auto-height so ResizeObserver can read true content size (fixed
     // 100% html/body clamps scrollHeight and eats centered padding).
-    const links = FRAME_STYLESHEET_HREFS.map(
-      (href) =>
-        `<link rel="stylesheet" href="${href}" data-vira-sandbox="frame" />`,
-    ).join("\n  ");
+    const fontLinks = THEME_FONT_HREFS[theme]
+      .map(
+        (href) =>
+          `<link rel="stylesheet" href="${href}" data-vira-sandbox="font" />`,
+      )
+      .join("\n  ");
+    const links = frameStylesheetHrefs(theme)
+      .map(
+        (href) =>
+          `<link rel="stylesheet" href="${href}" data-vira-sandbox="frame" />`,
+      )
+      .join("\n  ");
+    const baseCss = `${SANDBOX_LAYOUT_CSS}\n${THEME_FONT_REMAP_CSS[theme]}`;
     return `<!DOCTYPE html>
 <html${modeAttr} data-vira-sandbox-auto-height="">
 <head>
@@ -234,15 +342,15 @@ export function ViraSandbox({
   <base target="_parent" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="${GEIST_FONT_HREF}" />
+  ${fontLinks}
   ${links}
-  <style data-vira-sandbox="base">${SANDBOX_BASE_CSS}</style>
+  <style data-vira-sandbox="base">${baseCss}</style>
 </head>
 <body>
   <div id="vira-sandbox-root"></div>
 </body>
 </html>`;
-  }, [mode]);
+  }, [mode, theme]);
 
   const attach = useCallback(() => {
     const iframe = iframeRef.current;
@@ -384,33 +492,37 @@ export function ViraSandbox({
       role="img"
       aria-label={label}
     >
-      <iframe
-        ref={iframeRef}
-        title={label}
-        srcDoc={srcDoc}
-        onLoad={attach}
-        style={{
-          display: "block",
-          ...(resizable
-            ? {
-                maxWidth: wrapperWidth ?? "100%",
-                minWidth: "12rem",
-                overflow: "auto",
-                resize: "horizontal",
-              }
-            : {
-                width: "100%",
-                overflow: "hidden",
-              }),
-          height: frameHeight,
-          border: 0,
-          background: "transparent",
-        }}
-      />
+      {clientReady ? (
+        <iframe
+          ref={iframeRef}
+          title={label}
+          srcDoc={srcDoc}
+          onLoad={attach}
+          style={{
+            display: "block",
+            ...(resizable
+              ? {
+                  maxWidth: wrapperWidth ?? "100%",
+                  minWidth: "12rem",
+                  overflow: "auto",
+                  resize: "horizontal",
+                }
+              : {
+                  width: "100%",
+                  overflow: "hidden",
+                }),
+            height: frameHeight,
+            border: 0,
+            background: "transparent",
+          }}
+        />
+      ) : (
+        <div style={{ display: "block", width: "100%", height: canvasHeight }} />
+      )}
       {mountNode
         ? createPortal(
             <ViraSandboxDocContext.Provider value={docContext}>
-              {body}
+              <SandboxErrorBoundary>{body}</SandboxErrorBoundary>
             </ViraSandboxDocContext.Provider>,
             mountNode,
           )
