@@ -18,6 +18,7 @@ export {
 export { RadiusConcentricDemo } from "./radius-concentric-demo";
 export { IconsEmptyStatesDemo } from "./icons-empty-states-demo";
 export { TypographyFluidDemo } from "./typography-fluid-demo";
+export { TypographyTypescaleDemo } from "./typography-typescale-demo";
 export {
   ButtonActionRowDemo,
   ButtonAddonDemo,

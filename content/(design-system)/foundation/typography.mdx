@@ -30,6 +30,12 @@ import { Stack, Text, Title } from '@viraui/react';
 </Stack>
 ```
 
+## Modular ratios
+
+Theme sheets expose two ratio levers: `--font-heading-typescale` for `Title`, and `--font-body-typescale` for `Text`. Preflight derives the step sizes from those ratios, so changing a lever moves the whole ladder without editing each step. Brands ship a default; bump the body ratio when running copy needs more room, or the heading ratio when display type should jump more aggressively.
+
+<TypographyTypescaleDemo />
+
 ## Size vs semantic tag
 
 That split is intentional: size is aesthetics; the tag drives accessibility, screen-reader structure, and indexing. Pair them for ordinary headings. Mismatch only when you mean it (a visually large `h3`, or a quiet `h1` that must stay the page title).
