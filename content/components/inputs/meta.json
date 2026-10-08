@@ -4,6 +4,7 @@
     "autocomplete",
     "checkbox",
     "fieldset",
+    "number-field",
     "otp-field",
     "radio",
     "select",

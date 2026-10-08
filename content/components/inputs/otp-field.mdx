@@ -59,7 +59,7 @@ A six-slot code with label and helper on Root is the baseline. The visible label
 ```tsx
 import { OTPField } from '@viraui/react';
 
-<OTPField.Root
+<OTPField
   length={6}
   label="Verification code"
   description="Enter the 6-character code we sent to your device."
@@ -67,7 +67,7 @@ import { OTPField } from '@viraui/react';
   {Array.from({ length: 6 }, (_, slotIndex) => (
     <OTPField.Input key={`character-${slotIndex + 1}`} />
   ))}
-</OTPField.Root>
+</OTPField>
 ```
 
 </Example>
@@ -85,7 +85,7 @@ import { OTPField, Stack, Text, Title } from '@viraui/react';
   <Title align="center" size="6" render={<h3 />}>
     Verification code
   </Title>
-  <OTPField.Root length={6}>
+  <OTPField length={6}>
     <Stack columnGap="s" direction="row">
       <OTPField.Input aria-label="Verification code" />
       <OTPField.Input />
@@ -97,7 +97,7 @@ import { OTPField, Stack, Text, Title } from '@viraui/react';
       <OTPField.Input />
       <OTPField.Input />
     </Stack>
-  </OTPField.Root>
+  </OTPField>
 </Stack>
 ```
 
@@ -118,7 +118,7 @@ import { Button, OTPField, Stack, Title } from '@viraui/react';
     <Title align="center" size="6" render={<h3 />}>
       Verification code
     </Title>
-    <OTPField.Root
+    <OTPField
       length={6}
       name="verificationCode"
       autoSubmit
@@ -129,7 +129,7 @@ import { Button, OTPField, Stack, Title } from '@viraui/react';
       <OTPField.Input />
       <OTPField.Input />
       <OTPField.Input />
-    </OTPField.Root>
+    </OTPField>
     <Button type="submit" />
   </Stack>
 </Form>
@@ -152,7 +152,7 @@ const [rejected, setRejected] = useState(false);
   <Title align="center" size="6" render={<h3 />}>
     Verification code
   </Title>
-  <OTPField.Root
+  <OTPField
     length={6}
     dirty={rejected}
     invalid={rejected}
@@ -164,7 +164,7 @@ const [rejected, setRejected] = useState(false);
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
-  </OTPField.Root>
+  </OTPField>
   {rejected ? (
     <Text align="center" size="s" tone="danger">
       This code is not valid.
@@ -191,14 +191,14 @@ import { OTPField, Stack, Text, Title } from '@viraui/react';
   <Text align="center" size="s" tone="muted">
     Characters stay hidden on shared screens.
   </Text>
-  <OTPField.Root length={6} mask>
+  <OTPField length={6} mask>
     <OTPField.Input aria-label="Access code" />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
-  </OTPField.Root>
+  </OTPField>
 </Stack>
 ```
 

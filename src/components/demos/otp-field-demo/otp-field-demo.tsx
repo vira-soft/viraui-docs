@@ -83,13 +83,12 @@ const otpSlots = (length: number, firstAriaLabel?: string) =>
 export const OtpFieldLabeledDemo: React.FC = () => (
   <SandboxShell height={260} label="Labeled OTPField with helper">
     <FieldShell>
-      <OTPField.Root
-        description="Enter the 6-character code we sent to your device."
+      <OTPField
         label="Verification code"
         length={OTP_LENGTH}
       >
         {otpSlots(OTP_LENGTH)}
-      </OTPField.Root>
+      </OTPField>
     </FieldShell>
   </SandboxShell>
 );
@@ -102,7 +101,7 @@ export const OtpFieldGroupedDemo: React.FC = () => (
         description="Separator is a visual break, not a typed character."
         label="Verification code"
       >
-        <OTPField.Root length={OTP_LENGTH}>
+        <OTPField length={OTP_LENGTH}>
           <Stack columnGap="s" direction="row">
             <OTPField.Input aria-label="Verification code" />
             <OTPField.Input />
@@ -114,7 +113,7 @@ export const OtpFieldGroupedDemo: React.FC = () => (
             <OTPField.Input />
             <OTPField.Input />
           </Stack>
-        </OTPField.Root>
+        </OTPField>
       </CenteredField>
     </FieldShell>
   </SandboxShell>
@@ -138,13 +137,13 @@ export const OtpFieldFormDemo: React.FC = () => {
               description="Completing the code submits the form."
               label="Verification code"
             >
-              <OTPField.Root
+              <OTPField
                 autoSubmit
                 length={OTP_LENGTH}
                 name="verificationCode"
               >
                 {otpSlots(OTP_LENGTH, "Verification code")}
-              </OTPField.Root>
+              </OTPField>
             </CenteredField>
             <Button type="submit">Submit</Button>
             {submitted ? (
@@ -171,7 +170,7 @@ export const OtpFieldInvalidDemo: React.FC = () => {
           label="Verification code"
         >
           <Stack hAlign="center" rowGap="s">
-            <OTPField.Root
+            <OTPField
               dirty={rejected}
               invalid={rejected}
               length={OTP_LENGTH}
@@ -180,7 +179,7 @@ export const OtpFieldInvalidDemo: React.FC = () => {
               }}
             >
               {otpSlots(OTP_LENGTH, "Verification code")}
-            </OTPField.Root>
+            </OTPField>
             {rejected ? (
               <Text align="center" size="s" tone="danger">
                 This code is not valid.
@@ -201,9 +200,9 @@ export const OtpFieldMaskedDemo: React.FC = () => (
         description="Characters stay hidden on shared screens."
         label="Access code"
       >
-        <OTPField.Root length={OTP_LENGTH} mask>
+        <OTPField length={OTP_LENGTH} mask>
           {otpSlots(OTP_LENGTH, "Access code")}
-        </OTPField.Root>
+        </OTPField>
       </CenteredField>
     </FieldShell>
   </SandboxShell>

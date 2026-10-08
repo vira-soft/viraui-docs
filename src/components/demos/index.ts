@@ -243,6 +243,13 @@ export {
 export { FitTextResizeDemo, FitTextStatDemo } from "./fit-text-demo";
 export { ShimmerStatusDemo, ShimmerTitleDemo } from "./shimmer-demo";
 export {
+  NumberFieldGroupedDemo,
+  NumberFieldInvalidDemo,
+  NumberFieldLabeledDemo,
+  NumberFieldScrubOffDemo,
+  NumberFieldSiblingDemo,
+} from "./number-field-demo";
+export {
   OtpFieldFormDemo,
   OtpFieldGroupedDemo,
   OtpFieldInvalidDemo,

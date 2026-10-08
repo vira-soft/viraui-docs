@@ -1,0 +1,186 @@
+---
+title: NumberField
+description: Numeric field with Field chrome, built-in steppers, and optional label scrub.
+---
+
+## Base UI
+
+<Cards>
+  <Card
+    title="Number Field"
+    href="https://base-ui.com/react/components/number-field#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
+---
+
+NumberField is the labeled control for typed numbers with increment and decrement. One public element owns value, bounds, step, format, form `name`, label, helper, error, and the stepper row. Steppers are fixed secondary IconButtons — not custom children and not a Textfield addon API.
+
+Label, description, and error follow the shared field layout. Drag-on-label scrub is on by default when a label is present; turn it off with `labelScrub={false}` when accidental scrub would be wrong. `stepperPlacement` is `split` (button | input | button) or `grouped` (both at inline-end). `fullWidth` grows only the numeric input; `fitContent` shrink-wraps that input. The Base UI root host is `display: contents` — wrap NumberField in a [Stack](/components/layout/stack) when a flex row needs the field to grow.
+
+---
+
+## When to use
+
+- Quantities, amounts, counts, and other numbers with optional steppers
+- Form fields that submit a number via `name`, with min / max / step on the same NumberField
+- Textfield-aligned label, helper, and validation
+
+## When not to use
+
+- Open single-line text (email, search, city) → [Textfield](/components/inputs/textfield)
+- A continuous scale where position on a track matters → [Slider](/components/inputs/slider)
+- Custom stepper children, public Group / Decrement / Increment parts, or Textfield start/end addons
+
+---
+
+## Related
+
+- [Textfield](/components/inputs/textfield) — open single-line text; use NumberField when the value is numeric with steppers
+- [Slider](/components/inputs/slider) — drag a thumb on a track instead of typing
+- [Fieldset](/components/inputs/fieldset) — shared section legend for several fields
+- [Stack](/components/layout/stack) — grow NumberField in a form row (`fullWidth` + wrap)
+
+---
+
+## Common examples
+
+### Labeled field
+
+A guest count with helper copy and default split steppers is the baseline. Bounds, step, label, and description sit on the same NumberField.
+
+<Example preview={<NumberFieldLabeledDemo />}>
+
+```tsx
+import { NumberField } from '@viraui/react';
+
+<NumberField
+  defaultValue={2}
+  max={8}
+  min={1}
+  step={1}
+  fitContent
+  label="Guests"
+  description="Max 8 guests."
+/>
+```
+
+</Example>
+
+
+### Grouped steppers
+
+`stepperPlacement="grouped"` puts both steppers at inline-end (physical right in LTR, left in RTL). Use it when the control should read as input-then-cluster.
+
+<Example preview={<NumberFieldGroupedDemo />}>
+
+```tsx
+import { NumberField } from '@viraui/react';
+
+<NumberField
+  defaultValue={4}
+  max={20}
+  min={1}
+  step={1}
+  fitContent
+  label="Party size"
+  description="Seats to hold."
+  stepperPlacement="grouped"
+/>
+```
+
+</Example>
+
+### Label without scrub
+
+Default label scrub lets the user drag the label to change the value. Set `labelScrub={false}` when that gesture would be surprising — policy and retry limits are a common case.
+
+<Example preview={<NumberFieldScrubOffDemo />}>
+
+```tsx
+import { NumberField } from '@viraui/react';
+
+<NumberField
+  defaultValue={3}
+  max={10}
+  min={0}
+  step={1}
+  fitContent
+  label="Retry limit"
+  description="Before job stops."
+  labelScrub={false}
+/>
+```
+
+</Example>
+
+### Invalid helper
+
+While the field is `invalid` and `dirty`, `error` replaces `description` in the shared helper slot — same pattern as Textfield.
+
+<Example preview={<NumberFieldInvalidDemo />}>
+
+```tsx
+import { NumberField } from '@viraui/react';
+
+<NumberField
+  defaultValue={2}
+  max={100}
+  min={5}
+  step={1}
+  fitContent
+  label="Tip"
+  description="Min $5."
+  dirty
+  invalid
+  error="At least $5."
+/>
+```
+
+</Example>
+
+### Sibling fields
+
+Pair a Textfield with a shrink-wrapped NumberField in a centered parent `Stack` row.
+
+<Example preview={<NumberFieldSiblingDemo />}>
+
+```tsx
+import { NumberField, Stack, Textfield } from '@viraui/react';
+
+<Stack columnGap="m" direction="row" hAlign="center">
+  <Textfield label="Account" defaultValue="Operating · ••4821" />
+  <NumberField defaultValue={150} max={10000} min={1} step={1} fitContent label="Amount" />
+</Stack>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Guest count"
+Add a Guests number field from 1 to 8 with a short helper about suite occupancy and the default split steppers.
+```
+
+```text tab="Cart quantity"
+Put a Quantity number field in a form that submits as quantity, limited to 1–12, with an Add to cart button under it.
+```
+
+```text tab="Party size"
+Add a Party size number field with both steppers grouped on the end of the control and a short helper about holding the table.
+```
+
+```text tab="Retry limit"
+Add a Retry limit number field for webhook failures where dragging the label must not change the value.
+```
+
+```text tab="Invalid tip"
+Show a Tip number field that is invalid and dirty, with error copy replacing the house-minimum helper.
+```
+
+```text tab="Transfer row"
+Build a transfer row with an Account text field and a shrink-wrapped Amount number field side by side.
+```

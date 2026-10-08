@@ -23,6 +23,7 @@ import preflightCssUrl from "@viraui/react/preflight.css?url";
 /**
  * Every published component stylesheet under @viraui/react.
  * New components with a `name/name.css` build artifact are picked up automatically.
+ * (Glob re-resolve after local file: link — bump when switching package source.)
  */
 const COMPONENT_CSS_URLS = Object.values(
   import.meta.glob(

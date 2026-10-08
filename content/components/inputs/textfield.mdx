@@ -25,7 +25,7 @@ Value, placeholder, disabled state, and validation pass through Base UI `Field` 
 
 ## When to use
 
-- Single-line identifiers and short values (email, amount, search, city)
+- Single-line identifiers and short values (email, search, city)
 - Fields that need label, helper, or validation beside a native input
 - Prefix, glyph, or small action chrome via start/end addons
 - Native `date`, `time`, or `datetime-local` when the browser picker is enough
@@ -33,6 +33,7 @@ Value, placeholder, disabled state, and validation pass through Base UI `Field` 
 ## When not to use
 
 - The value spans multiple lines → [Textarea](/components/inputs/textarea)
+- A numeric value with steppers → [NumberField](/components/inputs/number-field)
 - A closed list of named options in a popup → [Select](/components/inputs/select)
 - Type-to-filter or free-form suggestions → [Autocomplete](/components/inputs/autocomplete)
 - One-time or verification code slots → [OTPField](/components/inputs/otp-field)
@@ -42,6 +43,7 @@ Value, placeholder, disabled state, and validation pass through Base UI `Field` 
 ## Related
 
 - [Textarea](/components/inputs/textarea) — multi-line bodies and notes
+- [NumberField](/components/inputs/number-field) — typed numbers with built-in steppers
 - [Fieldset](/components/inputs/fieldset) — shared section legend for several fields
 - [Select](/components/inputs/select) — closed-choice dropdown
 - [Autocomplete](/components/inputs/autocomplete) — filterable or free-form suggestions
