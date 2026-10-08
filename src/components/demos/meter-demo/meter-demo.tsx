@@ -52,3 +52,32 @@ export const MeterCustomValueDemo: React.FC = () => (
     </Stack>
   </SandboxShell>
 );
+
+/** Three highlight `variant` meters stacked for color-coded metrics. */
+export const MeterHighlightDemo: React.FC = () => (
+  <SandboxShell height={360} label="Highlight variant meters">
+    <Stack fullWidth maxWidth="20rem" minWidth="16rem" rowGap="xl">
+      <Meter
+        description="Uptime across the last 30 days."
+        label="Health"
+        renderValue
+        value={92}
+        variant="green"
+      />
+      <Meter
+        description="p95 response time vs budget."
+        label="Latency"
+        renderValue
+        value={38}
+        variant="yellow"
+      />
+      <Meter
+        description="Failed requests this hour."
+        label="Errors"
+        renderValue
+        value={12}
+        variant="red"
+      />
+    </Stack>
+  </SandboxShell>
+);

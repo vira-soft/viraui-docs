@@ -174,7 +174,11 @@ export {
   LinearProgressIndeterminateDemo,
   LinearProgressLabeledDemo,
 } from "./linear-progress-demo";
-export { MeterCustomValueDemo, MeterLabeledDemo } from "./meter-demo";
+export {
+  MeterCustomValueDemo,
+  MeterHighlightDemo,
+  MeterLabeledDemo,
+} from "./meter-demo";
 export { ChipAddonDemo, ChipLinkDemo, ChipStatusDemo } from "./chip-demo";
 export { AnnotateEndDemo, AnnotateMarkDemo } from "./annotate-demo";
 export {

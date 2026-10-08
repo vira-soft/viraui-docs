@@ -83,6 +83,42 @@ import { Meter } from '@viraui/react';
 
 </Example>
 
+### Highlight variants
+
+Use highlight `variant` names when the track and indicator should share a semantic color — health, warning, danger. Stack a few related metrics; do not dump every highlight token.
+
+<Example preview={<MeterHighlightDemo />}>
+
+```tsx
+import { Meter, Stack } from '@viraui/react';
+
+<Stack rowGap="xl">
+  <Meter
+    label="Health"
+    description="Uptime across the last 30 days."
+    renderValue
+    value={92}
+    variant="green"
+  />
+  <Meter
+    label="Latency"
+    description="p95 response time vs budget."
+    renderValue
+    value={38}
+    variant="yellow"
+  />
+  <Meter
+    label="Errors"
+    description="Failed requests this hour."
+    renderValue
+    value={12}
+    variant="red"
+  />
+</Stack>
+```
+
+</Example>
+
 ## Ask your agent
 
 ```text tab="Storage meter"
@@ -91,4 +127,8 @@ Add a storage-used meter on this account settings card — used GB out of 100 GB
 
 ```text tab="Custom value units"
 Show storage used as "42 GB" beside the label via a custom renderValue formatter, with description for the remaining capacity.
+```
+
+```text tab="Color-coded metrics"
+Stack three read-only meters for service health, latency, and errors — green, yellow, and red fills — each with a short description of what the fill means.
 ```

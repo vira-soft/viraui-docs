@@ -1,1 +1,5 @@
-export { MeterCustomValueDemo, MeterLabeledDemo } from "./meter-demo";
+export {
+  MeterCustomValueDemo,
+  MeterHighlightDemo,
+  MeterLabeledDemo,
+} from "./meter-demo";
