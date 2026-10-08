@@ -1,17 +1,23 @@
 {
   "version": 1,
   "skills": {
+    "a11y": {
+      "source": "equinusocio/skills",
+      "sourceType": "github",
+      "skillPath": "skills/a11y/SKILL.md",
+      "computedHash": "695c881c8fdc8ca7d2bf089c94c6e625f59ee0e75830153912ce2e9230639c6f"
+    },
     "authoring-css": {
       "source": "equinusocio/skills",
       "sourceType": "github",
       "skillPath": "skills/authoring-css/SKILL.md",
-      "computedHash": "b5bd127d1683d0dc9419c7c6716d98321cc7196032a08b9d252760c4075ab1b8"
+      "computedHash": "bf9198b9d38a0be3c23200a27c10bdbcf253f2a9dc7d80231401d8d4eb7034ed"
     },
     "authoring-react": {
       "source": "equinusocio/skills",
       "sourceType": "github",
       "skillPath": "skills/authoring-react/SKILL.md",
-      "computedHash": "2d95cb5b6bf1eeba389c7b2d15ba6119046270a66578b6e91ed3374fca3b37c4"
+      "computedHash": "a04b4aab2199c94fe3f9f803715bd70210e4273388995cb1f3793fce94184ed8"
     },
     "doc-coauthoring": {
       "source": "anthropics/skills",

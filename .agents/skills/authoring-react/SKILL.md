@@ -8,7 +8,7 @@ description: >-
 license: MIT
 metadata:
   author: equinusocio
-  version: "1.5.1"
+  version: "1.7.0"
 ---
 
 # React + TypeScript authoring
@@ -31,11 +31,13 @@ When force majeure applies, follow the local project pattern for that conflict o
 
 ## Router
 
-Read sibling refs **before** writing matching code:
+Read sibling refs **before** writing matching code. Load **only** matching refs — not the whole folder upfront.
 
 | When | Read |
 | --- | --- |
-| Creating or editing React components (JSX/TSX, props, wrappers) | [`authoring.md`](authoring.md) |
+| Creating or editing React components (JSX/TSX, props, wrappers, handlers) | [`authoring.md`](authoring.md) |
+| DOM access, events, class/style toggles via DOM APIs, third-party mount nodes, or temptation to use `querySelector` / imperative DOM | [`dom.md`](dom.md) |
+| CSS imports, outer `className`, `dynamicStyle` / CSS variables, `data-*` | [`presentation.md`](presentation.md) |
 | Writing or editing JS/TS/JSX/TSX — syntax, imports, types, hooks, JSX lint-style constraints | [`style.md`](style.md) |
 | Scaffolding or moving folders/files — components, hooks, libs, utils, providers (`index.ts`, kebab folders, `.ts` vs `.tsx`) | [`filesystem.md`](filesystem.md) |
 

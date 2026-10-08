@@ -25,56 +25,88 @@ Switch this app to a built-in ViraUI brand. Ask which one I want if I haven't sa
 If [Setup](/get-started/setup) ran through the agent and you picked a built-in brand, foundation, fonts, and import order are already wired. Nothing left to do here unless you want to switch presets. Prefer starting with **Vira** so you learn the system on a known brand; when you are ready to own the look, move on to a [custom theme](/get-started/theming/custom-themes).
 </Callout>
 
-Each built-in brand pairs one foundation stylesheet with specific Fontsource packages. Install those families and import their `wght.css` files **after** the theme CSS and **before** preflight. The tabs below show the packages and import paths per preset.
+Each built-in brand pairs one foundation stylesheet with specific Fontsource packages. Install those families and import their `wght.css` files **after** the theme CSS and **before** preflight. Pick a tab for a live sample of that brand, then copy its packages and import paths.
 
 ```sh title="Install foundation"
 pnpm add @viraui/foundation
 ```
 
-Fonts for the preset you pick:
+### Choose a preset
 
-```sh tab="Vira" tab-group="built-in-theme"
-pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
-```
+<Tabs items={["Vira", "Vira Condensed", "Sunburst", "Cinder"]}>
+  <Tab value="Vira">
+    <BuiltInThemeViraDemo />
 
-```sh tab="Vira Condensed"
-pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
-```
+    Fonts for this preset, you can import the web fonts the way you prefer, this is an example with FontSource:
 
-```sh tab="Sunburst"
-pnpm add @fontsource-variable/merriweather
-```
+    ```sh
+    pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
+    ```
 
-```sh tab="Cinder"
-pnpm add @fontsource-variable/oxanium
-```
+    CSS imports at the app root (theme → fonts → preflight):
 
-CSS imports at the app root (theme → fonts → preflight):
+    ```tsx
+    import '@viraui/foundation/vira.css';
+    import '@fontsource-variable/geist/wght.css';
+    import '@fontsource-variable/geist-mono/wght.css';
+    import '@viraui/react/preflight.css';
+    ```
+  </Tab>
 
-```tsx tab="Vira" tab-group="built-in-theme"
-import '@viraui/foundation/vira.css';
-import '@fontsource-variable/geist/wght.css';
-import '@fontsource-variable/geist-mono/wght.css';
-import '@viraui/react/preflight.css';
-```
+  <Tab value="Vira Condensed">
+    <BuiltInThemeViraCondensedDemo />
 
-```tsx tab="Vira Condensed"
-import '@viraui/foundation/vira-condensed.css';
-import '@fontsource-variable/geist/wght.css';
-import '@fontsource-variable/geist-mono/wght.css';
-import '@viraui/react/preflight.css';
-```
+    Fonts for this preset, you can import the web fonts the way you prefer, this is an example with FontSource:
 
-```tsx tab="Sunburst"
-import '@viraui/foundation/sunburst.css';
-import '@fontsource-variable/merriweather/wght.css';
-import '@viraui/react/preflight.css';
-```
+    ```sh
+    pnpm add @fontsource-variable/geist @fontsource-variable/geist-mono
+    ```
 
-```tsx tab="Cinder"
-import '@viraui/foundation/cinder.css';
-import '@fontsource-variable/oxanium/wght.css';
-import '@viraui/react/preflight.css';
-```
+    CSS imports at the app root (theme → fonts → preflight):
+
+    ```tsx
+    import '@viraui/foundation/vira-condensed.css';
+    import '@fontsource-variable/geist/wght.css';
+    import '@fontsource-variable/geist-mono/wght.css';
+    import '@viraui/react/preflight.css';
+    ```
+  </Tab>
+
+  <Tab value="Sunburst">
+    <BuiltInThemeSunburstDemo />
+
+    Fonts for this preset, you can import the web fonts the way you prefer, this is an example with FontSource:
+
+    ```sh
+    pnpm add @fontsource-variable/merriweather
+    ```
+
+    CSS imports at the app root (theme → fonts → preflight):
+
+    ```tsx
+    import '@viraui/foundation/sunburst.css';
+    import '@fontsource-variable/merriweather/wght.css';
+    import '@viraui/react/preflight.css';
+    ```
+  </Tab>
+
+  <Tab value="Cinder">
+    <BuiltInThemeCinderDemo />
+
+    Fonts for this preset, you can import the web fonts the way you prefer, this is an example with FontSource:
+
+    ```sh
+    pnpm add @fontsource-variable/oxanium
+    ```
+
+    CSS imports at the app root (theme → fonts → preflight):
+
+    ```tsx
+    import '@viraui/foundation/cinder.css';
+    import '@fontsource-variable/oxanium/wght.css';
+    import '@viraui/react/preflight.css';
+    ```
+  </Tab>
+</Tabs>
 
 For a brand you own instead of these presets, see [Custom themes](/get-started/theming/custom-themes).

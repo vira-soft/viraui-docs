@@ -229,9 +229,36 @@ export {
 } from "./text-demo";
 export { TitleSemanticPageDemo, TitleVisualVsSemanticDemo } from "./title-demo";
 export {
+  ProseArticleDemo,
+  ProseDensityAlignDemo,
+  ProseLineHeightDemo,
+  ProseNativeBlocksDemo,
+  ProseSpanHostsDemo,
+} from "./prose-demo";
+export {
   ClampTextCardDemo,
   ClampTextHeadingDemo,
   ClampTextInlineDemo,
 } from "./clamp-text-demo";
 export { FitTextResizeDemo, FitTextStatDemo } from "./fit-text-demo";
 export { ShimmerStatusDemo, ShimmerTitleDemo } from "./shimmer-demo";
+export {
+  NumberFieldGroupedDemo,
+  NumberFieldInvalidDemo,
+  NumberFieldLabeledDemo,
+  NumberFieldScrubOffDemo,
+  NumberFieldSiblingDemo,
+} from "./number-field-demo";
+export {
+  OtpFieldFormDemo,
+  OtpFieldGroupedDemo,
+  OtpFieldInvalidDemo,
+  OtpFieldLabeledDemo,
+  OtpFieldMaskedDemo,
+} from "./otp-field-demo";
+export {
+  BuiltInThemeCinderDemo,
+  BuiltInThemeSunburstDemo,
+  BuiltInThemeViraCondensedDemo,
+  BuiltInThemeViraDemo,
+} from "./built-in-themes-demo";

@@ -12,6 +12,8 @@ Effects/Typewriter
 Inputs/Autocomplete
 Inputs/Checkbox
 Inputs/Fieldset
+Inputs/NumberField
+Inputs/OTPField
 Inputs/Radio
 Inputs/Select
 Inputs/Slider
@@ -35,6 +37,7 @@ Overlays/Popover
 Overlays/Tooltip
 Typography/ClampText
 Typography/FitText
+Typography/Prose
 Typography/Shimmer
 Typography/Text
 Typography/Title

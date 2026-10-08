@@ -44,7 +44,7 @@ import './panel.css'
 ## TypeScript
 
 - **`any` allowed** (`no-explicit-any` off) — still prefer precise types when easy.
-- **Export types sparingly:** export only types the consumer needs outside the module, or types that are useful to reuse elsewhere like the main type of a component. Keep file-internal types **unexported** unless required — or unless they are already surfaced through other exported types (composition, indexed access, `typeof`, etc.).
+- **Export types sparingly:** prefer exporting the **main component props type** (`ComponentNameProps`) when consumers need types. Do **not** export satellite unions/aliases used only inside that props type — consumers use indexed access (`Props['variant']`). Keep file-internal types **unexported** unless required — or unless they are already surfaced through other exported types (composition, indexed access, `typeof`, etc.). See props-type guidance in [`authoring.md`](authoring.md).
 - **No** non-null assertion (`!`). Prefer narrowing, defaults, or explicit checks.
 - **No** shadowing (including nested scopes). Use `typescript/no-shadow` discipline; classic `no-shadow` is off in favor of the TS rule.
 - Enum members **must** have initializers.
@@ -142,6 +142,7 @@ for (const key in map) {
 - Prefer ES6 classes over `createClass` if classes appear; no `this` in SFCs.
 - React import in scope **not** required (modern JSX transform).
 - `display-name`, `jsx-key`, props spreading: not enforced here (keys still required for correctness when rendering lists).
+- **Stay inside React** for DOM access and events — no `querySelector` / imperative mutation on React-owned nodes; see [`dom.md`](dom.md).
 
 ```tsx
 <button type="button" disabled className={styles.Button} style={dynamicStyle}>
@@ -180,7 +181,7 @@ These are **off** or unrestricted — do not invent enforcement:
 ## Checklist
 
 - [ ] `import type` / `export type` where type-only
-- [ ] Export only consumer-needed / reusable types; keep file-internal types unexported
+- [ ] Export only consumer-needed types (prefer `ComponentNameProps`); no satellite union/alias exports; file-internal types unexported
 - [ ] Import extensions: no ts/js; yes json/css/pcss
 - [ ] No `!` non-null assertions; no param reassign (except allowlist)
 - [ ] `===` (null `==` OK); yoda; no `else` after `return`
@@ -188,5 +189,6 @@ These are **off** or unrestricted — do not invent enforcement:
 - [ ] `??` / `?.` / optional chain; `**`; templates; shorthand
 - [ ] Hooks: rules-of-hooks + exhaustive-deps
 - [ ] JSX: boolean shorthand, self-closing, fragment syntax, `type` on button, no index keys
+- [ ] No DOM escapes on React-owned UI (`querySelector`, `addEventListener`, `classList`, …) — see [`dom.md`](dom.md)
 - [ ] Async: no floating promises; `return await` / `async` on promise fns
 - [ ] Project lint conflict asked; unclear answer → local rules

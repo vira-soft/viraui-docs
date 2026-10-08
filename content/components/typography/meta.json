@@ -3,6 +3,7 @@
   "pages": [
     "clamp-text",
     "fit-text",
+    "prose",
     "shimmer",
     "text",
     "title"

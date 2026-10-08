@@ -1,6 +1,13 @@
 # CSS authoring
 
-Apply whenever creating or editing stylesheets, CSS modules, or component styles.
+Apply whenever creating or editing stylesheets, CSS modules, or component styles (classes, nesting, Baseline, shorthand).
+
+Load on demand — do **not** pull every sibling for every task:
+
+| Concern | Read |
+| --- | --- |
+| Hardcoded colors, gradients, relative colors / alpha | [`colors.md`](colors.md) |
+| Animations, transitions, `@property`, `*.props.css` | [`motion.md`](motion.md) |
 
 ## Class names
 
@@ -108,40 +115,7 @@ Example: `stack.tsx` (`const Stack = () => {}`) → root class `.Stack`.
 
 - Do **not** add useless declarations such as `min-inline-size: 0` or `min-block-size: 0` unless they serve a real purpose. Agents tend to sprinkle them everywhere — skip that habit.
 
-## Colors
-
-- Prefer design tokens (`var(--…)`) when they exist.
-- When inserting **hardcoded** colors (not tokens), prefer HDR formats **OKLCH** and **OKLAB** — especially for **gradients** (better interpolation).
-- When deriving colors or changing transparency from a variable or a hardcoded color: **do not** use `color-mix()`; use **relative colors**. Use color-mix() only to create new color from the combination of two colors.
-
-```css
-color: oklch(from var(--my-color) l calc(c + 0.2) h / 20%);
-```
-
-## Motion and `@property`
-
-- Prefer animations and transitions on **performant** properties (`transform` and similar compositor-friendly props) when there is an alternative to `opacity` / `filter`.
-- Prefer **`@property`** to animate custom-property values.
-- When a component needs `@property` registrations: create **`my-component.props.css`** beside the component (kebab name matching the component file), register the props there, and **import** that file from the component’s `.css` / `.module.css`.
-- Defaults that **cannot** be set inside `@property` (e.g. `var(...)`) go on the component **root** class.
-
-```css
-/* accent-badge.props.css */
-@property --accent-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-```
-
-```css
-/* accent-badge.module.css */
-@import "./accent-badge.props.css";
-
-.AccentBadge {
-  --accent-color: var(--color-brand);
-}
-```
+Colors: [`colors.md`](colors.md). Motion / `@property`: [`motion.md`](motion.md).
 
 ## Checklist
 
@@ -154,5 +128,5 @@ color: oklch(from var(--my-color) l calc(c + 0.2) h / 20%);
 - [ ] No prefixes autoprefixer can add
 - [ ] Shorthand for ≤5 values; longhand when shorthand would need >5 values
 - [ ] No useless `min-*-size: 0`
-- [ ] Hardcoded colors: OKLCH/OKLAB (esp. gradients); derive/alpha via relative colors — no `color-mix()`
-- [ ] Motion on performant props when possible; `@property` + `*.props.css` when animating custom props; `var()` defaults on root class
+- [ ] Color rules when touching colors/gradients → [`colors.md`](colors.md)
+- [ ] Motion / `@property` rules when animating → [`motion.md`](motion.md)

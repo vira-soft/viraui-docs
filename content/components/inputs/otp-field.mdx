@@ -1,0 +1,228 @@
+---
+title: OTPField
+description: One-time code slots with shared field chrome and Textfield-like controls.
+---
+
+## Base UI
+
+<Cards>
+  <Card
+    title="OTP Field"
+    href="https://base-ui.com/react/components/otp-field#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
+---
+
+OTPField is the labeled control for one-time, verification, and recovery codes. Put the visible label, helper, and error once on Root. You list exactly `length` `OTPField.Input` children — Root does not spawn boxes from `length`. Each slot is a native `input` with Textfield control chrome; you cannot replace that host.
+
+The visible label names the first slot for assistive tech. Later slots get generated names (`Character N of {length}`) unless you pass `aria-label` on that Input. Group chunks with [Stack](/components/layout/stack) and `OTPField.Separator` — a visual break, not a character in the code, and not counted in `length`. Root `name` submits one concatenated string. `fullWidth` fills the form column and grows slots equally.
+
+When you set the field `invalid` and `dirty`, the slot cluster plays a one-shot wiggle. Keep error copy on Root — the motion is extra, not the only signal. Reduced motion skips the animation. `autoSubmit` submits a wrapping Base UI `Form` when every slot is filled.
+
+---
+
+## When to use
+
+- One-time, verification, or recovery codes as a single labeled field
+- Numeric, alphanumeric, or masked slot entry with one concatenated form `name`
+- Grouped slot rows with Separator and Stack
+
+## When not to use
+
+- Open single-line text (email, search, city) → [Textfield](/components/inputs/textfield)
+- Expecting boxes from `length` alone — list one `OTPField.Input` per slot
+- A visible label, helper, or error on each box — those live on Root
+- Replacing a slot with a custom host — each Input is always a native `input`
+
+---
+
+## Related
+
+- [Textfield](/components/inputs/textfield) — single-line text; OTP slots reuse its control chrome
+- [Fieldset](/components/inputs/fieldset) — shared legend around several fields
+- [Stack](/components/layout/stack) — group gaps between slot clusters
+
+---
+
+## Common examples
+
+### Labeled slots
+
+A six-slot code with label and helper on Root is the baseline. The visible label names the first slot; later slots get generated names for assistive tech.
+
+<Example preview={<OtpFieldLabeledDemo />}>
+
+```tsx
+import { OTPField } from '@viraui/react';
+
+<OTPField
+  length={6}
+  label="Verification code"
+  description="Enter the 6-character code we sent to your device."
+>
+  {Array.from({ length: 6 }, (_, slotIndex) => (
+    <OTPField.Input key={`character-${slotIndex + 1}`} />
+  ))}
+</OTPField>
+```
+
+</Example>
+
+### Grouped slots
+
+Split the code into chunks with Stack and `OTPField.Separator`. Custom Title and helper stay centered above the cluster. When Root omits `label`, point the first slot at the Title with `aria-labelledby`.
+
+<Example preview={<OtpFieldGroupedDemo />}>
+
+```tsx
+import { OTPField, Stack, Title } from '@viraui/react';
+
+const titleId = useId();
+
+<Stack hAlign="center" rowGap="m">
+  <Title id={titleId} />
+  <OTPField length={6}>
+    <Stack columnGap="s" direction="row">
+      <OTPField.Input aria-labelledby={titleId} />
+      <OTPField.Input />
+      <OTPField.Input />
+    </Stack>
+    <OTPField.Separator />
+    <Stack columnGap="s" direction="row">
+      <OTPField.Input />
+      <OTPField.Input />
+      <OTPField.Input />
+    </Stack>
+  </OTPField>
+</Stack>
+```
+
+</Example>
+
+### Form submit
+
+Put `name` on Root so the form receives one concatenated string. Wrap the field in Base UI `Form` (`@base-ui/react/form`); `autoSubmit` submits that form when every slot is filled. Custom Title replaces Root `label` for a centered layout — wire the first slot with `aria-labelledby`.
+
+<Example preview={<OtpFieldFormDemo />}>
+
+```tsx
+import { Form } from '@base-ui/react/form';
+import { Button, OTPField, Stack, Title } from '@viraui/react';
+
+const titleId = useId();
+
+<Form>
+  <Stack hAlign="center" rowGap="m">
+    <Title id={titleId} />
+    <OTPField
+      length={6}
+      name="verificationCode"
+      autoSubmit
+    >
+      <OTPField.Input aria-labelledby={titleId} />
+      <OTPField.Input />
+      <OTPField.Input />
+      <OTPField.Input />
+      <OTPField.Input />
+      <OTPField.Input />
+    </OTPField>
+    <Button type="submit" />
+  </Stack>
+</Form>
+```
+
+</Example>
+
+### Invalid complete
+
+On complete, set `invalid` and `dirty` on Root so the slot cluster wiggles. With a custom centered title, swap the helper above for error Text — not Root `error`, and not below the slots. Completing again while still invalid replays the motion.
+
+<Example preview={<OtpFieldInvalidDemo />}>
+
+```tsx
+import { OTPField, Stack, Text, Title } from '@viraui/react';
+
+const titleId = useId();
+const [rejected, setRejected] = useState(false);
+
+<Stack hAlign="center" rowGap="m">
+  <Stack hAlign="center" rowGap="xs">
+    <Title id={titleId} />
+    {rejected ? (
+      <Text align="center" size="s" tone="danger">
+        This code is not valid.
+      </Text>
+    ) : (
+      <Text />
+    )}
+  </Stack>
+  <OTPField
+    length={6}
+    dirty={rejected}
+    invalid={rejected}
+    onValueComplete={() => setRejected(true)}
+  >
+    <OTPField.Input aria-labelledby={titleId} />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+  </OTPField>
+</Stack>
+```
+
+</Example>
+
+### Masked slots
+
+`mask` obscures the characters on shared screens. Custom Title and helper stay visible and centered. Point the first slot at the Title with `aria-labelledby`.
+
+<Example preview={<OtpFieldMaskedDemo />}>
+
+```tsx
+import { OTPField, Stack, Text, Title } from '@viraui/react';
+
+const titleId = useId();
+
+<Stack hAlign="center" rowGap="m">
+  <Title id={titleId} />
+  <Text />
+  <OTPField length={6} mask>
+    <OTPField.Input aria-labelledby={titleId} />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+    <OTPField.Input />
+  </OTPField>
+</Stack>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Labeled slots"
+Add a six-digit verification code field with a short helper about the code we sent to the device.
+```
+
+```text tab="Grouped slots"
+Show the verification code as two groups of three digits with a separator between the groups.
+```
+
+```text tab="Form submit"
+Put the verification code in a form that submits as soon as all six characters are filled, with a Submit button as a fallback.
+```
+
+```text tab="Invalid complete"
+When the six-digit code is complete, treat it as invalid, show an error, and keep the slot wiggle that plays on a bad complete.
+```
+
+```text tab="Masked slots"
+Add an access code field that hides the typed characters on shared screens.
+```

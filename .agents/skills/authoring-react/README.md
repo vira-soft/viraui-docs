@@ -2,7 +2,7 @@
 
 Personal conventions for **React + TypeScript UI**. Auto-applies when creating, editing, refactoring, or reviewing components, hooks, JSX/TSX, or props.
 
-**Version:** 1.5.0 · **Hub:** [`SKILL.md`](./SKILL.md)
+**Version:** 1.7.0 · **Hub:** [`SKILL.md`](./SKILL.md)
 
 ```bash
 npx skills add equinusocio/skills --skill authoring-react
@@ -70,9 +70,13 @@ export const StatusPanel: React.FC<StatusPanelProps> = ({
 | File | Role |
 | --- | --- |
 | [`SKILL.md`](./SKILL.md) | Hub: contract, router, out of scope |
-| [`authoring.md`](./authoring.md) | Component shape, props, markup, handlers, `className` / `style` / `data-*` |
+| [`authoring.md`](./authoring.md) | Component shape, props, markup, handlers |
+| [`dom.md`](./dom.md) | Stay inside React — no imperative DOM on React-owned nodes |
+| [`presentation.md`](./presentation.md) | CSS imports, `className`, `dynamicStyle`, `data-*` |
 | [`style.md`](./style.md) | JS/TS/React syntax + lint-style authoring constraints |
 | [`filesystem.md`](./filesystem.md) | Component folders first; hooks/libs/utils same spirit — `.tsx` only when JSX |
+
+Load matching refs only (same progressive-disclosure pattern as `a11y`).
 
 ## Highlights
 
@@ -82,7 +86,9 @@ export const StatusPanel: React.FC<StatusPanelProps> = ({
 - CSS modules → `styles` import; plain CSS → side-effect import
 - Prefer `data-*` (`"true"` / `"false"` strings) + `dynamicStyle: React.CSSProperties`
 - Folder: `/my-component` with `index.ts`, `my-component.tsx`, optional module CSS and subcomponents; hooks/libs use `.ts` when no JSX
-- `style.md`: `import type`, export only consumer/reusable types, no `!`, exhaustive-deps, JSX/TS constraints; project lint conflict → ask; unclear answer → local rules
+- Prefer `ComponentNameProps` export; inline one-shot unions; no satellite `Variants` exports — use `Props['variant']`
+- Stay inside React (`dom.md`): no `querySelector` / `addEventListener` / `classList` / `innerHTML` on React-owned DOM — props, state, JSX events, refs; imperative only via ref + effect + cleanup
+- `style.md`: `import type`, export only consumer-needed types, no `!`, exhaustive-deps, JSX/TS constraints; project lint conflict → ask; unclear answer → local rules
 
 ## Out of scope
 
