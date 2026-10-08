@@ -41,40 +41,51 @@ const FieldShell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 type CenteredFieldProps = {
-  children: React.ReactNode;
+  children: (titleId: string) => React.ReactNode;
   label: string;
   description?: string;
+  /** Replaces description above the cluster when set. */
+  error?: string;
 };
 
-/** Custom Title + helper above a hugging OTP cluster — both centered. */
+/** Custom Title + helper/error above a hugging OTP cluster — both centered. */
 const CenteredField: React.FC<CenteredFieldProps> = ({
   children,
   description,
+  error,
   label,
-}) => (
-  <Stack hAlign="center" rowGap="m">
-    <Stack hAlign="center" rowGap="xs">
-      <Title align="center" render={<h3 />} size="6">
-        {label}
-      </Title>
-      {description ? (
-        <Text align="center" maxWidth="20rem" size="s" tone="muted">
-          {description}
-        </Text>
-      ) : null}
+}) => {
+  const titleId = React.useId();
+
+  return (
+    <Stack hAlign="center" rowGap="m">
+      <Stack hAlign="center" rowGap="xs">
+        <Title align="center" id={titleId} render={<h3 />} size="6">
+          {label}
+        </Title>
+        {error ? (
+          <Text align="center" maxWidth="20rem" size="s" tone="danger">
+            {error}
+          </Text>
+        ) : description ? (
+          <Text align="center" maxWidth="20rem" size="s" tone="muted">
+            {description}
+          </Text>
+        ) : null}
+      </Stack>
+      {children(titleId)}
     </Stack>
-    {children}
-  </Stack>
-);
+  );
+};
 
 const OTP_LENGTH = 6;
 
-const otpSlots = (length: number, firstAriaLabel?: string) =>
+const otpSlots = (length: number, firstLabelledBy?: string) =>
   Array.from({ length }, (_, slotIndex) => (
     <OTPField.Input
       key={`character-${slotIndex + 1}`}
-      {...(slotIndex === 0 && firstAriaLabel
-        ? { "aria-label": firstAriaLabel }
+      {...(slotIndex === 0 && firstLabelledBy
+        ? { "aria-labelledby": firstLabelledBy }
         : {})}
     />
   ));
@@ -83,10 +94,7 @@ const otpSlots = (length: number, firstAriaLabel?: string) =>
 export const OtpFieldLabeledDemo: React.FC = () => (
   <SandboxShell height={260} label="Labeled OTPField with helper">
     <FieldShell>
-      <OTPField
-        label="Verification code"
-        length={OTP_LENGTH}
-      >
+      <OTPField label="Verification code" length={OTP_LENGTH}>
         {otpSlots(OTP_LENGTH)}
       </OTPField>
     </FieldShell>
@@ -101,19 +109,21 @@ export const OtpFieldGroupedDemo: React.FC = () => (
         description="Separator is a visual break, not a typed character."
         label="Verification code"
       >
-        <OTPField length={OTP_LENGTH}>
-          <Stack columnGap="s" direction="row">
-            <OTPField.Input aria-label="Verification code" />
-            <OTPField.Input />
-            <OTPField.Input />
-          </Stack>
-          <OTPField.Separator />
-          <Stack columnGap="s" direction="row">
-            <OTPField.Input />
-            <OTPField.Input />
-            <OTPField.Input />
-          </Stack>
-        </OTPField>
+        {(titleId) => (
+          <OTPField length={OTP_LENGTH}>
+            <Stack columnGap="s" direction="row">
+              <OTPField.Input aria-labelledby={titleId} />
+              <OTPField.Input />
+              <OTPField.Input />
+            </Stack>
+            <OTPField.Separator />
+            <Stack columnGap="s" direction="row">
+              <OTPField.Input />
+              <OTPField.Input />
+              <OTPField.Input />
+            </Stack>
+          </OTPField>
+        )}
       </CenteredField>
     </FieldShell>
   </SandboxShell>
@@ -137,13 +147,15 @@ export const OtpFieldFormDemo: React.FC = () => {
               description="Completing the code submits the form."
               label="Verification code"
             >
-              <OTPField
-                autoSubmit
-                length={OTP_LENGTH}
-                name="verificationCode"
-              >
-                {otpSlots(OTP_LENGTH, "Verification code")}
-              </OTPField>
+              {(titleId) => (
+                <OTPField
+                  autoSubmit
+                  length={OTP_LENGTH}
+                  name="verificationCode"
+                >
+                  {otpSlots(OTP_LENGTH, titleId)}
+                </OTPField>
+              )}
             </CenteredField>
             <Button type="submit">Submit</Button>
             {submitted ? (
@@ -158,7 +170,7 @@ export const OtpFieldFormDemo: React.FC = () => {
   );
 };
 
-/** Invalid + dirty after complete — custom centered title. */
+/** Invalid + dirty after complete — error replaces helper above. */
 export const OtpFieldInvalidDemo: React.FC = () => {
   const [rejected, setRejected] = React.useState(false);
 
@@ -166,10 +178,11 @@ export const OtpFieldInvalidDemo: React.FC = () => {
     <SandboxShell height={300} label="OTPField invalid complete">
       <FieldShell>
         <CenteredField
-          description={rejected ? undefined : "Enter any 6-digit code."}
+          description="Enter any 6-digit code."
+          error={rejected ? "This code is not valid." : undefined}
           label="Verification code"
         >
-          <Stack hAlign="center" rowGap="s">
+          {(titleId) => (
             <OTPField
               dirty={rejected}
               invalid={rejected}
@@ -178,14 +191,9 @@ export const OtpFieldInvalidDemo: React.FC = () => {
                 setRejected(true);
               }}
             >
-              {otpSlots(OTP_LENGTH, "Verification code")}
+              {otpSlots(OTP_LENGTH, titleId)}
             </OTPField>
-            {rejected ? (
-              <Text align="center" size="s" tone="danger">
-                This code is not valid.
-              </Text>
-            ) : null}
-          </Stack>
+          )}
         </CenteredField>
       </FieldShell>
     </SandboxShell>
@@ -200,9 +208,11 @@ export const OtpFieldMaskedDemo: React.FC = () => (
         description="Characters stay hidden on shared screens."
         label="Access code"
       >
-        <OTPField length={OTP_LENGTH} mask>
-          {otpSlots(OTP_LENGTH, "Access code")}
-        </OTPField>
+        {(titleId) => (
+          <OTPField length={OTP_LENGTH} mask>
+            {otpSlots(OTP_LENGTH, titleId)}
+          </OTPField>
+        )}
       </CenteredField>
     </FieldShell>
   </SandboxShell>

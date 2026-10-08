@@ -74,20 +74,20 @@ import { OTPField } from '@viraui/react';
 
 ### Grouped slots
 
-Split the code into chunks with Stack and `OTPField.Separator`. Custom Title and helper stay centered above the cluster. Name the first slot with `aria-label` when Root omits `label`.
+Split the code into chunks with Stack and `OTPField.Separator`. Custom Title and helper stay centered above the cluster. When Root omits `label`, point the first slot at the Title with `aria-labelledby`.
 
 <Example preview={<OtpFieldGroupedDemo />}>
 
 ```tsx
-import { OTPField, Stack, Text, Title } from '@viraui/react';
+import { OTPField, Stack, Title } from '@viraui/react';
+
+const titleId = useId();
 
 <Stack hAlign="center" rowGap="m">
-  <Title align="center" size="6" render={<h3 />}>
-    Verification code
-  </Title>
+  <Title id={titleId} />
   <OTPField length={6}>
     <Stack columnGap="s" direction="row">
-      <OTPField.Input aria-label="Verification code" />
+      <OTPField.Input aria-labelledby={titleId} />
       <OTPField.Input />
       <OTPField.Input />
     </Stack>
@@ -105,7 +105,7 @@ import { OTPField, Stack, Text, Title } from '@viraui/react';
 
 ### Form submit
 
-Put `name` on Root so the form receives one concatenated string. Wrap the field in Base UI `Form` (`@base-ui/react/form`); `autoSubmit` submits that form when every slot is filled. Custom Title replaces Root `label` for a centered layout.
+Put `name` on Root so the form receives one concatenated string. Wrap the field in Base UI `Form` (`@base-ui/react/form`); `autoSubmit` submits that form when every slot is filled. Custom Title replaces Root `label` for a centered layout — wire the first slot with `aria-labelledby`.
 
 <Example preview={<OtpFieldFormDemo />}>
 
@@ -113,17 +113,17 @@ Put `name` on Root so the form receives one concatenated string. Wrap the field 
 import { Form } from '@base-ui/react/form';
 import { Button, OTPField, Stack, Title } from '@viraui/react';
 
+const titleId = useId();
+
 <Form>
   <Stack hAlign="center" rowGap="m">
-    <Title align="center" size="6" render={<h3 />}>
-      Verification code
-    </Title>
+    <Title id={titleId} />
     <OTPField
       length={6}
       name="verificationCode"
       autoSubmit
     >
-      <OTPField.Input aria-label="Verification code" />
+      <OTPField.Input aria-labelledby={titleId} />
       <OTPField.Input />
       <OTPField.Input />
       <OTPField.Input />
@@ -139,37 +139,40 @@ import { Button, OTPField, Stack, Title } from '@viraui/react';
 
 ### Invalid complete
 
-On complete, set `invalid` and `dirty` on Root so the slot cluster wiggles. With a custom centered title, keep error copy on Text instead of Root `error`. Completing again while still invalid replays the motion.
+On complete, set `invalid` and `dirty` on Root so the slot cluster wiggles. With a custom centered title, swap the helper above for error Text — not Root `error`, and not below the slots. Completing again while still invalid replays the motion.
 
 <Example preview={<OtpFieldInvalidDemo />}>
 
 ```tsx
 import { OTPField, Stack, Text, Title } from '@viraui/react';
 
+const titleId = useId();
 const [rejected, setRejected] = useState(false);
 
 <Stack hAlign="center" rowGap="m">
-  <Title align="center" size="6" render={<h3 />}>
-    Verification code
-  </Title>
+  <Stack hAlign="center" rowGap="xs">
+    <Title id={titleId} />
+    {rejected ? (
+      <Text align="center" size="s" tone="danger">
+        This code is not valid.
+      </Text>
+    ) : (
+      <Text />
+    )}
+  </Stack>
   <OTPField
     length={6}
     dirty={rejected}
     invalid={rejected}
     onValueComplete={() => setRejected(true)}
   >
-    <OTPField.Input aria-label="Verification code" />
+    <OTPField.Input aria-labelledby={titleId} />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
   </OTPField>
-  {rejected ? (
-    <Text align="center" size="s" tone="danger">
-      This code is not valid.
-    </Text>
-  ) : null}
 </Stack>
 ```
 
@@ -177,22 +180,20 @@ const [rejected, setRejected] = useState(false);
 
 ### Masked slots
 
-`mask` obscures the characters on shared screens. Custom Title and helper stay visible and centered.
+`mask` obscures the characters on shared screens. Custom Title and helper stay visible and centered. Point the first slot at the Title with `aria-labelledby`.
 
 <Example preview={<OtpFieldMaskedDemo />}>
 
 ```tsx
 import { OTPField, Stack, Text, Title } from '@viraui/react';
 
+const titleId = useId();
+
 <Stack hAlign="center" rowGap="m">
-  <Title align="center" size="6" render={<h3 />}>
-    Access code
-  </Title>
-  <Text align="center" size="s" tone="muted">
-    Characters stay hidden on shared screens.
-  </Text>
+  <Title id={titleId} />
+  <Text />
   <OTPField length={6} mask>
-    <OTPField.Input aria-label="Access code" />
+    <OTPField.Input aria-labelledby={titleId} />
     <OTPField.Input />
     <OTPField.Input />
     <OTPField.Input />
