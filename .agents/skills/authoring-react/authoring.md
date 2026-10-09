@@ -136,6 +136,19 @@ const MyComponent: React.FC<MyComponentProps> = ({
 }) => <div data-prop={prop1} {...otherProps} />
 ```
 
+## Conditional component props
+
+- Toggle optional React props with a **simple ternary** (or omit the prop). Passing `undefined` omits / falls back to the default — that is intentional, not “useless `undefined`”.
+- Do **not** use conditional object spread onto the component. That pattern (`...(cond ? { prop: value } : {})`) is **only** for `dynamicStyle` CSS custom properties — see [`presentation.md`](presentation.md).
+
+```tsx
+// Prefer
+<Surface color={zebra ? 1 : undefined} />
+
+// Avoid — spread toggle is for dynamicStyle CSS vars only
+<Surface {...(zebra ? { color: 1 as const } : {})} />
+```
+
 ## Default values
 
 - Prefer **default values in the parameter list** (including when combined with spread):
@@ -218,6 +231,7 @@ Folder and file placement: see [`filesystem.md`](filesystem.md). Presentation (`
 - [ ] Prop types reused via indexed access / `typeof` — no redeclared copies
 - [ ] Extends `React.ComponentPropsWithRef` / `React.ComponentPropsWithoutRef` of the outer wrapper when spreading
 - [ ] Destructure + residual spread; spread order intentional
+- [ ] Conditional component props: simple ternary (`prop={cond ? value : undefined}`), not `{...(cond ? { prop } : {})}`
 - [ ] Defaults in param list when possible
 - [ ] Markup: `&&` for null branch; flat ternary otherwise
 - [ ] Prefer `??` where applicable

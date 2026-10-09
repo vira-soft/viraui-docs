@@ -85,6 +85,7 @@ Load matching refs only (same progressive-disclosure pattern as `a11y`).
 - Defaults in the parameter list; named handlers (no inline JSX callbacks)
 - CSS modules → `styles` import; plain CSS → side-effect import
 - Prefer `data-*` (`"true"` / `"false"` strings) + `dynamicStyle: React.CSSProperties`
+- Conditional `...(cond && { '--*': … })` only in `dynamicStyle`; component props use `prop={cond ? value : undefined}`
 - Folder: `/my-component` with `index.ts`, `my-component.tsx`, optional module CSS and subcomponents; hooks/libs use `.ts` when no JSX
 - Prefer `ComponentNameProps` export; inline one-shot unions; no satellite `Variants` exports — use `Props['variant']`
 - Stay inside React (`dom.md`): no `querySelector` / `addEventListener` / `classList` / `innerHTML` on React-owned DOM — props, state, JSX events, refs; imperative only via ref + effect + cleanup

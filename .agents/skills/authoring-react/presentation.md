@@ -59,6 +59,8 @@ const MyComponent: React.FC<MyComponentProps> = ({
 }
 ```
 
+Conditional object spread (`...(cond && { '--*': … })` / `...(cond ? { … } : {})`) is **only** for building `dynamicStyle` CSS custom properties. For React **component props**, use a simple ternary — see [`authoring.md`](authoring.md#conditional-component-props).
+
 ## `data-*` attribute values
 
 - Custom HTML attributes (`data-*`) always receive the strings **`"true"`** or **`"false"`**.
@@ -74,4 +76,5 @@ const MyComponent: React.FC<MyComponentProps> = ({
 - [ ] CSS modules → `styles` import; plain CSS → side-effect import
 - [ ] Outer wrapper `className`: merge with project util, else leave on spread
 - [ ] Prefer `data-*` + `dynamicStyle: React.CSSProperties` (+ memo when needed); `dynamicStyle` sets only `--*` custom props, never raw CSS properties
+- [ ] Conditional `...(cond && { '--*': … })` only inside `dynamicStyle` — not for component React props
 - [ ] `data-*` values are `"true"` / `"false"` strings, not booleans
