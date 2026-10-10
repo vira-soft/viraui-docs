@@ -57,12 +57,13 @@ import { Button, Surface } from '@viraui/react';
 ```css title="Same concentric math with theme tokens"
 .outer {
   --outer-padding: var(--space-l);
-  border-radius: var(--radius-2xl);
+  --outer-radius: var(--radius-2xl);
+  border-radius: var(--outer-radius);
   padding: var(--outer-padding);
 }
 
 .inner {
-  border-radius: max(0px, calc(var(--radius-2xl) - var(--outer-padding)));
+  border-radius: max(0px, calc(var(--outer-radius) - var(--outer-padding)));
 }
 ```
 
