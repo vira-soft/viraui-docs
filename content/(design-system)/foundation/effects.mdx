@@ -28,18 +28,44 @@ Intensity for a treatment that has parameters (glass blur, for example) lives on
 
 ## In practice
 
-Mark a surface for glass with `data-vibrant` (prefer that over hand-rolled `backdrop-filter`). The filter only applies while the vibrancy gate is on; `Surface` may also translucify its fill so blur reads through.
+Mark a surface for glass with `data-vibrant` (prefer that over hand-rolled `backdrop-filter`). The filter only applies while the vibrancy gate is on; `Surface` may also translucify its fill so blur reads through. Toggle the demo to feel the gate: off keeps the markup, but the frost goes quiet.
+
+<Example preview={<EffectsVibrancyDemo />}>
 
 ```tsx
+import { Surface } from '@viraui/react';
+
 <Surface data-vibrant color={1} radius="m" hPadding="m" vPadding="m">
-  {/* glass panel */}
+  <Title />
+  <Text />
 </Surface>
 ```
+
+```css title="Vibrancy gate on the theme"
+:root {
+  --effect-vibrancy: ; /* on */
+  /* --effect-vibrancy: initial; off */
+}
+```
+
+</Example>
+
+A foil wash paints a fixed, non-interactive overlay on `body::after` for the whole viewport when its gate is on — global, not a per-surface prop. Built-in brands often leave holofoil off (`initial`); flip the Switch to paint the foil over the card.
+
+<Example preview={<EffectsHolofoilDemo />}>
+
+```css title="Holofoil gate on the theme"
+:root {
+  --effect-holofoil: ; /* on — brand default is usually initial (off) */
+  /* --effect-holofoil: initial; off */
+}
+```
+
+</Example>
 
 Other gates follow the same pattern:
 
 - Corner treatment follows the theme's `--corner-shape` when its gate is on; off is ordinary [`border-radius`](/foundation/radius)
-- A foil wash paints a fixed, non-interactive overlay on `body::after` for the whole viewport when its gate is on (global, not per surface)
 - Elevation shadows behind `Elevator` / `data-elevation*` respect the shadows gate the same way; off kills those stacks even if attrs remain
 
 Stacking (`z-index`) is separate. Depth layers: [Elevation](/foundation/elevation).
