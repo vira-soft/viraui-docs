@@ -13,7 +13,6 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 /get-started/theming/built-in-themes → @viraui/foundation presets + Fontsource
 /get-started/theming/custom-themes → custom CSS, App Studio, agent sheets
 /get-started/skills        → consumer skills for agents
-/get-started/mcp           → docs MCP (Streamable HTTP) setup + examples
 /get-started/utilities/…   → Utilities group (expandable; defaultOpen false)
 /get-started/utilities/use-breakpoints → useBreakpoints (opt-in viewport match helper)
 /foundation                → foundation overview
@@ -38,7 +37,7 @@ Sidebar roots (Fumadocs root type `"docs"` — dropdown under search, not versio
 
 Sidebar footer (both roots, below the page tree): **Get ViraUI Pro** → `https://viraui.dev/#pro`. Not a content page.
 
-**Design System** sidebar: intro pages at first level; **Get started** and **Foundation** separator titles with extracted children (Get started order: setup → Theming group → skills → mcp → Utilities group). No Components separator here.
+**Design System** sidebar: intro pages at first level; **Get started** and **Foundation** separator titles with extracted children (Get started order: setup → Theming group → skills → Utilities group). No Components separator here. Docs MCP page/route removed (static deploy).
 
 **Components** sidebar: category folders only (nested component pages, `defaultOpen: false`; no category index) — no **Components** separator/title in the tree (the root dropdown label covers it). Overview lives at `/components` only.
 

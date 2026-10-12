@@ -13,7 +13,7 @@ Update when durable map/gotchas change. No WIP, no contract copies, no page inve
 - Sibling skills `../viraui-skills`
 - Sibling website (shared cover art) — optional; TokenSave peers via sibling MCP when needed
 - Tooling `pnpm@10.28`, Node `24.15` (`.node-version`), TypeScript `7`, React `19.2`, Fumapress `1.3` / Fumadocs, Vite `8`, Tailwind `4`
-- Dev `pnpm dev` → Fumapress; build `pnpm build` → `dist/public` + `dist/server` (MCP `/mcp`)
+- Dev `pnpm dev` → Fumapress; build `pnpm build` → `dist/public` only (`mode: "static"`; no serverless)
 - No root `AGENTS.md` yet — Spec Kit under `specs/`; consumer `README.md` (logo + docs link); local/dev/deploy in `CONTRIBUTING.md`
 
 ## Spec router (open one)
@@ -76,8 +76,9 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 ## Durable gotchas
 
 - Issues: only bug template; `blank_issues_enabled: false`; questions / feature requests → Discussions (`q-a`, `ideas`)
-- `mode: "default"` (not static) — need server for MCP `/mcp` + link-validation plugin
-- Ask AI **off** — needs paid model provider; MCP stays
+- `mode: "static"` — CDN-only; kills Vercel Fluid `/RSC` Active CPU. Docs MCP runtime + `/get-started/mcp` page removed
+- Ask AI **off** — needs paid model provider
+- `linkValidationPlugin` = build-time only (fine with static)
 - `githubUrl: "https://github.com/vira-soft/viraui-docs"` in `defaultLayoutProps` — nav GitHub icon (private repo; `site.git` also set)
 - Page actions: Copy Markdown + `OpenWithPopover` only; frontmatter `pageActions: false` hides both
 - Nav icons: `@viraui/icons` via `viraIconsPlugin` + shared `<Icon name="…" />` — sync duo barrel; avoid `import.meta.glob` over full icon set
@@ -92,7 +93,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Intro Spotkit (`core-*` / `pro-*`): **no fade mask**; contained panels; composition centered in 160 (same treatment as `foundation-*`)
 - Setup (`004`): page = `content/(design-system)/get-started/setup.mdx` → `/get-started/setup` (not category `index`); icon `CubeSettings`; **skills install + editor reload before** bootstrap/verify prompts; Manual demoted
 - Consumer voice: `.cursor/rules/02-docs-consumer-voice.mdc` + `page-shell.md` — AI-centric tool, human decide/review; short paras / bullets OK; em-dash rare; no telegraph stacks; no What's next
-- Skills (`005`): page = `content/(design-system)/get-started/skills.mdx` → `/get-started/skills`; icon `OrbitSparkle`; orientation only (no install one-liner, no ask-agent fence); Setup owns install; brief MCP link required
+- Skills (`005`): page = `content/(design-system)/get-started/skills.mdx` → `/get-started/skills`; icon `OrbitSparkle`; orientation only (no install one-liner, no ask-agent fence); Setup owns install; no MCP link while runtime off
 - Utilities (`006`): expandable group `content/(design-system)/get-started/utilities/` (`defaultOpen: false`); child `use-breakpoints.mdx` → `/get-started/utilities/use-breakpoints`; owns BreakpointsProvider / `useBreakpoints` live Examples (`breakpoints-demo`, no sandbox resize — `matchMedia` is document viewport); not under Layout; Base UI = link-out
 - Foundation overview (`007`): `/foundation` = lead → how-it-works → 8 Cards (title+image); title `Overview`; children = colors → motion → elevation → effects → typography → spacing → radius → iconography
 - Foundation Colors: `/foundation/colors` — browse `--global-*` / `--highlight-*` / `--color-*` swatches (`GlobalColorTokens`, `HighlightColorTokens`, `PrimitiveColorTokens` in `src/components/demos/color-tokens/`); theme retune → UI follows; “Change or extend” → Theming / Studio (no agent/skills CTA on foundation)
@@ -107,7 +108,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Foundation Spacing page (`/foundation/spacing`): prefer layout props (`Stack`/`Grid`/`Surface`); CSS only for one-offs via `--space-*`; beyond top step = add brand `--space-*` (CSS-only; not layout props) or `calc(var(--space-*) * N)`; retune theme when whole product needs roomier steps; no inventory; no spot; no skill CTA
 - Foundation Radius page (`/foundation/radius`): prefer `radius` props; CSS only for one-offs via `--radius-*`; concentric nested corners = `radius="auto"` (Surface context − padding) or CSS `max(0px, calc(var(--radius-*) - var(--space-*)))`; live toggle demo `RadiusConcentricDemo` (equal token vs `auto`); retune theme scale; no token inventory; no spot; no skill CTA
 - Foundation voice: substrate essays teach how Vira already wires look; consumer job = change theme. Skill/agent CTAs live on Get started Skills / Setup—not Foundation topic leads
-- Get started order: setup → Theming group → skills → mcp → Utilities group
+- Get started order: setup → Theming group → skills → Utilities group
 - MDX voice: speak to consumer (`you` / imperative); no meta “this page / keep this page / not here” — rule `.cursor/rules/02-docs-consumer-voice.mdc` (`content/**/*.mdx`)
 - MDX: no 1:1 ViraUI surface catalogs unless page is a browser — `.cursor/rules/03-docs-no-surface-catalog.mdc`
 - Component pages: live previews = demo components wrapping `ViraSandbox` (register via `src/mdx-components.ts` / demos barrel); `PreviewSlot` = stub only. Pattern set by Button (`src/components/demos/button-demo/`). Demo + teaching source fence (`tsx`/…) → `<Example preview={<XDemo />}>` (Fumadocs Tabs Preview/Code, independent, flush panels; `src/components/common/example`). Agent `text` prompts stay outside. No vertical demo+fence stack. Demo-only (motion, fluid typography) / prompt-only beside demo (icons empty-state) = no `Example`. **Co-locate link twins:** ButtonLink on `/components/actions/button`; IconButtonLink on `/components/actions/icon-button` (same chrome). No prop/variant inventories — name values inside examples. **Example `###` titles = pattern / use case** (Dual thumbs), not demo product UI (Price range) — `.cursor/rules/09-docs-example-titles.mdc`. Ask-your-agent tabs stay consumer intents. Page shell: `specs/001-llm-first-docs-site/contracts/page-shell.md`
@@ -130,5 +131,4 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 ## MCP
 
 - TokenSave: this repo graph (from sibling `../vira-ui` MCP, pass local checkout as `graph_root`)
-- Docs MCP (runtime): `https://docs.viraui.dev/mcp` — search / get_page / list_pages; human page `/get-started/mcp`
-- Browser GET `/mcp` → `Session ID required` = expected (Streamable HTTP needs POST initialize)
+- Docs MCP **off** (static deploy): no runtime plugin, no `/get-started/mcp` route. Re-enable needs non-static host + `mcpPlugin` + page MDX

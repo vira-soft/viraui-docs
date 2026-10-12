@@ -7,7 +7,7 @@
 ## MUST
 
 1. Frontmatter `title: Setup` and a non-stub `description` about consumer bootstrap.
-2. Short lead: bootstrap as thin shell; agents/skills do heavy lifting; skills must load before any bootstrap prompt. Not a Skills or MCP duplicate.
+2. Short lead: bootstrap as thin shell; agents/skills do heavy lifting; skills must load before any bootstrap prompt. Not a Skills duplicate.
 3. Requirements as a bullet list: React platform, Base UI as sole required peer beyond React / React DOM with link to `https://base-ui.com`, short toolchain, foundation/icons optional with links.
 4. **Primary path — `<Steps>`**:
    1. **Install skills first** — titled `npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP` command (Setup owns this install entry). Explicit note that the editor (or agent session) must be **reloaded** after install so `viraui-setup` registers before any bootstrap prompt.
@@ -27,7 +27,7 @@
 5. Put a copyable verify prompt on the Manual section.
 6. Leave stub/placeholder prompt text or “exact commands arrive later” copy.
 7. Reintroduce Setup at `/get-started` via `index.mdx` as the canonical Setup page.
-8. Turn Setup into MCP tutorial or CSS-framework coexistence essay.
+8. Link or promote the docs MCP page, or turn Setup into a CSS-framework coexistence essay.
 9. Add “What’s next” sections.
 10. Ask the agent to install the skills pack inside the bootstrap prompt, or present the bootstrap prompt before skills install + reload.
 
@@ -35,7 +35,7 @@
 
 | File | Change |
 | --- | --- |
-| `content/(design-system)/get-started/meta.json` | `pages`: `setup`, `skills`, `mcp`, … |
+| `content/(design-system)/get-started/meta.json` | `pages`: `setup`, `skills`, `utilities`, … (no `mcp`) |
 | `content/(design-system)/get-started/skills.mdx` | Keep link to `/get-started/setup` (verify still valid) |
 
 ## Relationship to other contracts

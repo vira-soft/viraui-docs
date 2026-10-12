@@ -8,7 +8,6 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
-import { mcpPlugin } from "@fumapress/ai";
 import { linkValidationPlugin } from "fumapress/plugins/link-validation";
 import * as customMdx from "./src/mdx-components";
 import { ViraLogo } from "./src/components/common/vira-logo";
@@ -107,7 +106,8 @@ const SITE_COVER = "https://docs.viraui.dev/cover.jpg";
 
 /**
  * Preset already ships: sitemap, robots.txt, llms.txt, RSS, FlexSearch, Takumi OG, image opts.
- * Explicit add: link validation + MCP (need server → mode default, not static).
+ * Explicit add: link validation (build-time only).
+ * MCP plugin + page off — static deploy (no Vercel Fluid `/RSC`).
  * Ask AI skipped — needs paid model provider (OpenAI/etc).
  * Site cover: static `/cover.jpg` (shared with viraui-website); `{ name: "core:takumi" }` skips generated OG.
  * @see https://press.fumadocs.dev/docs/config#preset
@@ -128,8 +128,8 @@ const config = defineConfig({
       ),
     }),
   renderPage: (props) => <DocsLayout {...props} />,
-  // default: prerender pages + emit API routes (/mcp)
-  mode: "default",
+  // static: CDN-only (HTML + /RSC payloads). No serverless → no Fluid Active CPU.
+  mode: "static",
 
   site: {
     name: "ViraUI Docs",
@@ -175,12 +175,6 @@ const config = defineConfig({
     // same name as preset Takumi → skip per-page generated OG
     { name: "core:takumi" },
     linkValidationPlugin(),
-    mcpPlugin({
-      server: {
-        name: "ViraUI Docs",
-        version: "1.0.0",
-      },
-    }),
   )
   .adapters(
     fumadocsMdx({

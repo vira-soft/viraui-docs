@@ -20,10 +20,10 @@ pnpm dev
 pnpm build
 ```
 
-Output: `dist/public` (pages) + `dist/server` (MCP `/mcp`). Render `mode: "default"`.
+Output: `dist/public` only (HTML + `/RSC` payloads). Render `mode: "static"` — no serverless / no Fluid Active CPU.
 
 **Preset (auto):** sitemap, robots.txt, llms.txt, RSS, FlexSearch, OG, image opts.  
-**Extra plugins:** link validation (build), MCP (`https://docs.viraui.dev/mcp`).  
+**Extra plugins:** link validation (build-time). Docs MCP runtime + page off.  
 Ask AI not enabled — needs a paid model provider.
 
 ## Deploy (Vercel, no Git link)
@@ -58,8 +58,8 @@ Feature: `specs/001-llm-first-docs-site/`
 ## Status (2026-09-17)
 
 - Local Fumapress scaffold + full IA stubs: done
-- Build (`pnpm build` → `dist/public` + server APIs): done
+- Build (`pnpm build` → `dist/public` static): done
 - Private GitHub [vira-soft/viraui-docs](https://github.com/vira-soft/viraui-docs): connected
 - Vercel project `viraui-docs` (CLI, no GitHub link): live at https://docs.viraui.dev
 - GitHub Actions production deploy on `main`: configured
-- Plugins: preset + link validation + MCP (`/mcp`). Ask AI skipped (paid provider)
+- Plugins: preset + link validation. MCP runtime off (`mode: "static"`). Ask AI skipped (paid provider)
