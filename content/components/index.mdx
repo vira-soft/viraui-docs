@@ -6,6 +6,8 @@ description: Pick a ViraUI category by the job on the screen, then open a part o
 
 Components groups `@viraui/react` by what a piece does on the screen: commit work, collect a value, interrupt the flow, float beside a trigger, and similar jobs. Start here when you know the region of the UI but not which family owns it.
 
+Most interactive parts wrap [Base UI](https://base-ui.com) primitives: accessible behavior stays upstream, and ViraUI re-exports them with a custom API and theme chrome on top so you compose without assembling the primitive tree by hand. Part pages that wrap Base UI link the upstream API when you need pass-through details.
+
 Name the job first, then open that category. Each part page explains when to reach for it, when to skip it, and how it sits next to siblings. Skills and package specs stay the live surface your agent reads while composing.
 
 ## With your agent
