@@ -14,7 +14,8 @@ Public URLs (no `/docs` prefix; host is docs.viraui.dev):
 /get-started/theming/custom-themes → custom CSS, App Studio, agent sheets
 /get-started/skills        → consumer skills for agents
 /get-started/utilities/…   → Utilities group (expandable; defaultOpen false)
-/get-started/utilities/use-breakpoints → useBreakpoints (opt-in viewport match helper)
+/get-started/utilities/breakpoints → Breakpoints (opt-in viewport match helper)
+/get-started/utilities/direction → Direction (Base UI DirectionProvider re-export / RTL)
 /foundation                → foundation overview
 /foundation/colors
 /foundation/motion
@@ -41,7 +42,7 @@ Sidebar footer (both roots, below the page tree): **Get ViraUI Pro** → `https:
 
 **Components** sidebar: category folders only (nested component pages, `defaultOpen: false`; no category index) — no **Components** separator/title in the tree (the root dropdown label covers it). Overview lives at `/components` only.
 
-Theming and Utilities are expandable folders (`defaultOpen: false`) with child pages. Theming children: `what-is-a-theme`, `built-in-themes`, `custom-themes`. Utilities children: currently `use-breakpoints`. Nav icons are `@viraui/icons` names via local `viraIconsPlugin` + shared `<Icon name="…" />` (sync duo barrel — same file-count tradeoff as Lucide plugin; avoid `import.meta.glob` over the full set).
+Theming and Utilities are expandable folders (`defaultOpen: false`) with child pages. Theming children: `what-is-a-theme`, `built-in-themes`, `custom-themes`. Utilities children: `breakpoints`, `direction`. Nav icons are `@viraui/icons` names via local `viraIconsPlugin` + shared `<Icon name="…" />` (sync duo barrel — same file-count tradeoff as Lucide plugin; avoid `import.meta.glob` over the full set).
 
 Categories (Storybook-aligned): actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 

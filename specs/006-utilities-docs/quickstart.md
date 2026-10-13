@@ -16,18 +16,18 @@ pnpm install
 pnpm dev
 ```
 
-Open `/get-started/utilities/use-breakpoints` (local Fumapress URL).
+Open `/get-started/utilities/breakpoints` and `/get-started/utilities/direction` (local Fumapress URL).
 
 ## Validation scenarios
 
 ### V1 — Route and nav
 
-1. Confirm Utilities is expandable in Get started nav after MCP (`defaultOpen: false`).
-2. Confirm child `useBreakpoints` opens at `/get-started/utilities/use-breakpoints`.
-3. Confirm useBreakpoints frontmatter title; description non-stub; `pageActions: false`.
-4. **Expect**: Finished group + child after MCP (SC-002 / FR-001–002).
+1. Confirm Utilities is expandable in Get started nav (`defaultOpen: false`).
+2. Confirm children titled **Breakpoints** and **Direction** at `/get-started/utilities/breakpoints` and `/get-started/utilities/direction`.
+3. Confirm frontmatter titles; descriptions non-stub; `pageActions: false`.
+4. **Expect**: Finished group + both children (SC-002 / FR-001–003).
 
-### V2 — Optional framing
+### V2 — Optional framing (Breakpoints)
 
 1. Read lead only.
 2. Follow Setup link.
@@ -41,23 +41,23 @@ Open `/get-started/utilities/use-breakpoints` (local Fumapress URL).
 4. Confirm provider + hook example(s).
 5. **Expect**: SC-001 / FR-005 satisfied without prop tables.
 
-### V4 — Base UI handoff
+### V4 — Direction + Base UI handoff
 
-1. Find Base UI utilities section.
-2. Confirm link to base-ui.com; no DirectionProvider/RTL recipe on page.
+1. On Breakpoints, confirm Base UI section links Direction for RTL and base-ui.com for other built-ins.
+2. On Direction, confirm Base UI Card href matches DS `direction-provider` meta; ≤2 fence examples; no API encyclopedia.
 3. **Expect**: FR-006 / US3.
 
 ### V5 — Setup handoff
 
-1. Open `/get-started/setup` root-providers end.
-2. Confirm brief utilities pointer + working `/get-started/utilities/use-breakpoints` link.
-3. Confirm Setup has no Breakpoints defaults/examples recipe.
+1. Open `/get-started/setup` manual optional step.
+2. Confirm brief utilities pointer + working Breakpoints and Direction links.
+3. Confirm Setup has no Breakpoints/RTL recipes.
 4. **Expect**: SC-004 / FR-007.
 
 ### V6 — Voice and bans
 
 1. Skim for prop tables, overlay-shell duplicate, Base UI API dumps, telegram spam, pasted XML.
-2. Time lead + body + Base UI handoff (~3 minutes).
+2. Time Breakpoints lead + body (~3 minutes); Direction skim (~1 minute).
 3. **Expect**: SC-003 / SC-006 / FR-008–009.
 
 ### V7 — Build smoke
@@ -66,7 +66,7 @@ Open `/get-started/utilities/use-breakpoints` (local Fumapress URL).
 pnpm build
 ```
 
-**Expect**: Build + link validation succeed; Setup ↔ useBreakpoints links resolve (SC-005).
+**Expect**: Build + link validation succeed; Setup ↔ Breakpoints / Direction links resolve (SC-005).
 
 ## Done when
 

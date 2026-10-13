@@ -43,5 +43,5 @@
 - Instructional Get started shell (`001` page-shell): titled/tabbed prompt regions required — satisfied by Setup/Verify tabs after skills install.
 - IA tree (`001` ia-tree): `/get-started/setup` already listed.
 - Skills page: purpose/overview; Setup owns install entry + bootstrap process (skills before prompt).
-- Utilities (`006` utilities-page): owns opt-in helpers (useBreakpoints under Utilities group); Setup only brief-links `/get-started/utilities/use-breakpoints` after overlay shell — no Breakpoints recipes on Setup.
+- Utilities (`006` utilities-page): owns opt-in helpers (Breakpoints + Direction under Utilities group); Setup only brief-links `/get-started/utilities/breakpoints` and `/get-started/utilities/direction` after overlay shell — no Breakpoints/RTL recipes on Setup.
 - Does **not** use Component Page Shell (`PreviewSlot`).

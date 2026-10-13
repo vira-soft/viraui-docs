@@ -1,0 +1,64 @@
+---
+title: Direction
+description: Transparent Base UI DirectionProvider re-export for RTL context — pair with document dir.
+pageActions: false
+---
+
+## Base UI
+
+<Cards>
+  <Card
+    title="Direction Provider"
+    href="https://base-ui.com/react/utils/direction-provider#api-reference"
+    external
+  >
+    Upstream API and behavior. ViraUI re-exports this primitive as-is from `@viraui/react`.
+  </Card>
+</Cards>
+
+---
+
+## How it works
+
+`DirectionProvider` and `useDirection` are a transparent re-export of Base UI’s direction utilities. They feed Base UI context so wrapped controls flip for RTL; they do **not** set HTML `dir` or CSS `direction`. Pair the provider with `dir="rtl"` on a portal ancestor — usually `<html>` — so body-mounted popups inherit the same direction.
+
+Optional beyond [Setup](/get-started/setup). Import from `@viraui/react` instead of `@base-ui/react/direction-provider`. Full API stays on [Base UI](https://base-ui.com/react/utils/direction-provider).
+
+## Common examples
+
+### RTL subtree with Slider
+
+```tsx
+import { DirectionProvider, Slider } from '@viraui/react';
+
+<div dir="rtl">
+  <DirectionProvider direction="rtl">
+    <Slider defaultValue={25} aria-label="Volume" />
+  </DirectionProvider>
+</div>
+```
+
+### Read direction in a portal-safe hook
+
+```tsx
+import { DirectionProvider, Text, useDirection } from '@viraui/react';
+
+function DirectionLabel() {
+  const direction = useDirection();
+  return <Text size="s">Direction: {direction}</Text>;
+}
+
+<DirectionProvider direction="rtl">
+  <DirectionLabel />
+</DirectionProvider>
+```
+
+## Ask your agent
+
+```text tab="App-wide RTL"
+This app needs right-to-left layout. Put direction context on the app shell so Base UI–backed controls flip correctly, and set document direction so portaled overlays match. Keep the wiring minimal — use the ViraUI re-export, not a direct Base UI import.
+```
+
+```text tab="RTL preview subtree"
+Wrap this settings preview in an RTL subtree so the slider and menus flip for review, without changing the whole app yet. Pair the direction provider with a local dir attribute on the preview host.
+```

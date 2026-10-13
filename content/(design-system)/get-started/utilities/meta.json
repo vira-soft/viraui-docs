@@ -1,6 +1,6 @@
 {
   "title": "Utilities",
-  "pages": ["use-breakpoints"],
+  "pages": ["breakpoints", "direction"],
   "defaultOpen": false,
   "icon": "WrenchScrewdriver"
 }

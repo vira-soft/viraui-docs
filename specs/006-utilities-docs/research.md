@@ -1,27 +1,25 @@
 # Research: Get Started Utilities Page
 
-**Feature**: `006-utilities-docs` | **Date**: 2026-09-18
+**Feature**: `006-utilities-docs` | **Date**: 2026-09-18 (updated 2026-10-13)
 
 ## 1. Page delivery vehicle
 
-**Decision**: Expandable folder `content/get-started/utilities/` (`meta.json` title Utilities, icon `WrenchScrewdriver`, `defaultOpen: false`) listed after `mcp` in Get started nav. Child page `use-breakpoints.mdx` at `/get-started/utilities/use-breakpoints`. Update `001` IA tree. No flat `utilities.mdx` index.
+**Decision**: Expandable folder `content/(design-system)/get-started/utilities/` (`meta.json` title Utilities, icon `WrenchScrewdriver`, `defaultOpen: false`). Children: `breakpoints.mdx` (title **Breakpoints**) and `direction.mdx` (title **Direction**). Update `001` IA tree. No flat `utilities.mdx` index.
 
-**Rationale**: FR-001–003; user asked for dedicated page after MCP.
+**Rationale**: FR-001–003; discoverable opt-in helpers after Setup.
 
-**Alternatives considered**: Expand Setup Breakpoints section — rejected (Setup overload). Put under Foundation — rejected (these are React helpers post-bootstrap, not token essays).
+**Alternatives considered**: Expand Setup Breakpoints section — rejected (Setup overload). Put under Foundation — rejected (these are React helpers post-bootstrap, not token essays). Keep slug `use-breakpoints` — rejected in favor of title-aligned `breakpoints`.
 
 ## 2. Page outline
 
 **Decision**:
 
-1. **Frontmatter** — as above.
-2. **Lead** — optional helpers beyond Setup overlay shell; link Setup.
-3. **Breakpoints** — when/not-when; named defaults; replace-map Callout; client wrap; TSX examples; specs/skill pointer.
-4. **Base UI utilities** — short handoff to base-ui.com for peer built-ins; no recipes.
+1. **Breakpoints** — optional ViraUI-custom viewport branch helpers; Base UI section hands RTL to Direction and other built-ins to base-ui.com; live Examples for demos.
+2. **Direction** — Base UI Card + thin how-it-works + ≤2 fences; transparent re-export of DirectionProvider / useDirection.
 
 **Rationale**: FR-004–006; SC-001–003.
 
-**Alternatives considered**: Tabs per utility — YAGNI (two sections). Full elevation/utilities catalog — out of scope.
+**Alternatives considered**: Tabs per utility on one page — YAGNI. Full Base UI API on Direction — rejected (drift).
 
 ## 3. Breakpoints editorial facts
 
@@ -39,24 +37,22 @@
 
 **Alternatives considered**: Omit numeric defaults — weaker consumer usefulness. Paste props.xml — rejected (encyclopedia).
 
-## 4. Setup handoff
+## 4. Direction editorial facts
 
-**Decision**: One short sentence on Setup after overlay examples: other providers/utilities optional → link `/get-started/utilities/use-breakpoints`. Remove any Breakpoints recipe from Setup.
+**Decision**: Transparent Base UI re-export from `@viraui/react`. Provider feeds context only; pair with `dir` on portal ancestor (usually `html`). Two examples: RTL Slider subtree; `useDirection` probe. Full API → Base UI Direction Provider docs.
+
+**Rationale**: User ask; DS meta `base_ui` owns URL; keep docs thin.
+
+## 5. Setup handoff
+
+**Decision**: One short sentence on Setup after overlay examples: other providers/utilities optional → link Breakpoints + Direction. No recipes on Setup.
 
 **Rationale**: FR-007; SC-004; user ask.
 
 **Alternatives considered**: Inline Breakpoints on Setup + Utilities duplicate — rejected.
 
-## 5. Base UI handoff
-
-**Decision**: One short section: Base UI built-ins (direction, focus, portals, …) → [base-ui.com](https://base-ui.com). Utilities documents ViraUI-custom helpers only.
-
-**Rationale**: FR-006; peer docs are source of truth for Base UI APIs.
-
-**Alternatives considered**: Keep RTL recipe on Utilities — rejected (not ViraUI-custom). Paste Base UI API — rejected (drift).
-
 ## 6. Validation approach
 
-**Decision**: Manual quickstart against FR/SC + `pnpm build` (link validation). Confirm nav order mcp → utilities; Setup link resolves.
+**Decision**: Manual quickstart against FR/SC + `pnpm build` (link validation). Confirm both utility URLs + Setup links resolve.
 
 **Rationale**: Same as `002`–`005` content features.
