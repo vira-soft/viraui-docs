@@ -135,9 +135,19 @@ type LadderRowProps = {
 const LadderRow: React.FC<LadderRowProps> = ({ label, children }) => (
   <Surface border="all" hPadding="m" radius="m" vPadding="m">
     <Stack fullWidth rowGap="m">
+      {/*
+        overflow-x:auto alone computes overflow-y to auto (CSS overflow).
+        Chrome then paints a vertical scrollbar when large glyphs barely
+        exceed the scrollport — clip keeps height content-sized.
+      */}
       <Stack
         fullWidth
-        style={{ inlineSize: "100%", minInlineSize: 0, overflowX: "auto" }}
+        style={{
+          inlineSize: "100%",
+          minInlineSize: 0,
+          overflowX: "auto",
+          overflowY: "clip",
+        }}
       >
         {children}
       </Stack>
@@ -178,19 +188,14 @@ const TypescaleSandbox: React.FC<TypescaleSandboxProps> = ({
       <TypescaleRootOverride cssVariable={cssVariable} ratio={ratio} />
       <PortalHost>
         {(container) => (
-          <Stack
-            expandChildren
-            fullWidth
-            rowGap="m"
-            style={{ inlineSize: "100%" }}
-          >
+          <Stack fullWidth rowGap="m" style={{ inlineSize: "100%" }}>
             <ScaleSelect
               container={container}
               label={selectLabel}
               onValueChange={setRatio}
               value={ratio}
             />
-            <Stack expandChildren fullWidth rowGap="l">
+            <Stack fullWidth rowGap="l">
               {children}
             </Stack>
           </Stack>
