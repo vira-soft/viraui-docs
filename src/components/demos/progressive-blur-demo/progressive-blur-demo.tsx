@@ -9,7 +9,7 @@ import {
   Text,
   Title,
 } from "@viraui/react";
-import { ViraSandbox } from "../../common/vira-sandbox";
+import { useViraSandboxCss, ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
   children: React.ReactNode;
@@ -32,13 +32,34 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   </ViraSandbox>
 );
 
+/**
+ * Layers inherit root `border-radius` (ships in `@viraui/react`). Sandbox
+ * inject covers older installs until docs bumps the package.
+ */
+const LAYER_RADIUS_CSS = `
+[data-direction] > span[aria-hidden='true'] {
+  border-radius: inherit;
+}
+`;
+
+const Panel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useViraSandboxCss(LAYER_RADIUS_CSS);
+  return <>{children}</>;
+};
+
 const panelStyle = {
   position: "relative",
   blockSize: "28rem",
   inlineSize: "100%",
   maxInlineSize: "24rem",
+  marginInline: "auto",
 } satisfies React.CSSProperties;
 
+/**
+ * No Surface `overflow` here — Chromium drops masked backdrop-filter under
+ * overflow+radius. Scroll clips; blur band matches Surface `radius="l"` via
+ * `border-radius` + layer inherit.
+ */
 const scrollStyle = {
   blockSize: "100%",
   containerType: "size",
@@ -46,10 +67,6 @@ const scrollStyle = {
   overscrollBehavior: "contain",
 } satisfies React.CSSProperties;
 
-/**
- * Sticky zero-height shell inside the scrollport — width excludes the scrollbar.
- * Child viewport uses 100cqb so the blur band pins to the visible panel.
- */
 const scrollBlurShellStyle = {
   position: "sticky",
   top: 0,
@@ -71,6 +88,7 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: "8rem",
+  borderRadius: "0 0 var(--radius-l) var(--radius-l)",
 } satisfies React.CSSProperties;
 
 const topBlurStyle = {
@@ -78,6 +96,7 @@ const topBlurStyle = {
   insetInline: 0,
   top: 0,
   blockSize: "9rem",
+  borderRadius: "var(--radius-l) var(--radius-l) 0 0",
   zIndex: 1,
   background:
     "linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)",
@@ -160,80 +179,76 @@ const ScrollArticle: React.FC<ScrollArticleProps> = ({
 /** Bottom-edge blur over a tall scroll article with a footer CTA. */
 export const ProgressiveBlurBottomDemo: React.FC = () => (
   <SandboxShell label="Bottom progressive blur over a scrollable article">
-    <Surface
-      border="all"
-      color={1}
-      overflow="hidden"
-      radius="l"
-      style={{ ...panelStyle, marginInline: "auto" }}
-    >
-      <div style={scrollStyle}>
-        <div aria-hidden style={scrollBlurShellStyle}>
-          <div style={scrollBlurViewportStyle}>
-            <ProgressiveBlur
-              blur="24px"
-              direction="bottom"
-              style={bottomBlurStyle}
-            />
+    <Panel>
+      <Surface border="all" color={1} radius="l" style={panelStyle}>
+        <div style={scrollStyle}>
+          <div aria-hidden style={scrollBlurShellStyle}>
+            <div style={scrollBlurViewportStyle}>
+              <ProgressiveBlur
+                blur="24px"
+                direction="bottom"
+                style={bottomBlurStyle}
+              />
+            </div>
           </div>
+          <ScrollArticle />
         </div>
-        <ScrollArticle />
-      </div>
-      <Stack
-        hAlign="center"
-        hPadding="l"
-        style={{
-          position: "absolute",
-          insetInline: 0,
-          bottom: 0,
-          zIndex: 2,
-          paddingBlockEnd: "1rem",
-        }}
-      >
-        <Button>Continue reading</Button>
-      </Stack>
-    </Surface>
+        <Stack
+          hAlign="center"
+          hPadding="l"
+          style={{
+            position: "absolute",
+            insetInline: 0,
+            bottom: 0,
+            zIndex: 2,
+            paddingBlockEnd: "1rem",
+          }}
+        >
+          <Button>Continue reading</Button>
+        </Stack>
+      </Surface>
+    </Panel>
   </SandboxShell>
 );
 
 /** Top-edge blur under sticky chrome so content fades as it scrolls up. */
 export const ProgressiveBlurTopDemo: React.FC = () => (
   <SandboxShell label="Top progressive blur under sticky article chrome">
-    <Surface
-      border="all"
-      color={1}
-      overflow="hidden"
-      radius="l"
-      style={{ ...panelStyle, marginInline: "auto" }}
-    >
-      <Stack
-        hPadding="l"
-        rowGap="xs"
-        style={{
-          position: "absolute",
-          insetInline: 0,
-          top: 0,
-          zIndex: 2,
-          paddingBlock: "0.85rem",
-        }}
-        vPadding="s"
-      >
-        <Title render={<h3 />} size="5">
-          Field notes
-        </Title>
-        <Text size="xs" tone="muted">
-          Oct 2026 · Coastal studio
-        </Text>
-      </Stack>
-      <div style={scrollStyle}>
-        <div aria-hidden style={scrollBlurShellStyle}>
-          <div style={scrollBlurViewportStyle}>
-            <ProgressiveBlur blur="28px" direction="top" style={topBlurStyle} />
+    <Panel>
+      <Surface border="all" color={1} radius="l" style={panelStyle}>
+        <Stack
+          hPadding="l"
+          rowGap="xs"
+          style={{
+            position: "absolute",
+            insetInline: 0,
+            top: 0,
+            zIndex: 2,
+            paddingBlock: "0.85rem",
+          }}
+          vPadding="s"
+        >
+          <Title render={<h3 />} size="5">
+            Field notes
+          </Title>
+          <Text size="xs" tone="muted">
+            Oct 2026 · Coastal studio
+          </Text>
+        </Stack>
+        <div style={scrollStyle}>
+          <div aria-hidden style={scrollBlurShellStyle}>
+            <div style={scrollBlurViewportStyle}>
+              <ProgressiveBlur
+                blur="28px"
+                direction="top"
+                style={topBlurStyle}
+              />
+            </div>
           </div>
+          <ScrollArticle bottomPad="2rem" topPad="7rem" />
         </div>
-        <ScrollArticle bottomPad="2rem" topPad="7rem" />
-      </div>
-    </Surface>
+      </Surface>
+    </Panel>
   </SandboxShell>
 );
 
@@ -243,59 +258,63 @@ export const ProgressiveBlurDualDemo: React.FC = () => (
     height={560}
     label="Top and bottom progressive blur on a tall reader panel"
   >
-    <Surface
-      border="all"
-      color={1}
-      overflow="hidden"
-      radius="l"
-      style={{
-        ...panelStyle,
-        blockSize: "30rem",
-        maxInlineSize: "26rem",
-        marginInline: "auto",
-      }}
-    >
-      <Stack
-        hAlign="center"
-        hPadding="l"
+    <Panel>
+      <Surface
+        border="all"
+        color={1}
+        radius="l"
         style={{
-          position: "absolute",
-          insetInline: 0,
-          top: 0,
-          zIndex: 2,
-          paddingBlock: "0.85rem",
+          ...panelStyle,
+          blockSize: "30rem",
+          maxInlineSize: "26rem",
         }}
       >
-        <Title align="center" render={<h3 />} size="5">
-          Issue 12
-        </Title>
-      </Stack>
-      <div style={scrollStyle}>
-        <div aria-hidden style={scrollBlurShellStyle}>
-          <div style={scrollBlurViewportStyle}>
-            <ProgressiveBlur blur="24px" direction="top" style={topBlurStyle} />
-            <ProgressiveBlur
-              blur="24px"
-              direction="bottom"
-              style={bottomBlurStyle}
-            />
+        <Stack
+          hAlign="center"
+          hPadding="l"
+          style={{
+            position: "absolute",
+            insetInline: 0,
+            top: 0,
+            zIndex: 2,
+            paddingBlock: "0.85rem",
+          }}
+        >
+          <Title align="center" render={<h3 />} size="5">
+            Issue 12
+          </Title>
+        </Stack>
+        <div style={scrollStyle}>
+          <div aria-hidden style={scrollBlurShellStyle}>
+            <div style={scrollBlurViewportStyle}>
+              <ProgressiveBlur
+                blur="24px"
+                direction="top"
+                style={topBlurStyle}
+              />
+              <ProgressiveBlur
+                blur="24px"
+                direction="bottom"
+                style={bottomBlurStyle}
+              />
+            </div>
           </div>
+          <ScrollArticle bottomPad="7rem" topPad="7rem" />
         </div>
-        <ScrollArticle bottomPad="7rem" topPad="7rem" />
-      </div>
-      <Stack
-        hAlign="center"
-        hPadding="l"
-        style={{
-          position: "absolute",
-          insetInline: 0,
-          bottom: 0,
-          zIndex: 2,
-          paddingBlockEnd: "1rem",
-        }}
-      >
-        <Button variant="secondary">Mark as read</Button>
-      </Stack>
-    </Surface>
+        <Stack
+          hAlign="center"
+          hPadding="l"
+          style={{
+            position: "absolute",
+            insetInline: 0,
+            bottom: 0,
+            zIndex: 2,
+            paddingBlockEnd: "1rem",
+          }}
+        >
+          <Button variant="secondary">Mark as read</Button>
+        </Stack>
+      </Surface>
+    </Panel>
   </SandboxShell>
 );

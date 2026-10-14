@@ -11,6 +11,10 @@ Mount it absolutely at the edge of a scroll region or over media when content sh
 ProgressiveBlur paints several `backdrop-filter` layers. Prefer one or two edge bands on a focal scroll panel. Do not stack it on every card in a dense grid.
 </Callout>
 
+<Callout type="info" title="Rounded scroll shells">
+Chromium drops masked backdrop blur under an ancestor that pairs overflow clipping with `border-radius` (Surface `overflow` + `radius`). Leave Surface overflow alone, scroll on an inner node, and set matching `border-radius` on the ProgressiveBlur root — layers inherit it so the veil follows the Surface corners.
+</Callout>
+
 ---
 
 ## When to use
@@ -38,7 +42,7 @@ ProgressiveBlur paints several `backdrop-filter` layers. Prefer one or two edge 
 
 ### Bottom edge fade
 
-A tall scroll article with images is the usual ProgressiveBlur composition. Keep the blur band inside the scrollport (sticky zero-height shell + `100cqb` viewport) so the scrollbar stays sharp, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above the blur in z-order.
+A tall scroll article with images is the usual ProgressiveBlur composition. Keep the blur band inside the scrollport (sticky zero-height shell + `100cqb` viewport) so the scrollbar stays sharp, match the Surface radius token on the blur root, pad the scroll content so the last lines can travel under the veil, and keep the footer CTA above in z-order.
 
 <Example preview={<ProgressiveBlurBottomDemo />}>
 
@@ -57,9 +61,10 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: '8rem',
+  borderRadius: '0 0 var(--radius-l) var(--radius-l)',
 } as const;
 
-<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+<Surface border="all" color={1} radius="l" style={panelStyle}>
   <div
     style={{
       blockSize: '100%',
@@ -112,7 +117,7 @@ const bottomBlurStyle = {
 
 ### Top edge under chrome
 
-Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. Keep the blur inside the scrollport with the same sticky zero-height shell so the scrollbar stays sharp. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
+Flip the band to `direction="top"` when sticky title chrome should stay sharp while scrolling content softens underneath. Keep the blur inside the scrollport with the same sticky zero-height shell so the scrollbar stays sharp, and match the top Surface corners on the blur root. ProgressiveBlur has no tint prop — layer a fading `background` on the same band to darken the backdrop under the blur. Pad the scroll content so the first lines sit past the strong end of the veil without leaving a large empty gap.
 
 <Example preview={<ProgressiveBlurTopDemo />}>
 
@@ -131,12 +136,13 @@ const topBlurStyle = {
   insetInline: 0,
   top: 0,
   blockSize: '9rem',
+  borderRadius: 'var(--radius-l) var(--radius-l) 0 0',
   zIndex: 1,
   background:
     'linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)',
 } as const;
 
-<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+<Surface border="all" color={1} radius="l" style={panelStyle}>
   <Stack
     hPadding="l"
     rowGap="xs"
@@ -189,7 +195,7 @@ const topBlurStyle = {
 
 ### Dual-edge bands
 
-Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Mount both bands in the same sticky scrollport shell so neither covers the scrollbar. Reuse the same tinted top band as the sticky-chrome example.
+Top and bottom bands together suit a sheet-style reader: content softens under both the header and the footer action without clipping. Mount both bands in the same sticky scrollport shell so neither covers the scrollbar. Reuse the tinted top band as the sticky-chrome example and match each edge’s corner radius on the blur roots.
 
 <Example preview={<ProgressiveBlurDualDemo />}>
 
@@ -208,6 +214,7 @@ const topBlurStyle = {
   insetInline: 0,
   top: 0,
   blockSize: '9rem',
+  borderRadius: 'var(--radius-l) var(--radius-l) 0 0',
   zIndex: 1,
   background:
     'linear-gradient(to bottom, color-mix(in oklab, var(--global-background) 88%, transparent), transparent)',
@@ -218,9 +225,10 @@ const bottomBlurStyle = {
   insetInline: 0,
   bottom: 0,
   blockSize: '8rem',
+  borderRadius: '0 0 var(--radius-l) var(--radius-l)',
 } as const;
 
-<Surface border="all" color={1} overflow="hidden" radius="l" style={panelStyle}>
+<Surface border="all" color={1} radius="l" style={panelStyle}>
   <Stack
     hAlign="center"
     hPadding="l"

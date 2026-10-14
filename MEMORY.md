@@ -75,6 +75,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 
 ## Durable gotchas
 
+- ProgressiveBlur demos: no Surface `overflow` with `radius` over blur (Chromium). Sticky-in-scrollport; match `--radius-*` on blur root (layers inherit — sandbox inject until package bump).
 - Issues: only bug template; `blank_issues_enabled: false`; questions / feature requests → Discussions (`q-a`, `ideas`)
 - `mode: "static"` — CDN-only; kills Vercel Fluid `/RSC` Active CPU. Docs MCP runtime + `/get-started/mcp` page removed
 - Ask AI **off** — needs paid model provider
