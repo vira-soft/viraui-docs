@@ -7,7 +7,7 @@ Title is the heading and display primitive on the theme typescale. Use it for he
 
 `size` controls appearance (`display`, `1`–`6`); `render` chooses the actual element. Default root is `span`, so outline-bearing headings need an explicit `render={<h2 />}` (or the level the page structure requires). Visual size and semantic level stay independent on purpose: a quiet `h1` with a smaller `size` is valid when SEO needs one page title but the layout calls for a quieter look.
 
-Layout controls (`lineHeight`, `align`, `maxWidth`, `balanced`, `trim`) mirror [Text](/components/typography/text) at heading densities. Fluid viewport clamp is on by default for ordinary heading steps — see [Typography](/foundation/typography) for the foundation gate.
+Layout controls (`lineHeight`, `align`, `maxWidth`, `wrap`, `whiteSpace`, `trim`) mirror [Text](/components/typography/text) at heading densities. Default `wrap` is `pretty`; use `wrap="balance"` on short multi-line heads that need even line lengths, and `whiteSpace="nowrap"` for single-line metrics. Fluid viewport clamp is on by default for ordinary heading steps — see [Typography](/foundation/typography) for the foundation gate.
 
 ---
 
@@ -15,7 +15,7 @@ Layout controls (`lineHeight`, `align`, `maxWidth`, `balanced`, `trim`) mirror [
 
 - Page heroes and section or subsection headings
 - Display lines that still need a semantic heading tag
-- Balanced wrapping on short marketing titles
+- Short marketing titles that need even line lengths (`wrap="balance"`)
 
 ## When not to use
 
@@ -40,7 +40,7 @@ Layout controls (`lineHeight`, `align`, `maxWidth`, `balanced`, `trim`) mirror [
 
 ### Semantic page title
 
-A page hero with a visual size preset and `render={<h1 />}` plus balanced wrapping. Keep supporting sentences on [Text](/components/typography/text) underneath.
+A page hero with a visual size preset and `render={<h1 />}` plus `wrap="balance"` for even rag. Keep supporting sentences on [Text](/components/typography/text) underneath.
 
 <Example preview={<TitleSemanticPageDemo />}>
 
@@ -48,7 +48,7 @@ A page hero with a visual size preset and `render={<h1 />}` plus balanced wrappi
 import { Stack, Text, Title } from '@viraui/react';
 
 <Stack rowGap="m">
-  <Title balanced lineHeight="s" render={<h1 />} size="1">
+  <Title wrap="balance" lineHeight="s" render={<h1 />} size="1">
     Ship the next release without the guesswork
   </Title>
   <Text />

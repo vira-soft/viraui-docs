@@ -15,14 +15,14 @@ importers:
         specifier: 2.1.10
         version: 2.1.10(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@viraui/foundation':
-        specifier: 2026.8.0
-        version: 2026.8.0
+        specifier: 2026.9.1
+        version: 2026.9.1
       '@viraui/icons':
         specifier: 2026.1.0
         version: 2026.1.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@viraui/react':
-        specifier: 2026.8.0
-        version: 2026.8.0(@base-ui/react@1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: 2026.9.1
+        version: 2026.9.1(@base-ui/react@1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       fumadocs-core:
         specifier: 16.15.7
         version: 16.15.7(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.5)(@types/mdast@4.0.4)(@types/react@19.2.18)(flexsearch@0.8.212)(lucide-react@1.47.0(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(zod@4.6.5)
@@ -840,8 +840,8 @@ packages:
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ==}
 
-  '@viraui/foundation@2026.8.0':
-    resolution: {integrity: sha512-eEIKghTNH3vh6VPJ3S3xU05ALFjZw+J5Fnse74iFhmrnFAJkziQ9Skv5DxCQQeLpCl27fCcmUaIWmGXOCWhCNQ==}
+  '@viraui/foundation@2026.9.1':
+    resolution: {integrity: sha512-Hf57AHNZH8iENrtHXX9Tj18VVSNsbAUUHPLB3xDTxLqYsmTabMFb7/RgvdtqHoXH6P8a006H3mvuFpHBr76f1A==}
 
   '@viraui/icons@2026.1.0':
     resolution: {integrity: sha512-Pajvf6ZYpc1z74R7rv/hGbSEq680Bi1VxoUWqofHSxe+YO59XwqvG5llAoGQc3YBYvVzsKZyG3NYdjZuF+/GSQ==}
@@ -849,8 +849,8 @@ packages:
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
 
-  '@viraui/react@2026.8.0':
-    resolution: {integrity: sha512-pshW2rqKMJ3/DcoKcEKyPErR+SUsILUq5OyUTOtZ7wFp0KjUoWyN9TEMLHwsA+IbmfFH9ZTXg8OoFZ0afRsv+Q==}
+  '@viraui/react@2026.9.1':
+    resolution: {integrity: sha512-+bypa3q38J99NubIiOd5Jf4GpYPDud0eC28lIm2yxQXX2/5B5LJE0ISQZ57KFeJ0q9Spzk6gsGjRguWuNGuuIg==}
     peerDependencies:
       '@base-ui/react': '>=1.6.0'
       react: '>=19.0.0'
@@ -2865,14 +2865,14 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@viraui/foundation@2026.8.0': {}
+  '@viraui/foundation@2026.9.1': {}
 
   '@viraui/icons@2026.1.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  '@viraui/react@2026.8.0(@base-ui/react@1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@viraui/react@2026.9.1(@base-ui/react@1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@base-ui/react': 1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react: 19.2.8

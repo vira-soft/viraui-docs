@@ -5,7 +5,7 @@ description: Body-scale copy — size, tone, weight, and layout for semantic inl
 
 Text is the default running-copy primitive on the body typescale. Reach for it for helper lines, descriptions, labels, and any sentence that is not a heading.
 
-`size` and `tone` cover most look choices; `weight`, `lineHeight`, `tracking`, `align`, `maxWidth`, and `whiteSpace` handle layout. Default root is `span` — pass `render` when the copy needs a `p`, `label`, `code`, or other element while keeping Text styling. Prefer `tone` over a literal `color` so theme changes stay centralized. Use `tracking` instead of CSS `letter-spacing` on the same Text root.
+`size` and `tone` cover most look choices; `weight`, `lineHeight`, `tracking`, `align`, `maxWidth`, `wrap`, and `whiteSpace` handle layout. Default `wrap` is `pretty` (orphan-aware). Prefer `wrap="balance"` on short multi-line blurbs that need even line lengths; prefer `whiteSpace="nowrap"` for single-line metrics. Default root is `span` — pass `render` when the copy needs a `p`, `label`, `code`, or other element while keeping Text styling. Prefer `tone` over a literal `color` so theme changes stay centralized. Use `tracking` instead of CSS `letter-spacing` on the same Text root.
 
 For headings, use [Title](/components/typography/title) instead of bumping Text `size`. Fluid viewport clamp and the foundation typography gate are covered on [Typography](/foundation/typography).
 

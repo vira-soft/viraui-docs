@@ -7,7 +7,7 @@ Prose is the grouping region for long-form copy. It adds space between its **dir
 
 Headings and paragraphs join that spacing only as Prose’s own children with real tags (`render={<h2 />}`, `render={<p />}`). Default Title and Text are `span`, so they get no heading or paragraph gap. Native `ul`, `ol`, and `blockquote` are one spaced block each. If you wrap blocks in a `div`, that wrapper can take a block gap; headings and paragraphs inside it do not. Use `render={<article />}` when the region is the document landmark.
 
-Reach for [Stack](/components/layout/stack) `rowGap` for cards, toolbars, and form rows. One even gap cannot split heading cadence. `align` on Prose is `text-align` for the copy, not a centered layout shell.
+Reach for [Stack](/components/layout/stack) `rowGap` for cards, toolbars, and form rows. One even gap cannot split heading cadence. `align` on Prose is `text-align` for the copy, not a centered layout shell. Region `wrap` defaults to `pretty` and inherits to children; override with `wrap="balance"` only when short blocks need even line lengths.
 
 ---
 
@@ -16,6 +16,7 @@ Reach for [Stack](/components/layout/stack) `rowGap` for cards, toolbars, and fo
 - Articles, docs, and changelog regions whose direct children are headings and blocks
 - Density via `gap` (`s` / `m` / `l`, default `l`)
 - One region `align` so Title and Text that omit `align` inherit it
+- Region `wrap` (default `pretty`) for article-wide text wrapping
 
 ## When not to use
 
