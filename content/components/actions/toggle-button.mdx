@@ -1,6 +1,6 @@
 ---
 title: ToggleButton
-description: Icon-only two-state toggle and its group — pressed icons, variant shift, single- or multi-select toolbars.
+description: Icon-only two-state toggle and its group — pressed icons, variant shift, single- or multi-select toolbars. For labeled toggles, use ToggleTextButton.
 ---
 
 ## Base UI
@@ -17,11 +17,11 @@ description: Icon-only two-state toggle and its group — pressed icons, variant
 
 ---
 
-ToggleButton is the icon-only control with a persistent pressed state. Pass `restingIcon` (required); optional `pressedIcon` swaps in when pressed, otherwise the resting glyph stays. Every instance needs `aria-label` or `aria-labelledby`.
+ToggleButton is the **icon-only** control with a persistent pressed state. Pass `restingIcon` (required); optional `pressedIcon` swaps in when pressed, otherwise the resting glyph stays. Every instance needs `aria-label` or `aria-labelledby`. For a visible text label (Bold, Monthly, Sync), use [ToggleTextButton](/components/actions/toggle-text-button) instead.
 
 `variant` defaults to flat at rest; `pressedVariant` can shift the treatment while pressed so the on state reads clearly in a quiet toolbar. `interpolateIcons` opts into a short crossfade and rotate between icons; otherwise the swap is instant. Reach for [IconButton](/components/actions/icon-button) when there is no pressed state to keep.
 
-When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value` plus an accessible name; the group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` for multi-select. Label the group with `aria-label` or `aria-labelledby` so assistive tech understands the cluster.
+When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value` plus an accessible name; children may be ToggleButton, ToggleTextButton, or both. The group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` for multi-select. Label the group with `aria-label` or `aria-labelledby` so assistive tech understands the cluster.
 
 ---
 
@@ -33,6 +33,7 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 
 ## When not to use
 
+- A labeled two-state toggle with visible text → [ToggleTextButton](/components/actions/toggle-text-button)
 - A one-shot click with no pressed state → [IconButton](/components/actions/icon-button)
 - A labeled boolean setting that applies immediately → [Switch](/components/inputs/switch)
 - Tabbed panel navigation → [Tabs](/components/navigation/tabs)
@@ -42,6 +43,7 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 
 ## Related
 
+- [ToggleTextButton](/components/actions/toggle-text-button) — labeled pressed toggles and mixed groups
 - [IconButton](/components/actions/icon-button) — fire-and-forget icon actions
 - [Button](/components/actions/button) — labeled commits and cancel rows
 - [Switch](/components/inputs/switch) — labeled on/off settings

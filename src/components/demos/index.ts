@@ -46,6 +46,14 @@ export {
   ToggleGroupSingleDemo,
 } from "./toggle-button-demo";
 export {
+  ToggleTextButtonAddonDemo,
+  ToggleTextButtonControlledDemo,
+  ToggleTextButtonExclusiveOptionsDemo,
+  ToggleTextButtonGroupDemo,
+  ToggleTextButtonMixedGroupDemo,
+  ToggleTextButtonPressedVariantDemo,
+} from "./toggle-text-button-demo";
+export {
   DialogCloseButtonDemo,
   DialogConfirmDemo,
   DialogNestedDemo,
@@ -211,6 +219,7 @@ export {
   TabsPanelsDemo,
   TabsProgrammaticDemo,
   TabsScrollableDemo,
+  TabsSizesDemo,
   TabsStretchDemo,
 } from "./tabs-demo";
 export {

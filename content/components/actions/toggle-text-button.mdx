@@ -1,0 +1,255 @@
+---
+title: ToggleTextButton
+description: Labeled two-state toggle — visible text, optional addon and pressed variant, alone or inside ToggleGroup.
+---
+
+## Base UI
+
+<Cards>
+  <Card
+    title="Toggle"
+    href="https://base-ui.com/react/components/toggle#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
+---
+
+ToggleTextButton is the **labeled** two-state control. Visible text (children) names the option; an optional Button-family `addon` can sit beside it. Pressed state stays on until toggled off — same interaction model as [ToggleButton](/components/actions/toggle-button), but Button chrome instead of icon-only.
+
+`variant` defaults to flat at rest; pass `pressedVariant` when the on state should read clearly in quiet chrome. Reach for ToggleButton when the control is glyph-only and needs `restingIcon` / `pressedIcon`. Reach for [Button](/components/actions/button) when the click commits once and does not stay pressed. Reach for [Tabs](/components/navigation/tabs) when options switch whole content panels with tab semantics — not a small exclusive strip of labels.
+
+When related toggles share one selection model, wrap them in **ToggleGroup**. Each child needs a distinct `value`; visible text (or an accessible name on icon-only siblings) labels the option. The group root takes `value` / `defaultValue` / `onValueChange` as `string[]`, and `multiple` when several can stay on. Label the group with `aria-label` or `aria-labelledby`.
+
+---
+
+## When to use
+
+- Toolbar or filter options with a readable text label (Bold, Grid, Sync)
+- Exclusive labeled choices that stay pressed (billing period, view mode) without Tabs panels
+- Related labeled toggles that share one selection model (`ToggleGroup`), alone or mixed with ToggleButton
+
+## When not to use
+
+- Icon-only chrome with no visible label → [ToggleButton](/components/actions/toggle-button)
+- A one-shot labeled commit (Save, Delete) → [Button](/components/actions/button)
+- A settings boolean that should look like a switch → [Switch](/components/inputs/switch)
+- Tabbed panel navigation with tab semantics → [Tabs](/components/navigation/tabs)
+
+---
+
+## Related
+
+- [ToggleButton](/components/actions/toggle-button) — icon-only pressed toggles and groups
+- [Button](/components/actions/button) — labeled commits without a pressed state
+- [Switch](/components/inputs/switch) — labeled on/off settings
+- [Tabs](/components/navigation/tabs) — switching content panels
+
+---
+
+## Common examples
+
+### Pressed variant
+
+Default resting chrome is flat. Pass `pressedVariant` so the on state looks filled or secondary in a quiet toolbar. The visible label stays in both states.
+
+<Example preview={<ToggleTextButtonPressedVariantDemo />}>
+
+```tsx
+import { Stack, ToggleTextButton } from '@viraui/react';
+
+<Stack direction="row" columnGap="m" wrap>
+  <ToggleTextButton pressedVariant="secondary">Bold</ToggleTextButton>
+  <ToggleTextButton defaultPressed pressedVariant="secondary">
+    Italic
+  </ToggleTextButton>
+</Stack>
+```
+
+</Example>
+
+### Addon
+
+`addon` accepts a leading or trailing glyph the same way Button does. The label still carries the name; the glyph is supporting chrome.
+
+<Example preview={<ToggleTextButtonAddonDemo />}>
+
+```tsx
+import { Bell } from '@phosphor-icons/react';
+import { ToggleTextButton } from '@viraui/react';
+
+<ToggleTextButton addon={<Bell />} pressedVariant="secondary">
+  Notify
+</ToggleTextButton>
+```
+
+</Example>
+
+### Controlled press
+
+Drive `pressed` and `onPressedChange` when the product owns the state — persist a preference, update sibling copy, or fire analytics when the toggle flips.
+
+<Example preview={<ToggleTextButtonControlledDemo />}>
+
+```tsx
+import { ToggleTextButton } from '@viraui/react';
+
+const [pressed, setPressed] = React.useState(false);
+
+<ToggleTextButton
+  pressed={pressed}
+  onPressedChange={setPressed}
+  pressedVariant="secondary"
+>
+  Sync
+</ToggleTextButton>
+```
+
+</Example>
+
+### In a group
+
+ToggleGroup coordinates exclusive (or multi) pressed values across labeled children. Give each child a `value`; wrap the group in a Surface when you want a bordered toolbar shell.
+
+<Example preview={<ToggleTextButtonGroupDemo />}>
+
+```tsx
+import { Bell } from '@phosphor-icons/react';
+import { Surface, ToggleGroup, ToggleTextButton } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <ToggleGroup aria-label="Text style" defaultValue={['bold']}>
+    <ToggleTextButton value="bold" pressedVariant="secondary">
+      Bold
+    </ToggleTextButton>
+    <ToggleTextButton value="italic" pressedVariant="secondary">
+      Italic
+    </ToggleTextButton>
+    <ToggleTextButton value="notify" addon={<Bell />} pressedVariant="secondary">
+      Notify
+    </ToggleTextButton>
+  </ToggleGroup>
+</Surface>
+```
+
+</Example>
+
+### Mixed group
+
+The same ToggleGroup can hold ToggleTextButton and ToggleButton children. Text options keep visible labels; icon-only siblings still need `aria-label` (or `aria-labelledby`).
+
+<Example preview={<ToggleTextButtonMixedGroupDemo />}>
+
+```tsx
+import { Bell, Moon, PushPin, Sun } from '@phosphor-icons/react';
+import { Surface, ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/react';
+
+<Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
+  <ToggleGroup aria-label="Editor options" defaultValue={['bold']}>
+    <ToggleTextButton value="bold" pressedVariant="secondary">
+      Bold
+    </ToggleTextButton>
+    <ToggleTextButton value="notify" addon={<Bell />} pressedVariant="secondary">
+      Notify
+    </ToggleTextButton>
+    <ToggleButton
+      value="pin"
+      aria-label="Pin"
+      restingIcon={<PushPin />}
+      pressedVariant="secondary"
+    />
+    <ToggleButton
+      value="dark"
+      aria-label="Dark mode"
+      restingIcon={<Moon />}
+      pressedIcon={<Sun />}
+      pressedVariant="secondary"
+    />
+  </ToggleGroup>
+</Surface>
+```
+
+</Example>
+
+### Exclusive options
+
+For a small exclusive strip that swaps nearby content (billing period, view mode), keep ToggleGroup single-select and update the price (and any sibling copy) when selection changes. Prefer Tabs when the UI is a full tablist with panels.
+
+<Example preview={<ToggleTextButtonExclusiveOptionsDemo />}>
+
+```tsx
+import {
+  Button,
+  Chip,
+  Stack,
+  Surface,
+  Text,
+  Title,
+  ToggleGroup,
+  ToggleTextButton,
+} from '@viraui/react';
+
+const [period, setPeriod] = React.useState(['annual']);
+const annual = period.includes('annual');
+
+<Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
+  <Stack rowGap="xl">
+    <Stack direction="row" hAlign="space-between" vAlign="center" wrap>
+      <Stack direction="row" columnGap="s" vAlign="center">
+        <Title render={<h3 />} size="5">
+          Pro
+        </Title>
+        <Chip variant="secondary">Most Popular</Chip>
+      </Stack>
+      <Surface border="all" color={2} hPadding="2xs" radius="full" vPadding="2xs">
+        <ToggleGroup
+          aria-label="Billing period"
+          value={period}
+          onValueChange={setPeriod}
+        >
+          <ToggleTextButton value="annual" size="s" pressedVariant="secondary">
+            Annual
+          </ToggleTextButton>
+          <ToggleTextButton value="monthly" size="s" pressedVariant="secondary">
+            Monthly
+          </ToggleTextButton>
+        </ToggleGroup>
+      </Surface>
+    </Stack>
+    <Stack direction="row" columnGap="xs" vAlign="end">
+      <Title render={<p />} size="1" lineHeight="s">
+        {annual ? '199 USD' : '19 USD'}
+      </Title>
+      <Text size="s" tone="muted">
+        {annual ? '/yr' : '/mo'}
+      </Text>
+    </Stack>
+    <Text render={<p />} size="m">
+      For professionals who ship magic every day.
+    </Text>
+    <Button>Unlock Pro</Button>
+  </Stack>
+</Surface>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Formatting strip"
+Add a formatting strip with Bold, Italic, and Notify as labeled toggles. One choice at a time. Put it in a quiet bordered surface and label the group for screen readers.
+```
+
+```text tab="Notify with icon"
+Add a Notify toggle with a bell icon beside the label. It should look pressed when notifications are on and shift to a secondary treatment while pressed.
+```
+
+```text tab="Mixed toolbar"
+Add an editor toolbar that mixes labeled Bold / Notify toggles with icon-only Pin and dark-mode toggles in one group. One bordered surface, clear accessible names on the icon controls.
+```
+
+```text tab="Billing period"
+Build a Pro pricing card: plan name with a Most Popular chip, Annual / Monthly labeled toggles in the header, large price that updates with the period, short tagline, and an Unlock Pro button. Only one period at a time — not Tabs.
+```

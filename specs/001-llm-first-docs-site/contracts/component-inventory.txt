@@ -1,6 +1,7 @@
 Actions/Button
 Actions/IconButton
 Actions/ToggleButton
+Actions/ToggleTextButton
 Actions/ToggleGroup
 Dialogs/Dialog
 Dialogs/Toast

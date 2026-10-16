@@ -21,7 +21,7 @@ Tabs keep related views on one screen. Compose a `Tabs.List` of `Tabs.Tab` trigg
 
 Each tab’s `value` pairs with exactly one panel of the same `value`. Only the selected panel stays mounted while the indicator moves under the active trigger. Long label sets scroll horizontally inside the list; that overflow is expected, not a layout bug.
 
-`listAlignment` aligns the segment chrome through the same stack contract as [Stack](/components/layout/stack) — prefer `center` for a compact list; use `stretch` when equal-width tabs should fill the row. Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move without changing selection until click or Enter. Labels accept `addon` slots for icons or [Chip](/components/widgets/chip) badges; disabled tabs ignore activation.
+`listAlignment` aligns the segment chrome through the same stack contract as [Stack](/components/layout/stack) — prefer `center` for a compact list; use `stretch` when equal-width tabs should fill the row. Root `size` scales tab items and the indicator with the same `s` / `m` / `l` steps as [Button](/components/actions/button) (default `m`). Set `activateOnFocus={false}` on `Tabs.List` when keyboard focus should move without changing selection until click or Enter. Labels accept `addon` slots for icons or [Chip](/components/widgets/chip) badges; disabled tabs ignore activation.
 
 ---
 
@@ -61,6 +61,40 @@ A three-tab block with paired list triggers and viewport panels is the default i
 import { Tabs, Text, Title } from '@viraui/react';
 
 <Tabs defaultValue="general" listAlignment="center">
+  <Tabs.List>
+    <Tabs.Tab value="general">General</Tabs.Tab>
+    <Tabs.Tab value="billing">Billing</Tabs.Tab>
+    <Tabs.Tab value="goals">Goals</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Viewport>
+    <Tabs.Panel value="general">
+      <Title />
+      <Text />
+    </Tabs.Panel>
+    <Tabs.Panel value="billing">
+      <Title />
+      <Text />
+    </Tabs.Panel>
+    <Tabs.Panel value="goals">
+      <Title />
+      <Text />
+    </Tabs.Panel>
+  </Tabs.Viewport>
+</Tabs>
+```
+
+</Example>
+
+### Size
+
+`size` on the root steps tab chrome and the active indicator with the same scale as Button. Default is medium; reach for `s` in tight preference strips.
+
+<Example preview={<TabsSizesDemo />}>
+
+```tsx
+import { Tabs, Text, Title } from '@viraui/react';
+
+<Tabs defaultValue="general" listAlignment="center" size="s">
   <Tabs.List>
     <Tabs.Tab value="general">General</Tabs.Tab>
     <Tabs.Tab value="billing">Billing</Tabs.Tab>
@@ -264,6 +298,10 @@ Set `activateOnFocus={false}` on `Tabs.List` when arrow-key focus should not cha
 
 ```text tab="Settings tabs"
 Add centered settings tabs — General, Billing, Goals — each with a short title and muted description. Use listAlignment center. Sync tab selection to URL search params if the screen already uses them.
+```
+
+```text tab="Dense tab strip"
+Show the same three settings tabs at small size for a compact preferences strip. Keep listAlignment center and short panel copy.
 ```
 
 ```text tab="Clone chooser"

@@ -3,5 +3,6 @@ export {
   TabsPanelsDemo,
   TabsProgrammaticDemo,
   TabsScrollableDemo,
+  TabsSizesDemo,
   TabsStretchDemo,
 } from "./tabs-demo";

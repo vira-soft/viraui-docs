@@ -114,6 +114,47 @@ export const TabsPanelsDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** Root `size` scales tab chrome + indicator like Button. */
+export const TabsSizesDemo: React.FC = () => (
+  <SandboxShell label="Small tabs for a compact preferences strip">
+    <PanelFrame>
+      <Tabs defaultValue="general" listAlignment="center" size="s">
+        <Tabs.List>
+          <Tabs.Tab value="general">General</Tabs.Tab>
+          <Tabs.Tab value="billing">Billing</Tabs.Tab>
+          <Tabs.Tab value="goals">Goals</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Viewport>
+          <Tabs.Panel value="general">
+            <PanelBody>
+              <PanelCopy
+                description="Dense chrome for tight preference strips."
+                title="General"
+              />
+            </PanelBody>
+          </Tabs.Panel>
+          <Tabs.Panel value="billing">
+            <PanelBody>
+              <PanelCopy
+                description="Plan summary at small tab scale."
+                title="Billing"
+              />
+            </PanelBody>
+          </Tabs.Panel>
+          <Tabs.Panel value="goals">
+            <PanelBody>
+              <PanelCopy
+                description="Adoption targets at small tab scale."
+                title="Goals"
+              />
+            </PanelBody>
+          </Tabs.Panel>
+        </Tabs.Viewport>
+      </Tabs>
+    </PanelFrame>
+  </SandboxShell>
+);
+
 /** Decorative start/end addons on tab labels. */
 export const TabsAddonsDemo: React.FC = () => (
   <SandboxShell label="Tabs with icon and Chip addons">
