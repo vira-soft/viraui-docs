@@ -175,7 +175,7 @@ import { Surface, ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/re
 
 ### Exclusive options
 
-For a small exclusive strip that swaps nearby content (billing period, view mode), keep ToggleGroup single-select and update the price (and any sibling copy) when selection changes. Prefer Tabs when the UI is a full tablist with panels.
+For a small exclusive strip that swaps nearby content (billing period, view mode), keep ToggleGroup single-select and update the price (and any sibling copy) when selection changes. Point the group at that region with `aria-controls` and give the region an `id` plus a polite live region so the change is announced. Prefer Tabs when the UI is a full tablist with panels.
 
 <Example preview={<ToggleTextButtonExclusiveOptionsDemo />}>
 
@@ -191,10 +191,11 @@ import {
   ToggleTextButton,
 } from '@viraui/react';
 
+const priceId = React.useId();
 const [period, setPeriod] = React.useState(['annual']);
 const annual = period.includes('annual');
 
-<Surface border="all" color={1} hPadding="l" radius="l" vPadding="l">
+<Surface border="all" color={1} hPadding="l" radius="m" vPadding="l">
   <Stack rowGap="xl">
     <Stack direction="row" hAlign="space-between" vAlign="center" wrap>
       <Stack direction="row" columnGap="s" vAlign="center">
@@ -206,19 +207,26 @@ const annual = period.includes('annual');
       <Surface border="all" color={2} hPadding="2xs" radius="full" vPadding="2xs">
         <ToggleGroup
           aria-label="Billing period"
+          aria-controls={priceId}
           value={period}
           onValueChange={setPeriod}
         >
-          <ToggleTextButton value="annual" size="s" pressedVariant="secondary">
+          <ToggleTextButton value="annual" size="s" pill pressedVariant="secondary">
             Annual
           </ToggleTextButton>
-          <ToggleTextButton value="monthly" size="s" pressedVariant="secondary">
+          <ToggleTextButton value="monthly" size="s" pill pressedVariant="secondary">
             Monthly
           </ToggleTextButton>
         </ToggleGroup>
       </Surface>
     </Stack>
-    <Stack direction="row" columnGap="xs" vAlign="end">
+    <Stack
+      id={priceId}
+      aria-live="polite"
+      direction="row"
+      columnGap="m"
+      vAlign="center"
+    >
       <Title render={<p />} size="1" lineHeight="s">
         {annual ? '199 USD' : '19 USD'}
       </Title>
@@ -251,5 +259,5 @@ Add an editor toolbar that mixes labeled Bold / Notify toggles with icon-only Pi
 ```
 
 ```text tab="Billing period"
-Build a Pro pricing card: plan name with a Most Popular chip, Annual / Monthly labeled toggles in the header, large price that updates with the period, short tagline, and an Unlock Pro button. Only one period at a time — not Tabs.
+Build a Pro pricing card: plan name with a Most Popular chip, Annual / Monthly labeled toggles in the header, large price that updates with the period, short tagline, and an Unlock Pro button. Wire the toggle group to the price region for assistive tech. Only one period at a time — not Tabs.
 ```

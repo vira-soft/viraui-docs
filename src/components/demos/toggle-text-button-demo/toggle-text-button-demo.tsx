@@ -142,6 +142,7 @@ export const ToggleTextButtonMixedGroupDemo: React.FC = () => (
 
 /** Exclusive content choice on a pricing card — annual / monthly, not Tabs. */
 export const ToggleTextButtonExclusiveOptionsDemo: React.FC = () => {
+  const priceId = React.useId();
   const [period, setPeriod] = React.useState<string[]>(["annual"]);
   const annual = period.includes("annual");
 
@@ -176,10 +177,11 @@ export const ToggleTextButtonExclusiveOptionsDemo: React.FC = () => {
                 border="all"
                 color={2}
                 hPadding="2xs"
-                radius="m"
+                radius="full"
                 vPadding="2xs"
               >
                 <ToggleGroup
+                  aria-controls={priceId}
                   aria-label="Billing period"
                   onValueChange={setPeriod}
                   value={period}
@@ -187,6 +189,7 @@ export const ToggleTextButtonExclusiveOptionsDemo: React.FC = () => {
                   <ToggleTextButton
                     pressedVariant="secondary"
                     size="s"
+                    pill
                     value="annual"
                   >
                     Annual
@@ -194,6 +197,7 @@ export const ToggleTextButtonExclusiveOptionsDemo: React.FC = () => {
                   <ToggleTextButton
                     pressedVariant="secondary"
                     size="s"
+                    pill
                     value="monthly"
                   >
                     Monthly
@@ -202,7 +206,13 @@ export const ToggleTextButtonExclusiveOptionsDemo: React.FC = () => {
               </Surface>
             </Stack>
 
-            <Stack columnGap="m" direction="row" vAlign="center">
+            <Stack
+              aria-live="polite"
+              columnGap="m"
+              direction="row"
+              id={priceId}
+              vAlign="center"
+            >
               <Title lineHeight="s" render={<p />} size="1">
                 {annual ? "199 USD" : "19 USD"}
               </Title>
