@@ -19,7 +19,8 @@ Theme scale (CSS vars on the loaded theme; same strings in preset JSON):
 1. Pick by **kind** then **distance**: functional shorter than evocative; small travel → instant/fast; large travel → normal (rarely slow).
 2. Exit/dismiss/collapse → **shorter** than enter.
 3. Dragging → `transition-duration: 0s` (or swipe-strength var at `0`); resume tokens on release.
-4. JS/WAAPI → foundation nested or computed CSS var — never invent 180/200/480.
+4. Prefer named `--duration-*` first. When longer than `--duration-slowest` is required, use `calc(var(--duration-slowest) * n)` — not raw `ms`/`s`. Authority: `@viraui/react/specs/foundation/motion.xml`.
+5. JS/WAAPI → foundation nested or computed CSS var — never invent 180/200/480.
 
 ## Defaults
 

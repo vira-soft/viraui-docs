@@ -1,17 +1,25 @@
 ---
 name: viraui-a11y
-description: Use when the user asks for an accessibility audit, APG or ARIA validation, screen-reader or keyboard-pattern debug, or WCAG widget review of a ViraUI screen. Symptoms include phrases like "audit a11y", "APG review", "is this accessible", keyboard trap reports, or deep audit routing from viraui-design accessibility.md — not ordinary compose.
+description: >-
+  Use when the user asks for an accessibility audit, APG or ARIA validation,
+  screen-reader or keyboard-pattern debug, or WCAG widget review of a ViraUI
+  screen. Symptoms include phrases like "audit a11y", "APG review", "is this
+  accessible", keyboard trap reports, or deep audit routing from viraui-design
+  accessibility.md — not ordinary compose (compose-time a11y stays in
+  viraui-design).
 license: MIT
 metadata:
   author: Vira Software
-  version: '2026.1.0'
+  version: '2026.10.16'
 ---
 
 # viraui-a11y
 
-Structured APG audit for `@viraui/react` screens. Load on **explicit audit/debug ask**, or when **viraui-design** [accessibility.md](../viraui-design/accessibility.md) routes here.
+Structured APG audit for `@viraui/react` screens. Load on **explicit audit/debug ask**, or when **viraui-design** [accessibility.md](../viraui-design/accessibility.md) routes here. Portable across Agent Skills hosts — same skill, no host forks.
 
-Compose rules stay in **viraui-design**. This skill **audits only**. Do not copy APG sample `role`/`aria-*` onto Vira parts — Base UI already emits widget chrome.
+Compose rules stay in **viraui-design** (including compose-time a11y + end-of-work [verify.md](../viraui-design/verify.md)). This skill **audits only**. Do not copy APG sample `role`/`aria-*` onto Vira parts — Base UI already emits widget chrome.
+
+Widget API facts → `@viraui/react/specs` units (index-first). Skills do not embed component encyclopedias.
 
 ## When to load
 
@@ -44,8 +52,9 @@ Read **one** mapping ref plus [audit.md](audit.md) for the workflow — not the 
 2. **Never fetch** [APG example-index](https://www.w3.org/WAI/ARIA/apg/example-index/) HTML. Folder tables **are** the index.
 3. Fetch only pattern URLs for widgets in scope. Open an APG `examples/` page only when the pattern page is insufficient for a keyboard question.
 4. Inspect **rendered DOM** and Base UI output — not “ARIA visible in JSX source.”
-5. Separate **page** landmarks/status/focus from **widget** behavior Vira/Base UI owns.
-6. Fixes route through **viraui-design** (guide + `baseUIApi`) — do not invent widget ARIA.
+5. Verify Vira-added a11y notes in `@viraui/react/specs/components/<id>/a11y.xml` (after index).
+6. Separate **page** landmarks/status/focus from **widget** behavior Vira/Base UI owns.
+7. Fixes route through **viraui-design** (specs units + types) — do not invent widget ARIA.
 
 ## Red flags — STOP
 
@@ -54,7 +63,7 @@ Read **one** mapping ref plus [audit.md](audit.md) for the workflow — not the 
 | “Fetch example-index to browse patterns” | Forbidden — use [vira-map.md](vira-map.md)     |
 | “Add role in JSX so audit passes”        | Dup/cloak semantics — inspect DOM              |
 | “Every form field needs viraui-a11y”     | Compose → **viraui-design** unless audit asked |
-| “Copy APG sample onto ToggleButton”      | Guide + Base UI own widget states              |
+| “Copy APG sample onto ToggleButton”      | Specs a11y units + Base UI own widget states   |
 | “Audit = list generic a11y tips”         | Follow [audit.md](audit.md) report shape       |
 
 ## Rationalization counters
@@ -63,12 +72,12 @@ Read **one** mapping ref plus [audit.md](audit.md) for the workflow — not the 
 - **“More ARIA is safer”** → [APG Read Me First](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/) — omit dup attrs.
 - **“I'll audit while building”** → compose with **viraui-design**; audit when user asks or router sends here.
 
-## Machine JSON (supporting)
+## Package specs (supporting)
 
 When verifying Vira-added surface during audit:
 
-- `@viraui/react/<id>.guide.json` — `accessibility`, `baseUIApi`
-- **viraui-design** [component-matrix.md](../viraui-design/component-matrix.md) — component → guide id
+- `@viraui/react/specs/index.xml` → `components/<id>/a11y.xml` (+ meta/props as needed)
+- **viraui-design** [component-matrix.md](../viraui-design/component-matrix.md) — intent → specs id only
 
 ## Out of scope
 
@@ -76,4 +85,4 @@ Monorepo component implementation, bootstrap, motion authoring, replacing **vira
 
 ## Next skill
 
-Apply fixes with **viraui-design** (guide + `baseUIApi`). Custom CSS motion found during audit → **viraui-motion**.
+Apply fixes with **viraui-design** (specs units). Custom CSS motion found during audit → **viraui-motion**.

@@ -69,7 +69,7 @@ viraui-docs/
 └── specs/001-llm-first-docs-site/contracts/ia-tree.md  # already lists /get-started/skills
 ```
 
-**Structure Decision**: Content feature. Rewrite `skills.mdx` only. No new packages, plugins, nav entries, or deploy work. Skill pack source of truth stays in sibling `viraui-skills` (out of scope to edit).
+**Structure Decision**: Content feature. Rewrite `skills.mdx` only. No new packages, plugins, nav entries, or deploy work. Skill source of truth stays in sibling `viraui-skills` (out of scope to edit).
 
 ## Complexity Tracking
 

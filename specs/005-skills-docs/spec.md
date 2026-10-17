@@ -86,7 +86,7 @@ A reader finishes Skills in one short pass: connected prose, scannable when/how 
 
 ### Edge Cases
 
-- Reader confuses Skills with Setup: Setup = install packages + skills pack + bootstrap; Skills = what those skills are for and when to load them. Cross-link; do not merge.
+- Reader confuses Skills with Setup: Setup = install packages + skills + bootstrap; Skills = what those skills are for and when to load them. Cross-link; do not merge.
 - Reader confuses Skills with MCP: MCP = search/fetch human docs over the network; Skills = agent playbooks installed in the project. Brief pointer only.
 - Reader wants prop/API encyclopedia: page states deep API authority stays in package agent specs / skill destinations—not on this page.
 - Skill pack gains/renames skills later: page MUST list the current published four; future skills need a follow-up docs change (out of scope to invent placeholders).
@@ -142,7 +142,7 @@ A reader finishes Skills in one short pass: connected prose, scannable when/how 
 
 ## Out of Scope
 
-- Changing skill pack contents, skill hub text, evals, or skills.sh packaging.
+- Changing skill repo contents, skill hub text, or evals in `vira-soft/viraui-skills`.
 - Duplicating Setup bootstrap (AI/Manual tabs, peers, theme gate, providers).
 - MCP connection tutorial; Foundation/Components tutorials; WCAG/APG course content; motion token tables.
 - Per-framework agent path encyclopedias or monorepo-only (`.cursor/skills`) maintenance skills.

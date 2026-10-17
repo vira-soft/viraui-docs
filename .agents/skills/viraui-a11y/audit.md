@@ -2,14 +2,14 @@
 
 # APG audit
 
-Audit only. Compose rules and “what aria for this control?” live in **viraui-design** [accessibility.md](../viraui-design/accessibility.md). Overlay part trees: [composition.md](../viraui-design/composition.md).
+Audit only. Compose rules and “what aria for this control?” live in **viraui-design** [accessibility.md](../viraui-design/accessibility.md). Overlay part trees: `@viraui/react/specs` units (`patterns` / `usage`) after index.
 
 ## Checklist
 
 1. Inventory interactive widgets, landmarks, and names (source **and** rendered DOM).
 2. Map each Vira widget via [vira-map.md](vira-map.md). Unmapped DOM `role` → [roles.md](roles.md). Unmapped `aria-*` → [properties.md](properties.md).
 3. Fetch **only** those pattern URLs. Skip patterns with no widget in scope.
-4. Per pattern: keyboard, roles/states, naming, focus. Compare to guide `accessibility` / `baseUIApi` — treat primitive-owned chrome as already present.
+4. Per pattern: keyboard, roles/states, naming, focus. Compare to specs `a11y.xml` / `meta.xml` (and types) — treat primitive-owned chrome as already present.
 5. Page-level still required: landmarks, heading outline, names on icon-only controls, live status → **viraui-design** [accessibility.md](../viraui-design/accessibility.md).
 6. Report with the shape below. Fixes → **viraui-design** (no duplicate widget ARIA).
 
@@ -21,7 +21,7 @@ Audit only. Compose rules and “what aria for this control?” live in **viraui
 | Unknown DOM                | [roles.md](roles.md) / [properties.md](properties.md)         |
 | APG fetch                  | Pattern page only; `examples/` only for a concrete keyboard Q |
 | Missing ARIA in JSX source | Inspect rendered DOM first                                    |
-| Widget chrome fail         | Fix via guide / props — do not stamp APG sample attrs         |
+| Widget chrome fail         | Fix via specs units / props — do not stamp APG sample attrs   |
 
 ## Gotchas
 
@@ -39,7 +39,7 @@ Stop when any of these is true:
 - Example-index was fetched or browsed
 - Report recommends adding `role` / `aria-*` that Base UI already emits
 - Audit mixed with ordinary compose without an audit ask or design→a11y route
-- Fixes invent widget ARIA instead of guide + `baseUIApi`
+- Fixes invent widget ARIA instead of specs a11y units + types
 
 ## Report
 

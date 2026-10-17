@@ -1,26 +1,31 @@
 ---
 name: viraui-motion
-description: Use when viraui-design is composing or styling a ViraUI screen and motion applies — adding, skipping, or debugging transitions, hover or press feedback, overlay enter/exit, micro-interactions, --duration-* / --easing-* tokens, or prefers-reduced-motion — including custom consumer CSS, not only @viraui/react components.
+description: >-
+  Use when adding, skipping, or debugging transitions, hover or press feedback,
+  overlay enter/exit, micro-interactions, --duration-* / --easing-* tokens, or
+  prefers-reduced-motion on a ViraUI screen — including custom consumer CSS, not
+  only @viraui/react components. Use even if the user never names this skill or
+  viraui-design.
 license: MIT
 metadata:
   author: Vira Software
-  version: '2026.1.0'
+  version: '2026.10.16'
 ---
 
 # viraui-motion
 
-Motion is **product, not polish**. Same tokens for `@viraui/react` **and** custom consumer CSS.
+Motion is **product, not polish**. Same tokens for `@viraui/react` **and** custom consumer CSS. Portable across Agent Skills hosts (Cursor, Claude Code, Codex, Gemini, …).
 
-Load this hub when **viraui-design** composes or styles a screen. Read **one** sibling ref from the router — not the whole folder.
+Load this hub when motion symptoms match (see description). Read **one** sibling ref from the router — not the whole folder.
 
-Do **not** auto-load independently of compose context. **viraui-design** routes here; this skill does not replace design for component choice or API.
+This skill does **not** replace **viraui-design** for component choice or API. Compose/API → design; motion tokens/principles → here. **viraui-design** also routes here when composing screens with transitions.
 
 ## When to load
 
-- **viraui-design** is active on a screen and you add/skip/debug motion
 - Hover, press, focus, expand/collapse, overlay open/close on Vira or custom CSS
 - Token choice (`--duration-*`, `--easing-*`) or `prefers-reduced-motion` behavior
 - Replacing raw `ms`, `ease`, or animation libraries on UI feedback
+- **viraui-design** is composing a screen and motion applies (add/skip/debug)
 
 ## When not to load
 
@@ -42,22 +47,25 @@ Do **not** auto-load independently of compose context. **viraui-design** routes 
 
 1. **Whole interface** — “Vira already animates” is not an exemption for custom CSS.
 2. Hover, press, focus, expand/collapse, overlay open/close → **functional** motion unless `prefers-reduced-motion: reduce`.
-3. Tokens only, e.g. `transition: transform var(--duration-fast) var(--easing-standard);`  
-   Duration: `--duration-instant` \| `--duration-fast` \| `--duration-normal` \| `--duration-slow` \| `--duration-slowest`.  
+3. Tokens only, e.g. `transition: transform var(--duration-fast) var(--easing-standard);`
+   Duration: `--duration-instant` \| `--duration-fast` \| `--duration-normal` \| `--duration-slow` \| `--duration-slowest`.
    Easing: `--easing-standard` \| `--easing-entrance` \| `--easing-exit` \| `--easing-elastic` \| `--easing-wiggle`.
 4. Every animation you add includes `@media (prefers-reduced-motion: reduce) { transition: none; }` (or equivalent). Motion never carries meaning alone.
 
-Theme group `motion` in `@viraui/react/theme-surface.json`. Preset JS: `@viraui/foundation/<brand>/nested` (`duration.*`, `easing.*`) — see [speed.md](speed.md).
+Theme group `motion` in `@viraui/react/specs/foundation/theme-topics.xml`. Full roles/principles/a11y + longer-than-slowest `calc(var(--duration-slowest) * n)`: `@viraui/react/specs/foundation/motion.xml`. Preset JS: `@viraui/foundation/<brand>/nested` (`duration.*`, `easing.*`) — see [speed.md](speed.md).
+
+**Engine** (CSS vs JS): prefer modern CSS timelines / `sibling-index()` / `@starting-style` — see **viraui-design** [styling.md](../viraui-design/styling.md). This skill owns tokens and principles.
 
 ## Red flags — STOP
 
-| Excuse                                   | Reality                                  |
-| ---------------------------------------- | ---------------------------------------- |
-| “Polish / next sprint / skip custom CSS” | Functional motion required               |
-| “200ms ease-in-out is fine”              | `--duration-*` + `--easing-*`            |
-| “Framer/GSAP for hover”                  | Token CSS unless explicitly out of scope |
-| “Read all motion refs first”             | Hub + one ref from router                |
-| “Motion without viraui-design context”   | Compose routes here                      |
+| Excuse                                   | Reality                                                     |
+| ---------------------------------------- | ----------------------------------------------------------- |
+| “Polish / next sprint / skip custom CSS” | Functional motion required                                  |
+| “200ms ease-in-out is fine”              | `--duration-*` + `--easing-*`                               |
+| “Framer/GSAP for hover”                  | Token CSS unless explicitly out of scope                    |
+| “IO / Framer for scroll reveal”          | CSS timelines first — **viraui-design** hub motion pointers |
+| “Read all motion refs first”             | Hub + one ref from router                                   |
+| “Only load if user said viraui-motion”   | Description symptoms are enough — load on match             |
 
 ## Rationalization counters
 

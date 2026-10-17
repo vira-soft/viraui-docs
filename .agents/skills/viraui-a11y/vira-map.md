@@ -10,7 +10,7 @@ Fetch the pattern URL, not the example-index page. No row = no APG widget patter
 
 1. Identify the public Vira export (not a raw DOM role).
 2. Look up the row below; fetch that pattern URL only.
-3. If no row: page semantics / guide only — do not invent a pattern from APG samples.
+3. If no row: page semantics / specs a11y units only — do not invent a pattern from APG samples.
 4. Layout and decorative components are never APG widgets.
 
 ## Gotchas
@@ -18,7 +18,8 @@ Fetch the pattern URL, not the example-index page. No row = no APG widget patter
 - **Never fetch** [APG example-index](https://www.w3.org/WAI/ARIA/apg/example-index/). This table + [roles.md](roles.md) / [properties.md](properties.md) replace it.
 - Do **not** copy APG sample markup onto Vira — map → fetch pattern → compare rendered DOM.
 - Prefer this file over [roles.md](roles.md) when the widget is a known Vira component.
-- `LinearProgress`, `Stack`, `Surface`, `Grid`, and decorative effects have no widget pattern — do not force Accordion/Button/etc. onto them.
+- `LinearProgress`, `Stack`, `Surface`, `Grid`, `Prose`, and decorative effects have no widget pattern — do not force Accordion/Button/etc. onto them.
+- Decorative effects include `StaticNoise`, `ProgressiveBlur`, `Glow`, `Beam`, `Shimmer`, `Typewriter`, and similar non-widget visuals.
 
 Base: `https://www.w3.org/WAI/ARIA/apg/patterns/<id>/`
 
@@ -26,11 +27,15 @@ Base: `https://www.w3.org/WAI/ARIA/apg/patterns/<id>/`
 | ---------------------------------------- | ----------------------------------- | ------------------------------------------------------ |
 | `Accordion`                              | Accordion                           | https://www.w3.org/WAI/ARIA/apg/patterns/accordion/    |
 | `Autocomplete`                           | Combobox                            | https://www.w3.org/WAI/ARIA/apg/patterns/combobox/     |
-| `Button` / `IconButton` / `ToggleButton` | Button                              | https://www.w3.org/WAI/ARIA/apg/patterns/button/       |
+| `Button` / `IconButton` / `ToggleButton` / `ToggleTextButton` | Button                    | https://www.w3.org/WAI/ARIA/apg/patterns/button/       |
+
 | `ButtonLink` / `IconButtonLink`          | Link                                | https://www.w3.org/WAI/ARIA/apg/patterns/link/         |
 | `Checkbox` / `CheckboxGroup`             | Checkbox                            | https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/     |
 | `Dialog`                                 | Dialog (Modal)                      | https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/ |
+| `Disclosure`                             | Disclosure                          | https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/   |
 | `Menu`                                   | Menu Button                         | https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/  |
+| `OTPField`                               | n/a (Base UI OTP labeling)          | —                                                      |
+| `NumberField`                            | n/a (Base UI Number Field labeling) | —                                                      |
 | `Meter`                                  | Meter                               | https://www.w3.org/WAI/ARIA/apg/patterns/meter/        |
 | `Popover`                                | Disclosure                          | https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/   |
 | `Radio` / `RadioGroup`                   | Radio Group                         | https://www.w3.org/WAI/ARIA/apg/patterns/radio/        |
@@ -44,4 +49,4 @@ Base: `https://www.w3.org/WAI/ARIA/apg/patterns/<id>/`
 | `Fieldset`                               | Radio Group / Checkbox (group name) | https://www.w3.org/WAI/ARIA/apg/patterns/radio/        |
 | Page landmarks                           | Landmarks                           | https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/    |
 
-`LinearProgress` has no APG widget row — determinate vs `value={null}` stays in **viraui-design** [accessibility.md](../viraui-design/accessibility.md). Layout (`Stack`, `Surface`, `Grid`, …) and decorative effects are not APG widgets.
+`LinearProgress` has no APG widget row — determinate vs `value={null}` stays in **viraui-design** [accessibility.md](../viraui-design/accessibility.md). `OTPField` has no APG widget row — first slot uses the field label; later slots use Base UI `Character N of {length}` names (see `components/otp-field/a11y.xml`). `NumberField` has no APG widget row — visible `label` names the control; steppers use Decrement/Increment names; optional label scrub (see `components/number-field/a11y.xml`). Layout (`Stack`, `Surface`, `Grid`, `Prose`, …), `BreakpointsProvider` / `useBreakpoints`, `DirectionProvider` / `useDirection`, and decorative effects are not APG widgets.

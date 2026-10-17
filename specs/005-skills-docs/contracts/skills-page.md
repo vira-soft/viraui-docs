@@ -16,7 +16,7 @@
 ## MUST NOT
 
 1. Comparison table as the primary what/when presentation.
-2. Publishable pack install one-liner (`npx skills add …` or equivalent) on this page.
+2. Publishable skills install one-liner (`npx skills add …` or equivalent) on this page.
 3. Setup-style titled Ask-your-agent / bootstrap-verify fence on the How section (per-skill example prompts are allowed).
 4. Duplicate Setup’s AI/Manual bootstrap, peers list, or brand/theme→fonts wiring steps.
 5. Paste skill-hub routers, reference inventories, eval notes, or monorepo-only paths.

@@ -132,7 +132,7 @@ A reader experiences Setup as connected paragraphs and clear sections—discursi
 - Target readers are app teams adding ViraUI to a React project (or an agent acting for them), not DS maintainers.
 - “No dependencies besides Base UI” means: beyond React / React DOM as the platform peers, `@base-ui/react` is the only required peer; `@viraui/foundation` and `@viraui/icons` remain optional / theme-gated and are not sold as mandatory deps on this page.
 - Base UI external link defaults to the official Base UI site (`https://base-ui.com`).
-- Publishable skills install remains the skills.sh pack command already documented in consumer setup guidance; Manual shows it in the full process; AI prompt embeds the same expectation.
+- Publishable skills install remains `npx skills add vira-soft/viraui-skills` already documented in consumer setup guidance; Manual shows it in the full process; AI prompt embeds the same expectation.
 - Both AI and Manual tabs cover the full bootstrap process (same outcomes). Shared steps/explanations live once outside the tabs; tabs only add path-specific material. Verification: AI tab has a dedicated verify prompt; Manual uses checklist wording for the same checks.
 - Toolchain statement stays high level (Node-capable package manager + agent host for AI path); exact Node/pnpm pins belong to release notes or package engines, not this page.
 - Page file is `content/get-started/setup.mdx` at `/get-started/setup` (rename from current `index.mdx` stub; update `meta.json`). No separate Get started overview in this feature.

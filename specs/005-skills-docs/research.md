@@ -16,7 +16,7 @@
 
 1. **Frontmatter** — `title: Skills`; non-stub `description` (orientation / agent playbooks); `icon: OrbitSparkle`; `pageActions: false`.
 2. **Lead (what)** — discursive framing: publishable consumer skills = agent playbooks that keep ViraUI on-pattern; deep API stays in package specs; Skills ≠ Setup ≠ MCP.
-3. **How** — short prose: install the pack via [Setup](/get-started/setup) (link only—no command); agents load by task; humans may name a skill in a prompt. No titled prompt fence. No install one-liner.
+3. **How** — short prose: install skills via [Setup](/get-started/setup) (link only—no command); agents load by task; humans may name a skill in a prompt. No titled prompt fence. No install one-liner.
 4. **Per-skill blocks (what/when)** — four H2/H3 sections in order **setup → design → a11y → motion** (Get started journey + deferred clarify default). Each: skill name as heading + ~2–3 sentences (one job + use when / not when). No comparison table.
 5. **MCP close** — one brief sentence: skills = project playbooks; MCP = search/fetch human docs; link `/get-started/mcp`. No connection tutorial.
 
@@ -30,7 +30,7 @@
 
 | Skill | Job | Use when | Not when |
 | --- | --- | --- | --- |
-| `viraui-setup` | Bootstrap / fix theme, preflight, providers, pack install | First wire-up; missing styles; theme gate; reset coexistence | Routine UI compose |
+| `viraui-setup` | Bootstrap / fix theme, preflight, providers, skills install | First wire-up; missing styles; theme gate; reset coexistence | Routine UI compose |
 | `viraui-design` | Default compose/edit/style with `@viraui/react` | Building or debugging UI after bootstrap | Explicit APG audit; bootstrap-only symptoms (fix setup first) |
 | `viraui-a11y` | Structured accessibility / APG audit | User asks for audit or a11y debug | Ordinary compose (use design’s light a11y guidance) |
 | `viraui-motion` | Motion tokens / transitions on Vira or custom CSS | Composing a screen and motion applies (usually via design) | Component choice without motion; bootstrap; APG audit |

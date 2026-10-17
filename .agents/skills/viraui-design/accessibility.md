@@ -1,14 +1,14 @@
 # Accessibility
 
-**When to read:** compose-time names, landmarks, icon-only controls, forms, overlays, or decorative parts — not a full APG audit.
+**When to read:** compose-time names, landmarks, typography/semantic hosts, heading outline, icon-only controls, forms, overlays, or decorative parts — not a full APG audit.
 
 Vira owns widget behavior (Base UI); consumers own page semantics. Structured APG audit / SR-keyboard debug → **viraui-a11y** (do not fetch the APG example-index HTML).
 
-Follow [APG Read Me First](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/): no ARIA is better than bad ARIA. Extra state on a real control is a belt — Base UI already adds it.
+Follow [APG Read Me First](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/): no ARIA is better than bad ARIA.
 
 ## Before adding `role` or `aria-*`
 
-1. Read guide `accessibility` + `baseUIApi` (source/types if unsure).
+1. Read the surface’s specs `a11y.xml` (+ `meta` / `props`) and types/source if unsure.
 2. If Base UI or Vira already emit that role/state → **omit** it (`role`, `aria-pressed`, `aria-expanded`, `aria-selected`, `aria-checked`, `aria-haspopup`, `aria-controls`, `aria-modal`).
 3. Add only consumer-owned names, landmarks, and page status.
 
@@ -25,9 +25,54 @@ Do not fake widgets (`role="button"` on `Stack`/`div` — use `Button` / `IconBu
 <Button>Save</Button>
 ```
 
+## Typography + semantic hosts
+
+`Title` / `Text` defaults are `span`. **Size / tone = look. Tag = meaning** — set the host with `render`. Prefer the **most correct native HTML element** for that meaning over ARIA or a generic `span`/`div`. The table below is **examples only** — not a closed list (`mark`, `code`, `kbd`, `samp`, `var`, `cite`, `q`, `abbr`, `address`, `small`, `del`/`ins`, `dfn`, `data`, … — pick what the content is).
+
+| Meaning (examples)          | Host via `render` (examples)                                 |
+| --------------------------- | ------------------------------------------------------------ |
+| Document / section heading  | `Title` + `h1`…`h6` (never bare `Title` as outline)          |
+| Block body / paragraph      | `Text` + `p` when the copy is a block                        |
+| Date or time                | `Text` + `time` with machine-readable `dateTime`             |
+| Calculation / form result   | `Text` + `output` (wire `htmlFor` / form when it applies)    |
+| Inline prose link           | `Text` + `a` (`href` required)                               |
+| Stress / importance in copy | `em` / `strong` when meaning needs it — not weight/CSS alone |
+
+Rule: match meaning → correct element → `render` that host. Confirm defaults and don’ts in `title` / `text` `a11y` + `usage` units. Do not use `Text` as a heading; do not treat `Title` `size` as the HTML level.
+
+```tsx
+// Don't: visual size as fake outline; span for a datetime
+<Title size="1">Dashboard</Title>
+<Text>{publishedAt}</Text>
+
+// Do: native host matches meaning
+<Title size="1" render={<h1 />}>Dashboard</Title>
+<Text render={<time dateTime="2026-10-09T09:00:00Z" />}>9 Oct 2026, 09:00</Text>
+<Text render={<output htmlFor="qty price" />}>{totalLabel}</Text>
+```
+
+### Heading outline (no skips)
+
+- One outline per view: levels climb in order (`h1` → `h2` → `h3` …).
+- **Never skip a level** for styling (no `h2` then `h4` because `size` looked right).
+- Nested sections stay in scale: under an `h2`, the next heading is `h3`, then `h4` — not a jump.
+- Pair `size` (visual) with the correct `h*` via `render`. Specs: Title `a11y` — hierarchy sequential.
+
+```tsx
+// Don't: skip h3
+<Title size="2" render={<h2 />}>Settings</Title>
+<Title size="4" render={<h4 />}>Notifications</Title>
+
+// Do: sequential nest
+<Title size="2" render={<h2 />}>Settings</Title>
+<Title size="3" render={<h3 />}>Notifications</Title>
+<Title size="4" render={<h4 />}>Email</Title>
+```
+
 ## Compose checklist
 
-- [ ] Real landmarks + logical heading outline (`Title` size is visual — semantic root via `render`)
+- [ ] Real landmarks + **sequential** heading outline — no skipped `h*` (`Title` size visual; tag via `render`)
+- [ ] Semantic host = most correct HTML element for meaning (table above = examples) via `Text`/`Title` `render` — not ARIA / bare `span` fakes
 - [ ] DOM / reading / focus order aligned
 - [ ] Interactive controls and regions named
 - [ ] Loading via `aria-busy` and/or live status; blocking errors via `role="alert"` (or equivalent)
@@ -36,51 +81,23 @@ Do not fake widgets (`role="button"` on `Stack`/`div` — use `Button` / `IconBu
 
 ## Icon-only controls
 
-`IconButton`, `IconButtonLink`, `ToggleButton`, and icon-only triggers need `aria-label` or `aria-labelledby`. Use icon props — never `children`:
+`IconButton`, `IconButtonLink`, `ToggleButton`, and icon-only triggers need `aria-label` or `aria-labelledby`. Use icon props — never `children`. Any decorative glyph stays decorative — parent carries the name ([icons.md](icons.md)):
 
 ```tsx
 <IconButton aria-label="Close dialog" icon={<Xmark />} />
 ```
 
-Keep tooltip text and the trigger’s accessible name aligned.
+## Buttons, forms, overlays, decorative
 
-## Buttons and loading
-
-`Button` / `ButtonLink`: visible text names the action — do not rely on addon alone; do not add `aria-label` that repeats that text. `loading` sets `aria-busy`; keep the label stable. Spinner inside is decorative when label text exists.
-
-## Forms and selection
-
-- `Textfield` / `Textarea` / `Select` / `Autocomplete` own Field root — provide `label`, `aria-label`, or `aria-labelledby`.
-- `Field` from `@base-ui/react`. External `Field.Root` + `Fieldset render={<RadioGroup />}` / `render={<CheckboxGroup />}` when a group needs shared legend, description, validation, or error.
-- Each `Radio` / `Checkbox` still needs its own name. Label `Slider` / `Switch` / `Meter` / `LinearProgress`.
-- Optional visible value: `renderValue` (`true` or Value `children` formatter). On `Slider`, a function owns the value slot (no `Text` wrapper). Root `format` / `locale` feed Intl into the default label and formatter’s first argument.
-- `Meter` = determinate status; indeterminate work → `LinearProgress value={null}`.
-- Label `ToggleGroup` root and every child `ToggleButton`.
-
-## Overlays
-
-- `Dialog.Sheet`: always `title`; `description` when needed. Do not also set `role="dialog"` or `aria-modal`.
-- Styled `Popover.Sheet`: always `title`. Unstyled: compose `Popover.Title` + optional `Popover.Description`.
-- Name Dialog/Popover close controls and Menu triggers. Use `Menu.Group label` / `Menu.RadioGroup label` for sections.
-- Toast titles drive banner headings; keep actions and dismiss visibly named.
-
-## Decorative components
-
-- `Spinner`: set `aria-hidden` when decorative; parent region owns loading status.
-- `Skeleton` / `Skeleton.Overlay`: decorative (`aria-hidden`); parent owns loading status.
-- `StaticNoise` / `ProgressiveBlur`: hardcode `aria-hidden`.
-- `Annotate` / `Glow`: decorative; critical meaning stays in real content.
-- `Typewriter`: polite live region for completed phrases — not the only critical status source.
-- Decorative Badge dots/effects/icons never carry meaning alone.
+Confirm labels, Field ownership, Dialog/Popover titles, and decorative `aria-hidden` rules in the target surface’s `a11y.xml` / `usage.xml`. Do not invent widget ARIA from APG samples.
 
 ## Gotchas
 
-- Dup widget ARIA (`role="tablist"`, `aria-pressed`, `aria-modal`) already emitted by Base UI/Vira.
+- Dup widget ARIA already emitted by Base UI/Vira.
 - `aria-label` that cloaks visible text / `label` / `title`.
 - `children` on icon-only APIs instead of `icon` / `restingIcon`.
-- `role="button"` on `Stack`/`div` instead of `Button` / `IconButton`.
-- Copying APG sample markup into consumer JSX for audit optics.
-- Using `Spinner` / `Skeleton` as the only loading announcement without parent status.
+- `Title`/`Text` left on default `span` when a more specific semantic element fits (not limited to the example table)
+- Skipped heading levels (`h2` → `h4`) or `size` used as if it set the tag.
 - Treating compose-time a11y as a substitute for **viraui-a11y** when the user asks for an APG audit.
 
-Compound trees → [composition.md](composition.md). Prop discovery → [discovery.md](discovery.md).
+Prop / part discovery → [discovery.md](discovery.md). Compound assembly → specs `patterns` / `usage` units.

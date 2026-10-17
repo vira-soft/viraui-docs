@@ -1,71 +1,69 @@
 # Bootstrap packages and import order
 
-**When to read:** installing `@viraui/react`, installing agent skills, fixing missing styles / wrong import order, or mounting root overlay providers.
+**When to read:** installing `@viraui/react`, installing agent skills, deciding `@viraui/icons` vs another icon library, fixing missing styles / wrong import order, or mounting root overlay providers.
+
+**Authority:** `@viraui/react/specs/foundation/bootstrap.xml` (packages, import order, root providers, framework rules). Theme groups → `foundation/theme-topics.xml`. This page is the **playbook**; do not invent paths that contradict bootstrap.xml.
+
+## Theme choice — hard gate
+
+**Before** installing `@viraui/foundation` or `@fontsource-variable/*`, ask:
+
+1. **Default Vira theme** → install foundation + matching fonts ([foundation-exports.md](foundation-exports.md), [theme.md](theme.md))
+2. **Custom App Studio theme** → skip foundation; paste/save Studio `theme.css`; install fonts detected in that CSS ([theme.md](theme.md) Studio path)
+
+Do not assume default. Do not install foundation/fonts until answered.
 
 ## Defaults
 
-| Need             | Default                                                              |
-| ---------------- | -------------------------------------------------------------------- |
-| Agent skills     | `npx skills add https://skills.sh/p/W6CiDSj87OlBuTgR` (see below)    |
-| Theme            | `@viraui/foundation/vira.css` (custom CSS OK if `theme-surface` fit) |
-| Fonts            | Consumer `@font-face` / `@fontsource-variable/*` matching theme      |
-| Preflight        | `@viraui/react/preflight.css` after theme + fonts                    |
-| Import mechanism | JS side-effect imports in root entry — never CSS `@import`           |
-| Overlay shell    | `Dialog` + `Tooltip` + `Toast` providers once at app root            |
-| Components       | `@viraui/react` root barrel only                                     |
-
-Authority: `@viraui/react/consumption.json` (`importOrder`, `requiredPackages`, `importMechanism`, `rootProviders`).
+| Need             | Default                                                                           |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Agent skills     | `npx skills add vira-soft/viraui-skills`                             |
+| Theme            | Ask first — foundation preset **or** Studio/custom CSS (`theme-topics` fit)       |
+| Fonts            | After theme choice — `@fontsource-variable/*` matching that theme                 |
+| Preflight        | `@viraui/react/preflight.css` after theme + fonts                                 |
+| Import mechanism | JS side-effect imports in root entry — never CSS `@import`                        |
+| Overlay shell    | `Dialog` + `Tooltip` + `Toast` providers once at app root                         |
+| Content icons    | Optional. `@viraui/icons` for Vira glyphs; any ReactNode (other libs, custom SVG) |
+| Components       | `@viraui/react` root barrel only                                                  |
 
 ## Checklist
 
 - [ ] Install publishable agent skills (`viraui-setup`, `viraui-design`, `viraui-motion`, `viraui-a11y`)
 - [ ] Install `@viraui/react` + peers: `react`, `react-dom`, `@base-ui/react`
-- [ ] Optional: `@viraui/foundation` for presets; `@viraui/icons` for content glyphs only
+- [ ] Ask default vs App Studio custom **before** foundation/font installs
+- [ ] Theme path: foundation presets **or** saved Studio/custom CSS — [theme.md](theme.md)
+- [ ] Optional: `@viraui/icons` only for Vira content glyphs
 - [ ] Root entry: theme CSS → font CSS → preflight (then app globals)
-- [ ] Mount provider shell once (see below); framework mount site → [frameworks.md](frameworks.md)
-- [ ] Components from `@viraui/react`; content icons from `@viraui/icons/react` if installed
+- [ ] If Tailwind/Bootstrap/other CSS reset present: warn → ask → omit third-party preflight — [css-framework-coexistence.md](css-framework-coexistence.md)
+- [ ] Mount provider shell once; framework mount site → [frameworks.md](frameworks.md) + bootstrap.xml `root_providers`
+- [ ] Components from `@viraui/react` root. Icon slots take any ReactNode
 - [ ] Validate: semantic `--global-*` resolve; `toastManager.add` paints a `Toast.Banner`
 
 ## Agent skills
 
-Source of truth is private repo [vira-soft/viraui-skills](https://github.com/vira-soft/viraui-skills), distributed as a [skills.sh](https://skills.sh) pack. Do **not** tell consumers to clone the monorepo or install deprecated npm `@viraui/skills`.
-
 ```bash
-npx skills add https://skills.sh/p/W6CiDSj87OlBuTgR
+npx skills add vira-soft/viraui-skills
 ```
 
-Installs with [vercel-labs/skills](https://github.com/vercel-labs/skills). Pick agents when prompted (or pass `-a` / `-y` per that CLI).
+Same pack for Cursor, Claude Code, Codex, Gemini, and other Agent Skills hosts — no per-host forks.
 
-Do not use `npx @viraui/skills`, `npm view @viraui/skills dist.tarball`, or hard-coded registry `.tgz` URLs.
+Do **not** use deprecated npm `@viraui/skills` / tarball install paths.
 
-## Packages
+Optional belt: paste the portable project note into consumer `AGENTS.md` (or host-equivalent) — [agents-project-note.md](agents-project-note.md). Primary enforcement stays in skill descriptions + hubs; do not rely on Cursor-only rules.
 
-| Package               | Required? | Role                                                         |
-| --------------------- | --------- | ------------------------------------------------------------ |
-| `@viraui/react`       | Yes       | Components, preflight, machine JSON                          |
-| `react` / `react-dom` | Yes       | Peers                                                        |
-| `@base-ui/react`      | Yes       | Peer for wrapped primitives                                  |
-| `@viraui/foundation`  | No        | Preset brand CSS / types / JSON                              |
-| `@viraui/icons`       | No        | Content icons (`@viraui/icons/react`); chrome icons built-in |
+## Packages (summary)
 
-Agent skills are not an app dependency — install via the pack URL above.
+| Package               | Required? | Role                                                   |
+| --------------------- | --------- | ------------------------------------------------------ |
+| `@viraui/react`       | Yes       | Components, preflight, package specs                   |
+| `react` / `react-dom` | Yes       | Peers                                                  |
+| `@base-ui/react`      | Yes       | Peer for wrapped primitives                            |
+| `@viraui/foundation`  | No*       | Preset brand CSS — only after **default** theme answer |
+| `@viraui/icons`       | No        | Optional Vira glyphs; slots accept any ReactNode       |
 
-Custom-theme apps skip foundation if CSS matches `@viraui/react/theme-surface.json`.
+\*Required for default presets; never auto-install. Studio/custom path skips it.
 
-## Supported paths
-
-| Path                                                                                               | Support    | Rule                                                                     |
-| -------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------ |
-| `@viraui/react`                                                                                    | Yes        | Public components (not `Icon`)                                           |
-| `@viraui/react/preflight.css`                                                                      | Yes        | Once, after theme + fonts                                                |
-| `@viraui/react/*.css`                                                                              | Optional   | Debug / explicit tree-shake — not bootstrap                              |
-| `catalog.json`, `consumption.json`, `theme-surface.json`, `preflight-surface.json`, `*.guide.json` | Yes        | Under `@viraui/react/`                                                   |
-| `@viraui/icons`, `@viraui/icons/react`, `@viraui/icons/icon.guide.json`                            | Yes        | Metadata + named sync icons                                              |
-| `@viraui/icons/react/icons/<variant>/<Name>`                                                       | Optional   | Deep per-icon modules                                                    |
-| Compatible theme CSS / `@viraui/foundation` presets                                                | Theme req. | See [theme.md](theme.md), [foundation-exports.md](foundation-exports.md) |
-| `@viraui/foundation/vira/css`, `web`                                                               | Deprecated | Alias to preset CSS                                                      |
-| `@viraui/postcss-config`, `@viraui/style-dictionary-utils`, `@viraui/tsconfig`                     | No         | Workspace-only                                                           |
-| Deep React component JS / raw `@viraui/icons` SVG                                                  | No         | Public barrels only                                                      |
+Full supported/forbidden path list → `foundation/bootstrap.xml` (+ [foundation-exports.md](foundation-exports.md)).
 
 ## Import order
 
@@ -80,82 +78,19 @@ CSS alone does not enable overlays — wrap the tree in the provider shell next.
 
 ## Root providers
 
-Mount **once** at framework root. Overlay part trees: `*.guide.json` + **viraui-design** `composition.md`.
+Mount **once** at framework root. Exact tree → `foundation/bootstrap.xml` `root_providers`. Overlay compose shapes → **viraui-design** [composition.md](../viraui-design/composition.md).
 
-| Part                                                            | Role                                                                                                      |
-| --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `Dialog.Provider` + `Dialog.IndentBackground` + `Dialog.Indent` | Sheet indent. `IndentBackground` / `Indent` are **siblings** under `Provider`; `Indent` wraps app content |
-| `Tooltip.Provider`                                              | Shared open/close delay                                                                                   |
-| `Toast.createToastManager()`                                    | Module-scope (not inside render); pass to `Toast.Provider`                                                |
-| `Toast.Provider` + portal viewport                              | Map `Toast.useToastManager().toasts` → `Toast.Banner`                                                     |
-
-```tsx
-import { Dialog, Toast, Tooltip } from '@viraui/react';
-
-const toastManager = Toast.createToastManager();
-
-function ToastRegion() {
-  const { toasts } = Toast.useToastManager();
-  return (
-    <Toast.Portal>
-      <Toast.Viewport>
-        {toasts.map((toast) => (
-          <Toast.Banner key={toast.id} description={toast.description} toast={toast} />
-        ))}
-      </Toast.Viewport>
-    </Toast.Portal>
-  );
-}
-
-export function ViraProviders({ children }: { children: React.ReactNode }) {
-  return (
-    <Dialog.Provider>
-      <Dialog.IndentBackground />
-      <Dialog.Indent>
-        <Tooltip.Provider>
-          <Toast.Provider toastManager={toastManager}>
-            {children}
-            <ToastRegion />
-          </Toast.Provider>
-        </Tooltip.Provider>
-      </Dialog.Indent>
-    </Dialog.Provider>
-  );
-}
-```
-
-Anchored toasts: second manager + `Toast.Viewport position="anchored"` + `Toast.Positioner` → **viraui-design** `composition.md`. RTL: Base UI `DirectionProvider direction="rtl"` + `dir="rtl"` on a portal ancestor (usually `<html>`).
-
-## Component imports
-
-```tsx
-import { Button, Stack } from '@viraui/react';
-import { Xmark } from '@viraui/icons/react';
-```
-
-Component CSS rides the JS module graph. Do not add per-component CSS to bootstrap unless debugging.
+Typical shell: `Dialog.Provider` (+ indent parts when using indent), `Tooltip.Provider`, `Toast.Provider` + viewport mapping. Do not remount providers per page.
 
 ## Gotchas
 
-| Mistake                                             | Fix                                                                   |
-| --------------------------------------------------- | --------------------------------------------------------------------- |
-| `@import '@viraui/*'` in `globals.css`              | JS side-effect imports in root entry ([frameworks.md](frameworks.md)) |
-| CSS-only layout then `toastManager.add`             | Mount shell; viewport must map toasts → `Toast.Banner`                |
-| `import { Indent }` / standalone indent             | Use `Dialog.Indent` + `Dialog.IndentBackground`                       |
-| Providers in a Next.js Server Component             | Client wrapper around `children`; CSS stays in layout                 |
-| Astro providers in a different island than overlays | Same React island as Dialog/Tooltip/Toast consumers                   |
-| Theme CSS expected to load fonts                    | Separate font CSS in step 2 of import order                           |
-| Override only raw `--color-*`                       | Override semantic vars ([theme.md](theme.md))                         |
-| Workspace infra packages as consumer deps           | Public packages only                                                  |
-| Render Vira before theme/preflight loads            | Fix import order before chasing component CSS                         |
+- Installing foundation/fonts before theme choice answer.
+- CSS `@import` for preflight instead of JS side-effect imports.
+- Provider on a single page instead of root layout.
+- Per-component CSS to “fix” missing styles.
+- Treating `@viraui/icons` as mandatory for icon slots.
+- Guessing framework entry paths — [frameworks.md](frameworks.md) + bootstrap.xml.
 
 ## Stop — validate
 
-| Check     | Expected                                                  |
-| --------- | --------------------------------------------------------- |
-| Theme     | `--global-*` resolve in DevTools before first Vira render |
-| Preflight | Baseline typography / elevation utilities apply           |
-| Barrel    | `import { Button } from '@viraui/react'` resolves         |
-| Providers | Dialog / Tooltip / Toast providers wrap app               |
-| Toast     | `toastManager.add` shows `Toast.Banner`                   |
-| Fonts     | `@font-face` family names match theme `--font-family-*`   |
+Semantic tokens resolve; overlays paint; setup recap table on the hub. Then **viraui-design** for UI compose.

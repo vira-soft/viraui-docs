@@ -8,7 +8,7 @@ Prefer [vira-map.md](vira-map.md) for known Vira widgets. Omit attrs Base UI alr
 
 ## Checklist
 
-1. Confirm the control is **not** covered by [vira-map.md](vira-map.md) + guide `accessibility` / `baseUIApi`.
+1. Confirm the control is **not** covered by [vira-map.md](vira-map.md) + specs `a11y.xml` / `meta.xml`.
 2. Read the rendered `aria-*` (not JSX alone).
 3. Fetch only matching pattern URLs from the table.
 4. If the attr duplicates Base UI chrome → fail the audit recommendation to “add” it; route fix through compose.

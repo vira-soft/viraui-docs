@@ -71,7 +71,7 @@ Single docs app at repo root — primary edit: `content/get-started/setup.mdx`
 ### Implementation for User Story 2
 
 - [x] T012 [US2] Fill AI tab in `content/get-started/setup.mdx` with short path-specific intro (no duplicate of shared process essay) pointing to the copy-ready prompts
-- [x] T013 [US2] Write titled setup prompt fence in AI tab of `content/get-started/setup.mdx` instructing full consumer setup: skills pack `npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP`, `@viraui/react` + peers including `@base-ui/react`, theme gate before foundation/fonts, theme→fonts→preflight JS side-effect imports, root Dialog/Tooltip/Toast providers, follow `viraui-setup` / package specs (FR-005 / research §5)
+- [x] T013 [US2] Write titled setup prompt fence in AI tab of `content/get-started/setup.mdx` instructing full consumer setup: skills `npx skills add vira-soft/viraui-skills`, `@viraui/react` + peers including `@base-ui/react`, theme gate before foundation/fonts, theme→fonts→preflight JS side-effect imports, root Dialog/Tooltip/Toast providers, follow `viraui-setup` / package specs (FR-005 / research §5)
 - [x] T014 [US2] Write separate titled verify prompt fence in AI tab of `content/get-started/setup.mdx` for smoke-check theme tokens, preflight, providers, sample Button/Stack (or toast) render (FR-005 / FR-009)
 - [x] T015 [US2] Confirm AI is first/default tab and prompts are non-placeholder in `content/get-started/setup.mdx` (SC-002 / SC-005)
 

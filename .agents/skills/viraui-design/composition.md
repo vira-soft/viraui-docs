@@ -1,14 +1,16 @@
 # High-risk composition
 
-**When to read:** Field ownership, Dialog / Popover / Menu / Toast / ToggleGroup / Select / Autocomplete trees, or any compound `structure` before inventing parts.
+**When to read:** Field ownership, Dialog / Popover / Menu / Toast / ToggleGroup / Select / Autocomplete / OTPField / NumberField trees, or any compound assembly before inventing parts.
 
-Canonical shapes only. Complete props/defaults → target guide + source/types. Prefer high-level parts (`Sheet`, `Popup`, `Banner`) over reimplementing Portal/Positioner.
+Canonical **shapes** only. Complete props/defaults → specs `components/<id>/` (`meta` → `props` → `usage` → `patterns`) + types verify. Prefer high-level parts (`Sheet`, `Popup`, `Banner`) over reimplementing Portal/Positioner.
 
-Lower-risk compounds (`Accordion`, `Grid`, `Masonry`, `Skeleton`, `Tabs`, `Tooltip`): follow colocated guide (`Tooltip.Provider` for shared delay; `Skeleton.Overlay` for child-sized placeholders). View-transition wipe: `view-transition-name: skeleton-overlay` on the transitioning wrapper (CSS class, not inline style). Overlay enter/exit motion → **viraui-motion**.
+Lower-risk compounds (`Accordion`, `Disclosure`, `Grid`, `Masonry`, `Skeleton`, `Tabs`, `Tooltip`): follow that surface’s units (`Tooltip.Provider` for shared delay; `Skeleton.Overlay` for child-sized placeholders; `Disclosure` = `Trigger` + `Panel` for one section — not Accordion). Overlay enter/exit motion → **viraui-motion**.
+
+`BreakpointsProvider` / `DirectionProvider` are **opt-in**, not part of the Dialog/Tooltip/Toast overlay shell. Full discipline (mobile-first map, RTL + `dir` on `html`, Stack flex vs LTR/RTL) → [responsive.md](responsive.md) → specs `breakpoints` / `direction-provider` units.
 
 ## Field ownership
 
-`Field` from `@base-ui/react`, not `@viraui/react`. `Textfield`, `Textarea`, `Select`, `Autocomplete` already own `Field.Root` — never double-wrap.
+`Field` from `@base-ui/react`, not `@viraui/react`. `Textfield` (unless `controlOnly`), `Textarea`, `Select`, `Autocomplete`, `OTPField`, `NumberField` already own `Field.Root` — never double-wrap.
 
 Standalone `Checkbox` validation needs Base UI Field:
 
@@ -21,32 +23,11 @@ import { Checkbox } from '@viraui/react';
 </Field.Root>;
 ```
 
-Use `Fieldset` only when a choice group needs shared legend, description, or error:
-
-```tsx
-import { Field } from '@base-ui/react';
-import { Checkbox, CheckboxGroup, Fieldset, Radio, RadioGroup } from '@viraui/react';
-
-<Field.Root name="channels">
-  <Fieldset label="Channels" render={<CheckboxGroup />}>
-    <Checkbox label="Email" value="email" />
-    <Checkbox label="SMS" value="sms" />
-  </Fieldset>
-</Field.Root>;
-
-<Field.Root name="plan">
-  <Fieldset label="Plan" render={<RadioGroup<'free' | 'pro'> />}>
-    <Radio label="Free" value="free" />
-    <Radio label="Pro" value="pro" />
-  </Fieldset>
-</Field.Root>;
-```
-
-Without shared group copy, `RadioGroup` / `CheckboxGroup` may sit directly in `Field.Root`.
+Use `Fieldset` only when a choice group needs shared legend, description, or error. Without shared group copy, `RadioGroup` / `CheckboxGroup` may sit directly in `Field.Root`.
 
 ## Dialog
 
-Root indent shell is bootstrap — viraui-setup `bootstrap.md` / `frameworks.md`. `IndentBackground` and `Indent` are siblings under `Provider`; dialog lives inside indented app content.
+Root indent shell is bootstrap — **viraui-setup** [bootstrap.md](../viraui-setup/bootstrap.md) / [frameworks.md](../viraui-setup/frameworks.md). Exact parts → `components/dialog/patterns.xml` + `usage.xml`.
 
 ```tsx
 <Dialog.Provider>
@@ -65,9 +46,7 @@ Root indent shell is bootstrap — viraui-setup `bootstrap.md` / `frameworks.md`
 </Dialog.Provider>
 ```
 
-Indent parts optional. Without the effect: `Dialog`, `Trigger`, required-title `Sheet`, optional `Close`. Nested `Dialog` inside `Sheet` supports drill-down.
-
-Non-modal: `modal={false}` + `disablePointerDismissal` on `Dialog`; Sheet omits backdrop automatically. No `showBackdrop` prop.
+Indent parts optional. Without the effect: `Dialog`, `Trigger`, required-title `Sheet`, optional `Close`. Nested `Dialog` inside `Sheet` supports drill-down. Non-modal: confirm props in units (no invented `showBackdrop`).
 
 ## Popover
 
@@ -83,25 +62,9 @@ Styled sheet:
 </Popover>
 ```
 
-Unstyled sheet owns chrome and must compose accessible heading:
-
-```tsx
-<Popover>
-  <Popover.Trigger render={<Button>Details</Button>} />
-  <Popover.Sheet unstyled>
-    <Surface>
-      <Popover.Title render={<Title render={<h2 />} />}>Details</Popover.Title>
-      <Popover.Description>Supporting copy</Popover.Description>
-    </Surface>
-  </Popover.Sheet>
-</Popover>
-```
-
-Detached/multiple triggers: `Popover.createHandle()`. `Popover.Arrow` is not public.
+Unstyled sheet owns chrome and must compose accessible heading — see `components/popover` units. Detached/multiple triggers: `Popover.createHandle()` when documented. Do not invent non-public parts (e.g. `Popover.Arrow`).
 
 ## Menu
-
-`Menu.RadioGroup` owns radio items and optional label:
 
 ```tsx
 <Menu>
@@ -115,18 +78,17 @@ Detached/multiple triggers: `Popover.createHandle()`. `Popover.Arrow` is not pub
 </Menu>
 ```
 
-Do not wrap `Menu` in `Popover` — Menu owns portal, positioning, and keyboard behavior.
+Do not wrap `Menu` in `Popover` — Menu owns portal, positioning, and keyboard behavior. Confirm part names in `components/menu` units.
 
 ## Toast
 
-Root `Toast.Provider` + viewport mapping is bootstrap — viraui-setup `bootstrap.md` / `frameworks.md`. `Toast` is a namespace. Manager: `Toast.createToastManager()` / `Toast.useToastManager()`. Viewport alone does not render notifications — map manager toasts to `Toast.Banner`.
+Root `Toast.Provider` + viewport mapping is bootstrap — **viraui-setup**. Manager / Banner mapping shapes:
 
 ```tsx
 const toastManager = Toast.createToastManager();
 
 function ToastRegion() {
   const { toasts } = Toast.useToastManager();
-
   return (
     <Toast.Portal>
       <Toast.Viewport>
@@ -146,15 +108,7 @@ function ToastRegion() {
 toastManager.add({ title: 'Saved', description: 'Changes stored.' });
 ```
 
-Anchored feedback: `positionerProps.anchor`, `Toast.Viewport position="anchored"`, wrap each mapped banner:
-
-```tsx
-<Toast.Positioner key={toast.id} toast={toast}>
-  <Toast.Banner description={toast.description} toast={toast} />
-</Toast.Positioner>
-```
-
-Only `Toast.Action` children inside `Toast.Banner`.
+Anchored / action children → confirm in `components/toast` units. Viewport alone does not render notifications — map manager toasts to `Toast.Banner`.
 
 ## ToggleGroup
 
@@ -167,43 +121,61 @@ Only `Toast.Action` children inside `Toast.Banner`.
 
 Every item needs distinct `value`, icon slot, and accessible name. Never pass `ToggleButton` children.
 
+## OTPField
+
+Compound `OTPField` / `Input` / `Separator` (no public `.Root`). One Field for label/helper. List exactly `length` Inputs — OTPField does not auto-spawn slots. Default slots compose Textfield `controlOnly`; host is always native `input` (no Input `render`). Group with Stack + `Separator`. Equal-grow via `fullWidth`. Invalid+dirty (and `onValueInvalid`) play a built-in one-shot slot wiggle — keep error copy. Confirm remaining-slot names in `components/otp-field` units.
+
+```tsx
+<OTPField length={6} label="Verification code">
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+</OTPField>
+```
+
+## NumberField
+
+Single public `NumberField` (no `.Root` / `.Input`). Owns Base UI value/bounds/`name`, Field chrome, steppers, scrub, width. Do not export Group/Decrement/Increment/ScrubArea. Confirm placement / scrub / `fullWidth` (input grows, steppers compact) in `components/number-field` units.
+
+```tsx
+<NumberField defaultValue={100} name="amount" label="Amount" description="Local currency." />
+```
+
 ## Select and Autocomplete
 
-Both own field and popup chrome. Do not add `Field.Root`.
+Both own field and popup chrome. Do not add `Field.Root`. Confirm `Option` / `Group` / `Item` / `empty` / `modal` in units — do not invent parts.
 
 ```tsx
 <Select label="Status">
   <Select.Option value="open">Open</Select.Option>
-  <Select.Group label="Closed">
-    <Select.Option value="done">Done</Select.Option>
-  </Select.Group>
 </Select>
 
 <Autocomplete label="Tag" empty="No tags found">
   <Autocomplete.Item value="feature">feature</Autocomplete.Item>
-  <Autocomplete.Item value="bug">bug</Autocomplete.Item>
 </Autocomplete>
 ```
 
-**Default:** Select = closed single-choice; Autocomplete = free-form suggestions. Keep dynamic `empty` / `status` slots mounted; update content. Grouped data → guide `Autocomplete.Group` + `Autocomplete.Collection`.
-
 ## Validation loop
 
-1. Open guide `structure` + source/types for the compound.
-2. Diff planned parts against `structure` — stop on undocumented names.
-3. Confirm Field ownership (no double-wrap; Base UI `Field` when required).
-4. Confirm overlay titles / names; omit dup widget ARIA — [accessibility.md](accessibility.md).
-5. Motion on enter/exit → **viraui-motion** hub + one ref.
+1. Open specs `patterns` / `usage` + types for the compound.
+2. Diff planned parts against units — stop on undocumented names.
+3. If `meta` has `<base_ui>` → open that Base UI API for pass-through (Vira may wrap/regroup parts) — [discovery.md](discovery.md). Still unsure → ask.
+4. Confirm Field ownership (no double-wrap; Base UI `Field` when required).
+5. Confirm overlay titles / names; omit dup widget ARIA — [accessibility.md](accessibility.md).
+6. Motion on enter/exit → **viraui-motion** hub + one ref.
 
 ## Gotchas
 
 - Invented parts (`Dialog.Body`, `Popover.Arrow`, `showBackdrop`).
-- Double-wrapping Textfield/Select/Autocomplete in `Field.Root`.
+- Double-wrapping Textfield/Select/Autocomplete/OTPField/NumberField in `Field.Root`.
 - Importing `Field` from `@viraui/react`.
 - Wrapping `Menu` in `Popover`.
 - `ToggleButton` / icon-only controls with `children`.
 - Toast viewport without mapping toasts → `Banner`.
 - Copying APG sample roles onto Dialog/Popover parts.
-- Skipping required `Dialog.Sheet` / styled `Popover.Sheet` `title`.
+- Skipping required styled `Sheet` `title` when units require it.
 
-Routing index → [component-matrix.md](component-matrix.md). Discover props → [discovery.md](discovery.md).
+Routing → [component-matrix.md](component-matrix.md). Props → [discovery.md](discovery.md) → specs units.

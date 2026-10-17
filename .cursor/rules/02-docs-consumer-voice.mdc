@@ -48,7 +48,7 @@ Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
 | Avoid | Prefer |
 | --- | --- |
 | Keep this page for ViraUI-custom helpers only. | These helpers are ViraUI-specific. The agent adds them when the app needs that behavior. |
-| Follow these five manual steps to install… | Install the skills pack, reload the editor, then paste the setup prompt. Manual wiring stays below only if you must do it by hand. |
+| Follow these five manual steps to install… | Install the skills (`npx skills add vira-soft/viraui-skills`), reload the editor, then paste the setup prompt. Manual wiring stays below only if you must do it by hand. |
 | One dense paragraph that lists every prop and sibling. | Short lead on the job of the part, then bullets for when to use / when not. |
 | Short. Punchy. One idea each. | Connected sentences inside a short paragraph, or a tight bullet list — not a telegraph stack. |
 | What’s next: Themes → Skills → … | Link Themes or Skills inline where the mechanism needs them. |

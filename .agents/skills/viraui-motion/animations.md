@@ -57,6 +57,8 @@ Two styles. Most UI is functional. Evocative is rare. Tokens: [speed.md](speed.m
 
 Still pair with non-motion meaning (**viraui-design** [accessibility.md](../viraui-design/accessibility.md)).
 
+Scroll reveal, stagger, discrete enter, size-to-auto, custom anchor chrome → prefer modern CSS over JS — **viraui-design** [styling.md](../viraui-design/styling.md). This file picks **style** (functional vs evocative); styling.md picks **engine**.
+
 ## Gotchas
 
 - **Tokens only** — no invented `--spring` / Framer when `--easing-elastic` exists.

@@ -10,8 +10,8 @@
 2. Short lead: bootstrap as thin shell; agents/skills do heavy lifting; skills must load before any bootstrap prompt. Not a Skills duplicate.
 3. Requirements as a bullet list: React platform, Base UI as sole required peer beyond React / React DOM with link to `https://base-ui.com`, short toolchain, foundation/icons optional with links.
 4. **Primary path — `<Steps>`**:
-   1. **Install skills first** — titled `npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP` command (Setup owns this install entry). Explicit note that the editor (or agent session) must be **reloaded** after install so `viraui-setup` registers before any bootstrap prompt.
-   2. Tabbed copy-ready prompt fences (`tab="Setup"` / `tab="Verify"`): Setup uses `viraui-setup` for packages/peers, user brand/theme choice then matching fonts (built-in theme fonts vs custom), theme/fonts/preflight order, and root providers — **do not** nest skills-pack install inside that prompt; Verify covers theme, preflight, providers, sample render.
+   1. **Install skills first** — titled `npx skills add vira-soft/viraui-skills` command (Setup owns this install entry). Explicit note that the editor (or agent session) must be **reloaded** after install so `viraui-setup` registers before any bootstrap prompt.
+   2. Tabbed copy-ready prompt fences (`tab="Setup"` / `tab="Verify"`): Setup uses `viraui-setup` for packages/peers, user brand/theme choice then matching fonts (built-in theme fonts vs custom), theme/fonts/preflight order, and root providers — **do not** nest skills install inside that prompt; Verify covers theme, preflight, providers, sample render.
 5. **Secondary path** (optional, demoted): short Manual fallback for packages/theme/CSS/providers when wiring by hand is unavoidable after skills are installed; checklist-style verify matching AI verify outcomes (no verify prompt fence on Manual). Do not present Manual as equal weight to the prompt path.
 6. No separate “How bootstrap works” essay before install — mechanism stays in the short lead and Manual fallback.
 7. Discursive English prose per `.cursor/rules/02-docs-consumer-voice.mdc`; no telegram stacks; sparse spaced em-dashes; consumer-useful only (FR-008).
@@ -29,7 +29,7 @@
 7. Reintroduce Setup at `/get-started` via `index.mdx` as the canonical Setup page.
 8. Link or promote the docs MCP page, or turn Setup into a CSS-framework coexistence essay.
 9. Add “What’s next” sections.
-10. Ask the agent to install the skills pack inside the bootstrap prompt, or present the bootstrap prompt before skills install + reload.
+10. Ask the agent to install the skills inside the bootstrap prompt, or present the bootstrap prompt before skills install + reload.
 
 ## Related file changes (same feature)
 

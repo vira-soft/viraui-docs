@@ -25,7 +25,7 @@
 1. **Frontmatter** — `title: Setup`; non-stub `description`; keep or set `icon: Gear`; `pageActions: false` (match overview instructional siblings).
 2. **Lead** — discursive framing: bootstrap ViraUI into a React app; keep bootstrap thin; agents + skills do heavy lifting; Setup ≠ Skills ≠ MCP.
 3. **Requirements** (shared, outside tabs) — React / React DOM platform; Base UI sole required peer beyond that, link `https://base-ui.com`; short toolchain (Node-capable package manager + agent host for AI path). Optional packages (`@viraui/foundation`, `@viraui/icons`) mentioned only as optional / theme-gated, not a laundry list.
-4. **Shared process** (outside tabs) — one narrative of the full bootstrap sequence so tabs do not restate it: skills pack → packages/peers → **theme choice gate** → theme CSS → fonts → preflight → root overlay providers. Brief coexistence note (Tailwind/other resets → handled in bootstrap / skill) without essay.
+4. **Shared process** (outside tabs) — one narrative of the full bootstrap sequence so tabs do not restate it: skills install → packages/peers → **theme choice gate** → theme CSS → fonts → preflight → root overlay providers. Brief coexistence note (Tailwind/other resets → handled in bootstrap / skill) without essay.
 5. **Tabs** — default/first tab **AI**, second **Manual**. Each covers full process outcomes; only path-specific material inside:
    - **AI**: titled setup prompt fence + titled verify prompt fence.
    - **Manual**: human commands/checklist for same steps + checklist-style verify (no verify prompt fence). Link to `/get-started/skills` at skills step.
@@ -56,7 +56,7 @@ No `PreviewSlot` (not a component page).
 
 **Decision**:
 
-- **AI setup prompt** MUST instruct agent to: install publishable skills (`npx skills add https://skills.sh/p/IQZPjm9biEMkAZOP`), install `@viraui/react` + peers (`react`, `react-dom`, `@base-ui/react`), ask default foundation vs App Studio/custom theme **before** foundation/fonts, apply theme → fonts → `@viraui/react/preflight.css` as JS side-effect imports in app root, mount Dialog/Tooltip/Toast root providers once, follow `viraui-setup` / package specs — do not invent paths.
+- **AI setup prompt** MUST instruct agent to: install publishable skills (`npx skills add vira-soft/viraui-skills`), install `@viraui/react` + peers (`react`, `react-dom`, `@base-ui/react`), ask default foundation vs App Studio/custom theme **before** foundation/fonts, apply theme → fonts → `@viraui/react/preflight.css` as JS side-effect imports in app root, mount Dialog/Tooltip/Toast root providers once, follow `viraui-setup` / package specs — do not invent paths.
 - **AI verify prompt** MUST ask agent to smoke-check: semantic tokens resolve, preflight present, providers mounted, sample Button/Stack (or equivalent) renders / toast paints.
 - **Manual** mirrors same outcomes with copyable install commands and short wiring checklist; skills purpose → link Skills page; verify as checklist bullets matching verify prompt outcomes.
 - Do **not** dump per-framework entry-file matrices (Next/Remix/Astro/Vite) — point agent/skill at framework guidance.
