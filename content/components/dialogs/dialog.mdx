@@ -19,7 +19,7 @@ description: Edge sheet for focused tasks that interrupt the page — confirmati
 
 Dialog opens a bottom edge sheet for tasks that need attention without leaving the page. Compose `Dialog.Trigger` (usually a Button or IconButton via `render`), a titled `Dialog.Sheet`, and `Dialog.Close` for actions that should dismiss. Portal, backdrop, handle, and heading chrome live inside the sheet — they are not separate public parts.
 
-Pass `title` for assistive technologies, and add `description` when the heading alone is thin. Snap points and swipe dismissal live on the `Dialog` root when the sheet should drag between heights. Nest another Dialog inside `Dialog.Sheet` for drill-down settings; Escape closes only the topmost layer. Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell should push aside behind an open sheet.
+Pass `title` for assistive technologies, and add `description` when the heading alone is thin. Snap points and swipe dismissal live on the `Dialog` root when the sheet should drag between heights. Nest another Dialog inside `Dialog.Sheet` for drill-down settings; Escape closes only the topmost layer. Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell should scale down behind an open sheet.
 
 ---
 
@@ -211,6 +211,36 @@ function TermsDialog() {
 
 </Example>
 
+### Background indent
+
+Wrap the app once in `Dialog.Provider`, `Dialog.IndentBackground`, and `Dialog.Indent` when the shell behind an open sheet should scale down (zoom-out). Put page chrome inside `Dialog.Indent`; keep `IndentBackground` as a sibling. Sheets still compose as usual under that shell.
+
+<Example preview={<DialogIndentDemo />}>
+
+```tsx
+import { Button, Dialog, Stack, Text, Title } from '@viraui/react';
+
+<Dialog.Provider>
+  <Dialog.IndentBackground />
+  <Dialog.Indent>
+    <Stack hPadding="l" vPadding="l" hAlign="start" rowGap="m">
+      <Title />
+      <Text />
+      <Dialog>
+        <Dialog.Trigger render={<Button />} />
+        <Dialog.Sheet title="Settings" description="Shell scales down while open.">
+          <Dialog.Close render={<Button variant="secondary" />} />
+        </Dialog.Sheet>
+      </Dialog>
+    </Stack>
+  </Dialog.Indent>
+</Dialog.Provider>
+```
+
+</Example>
+
+Indent is optional bootstrap for the scale effect. Without it, sheets still open — the page behind them just stays full size.
+
 ## Ask your agent
 
 ```text tab="Delete confirm"
@@ -231,4 +261,8 @@ Add a terms bottom sheet with two snap heights: an intermediate preview and full
 
 ```text tab="Import form sheet"
 Add an import sheet triggered by a secondary Import button. Center the header, include a text field for pasted code, Apply, and Cancel that closes the sheet.
+```
+
+```text tab="Shell zoom-out"
+Wrap the app so that when a settings sheet opens, the page behind it scales down slightly. Keep the usual trigger and titled sheet under that shell.
 ```

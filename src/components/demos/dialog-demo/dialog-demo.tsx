@@ -2,7 +2,14 @@
 
 import * as React from "react";
 import { Trash } from "@phosphor-icons/react";
-import { Button, Dialog, Stack, Text, type DialogSnapPoint } from "@viraui/react";
+import {
+  Button,
+  Dialog,
+  Stack,
+  Text,
+  Title,
+  type DialogSnapPoint,
+} from "@viraui/react";
 import {
   useViraSandboxDocument,
   ViraSandbox,
@@ -12,14 +19,22 @@ type SandboxShellProps = {
   children: React.ReactNode;
   label: string;
   height?: number;
+  /** Pass false when the demo owns Dialog.Provider + Indent itself. */
+  dialogShell?: boolean;
 };
 
 const SandboxShell: React.FC<SandboxShellProps> = ({
   children,
   label,
   height = 400,
+  dialogShell = true,
 }) => (
-  <ViraSandbox height={height} label={label} vAlign="center">
+  <ViraSandbox
+    dialogShell={dialogShell}
+    height={height}
+    label={label}
+    vAlign="center"
+  >
     {children}
   </ViraSandbox>
 );
@@ -139,6 +154,49 @@ export const DialogNestedDemo: React.FC = () => (
             </Stack>
           </Dialog.Sheet>
         </Dialog>
+      )}
+    </SheetHost>
+  </SandboxShell>
+);
+
+/**
+ * App shell behind the sheet scales down while open.
+ * Owns Provider + Indent so the fence matches the live tree.
+ */
+export const DialogIndentDemo: React.FC = () => (
+  <SandboxShell
+    dialogShell={false}
+    height={440}
+    label="Dialog with background indent scale"
+  >
+    <SheetHost>
+      {(container) => (
+        <Dialog.Provider>
+          <Dialog.IndentBackground />
+          <Dialog.Indent>
+            <Stack hAlign="start" hPadding="l" rowGap="m" vPadding="l">
+              <Title size="display">Workspace</Title>
+              <Text tone="muted" render={<p />}>
+                Project list and settings stay here. Opening the sheet scales
+                this shell down behind the modal.
+              </Text>
+              <Dialog>
+                <Dialog.Trigger render={<Button>Open settings</Button>} />
+                <Dialog.Sheet
+                  container={container}
+                  description="The app shell behind this sheet scales down while open."
+                  title="Settings"
+                >
+                  <Stack expandChildren hPadding="l" rowGap="s" vPadding={["s", 0]}>
+                    <Dialog.Close
+                      render={<Button variant="secondary">Close</Button>}
+                    />
+                  </Stack>
+                </Dialog.Sheet>
+              </Dialog>
+            </Stack>
+          </Dialog.Indent>
+        </Dialog.Provider>
       )}
     </SheetHost>
   </SandboxShell>
