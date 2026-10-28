@@ -361,14 +361,7 @@ import {
 import { Gauge, GaugeText, GaugeTickFill, GaugeValue } from '@viraui/react';
 
 <Gauge value={64} min={0} max={100} label="Segments">
-  <GaugeTickFill
-    count={40}
-    length={28}
-    litLength={40}
-    width={7}
-    color="var(--global-primary)"
-    dimColor="var(--global-contrast)"
-  />
+  <GaugeTickFill count={40} length={28} litLength={40} width={7} dimColor="var(--global-contrast)" />
   <GaugeValue fontSize={104} weight="bold" />
   <GaugeText fontSize={26}>%</GaugeText>
 </Gauge>

@@ -654,7 +654,7 @@ export const GaugeInteractiveControlDemo: React.FC = () => {
               offset={6}
               cap="round"
             />
-            <GaugeDot radius={11} offset={-76} color={TOKEN.foreground} />
+            <GaugeDot radius={11} offset={-76} />
             <GaugeValue fontSize={64} font="rounded" weight="bold" />
           </Gauge>
         </GaugeControl>
