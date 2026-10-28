@@ -1,4 +1,5 @@
 export {
+  GaugeCompassDemo,
   GaugeDualRangeDemo,
   GaugeInteractiveControlDemo,
   GaugeNestedInsetDemo,

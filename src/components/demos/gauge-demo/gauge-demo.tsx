@@ -20,6 +20,7 @@ import {
   GaugeZones,
   IconButton,
   Stack,
+  compassLabel,
   zoneColor,
   zoneCutoffs,
   type Zone,
@@ -80,6 +81,7 @@ const TOKEN = {
   foreground: "var(--global-foreground)",
   primary: "var(--global-primary)",
   contrast: "var(--global-contrast)",
+  muted: "var(--global-muted)",
   background: "var(--global-background)",
   red: "var(--highlight-red)",
 } as const;
@@ -429,6 +431,107 @@ export const GaugeNestedInsetDemo: React.FC = () => (
         </GaugeInset>
       </Gauge>
     </Dial>
+  </SandboxShell>
+);
+
+/** Heading bezel + wind vane — full-circle 0–360 with compassLabel. */
+export const GaugeCompassDemo: React.FC = () => (
+  <SandboxShell height={340} label="Compass and wind dials">
+    <Stack columnGap="xl" direction="row" hAlign="center" vAlign="center" wrap>
+      <Dial>
+        <Gauge
+          value={128}
+          min={0}
+          max={360}
+          startAngle={180}
+          endAngle={540}
+          label="Compass"
+        >
+          <GaugeTrack width={2} color={TOKEN.muted} opacity={0.4} />
+          <GaugeTicks
+            count={8}
+            length={18}
+            width={3}
+            offset={-9}
+            cap="butt"
+            color={TOKEN.foreground}
+          />
+          <GaugeTicks
+            count={36}
+            length={8}
+            width={1.5}
+            offset={-4}
+            cap="butt"
+            opacity={0.8}
+          />
+          <GaugeTickLabels
+            count={8}
+            offset={-46}
+            fontSize={22}
+            weight="bold"
+            color={TOKEN.foreground}
+            format={compassLabel}
+          />
+          <GaugeNeedle
+            kind="compass"
+            length={0.62}
+            width={22}
+            tail={124}
+            color={TOKEN.foreground}
+            tailColor={TOKEN.muted}
+          />
+          <GaugeHub radius={5} color={TOKEN.background} />
+        </Gauge>
+      </Dial>
+      <Dial>
+        <Gauge
+          value={196}
+          min={0}
+          max={360}
+          startAngle={180}
+          endAngle={540}
+          label="Wind direction"
+        >
+          <GaugeTrack cap="butt" />
+          <GaugeTicks count={4} length={8} offset={0} />
+          <GaugeTicks count={36} length={4} width={3} offset={0} />
+          <GaugeTickLabels
+            count={4}
+            offset={-44}
+            fontSize={32}
+            font="rounded"
+            weight="bold"
+            format={compassLabel}
+          />
+          <GaugeNeedle
+            kind="arrow"
+            length={1.05}
+            width={7}
+            tail={200}
+            tailDot={12}
+            gap={84}
+          />
+          <GaugeText
+            fontSize={72}
+            font="rounded"
+            weight="bold"
+            color={TOKEN.foreground}
+            {...pos(0, 0.07)}
+          >
+            5
+          </GaugeText>
+          <GaugeText
+            fontSize={26}
+            font="rounded"
+            weight="medium"
+            color={TOKEN.muted}
+            {...pos(0, -0.16)}
+          >
+            m/s
+          </GaugeText>
+        </Gauge>
+      </Dial>
+    </Stack>
   </SandboxShell>
 );
 

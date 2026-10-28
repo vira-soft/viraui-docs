@@ -193,6 +193,15 @@ export {
   MeterLabeledDemo,
 } from "./meter-demo";
 export {
+  IconMeterCustomIconDemo,
+  IconMeterDefaultDemo,
+  IconMeterHighlightDemo,
+  IconMeterLabelsDemo,
+  IconMeterSizesDemo,
+  IconMeterThresholdDemo,
+} from "./icon-meter-demo";
+export {
+  GaugeCompassDemo,
   GaugeDualRangeDemo,
   GaugeInteractiveControlDemo,
   GaugeNestedInsetDemo,

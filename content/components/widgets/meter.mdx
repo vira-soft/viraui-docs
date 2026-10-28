@@ -19,7 +19,7 @@ description: Read-only progress bar with optional label, description, and format
 
 `Meter` shows a scalar value on a track with Base UI meter semantics. `value`, `min`, and `max` feed an accessible meter that users do not drag. Optional `label` uses the shared field-label pattern; `description` adds muted helper copy below the track; `renderValue` shows the current amount beside the label (`true` for default formatting, or a function for custom text).
 
-The indicator width follows `value` automatically. Reach for Meter when the fill level is known and read-only — storage quotas, completion percentages, capacity. Use [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for in-progress tasks or indeterminate work.
+The indicator width follows `value` automatically. Reach for Meter when the fill level is known and read-only — storage quotas, completion percentages, capacity. Prefer [IconMeter](/components/widgets/icon-meter) for discrete icon-row scores, [Gauge](/components/widgets/gauge) for a polar dial, [Slider](/components/inputs/slider) when someone must adjust the value, and [LinearProgress](/components/loading/linear-progress) for in-progress tasks or indeterminate work.
 
 ---
 
@@ -30,6 +30,8 @@ The indicator width follows `value` automatically. Reach for Meter when the fill
 
 ## When not to use
 
+- Discrete icon-row scores (stars, hearts, pips) → [IconMeter](/components/widgets/icon-meter)
+- Polar dial or needle → [Gauge](/components/widgets/gauge)
 - Interactive adjustment → [Slider](/components/inputs/slider)
 - In-progress or indeterminate task progress → [LinearProgress](/components/loading/linear-progress)
 
@@ -37,6 +39,8 @@ The indicator width follows `value` automatically. Reach for Meter when the fill
 
 ## Related
 
+- [IconMeter](/components/widgets/icon-meter) — discrete filled / half / empty icon row
+- [Gauge](/components/widgets/gauge) — round dial for determinate readings
 - [Slider](/components/inputs/slider) — editable value on a track
 - [LinearProgress](/components/loading/linear-progress) — task progress bars
 - [Spinner](/components/loading/spinner) — compact in-flight wait states

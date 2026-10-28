@@ -203,6 +203,35 @@ const RING = {
 
 </Example>
 
+### Compass dial
+
+A full-circle 0–360 domain with `compassLabel` on the ticks reads as a heading bezel. Use `kind="compass"` for a north-marked needle, or `kind="arrow"` for a wind vane with speed in the hub gap.
+
+<Example preview={<GaugeCompassDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeHub,
+  GaugeNeedle,
+  GaugeTickLabels,
+  GaugeTicks,
+  GaugeTrack,
+  compassLabel,
+} from '@viraui/react';
+
+<Gauge value={128} min={0} max={360} startAngle={180} endAngle={540} label="Compass">
+  <GaugeTrack width={2} opacity={0.4} />
+  <GaugeTicks count={8} length={18} width={3} offset={-9} cap="butt" />
+  <GaugeTicks count={36} length={8} width={1.5} offset={-4} cap="butt" opacity={0.8} />
+  <GaugeTickLabels count={8} offset={-46} fontSize={22} weight="bold" format={compassLabel} />
+  <GaugeNeedle kind="compass" length={0.62} width={22} tail={124} />
+  <GaugeHub radius={5} />
+</Gauge>
+```
+
+</Example>
+
 ### Segment fill
 
 `GaugeTickFill` lights discrete ticks along the ring instead of a continuous arc — useful when the reading should feel stepped.

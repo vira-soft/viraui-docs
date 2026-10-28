@@ -3,25 +3,47 @@ title: IconMeter
 description: Discrete icon-row meter for scores and levels — filled, half, or empty slots; not a continuous dial or progress bar.
 ---
 
-[To be written: lead — discrete icon row vs Gauge / Meter / LinearProgress]
+## Base UI
+
+<Cards>
+  <Card
+    title="Meter"
+    href="https://base-ui.com/react/components/meter#api-reference"
+    external
+  >
+    Upstream API and behavior for the Base UI primitive this control wraps.
+  </Card>
+</Cards>
+
+---
+
+`IconMeter` paints a score as a row of icons — full, half, or empty — with Base UI meter semantics. Pass `value` (and optional `iconCount`); the reading clamps into `[0, iconCount]`, then each slot snaps to empty / half / full paint from the fractional bands below. The default glyph is a star; swap `icon` for any recolorable SVG component that honors `fill`.
+
+Reach for IconMeter when the metaphor is discrete icons: ratings, quality pips, favorite counts. Prefer [Meter](/components/widgets/meter) for a continuous horizontal capacity bar, [Gauge](/components/widgets/gauge) for a polar dial, and [LinearProgress](/components/loading/linear-progress) for in-progress or indeterminate work. IconMeter is display-only — do not use it as an interactive rating control.
+
+Highlight paint defaults to the theme primary. Override with `highlightColor` as any valid CSS color (`#hex`, named colors, `oklch()`, `var(--*)`, …). Always name the meter when you hide the visible label (`aria-label` or `aria-labelledby`).
 
 ---
 
 ## When to use
 
-[To be written]
+- Discrete scores or levels as filled / half / empty icons
+- Read-only ratings, quality pips, or similar icon rows
 
 ## When not to use
 
-[To be written]
+- Continuous capacity on a track → [Meter](/components/widgets/meter)
+- Polar dial or needle → [Gauge](/components/widgets/gauge)
+- In-progress or indeterminate task progress → [LinearProgress](/components/loading/linear-progress)
+- Interactive star rating the user edits → out of scope for IconMeter
 
 ---
 
 ## Related
 
-- [Gauge](/components/widgets/gauge) — [To be written]
-- [Meter](/components/widgets/meter) — [To be written]
-- [LinearProgress](/components/loading/linear-progress) — [To be written]
+- [Meter](/components/widgets/meter) — read-only scalar on a horizontal track
+- [Gauge](/components/widgets/gauge) — round dial for determinate readings
+- [LinearProgress](/components/loading/linear-progress) — task progress bars
 
 ---
 
@@ -29,12 +51,174 @@ description: Discrete icon-row meter for scores and levels — filled, half, or 
 
 ### Default row
 
-[To be written]
+A five-star row with a half fill is the baseline. The visible label mirrors the numeric value unless you pass `label` or hide it.
 
-<PreviewSlot />
+<Example preview={<IconMeterDefaultDemo />}>
+
+```tsx
+import { IconMeter } from '@viraui/react';
+
+<IconMeter value={3.5} />
+```
+
+</Example>
+
+### Fill thresholds
+
+`value` is clamped to `[0, iconCount]`, then the fractional part snaps paint into three bands per unit:
+
+- under `0.25` → stay on the floor (empty remainder on that icon)
+- `0.25`–under `0.75` → half that icon
+- `0.75` and up → ceil to a full icon
+
+The visible label and assistive `valuetext` keep the clamped number (for example `0.2 of 5`); only the icon paint uses the snapped bands. Out-of-range values clamp — negative → all empty, above `iconCount` → all full.
+
+<Example preview={<IconMeterThresholdDemo />}>
+
+```tsx
+import { IconMeter, Stack, Text } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={0} />
+    <Text size="s" tone="muted">
+      0 — all empty
+    </Text>
+  </Stack>
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={0.2} />
+    <Text size="s" tone="muted">
+      0.2 — empty remainder
+    </Text>
+  </Stack>
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={0.5} />
+    <Text size="s" tone="muted">
+      0.5 — half first
+    </Text>
+  </Stack>
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={0.8} />
+    <Text size="s" tone="muted">
+      0.8 — full first
+    </Text>
+  </Stack>
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={3.5} />
+    <Text size="s" tone="muted">
+      3.5 — three full + half
+    </Text>
+  </Stack>
+  <Stack direction="row" columnGap="m" vAlign="center">
+    <IconMeter iconCount={5} value={5} />
+    <Text size="s" tone="muted">
+      5 — all full
+    </Text>
+  </Stack>
+</Stack>
+```
+
+</Example>
+
+### Sizes
+
+Use `size` for dense list rows versus roomier card chrome — icon size, gap, and label scale together.
+
+<Example preview={<IconMeterSizesDemo />}>
+
+```tsx
+import { IconMeter, Stack } from '@viraui/react';
+
+<Stack rowGap="m">
+  <IconMeter size="s" value={3} />
+  <IconMeter size="m" value={3.5} />
+  <IconMeter size="l" value={4} />
+</Stack>
+```
+
+</Example>
+
+### Highlight color
+
+Pass any CSS color string on `highlightColor` when the row should match semantic paint — primary, warning, success, danger.
+
+<Example preview={<IconMeterHighlightDemo />}>
+
+```tsx
+import { IconMeter, Stack } from '@viraui/react';
+
+<Stack rowGap="m">
+  <IconMeter highlightColor="var(--global-primary)" value={3.5} />
+  <IconMeter highlightColor="var(--highlight-yellow)" value={3.5} />
+  <IconMeter highlightColor="var(--highlight-green)" value={4} />
+  <IconMeter highlightColor="var(--highlight-red)" value={2.5} />
+</Stack>
+```
+
+</Example>
+
+### Custom icons
+
+Swap `icon` for a recolorable SVG component that accepts `fill` (solid color or half-gradient url). Hearts, pips, or product glyphs work the same way.
+
+<Example preview={<IconMeterCustomIconDemo />}>
+
+```tsx
+import { IconMeter, Stack } from '@viraui/react';
+
+const HeartIcon = ({ className, fill = 'currentColor', size = 18 }) => (
+  <svg
+    aria-hidden="true"
+    className={className}
+    fill={fill}
+    height={size}
+    viewBox="0 0 18 18"
+    width={size}
+  >
+    <path d="M9 15.5S2.5 11.25 2.5 6.75A3.75 3.75 0 0 1 9 4.5a3.75 3.75 0 0 1 6.5 2.25C15.5 11.25 9 15.5 9 15.5" />
+  </svg>
+);
+
+<Stack rowGap="m">
+  <IconMeter value={3.5} />
+  <IconMeter
+    highlightColor="var(--highlight-red)"
+    icon={HeartIcon}
+    value={2.5}
+  />
+</Stack>
+```
+
+</Example>
+
+### Labels
+
+Omit `label` to show the numeric value. Pass a short word for product copy, or `hideLabel` with `aria-label` when the surrounding UI already names the score.
+
+<Example preview={<IconMeterLabelsDemo />}>
+
+```tsx
+import { IconMeter, Stack } from '@viraui/react';
+
+<Stack rowGap="m">
+  <IconMeter value={3.5} />
+  <IconMeter label="Quality" value={4} />
+  <IconMeter aria-label="Guest rating" hideLabel value={4.5} />
+</Stack>
+```
+
+</Example>
 
 ## Ask your agent
 
-```text tab="TODO"
-[To be written]
+```text tab="Guest rating row"
+Add a read-only five-star rating beside this review card — three and a half stars, with the numeric score shown next to the icons.
+```
+
+```text tab="Compact quality pips"
+Show a compact icon-meter for quality on this dense table row — smaller size, four of five filled, no visible label, named for assistive tech.
+```
+
+```text tab="Heart favorites"
+Replace the default stars with a heart icon for favorites count — red highlight, two and a half filled on a five-icon row.
 ```
