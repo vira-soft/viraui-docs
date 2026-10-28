@@ -6,6 +6,8 @@
     "avatar-group",
     "badge",
     "chip",
+    "gauge",
+    "icon-meter",
     "meter"
   ],
   "defaultOpen": false,

@@ -1,0 +1,332 @@
+---
+title: Gauge
+description: Composable round dial for determinate readings and optional polar slider control — linear bars stay on Slider or Meter.
+---
+
+`Gauge` builds a round dial from SVG parts that share one domain — track, arc, zones, ticks, needle, value text, and insets. Pass `value`, `min`, and `max` on the root; compose only the parts the reading needs. Wrap with `GaugeControl` when the dial should also adjust the value on a polar arc (single or dual thumb).
+
+Reach for Gauge when the metaphor is polar: KPI rings, instrument chrome, nested arcs. Prefer [Meter](/components/widgets/meter) for a compact horizontal capacity bar, [Slider](/components/inputs/slider) for a linear interactive track, [IconMeter](/components/widgets/icon-meter) for discrete icon-row scores, and [LinearProgress](/components/loading/linear-progress) for in-progress or indeterminate work. Part color is optional — omit it for theme defaults, or pass any valid CSS color (`#hex`, named colors, `oklch()`, `var(--*)`, …); Gauge has no Meter-style `variant`.
+
+Always name read-only dials with `label` (or `aria-label`), and always pass `label` on `GaugeControl`.
+
+---
+
+## When to use
+
+- Determinate readings on a round dial (rings, needles, zone bands, nested insets)
+- Polar single or dual-thumb adjustment with `GaugeControl`
+
+## When not to use
+
+- Compact horizontal capacity the user only reads → [Meter](/components/widgets/meter)
+- Discrete icon-row scores (stars, hearts, pips) → [IconMeter](/components/widgets/icon-meter)
+- Linear interactive range on a track → [Slider](/components/inputs/slider)
+- In-progress or indeterminate task progress → [LinearProgress](/components/loading/linear-progress)
+
+---
+
+## Related
+
+- [Meter](/components/widgets/meter) — read-only scalar on a horizontal track
+- [IconMeter](/components/widgets/icon-meter) — discrete filled / half / empty icon row
+- [Slider](/components/inputs/slider) — linear thumb range input
+- [LinearProgress](/components/loading/linear-progress) — task progress bars
+
+---
+
+## Common examples
+
+### Simple dial
+
+Track, arc, and a large centered value are the baseline read-only dial. Add parts only when the reading needs them.
+
+<Example preview={<GaugeSimpleDemo />}>
+
+```tsx
+import { Gauge, GaugeArc, GaugeTrack, GaugeValue } from '@viraui/react';
+
+<Gauge value={62} min={0} max={100} label="Reading">
+  <GaugeTrack />
+  <GaugeArc />
+  <GaugeValue fontSize={104} />
+</Gauge>
+```
+
+</Example>
+
+### Progress ring
+
+A full-circle ring suits completion; a half-ring suits a single KPI. Stack both when the page shows completion and a headline metric together.
+
+<Example preview={<GaugeProgressRingDemo />}>
+
+```tsx
+import { Gauge, GaugeArc, GaugeText, GaugeTrack, GaugeValue, Stack } from '@viraui/react';
+
+<Stack direction="row" columnGap="xl" hAlign="center" vAlign="center" wrap>
+  <Gauge value={68} min={0} max={100} startAngle={0} endAngle={360} label="Complete">
+    <GaugeTrack width={20} />
+    <GaugeArc width={20} />
+    <GaugeValue fontSize={84} weight="semibold" />
+    <GaugeText fontSize={26}>%</GaugeText>
+  </Gauge>
+
+  <Gauge
+    value={64}
+    min={0}
+    max={100}
+    startAngle={90}
+    endAngle={270}
+    fit="content"
+    label="Conversion rate"
+  >
+    <GaugeTrack width={28} />
+    <GaugeArc width={28} />
+    <GaugeValue fontSize={84} weight="semibold" />
+    <GaugeText fontSize={28}>%</GaugeText>
+  </Gauge>
+</Stack>
+```
+
+</Example>
+
+### Zones and needle
+
+Zone bands plus a pointer needle read as instrument chrome. Keep tick density modest; let `zoneCutoffs` drive marks at band edges.
+
+<Example preview={<GaugeZonesNeedleDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeHub,
+  GaugeMarks,
+  GaugeNeedle,
+  GaugeText,
+  GaugeTickLabels,
+  GaugeTicks,
+  GaugeValue,
+  GaugeZones,
+  zoneCutoffs,
+  type Zone,
+} from '@viraui/react';
+
+const zones: Zone[] = [
+  { to: 180, color: 'var(--global-contrast)' },
+  { to: 240, color: 'var(--global-primary)' },
+];
+
+<Gauge
+  value={128}
+  min={0}
+  max={240}
+  startAngle={40}
+  endAngle={320}
+  fit="content"
+  label="Speed"
+>
+  <GaugeZones zones={zones} width={8} gap={0} cap="butt" endCap="butt" />
+  <GaugeMarks values={zoneCutoffs(zones)} length={8} width={2} />
+  <GaugeTicks count={12} length={18} width={3} offset={-16} cap="butt" />
+  <GaugeTicks count={48} length={8} width={1.5} offset={-12} cap="butt" opacity={0.6} />
+  <GaugeTickLabels count={12} offset={-54} fontSize={20} weight="semibold" />
+  <GaugeNeedle kind="pointer" length={0.85} width={10} tail={32} />
+  <GaugeHub radius={12} />
+  <GaugeValue fontSize={44} font="mono" weight="semibold" />
+  <GaugeText fontSize={18}>km/h</GaugeText>
+</Gauge>
+```
+
+</Example>
+
+### Dual range
+
+Pass a two-element `value` for a comfort band with dots at both ends. Pair with a single-thumb thermostat-style dial when the page needs both band and setpoint.
+
+<Example preview={<GaugeDualRangeDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeDot,
+  GaugeText,
+  GaugeTicks,
+  GaugeTrack,
+  GaugeValue,
+} from '@viraui/react';
+
+<Gauge value={[19, 23]} min={10} max={30} startAngle={40} endAngle={320} label="Comfort">
+  <GaugeTrack width={28} cap="butt" />
+  <GaugeArc width={28} opacity={0.35} cap="butt" />
+  <GaugeTicks count={20} length={8} width={2} offset={-38} opacity={0.6} />
+  <GaugeDot end="from" radius={16} />
+  <GaugeDot end="to" radius={16} />
+  <GaugeValue fontSize={76} weight="bold" />
+  <GaugeText fontSize={24}>°C</GaugeText>
+</Gauge>
+```
+
+</Example>
+
+### Nested inset
+
+`GaugeInset` nests child dials on the same polar plane — concentric activity rings, or a secondary fuel arc beside a primary needle.
+
+<Example preview={<GaugeNestedInsetDemo />}>
+
+```tsx
+import { Gauge, GaugeArc, GaugeInset, GaugeTrack, GaugeValue } from '@viraui/react';
+
+const RING = {
+  stand: 'var(--highlight-cyan)',
+  exercise: 'var(--highlight-acid)',
+  move: 'var(--highlight-red)',
+} as const;
+
+<Gauge value={72} min={0} max={100} startAngle={180} endAngle={540} label="Move">
+  <GaugeTrack width={44} color={RING.move} opacity={0.18} />
+  <GaugeArc width={44} color={RING.move} />
+  <GaugeValue fontSize={52} weight="bold" />
+
+  <GaugeInset value={48} min={0} max={100} startAngle={180} endAngle={540} scale={0.74}>
+    <GaugeTrack width={60} color={RING.exercise} opacity={0.18} />
+    <GaugeArc width={60} color={RING.exercise} />
+  </GaugeInset>
+
+  <GaugeInset value={90} min={0} max={100} startAngle={180} endAngle={540} scale={0.5}>
+    <GaugeTrack width={76} color={RING.stand} opacity={0.18} />
+    <GaugeArc width={76} color={RING.stand} />
+  </GaugeInset>
+</Gauge>
+```
+
+</Example>
+
+### Segment fill
+
+`GaugeTickFill` lights discrete ticks along the ring instead of a continuous arc — useful when the reading should feel stepped.
+
+<Example preview={<GaugeSegmentFillDemo />}>
+
+```tsx
+import { Gauge, GaugeText, GaugeTickFill, GaugeValue } from '@viraui/react';
+
+<Gauge value={64} min={0} max={100} label="Segments">
+  <GaugeTickFill
+    count={40}
+    length={28}
+    litLength={40}
+    width={7}
+    color="var(--global-primary)"
+    dimColor="var(--global-contrast)"
+  />
+  <GaugeValue fontSize={104} weight="bold" />
+  <GaugeText fontSize={26}>%</GaugeText>
+</Gauge>
+```
+
+</Example>
+
+### Interactive control
+
+Wrap the dial in `GaugeControl` for polar adjustment. Keep Control angles aligned with the child `Gauge`; pass `label` on Control and hide decorative dial chrome from AT with `aria-hidden` when Control owns the name.
+
+<Example preview={<GaugeInteractiveControlDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeControl,
+  GaugeDot,
+  GaugeHub,
+  GaugeTicks,
+  GaugeTrack,
+  GaugeValue,
+} from '@viraui/react';
+
+<GaugeControl
+  value={volume}
+  onChange={setVolume}
+  min={0}
+  max={100}
+  startAngle={40}
+  endAngle={320}
+  label="Volume"
+  knob
+>
+  <Gauge
+    value={volume}
+    min={0}
+    max={100}
+    startAngle={40}
+    endAngle={320}
+    padding={56}
+    aria-hidden
+  >
+    <GaugeHub radius={156} color="var(--global-contrast)" />
+    <GaugeTrack width={6} opacity={0.12} offset={-18} />
+    <GaugeArc width={6} offset={-18} />
+    <GaugeTicks count={20} length={12} width={3} offset={6} cap="round" />
+    <GaugeDot radius={11} offset={-76} />
+    <GaugeValue fontSize={64} weight="bold" />
+  </Gauge>
+</GaugeControl>
+```
+
+</Example>
+
+### Part colors
+
+Omit part `color` to keep theme defaults. When you need paint, pass any valid CSS color string on parts and `zones[].color` — hex, named colors, `oklch()`, or theme `var(--*)`. Drive the live arc with `zoneColor` so the fill tracks the active band as the value moves.
+
+<Example preview={<GaugeTokenColorsDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeTrack,
+  GaugeValue,
+  GaugeZones,
+  zoneColor,
+  type Zone,
+} from '@viraui/react';
+
+const zones: Zone[] = [
+  { to: 20, color: '#e11d48' },
+  { to: 70, color: 'goldenrod' },
+  { to: 100, color: 'var(--highlight-green)' },
+];
+
+<Gauge value={value} min={0} max={100} label="Health">
+  <GaugeTrack width={16} opacity={0.35} />
+  <GaugeArc
+    width={16}
+    color={zoneColor(zones, value, 'var(--global-foreground)')}
+  />
+  <GaugeZones zones={zones} width={5} offset={-18} gap={1} cap="butt" endCap="round" />
+  <GaugeValue fontSize={64} />
+</Gauge>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Simple KPI dial"
+Add a round gauge on this dashboard card for the main reading — track, arc, and a large centered value. Read-only, labeled for assistive tech.
+```
+
+```text tab="Zones and needle"
+Build a speed-style dial with colored zone bands, tick marks, and a pointer needle. Show the numeric value and unit under the hub.
+```
+
+```text tab="Nested activity rings"
+Compose three concentric full-circle rings for move, exercise, and stand — each with its own highlight color and shared min/max.
+```
+
+```text tab="Polar volume knob"
+Wrap a dial in GaugeControl as a volume knob the user can drag. Keep angles aligned, label the control, and show the live percent in the center.
+```

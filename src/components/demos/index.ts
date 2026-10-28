@@ -192,6 +192,16 @@ export {
   MeterHighlightDemo,
   MeterLabeledDemo,
 } from "./meter-demo";
+export {
+  GaugeDualRangeDemo,
+  GaugeInteractiveControlDemo,
+  GaugeNestedInsetDemo,
+  GaugeProgressRingDemo,
+  GaugeSegmentFillDemo,
+  GaugeSimpleDemo,
+  GaugeTokenColorsDemo,
+  GaugeZonesNeedleDemo,
+} from "./gauge-demo";
 export { ChipAddonDemo, ChipLinkDemo, ChipStatusDemo } from "./chip-demo";
 export { AnnotateEndDemo, AnnotateMarkDemo } from "./annotate-demo";
 export {

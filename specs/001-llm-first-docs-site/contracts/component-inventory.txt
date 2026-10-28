@@ -47,4 +47,6 @@ Widgets/Avatar
 Widgets/AvatarGroup
 Widgets/Badge
 Widgets/Chip
+Widgets/Gauge
+Widgets/IconMeter
 Widgets/Meter
