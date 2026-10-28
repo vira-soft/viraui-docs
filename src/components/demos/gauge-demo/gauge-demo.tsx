@@ -611,8 +611,6 @@ export const GaugeSegmentFillDemo: React.FC = () => (
           length={28}
           litLength={40}
           width={7}
-          color={TOKEN.primary}
-          dimColor={TOKEN.contrast}
         />
         <GaugeValue fontSize={104} font="rounded" weight="bold" />
         <GaugeText fontSize={26} {...pos(0, -0.34)}>
@@ -653,8 +651,6 @@ export const GaugeInteractiveControlDemo: React.FC = () => {
             <GaugeHub radius={156} color={TOKEN.contrast} />
             <GaugeTrack
               width={6}
-              color={TOKEN.foreground}
-              opacity={0.12}
               offset={-18}
             />
             <GaugeArc width={6} color={TOKEN.foreground} offset={-18} />
@@ -664,7 +660,6 @@ export const GaugeInteractiveControlDemo: React.FC = () => {
               width={3}
               offset={6}
               cap="round"
-              color={TOKEN.contrast}
             />
             <GaugeDot radius={11} offset={-76} color={TOKEN.foreground} />
             <GaugeValue fontSize={64} font="rounded" weight="bold" />
@@ -858,7 +853,7 @@ export const GaugeTimerClockDemo: React.FC = () => (
             scale={0.28}
             {...pos(0, -0.36)}
           >
-            <GaugeTrack width={6} cap="butt" opacity={0.25} offset={-3} />
+            <GaugeTrack width={6} cap="butt" offset={-3} />
             <GaugeTicks
               count={6}
               length={34}
