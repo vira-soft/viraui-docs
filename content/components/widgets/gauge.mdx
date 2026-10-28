@@ -5,7 +5,7 @@ description: Composable round dial for determinate readings and optional polar s
 
 `Gauge` builds a round dial from SVG parts that share one domain — track, arc, zones, ticks, needle, value text, and insets. Pass `value`, `min`, and `max` on the root; compose only the parts the reading needs. Wrap with `GaugeControl` when the dial should also adjust the value on a polar arc (single or dual thumb).
 
-Reach for Gauge when the metaphor is polar: KPI rings, instrument chrome, nested arcs. Prefer [Meter](/components/widgets/meter) for a compact horizontal capacity bar, [Slider](/components/inputs/slider) for a linear interactive track, [IconMeter](/components/widgets/icon-meter) for discrete icon-row scores, and [LinearProgress](/components/loading/linear-progress) for in-progress or indeterminate work. Part color is optional — omit it for theme defaults, or pass any valid CSS color (`#hex`, named colors, `oklch()`, `var(--*)`, …); Gauge has no Meter-style `variant`.
+Reach for Gauge when the metaphor is polar: KPI rings, instrument chrome, nested arcs. Prefer [Meter](/components/widgets/meter) for a compact horizontal capacity bar, [Slider](/components/inputs/slider) for a linear interactive track, [IconMeter](/components/widgets/icon-meter) for discrete icon-row scores, and [LinearProgress](/components/loading/linear-progress) for in-progress or indeterminate work. Part color is optional. Every part paints from the theme without a `color` prop, so the default composition needs none — and the dial follows mode/theme changes for free. Set color only where it carries a meaning (severity bands, a `zoneColor`-driven arc, chrome you must separate); restating a part's own default is a no-op that pins it to a literal token. Any valid CSS color works: `#hex`, named colors, `oklch()`, `var(--*)`. Gauge has no Meter-style `variant`.
 
 Always name read-only dials with `label` (or `aria-label`), and always pass `label` on `GaugeControl`.
 
@@ -427,7 +427,9 @@ import {
 
 ### Part colors
 
-Omit part `color` to keep theme defaults. When you need paint, pass any valid CSS color string on parts and `zones[].color` — hex, named colors, `oklch()`, or theme `var(--*)`. Drive the live arc with `zoneColor` so the fill tracks the active band as the value moves.
+Parts already resolve to theme defaults — **omitting `color` is the normal, complete composition**, and the dial follows mode/theme changes for free. Reach for paint only when it carries a meaning the dial cannot show otherwise: severity bands, a reading that follows `zoneColor`, or chrome the composition must separate. Don't restate a part's own default as an explicit color: it changes nothing and pins the part to a literal token.
+
+When you do need paint, pass any valid CSS color string on parts and `zones[].color` — hex, named colors, `oklch()`, or theme `var(--*)`. Drive the live arc with `zoneColor` so the fill tracks the active band as the value moves.
 
 <Example preview={<GaugeTokenColorsDemo />}>
 

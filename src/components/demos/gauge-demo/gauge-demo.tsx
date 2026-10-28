@@ -279,7 +279,6 @@ export const GaugeZonesNeedleDemo: React.FC = () => (
             width={3}
             offset={-20}
             cap="butt"
-            color={TOKEN.foreground}
           />
           <GaugeTicks
             count={16}
@@ -300,7 +299,6 @@ export const GaugeZonesNeedleDemo: React.FC = () => (
           <GaugeText
             fontSize={28}
             weight="bold"
-            color={TOKEN.foreground}
             {...pos(0.8, -0.16)}
           >
             F
@@ -308,7 +306,6 @@ export const GaugeZonesNeedleDemo: React.FC = () => (
           <GaugeText
             fontSize={28}
             weight="bold"
-            color={TOKEN.foreground}
             {...pos(-0.8, -0.16)}
           >
             E
@@ -459,7 +456,6 @@ export const GaugeCompassDemo: React.FC = () => (
             width={3}
             offset={-9}
             cap="butt"
-            color={TOKEN.foreground}
           />
           <GaugeTicks
             count={36}
@@ -474,7 +470,6 @@ export const GaugeCompassDemo: React.FC = () => (
             offset={-46}
             fontSize={22}
             weight="bold"
-            color={TOKEN.foreground}
             format={compassLabel}
           />
           <GaugeNeedle
@@ -482,7 +477,6 @@ export const GaugeCompassDemo: React.FC = () => (
             length={0.62}
             width={22}
             tail={124}
-            color={TOKEN.foreground}
             tailColor={TOKEN.muted}
           />
           <GaugeHub radius={5} color={TOKEN.background} />
@@ -520,7 +514,6 @@ export const GaugeCompassDemo: React.FC = () => (
             fontSize={72}
             font="rounded"
             weight="bold"
-            color={TOKEN.foreground}
             {...pos(0, 0.07)}
           >
             5
@@ -759,7 +752,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
             width={3}
             offset={-8}
             cap="butt"
-            color={TOKEN.foreground}
           />
           <GaugeTicks
             count={60}
@@ -774,7 +766,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
             offset={-48}
             fontSize={26}
             weight="semibold"
-            color={TOKEN.foreground}
             format={clockLabel}
           />
           <GaugeNeedle kind="pointer" length={0.5} width={12} tail={0} />
@@ -798,7 +789,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
             length={10}
             width={2.5}
             offset={18}
-            color={TOKEN.foreground}
           />
           <GaugeTicks count={60} length={5} width={1.5} offset={16} opacity={0.5} />
           <GaugeValue fontSize={110} font="mono" weight="regular" {...pos(0, 0.04)} />
@@ -822,7 +812,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
             width={4}
             offset={-11}
             cap="butt"
-            color={TOKEN.foreground}
           />
           <GaugeTicks
             count={60}
@@ -837,7 +826,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
             offset={-50}
             fontSize={26}
             weight="semibold"
-            color={TOKEN.foreground}
           />
           <GaugeNeedle kind="line" length={0.92} width={4} tail={44} tailDot={10} />
           <GaugeHub radius={11} />
@@ -860,7 +848,6 @@ export const GaugeTimerClockDemo: React.FC = () => (
               width={9}
               offset={-26}
               cap="butt"
-              color={TOKEN.foreground}
             />
             <GaugeTicks
               count={30}
