@@ -23,6 +23,37 @@ Plain commands use `Menu.Item`; linked destinations use `Menu.LinkItem`; exclusi
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Menu } from '@viraui/react';
+
+<Menu>
+  <Menu.Trigger />
+  <Menu.Popup>
+    <Menu.Group>
+      <Menu.Item />
+      <Menu.LinkItem />
+      <Menu.CheckboxItem />
+    </Menu.Group>
+    <Menu.Separator />
+    <Menu.RadioGroup>
+      <Menu.RadioItem />
+    </Menu.RadioGroup>
+    <Menu.Submenu>
+      <Menu.SubmenuTrigger />
+      <Menu.Popup />
+    </Menu.Submenu>
+  </Menu.Popup>
+</Menu>
+```
+
+`Menu.createHandle()` stays out of the tree.
+
+---
+
 ## When to use
 
 - A short list of commands from a button, icon, or custom chip (Edit, Duplicate, Archive)

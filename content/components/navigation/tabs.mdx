@@ -25,6 +25,25 @@ Each tab’s `value` pairs with exactly one panel of the same `value`. Only the 
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Tabs } from '@viraui/react';
+
+<Tabs>
+  <Tabs.List>
+    <Tabs.Tab />
+  </Tabs.List>
+  <Tabs.Viewport>
+    <Tabs.Panel />
+  </Tabs.Viewport>
+</Tabs>
+```
+
+---
+
 ## When to use
 
 - Peer sections of the same screen (profile, billing, goals)

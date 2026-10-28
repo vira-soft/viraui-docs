@@ -23,6 +23,29 @@ Pass `title` for assistive technologies, and add `description` when the heading 
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Dialog } from '@viraui/react';
+
+<Dialog.Provider>
+  <Dialog.IndentBackground>
+    <Dialog.Indent>
+      <Dialog>
+        <Dialog.Trigger />
+        <Dialog.Sheet>
+          <Dialog.Close />
+        </Dialog.Sheet>
+      </Dialog>
+    </Dialog.Indent>
+  </Dialog.IndentBackground>
+</Dialog.Provider>
+```
+
+---
+
 ## When to use
 
 - Confirmations, short forms, and settings that interrupt the page without navigating away

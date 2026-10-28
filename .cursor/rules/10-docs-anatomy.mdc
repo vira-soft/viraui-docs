@@ -1,0 +1,75 @@
+---
+description: ComponentPage Anatomy skeleton fence (Base UI style)
+globs: content/components/**/*.mdx
+alwaysApply: false
+---
+
+# Docs: Anatomy
+
+When a **ComponentPage** documents a Vira surface with **consumer-composable `.` parts**, a **multi-part compose tree**, or a **forced host** that must combine with sibling components, put `## Anatomy` **after the lead** thematic break and **before** `## When to use`. Contract: `specs/001-llm-first-docs-site/contracts/page-shell.md`.
+
+## When required
+
+- Public compound attachments (`Object.assign` / namespace) such as `Dialog.Trigger`, `Menu.Popup`, `Select.Option`, `Skeleton.Overlay`
+- Co-exported part trees composed under a domain root (e.g. `Gauge` + `GaugeTrack` / `GaugeArc` / …)
+- Forced hosts that nest sibling components as children (e.g. `ToggleGroup` + `ToggleButton` / `ToggleTextButton`)
+
+## When omit
+
+- True leaves: standalone single export with no `.` parts and no required sibling host (Button, Stack, Meter, …)
+- Prop-driven hosts with no child compose tree (e.g. `AvatarGroup` — `avatars` array maps to Avatar; not compound Anatomy)
+- Hub `content/components/index.mdx`
+
+## Authority (do not invent)
+
+1. Sibling DS `packages/react/src/components/<id>/` public `Object.assign` / namespace / index co-exports / required sibling hosts
+2. Consumer skill shapes in `../viraui-skills/skills/viraui-design/composition.md` when present
+3. Never invent Portal/backdrop/chrome that is baked into a public part (e.g. Dialog portal lives inside `Sheet`)
+4. Never invent child APIs the surface does not expose
+5. Never generate Anatomy from `patterns.xml` (usage examples, not part trees)
+
+## Shape
+
+```mdx
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Dialog } from '@viraui/react';
+
+<Dialog.Provider>
+  <Dialog.IndentBackground>
+    <Dialog.Indent>
+      <Dialog>
+        <Dialog.Trigger />
+        <Dialog.Sheet>
+          <Dialog.Close />
+        </Dialog.Sheet>
+      </Dialog>
+    </Dialog.Indent>
+  </Dialog.IndentBackground>
+</Dialog.Provider>
+```
+
+---
+```
+
+Forced-compose host (no `.` parts; documented on the host or the child page that teaches the group):
+
+```tsx
+import { ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/react';
+
+<ToggleGroup>
+  <ToggleButton />
+  <ToggleTextButton />
+</ToggleGroup>
+```
+
+## Rules
+
+- One fence only — import + nested skeleton, **no props**, self-closing parts
+- Include the full public tree / forced-compose set — **no** `{/* optional */}` markers
+- Hooks / factories that are not DOM parts (`createToastManager`, `useFilter`, `createHandle`) stay **out** of the tree; one short prose line under the fence only when the page already teaches them
+- After Anatomy, thematic break (`---`) before When to use / next section
+- Structure only — not a prop inventory or surface catalog

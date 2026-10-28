@@ -23,6 +23,27 @@ Field label, description, error copy, and `startAddon` / `endAddon` chrome match
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Autocomplete } from '@viraui/react';
+
+<Autocomplete>
+  <Autocomplete.Item />
+  <Autocomplete.Group>
+    <Autocomplete.Collection>
+      <Autocomplete.Item />
+    </Autocomplete.Collection>
+  </Autocomplete.Group>
+</Autocomplete>
+```
+
+`Autocomplete.useFilter` and `Autocomplete.useFilteredItems` stay out of the tree.
+
+---
+
 ## When to use
 
 - Large lists where typing to filter is easier than scanning a closed dropdown

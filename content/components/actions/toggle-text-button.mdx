@@ -25,6 +25,23 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/react';
+
+<ToggleGroup>
+  <ToggleTextButton />
+  <ToggleButton />
+</ToggleGroup>
+```
+
+A lone ToggleTextButton is valid outside the group. Related selection needs `ToggleGroup` as the host.
+
+---
+
 ## When to use
 
 - Toolbar or filter options with a readable text label (Bold, Grid, Sync)

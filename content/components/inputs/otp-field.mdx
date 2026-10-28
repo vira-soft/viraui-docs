@@ -25,6 +25,26 @@ When you set the field `invalid` and `dirty`, the slot cluster plays a one-shot 
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { OTPField } from '@viraui/react';
+
+<OTPField>
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Separator />
+  <OTPField.Input />
+  <OTPField.Input />
+  <OTPField.Input />
+</OTPField>
+```
+
+---
+
 ## When to use
 
 - One-time, verification, or recovery codes as a single labeled field

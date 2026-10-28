@@ -23,6 +23,25 @@ Each instance pairs `Tooltip.Trigger` with `Tooltip.Content`. The trigger accept
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Tooltip } from '@viraui/react';
+
+<Tooltip.Provider>
+  <Tooltip>
+    <Tooltip.Trigger />
+    <Tooltip.Content />
+  </Tooltip>
+</Tooltip.Provider>
+```
+
+`Tooltip.createHandle()` stays out of the tree.
+
+---
+
 ## When to use
 
 - A short label or clarification on hover/focus for a control that already has an accessible name

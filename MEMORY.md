@@ -60,7 +60,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Voice contract: `page-shell.md` + `.cursor/rules/02-docs-consumer-voice.mdc` (update when this model drifts).
 - Setup order: `npx skills add vira-soft/viraui-skills` → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt. Brand/theme = user choice; font import follows (built-in theme fonts vs custom) — not a hard “theme gate” that blocks foundation/font install.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
-- ComponentPage rhythm: thematic breaks (`---`) after Base UI Cards, after lead, after when/when-not, after Related (before Common examples) — `page-shell.md`
+- ComponentPage rhythm: thematic breaks (`---`) after Base UI Cards, after lead, after Anatomy (compounds + child forced-compose like ToggleGroup), after when/when-not, after Related (before Common examples) — `page-shell.md`; Anatomy = full tree, no `{/* optional */}`; omit prop-driven hosts like AvatarGroup; rule `.cursor/rules/10-docs-anatomy.mdc`
 - Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
 - Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
 

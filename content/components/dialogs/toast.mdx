@@ -23,6 +23,28 @@ Optional actions on a banner are `Toast.Action` only. The stack defaults to `bot
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Toast } from '@viraui/react';
+
+<Toast.Provider>
+  <Toast.Portal>
+    <Toast.Viewport>
+      <Toast.Banner>
+        <Toast.Action />
+      </Toast.Banner>
+    </Toast.Viewport>
+  </Toast.Portal>
+</Toast.Provider>
+```
+
+Manager helpers `Toast.createToastManager()` and `Toast.useToastManager()` wire the stack — not DOM parts. Anchored placement uses `Toast.Positioner` when the page teaches it.
+
+---
+
 ## When to use
 
 - Reversible or informational outcomes after an action (saved, deleted with undo, copied)

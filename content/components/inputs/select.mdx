@@ -23,6 +23,24 @@ Field label, description, and error copy follow the shared input pattern; value,
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Select } from '@viraui/react';
+
+<Select>
+  <Select.Option />
+  <Select.Group>
+    <Select.Option />
+  </Select.Group>
+  <Select.Separator />
+</Select>
+```
+
+---
+
 ## When to use
 
 - Exactly one value from a fixed list that fits in a popup (timezone, state, theme)

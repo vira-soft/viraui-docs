@@ -11,6 +11,54 @@ Always name read-only dials with `label` (or `aria-label`), and always pass `lab
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeControl,
+  GaugeDot,
+  GaugeHub,
+  GaugeInset,
+  GaugeMarks,
+  GaugeNeedle,
+  GaugeStack,
+  GaugeText,
+  GaugeTickFill,
+  GaugeTickLabels,
+  GaugeTicks,
+  GaugeTooltip,
+  GaugeTrack,
+  GaugeValue,
+  GaugeZones,
+} from '@viraui/react';
+
+<GaugeControl>
+  <Gauge>
+    <GaugeInset />
+    <GaugeTrack />
+    <GaugeArc />
+    <GaugeStack />
+    <GaugeZones />
+    <GaugeTicks />
+    <GaugeTickFill />
+    <GaugeMarks />
+    <GaugeTickLabels />
+    <GaugeText />
+    <GaugeValue />
+    <GaugeDot />
+    <GaugeNeedle />
+    <GaugeHub />
+    <GaugeTooltip />
+  </Gauge>
+</GaugeControl>
+```
+
+---
+
 ## When to use
 
 - Determinate readings on a round dial (rings, needles, zone bands, nested insets)
@@ -232,6 +280,77 @@ import {
 
 </Example>
 
+### Timer and clock
+
+Full-circle time dials share `startAngle={180}` / `endAngle={540}` (twelve at the top). A clock uses hour + minute needles with `turns={12}` on the minute hand and `clockLabel` on the hours; a timer is a 0–60 ring with a mono second readout; a chronograph adds a sweeping second hand plus a minute-register `GaugeInset`.
+
+<Example preview={<GaugeTimerClockDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeHub,
+  GaugeInset,
+  GaugeNeedle,
+  GaugeText,
+  GaugeTickLabels,
+  GaugeTicks,
+  GaugeTrack,
+  GaugeValue,
+  clockLabel,
+} from '@viraui/react';
+
+<Gauge value={10.2} min={0} max={12} startAngle={180} endAngle={540} label="Clock">
+  <GaugeTicks count={12} length={16} width={3} offset={-8} cap="butt" />
+  <GaugeTicks count={60} length={6} width={1.5} offset={-3} cap="butt" opacity={0.6} />
+  <GaugeTickLabels count={12} offset={-48} fontSize={26} weight="semibold" format={clockLabel} />
+  <GaugeNeedle kind="pointer" length={0.5} width={12} tail={0} />
+  <GaugeNeedle kind="pointer" length={0.74} width={8} tail={0} turns={12} />
+  <GaugeHub radius={7} />
+</Gauge>
+
+<Gauge value={42} min={0} max={60} startAngle={180} endAngle={540} label="Timer">
+  <GaugeTrack width={8} cap="butt" />
+  <GaugeArc width={8} cap="butt" />
+  <GaugeTicks count={12} length={10} width={2.5} offset={18} />
+  <GaugeTicks count={60} length={5} width={1.5} offset={16} opacity={0.5} />
+  <GaugeValue fontSize={110} font="mono" />
+  <GaugeText fontSize={24} font="mono">sec</GaugeText>
+</Gauge>
+```
+
+</Example>
+
+### Value tooltip
+
+`GaugeTooltip` paints a small elevated bubble next to the dial — default content is an optional `label` over the formatted value and `unit`. With `position="value"` it sits outward from the reading on the arc (here near the end of the fill). Hover, press, or focus shows it; pass `open` to keep it up. In an iframe or docs sandbox, pass `container` to that document’s `body` so the portal stays with the dial.
+
+<Example preview={<GaugeTooltipDemo />}>
+
+```tsx
+import {
+  Gauge,
+  GaugeArc,
+  GaugeDot,
+  GaugeText,
+  GaugeTooltip,
+  GaugeTrack,
+  GaugeValue,
+} from '@viraui/react';
+
+<Gauge value={32} min={0} max={50} startAngle={60} endAngle={300} label="Data usage">
+  <GaugeTrack width={28} />
+  <GaugeArc width={28} />
+  <GaugeDot radius={7} />
+  <GaugeTooltip label="Used" unit="GB" decimals={1} position="value" />
+  <GaugeValue fontSize={96} weight="bold" />
+  <GaugeText fontSize={32}>GB</GaugeText>
+</Gauge>
+```
+
+</Example>
+
 ### Segment fill
 
 `GaugeTickFill` lights discrete ticks along the ring instead of a continuous arc — useful when the reading should feel stepped.
@@ -358,4 +477,8 @@ Compose three concentric full-circle rings for move, exercise, and stand — eac
 
 ```text tab="Polar volume knob"
 Wrap a dial in GaugeControl as a volume knob the user can drag. Keep angles aligned, label the control, and show the live percent in the center.
+```
+
+```text tab="Timer and clock"
+Build a 12-hour clock dial with hour and minute needles (minute hand turns=12) and clockLabel on the hours, plus a 60-second timer ring with a mono second readout. Use startAngle 180 and endAngle 540 so twelve sits at the top.
 ```

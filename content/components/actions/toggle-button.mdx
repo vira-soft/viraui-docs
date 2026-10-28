@@ -25,6 +25,23 @@ When related toggles share one selection model, wrap them in **ToggleGroup**. Ea
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/react';
+
+<ToggleGroup>
+  <ToggleButton />
+  <ToggleTextButton />
+</ToggleGroup>
+```
+
+A lone ToggleButton is valid outside the group. Related selection needs `ToggleGroup` as the host.
+
+---
+
 ## When to use
 
 - Pin, favorite, view-mode, or formatting controls that stay on until toggled off

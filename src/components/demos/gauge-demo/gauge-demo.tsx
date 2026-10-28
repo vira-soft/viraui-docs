@@ -15,17 +15,22 @@ import {
   GaugeTickFill,
   GaugeTickLabels,
   GaugeTicks,
+  GaugeTooltip,
   GaugeTrack,
   GaugeValue,
   GaugeZones,
   IconButton,
   Stack,
+  clockLabel,
   compassLabel,
   zoneColor,
   zoneCutoffs,
   type Zone,
 } from "@viraui/react";
-import { ViraSandbox } from "../../common/vira-sandbox";
+import {
+  useViraSandboxDocument,
+  ViraSandbox,
+} from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
   children: React.ReactNode;
@@ -535,6 +540,67 @@ export const GaugeCompassDemo: React.FC = () => (
   </SandboxShell>
 );
 
+/** Wait for iframe body so GaugeTooltip portals inside the sandbox. */
+const PortalHost: React.FC<{
+  children: (container: HTMLElement) => React.ReactNode;
+}> = ({ children }) => {
+  const { document: frameDoc } = useViraSandboxDocument();
+  if (!frameDoc?.body) {
+    return null;
+  }
+  return children(frameDoc.body);
+};
+
+/** Value-anchored tooltip on a data dial — pinned open so the bubble is visible. */
+export const GaugeTooltipDemo: React.FC = () => (
+  <SandboxShell height={380} label="Gauge with value tooltip">
+    <PortalHost>
+      {(container) => (
+        <Dial>
+          <Gauge
+            value={32}
+            min={0}
+            max={50}
+            startAngle={60}
+            endAngle={300}
+            label="Data usage"
+          >
+            <GaugeTrack width={28} />
+            <GaugeArc width={28} />
+            <GaugeDot radius={7} color={TOKEN.background} />
+            <GaugeTooltip
+              container={container}
+              label="Used"
+              unit="GB"
+              decimals={1}
+              position="value"
+              open
+            />
+            <GaugeValue
+              fontSize={96}
+              font="rounded"
+              weight="bold"
+              {...pos(-0.08, 0.06)}
+            />
+            <GaugeText
+              fontSize={32}
+              font="rounded"
+              weight="bold"
+              anchor="start"
+              {...pos(0.2, 0.02)}
+            >
+              GB
+            </GaugeText>
+            <GaugeText fontSize={26} {...pos(0, -0.26)}>
+              of 50 GB
+            </GaugeText>
+          </Gauge>
+        </Dial>
+      )}
+    </PortalHost>
+  </SandboxShell>
+);
+
 /** Discrete lit ticks instead of a continuous arc. */
 export const GaugeSegmentFillDemo: React.FC = () => (
   <SandboxShell height={300} label="Segment fill">
@@ -678,3 +744,142 @@ export const GaugeTokenColorsDemo: React.FC = () => {
     </SandboxShell>
   );
 };
+
+/** 12h clock, 60s timer ring, chronograph with minute register inset. */
+export const GaugeTimerClockDemo: React.FC = () => (
+  <SandboxShell height={380} label="Clock, timer, and chronograph">
+    <Stack columnGap="xl" direction="row" hAlign="center" vAlign="center" wrap>
+      <Dial>
+        <Gauge
+          value={10.2}
+          min={0}
+          max={12}
+          startAngle={180}
+          endAngle={540}
+          label="Clock"
+        >
+          <GaugeTicks
+            count={12}
+            length={16}
+            width={3}
+            offset={-8}
+            cap="butt"
+            color={TOKEN.foreground}
+          />
+          <GaugeTicks
+            count={60}
+            length={6}
+            width={1.5}
+            offset={-3}
+            cap="butt"
+            opacity={0.6}
+          />
+          <GaugeTickLabels
+            count={12}
+            offset={-48}
+            fontSize={26}
+            weight="semibold"
+            color={TOKEN.foreground}
+            format={clockLabel}
+          />
+          <GaugeNeedle kind="pointer" length={0.5} width={12} tail={0} />
+          <GaugeNeedle kind="pointer" length={0.74} width={8} tail={0} turns={12} />
+          <GaugeHub radius={7} />
+        </Gauge>
+      </Dial>
+      <Dial>
+        <Gauge
+          value={42}
+          min={0}
+          max={60}
+          startAngle={180}
+          endAngle={540}
+          label="Timer"
+        >
+          <GaugeTrack width={8} cap="butt" />
+          <GaugeArc width={8} cap="butt" />
+          <GaugeTicks
+            count={12}
+            length={10}
+            width={2.5}
+            offset={18}
+            color={TOKEN.foreground}
+          />
+          <GaugeTicks count={60} length={5} width={1.5} offset={16} opacity={0.5} />
+          <GaugeValue fontSize={110} font="mono" weight="regular" {...pos(0, 0.04)} />
+          <GaugeText fontSize={24} font="mono" {...pos(0, -0.3)}>
+            sec
+          </GaugeText>
+        </Gauge>
+      </Dial>
+      <Dial>
+        <Gauge
+          value={42}
+          min={0}
+          max={60}
+          startAngle={180}
+          endAngle={540}
+          label="Chronograph"
+        >
+          <GaugeTicks
+            count={12}
+            length={22}
+            width={4}
+            offset={-11}
+            cap="butt"
+            color={TOKEN.foreground}
+          />
+          <GaugeTicks
+            count={60}
+            length={14}
+            width={2.5}
+            offset={-7}
+            cap="butt"
+            opacity={0.6}
+          />
+          <GaugeTickLabels
+            count={12}
+            offset={-50}
+            fontSize={26}
+            weight="semibold"
+            color={TOKEN.foreground}
+          />
+          <GaugeNeedle kind="line" length={0.92} width={4} tail={44} tailDot={10} />
+          <GaugeHub radius={11} />
+          <GaugeText fontSize={30} font="mono" {...pos(0, 0.36)}>
+            05:42.1
+          </GaugeText>
+          <GaugeInset
+            value={5.7}
+            min={0}
+            max={30}
+            startAngle={180}
+            endAngle={540}
+            scale={0.28}
+            {...pos(0, -0.36)}
+          >
+            <GaugeTrack width={6} cap="butt" opacity={0.25} offset={-3} />
+            <GaugeTicks
+              count={6}
+              length={34}
+              width={9}
+              offset={-26}
+              cap="butt"
+              color={TOKEN.foreground}
+            />
+            <GaugeTicks
+              count={30}
+              length={18}
+              width={5}
+              offset={-18}
+              cap="butt"
+              opacity={0.5}
+            />
+            <GaugeNeedle kind="pointer" length={0.78} width={30} tail={0} />
+            <GaugeHub radius={22} />
+          </GaugeInset>
+        </Gauge>
+      </Dial>
+    </Stack>
+  </SandboxShell>
+);

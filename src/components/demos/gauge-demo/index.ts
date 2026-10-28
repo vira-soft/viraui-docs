@@ -6,6 +6,8 @@ export {
   GaugeProgressRingDemo,
   GaugeSegmentFillDemo,
   GaugeSimpleDemo,
+  GaugeTimerClockDemo,
   GaugeTokenColorsDemo,
+  GaugeTooltipDemo,
   GaugeZonesNeedleDemo,
 } from "./gauge-demo";

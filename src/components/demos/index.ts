@@ -208,7 +208,9 @@ export {
   GaugeProgressRingDemo,
   GaugeSegmentFillDemo,
   GaugeSimpleDemo,
+  GaugeTimerClockDemo,
   GaugeTokenColorsDemo,
+  GaugeTooltipDemo,
   GaugeZonesNeedleDemo,
 } from "./gauge-demo";
 export { ChipAddonDemo, ChipLinkDemo, ChipStatusDemo } from "./chip-demo";

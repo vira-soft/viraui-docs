@@ -23,6 +23,25 @@ Content portals out of the DOM flow, picks a side from available space, and dism
 
 ---
 
+## Anatomy
+
+Import the component and assemble its parts:
+
+```tsx
+import { Popover } from '@viraui/react';
+
+<Popover>
+  <Popover.Trigger />
+  <Popover.Sheet>
+    <Popover.Close />
+  </Popover.Sheet>
+</Popover>
+```
+
+Unstyled sheets own chrome and compose `Popover.Title` / `Popover.Description` for the accessible name. `Popover.createHandle()` stays out of the tree.
+
+---
+
 ## When to use
 
 - Options, notifications, or short forms anchored to a control without blocking the page
