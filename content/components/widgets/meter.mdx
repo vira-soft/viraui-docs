@@ -143,7 +143,12 @@ const score = RULES.filter((rule) => rule.test(password)).length;
 const variant = score === 0 ? undefined : score <= 2 ? 'yellow' : 'green';
 
 <Stack rowGap="m">
-  <Textfield label="New password" onValueChange={setPassword} value={password} />
+  <Textfield
+    label="New password"
+    autoComplete="new-password"
+    onValueChange={setPassword}
+    value={password}
+  />
   <Stack rowGap="s">
     <Meter aria-label="Password strength" max={RULES.length} value={score} variant={variant} />
     <Text size="xs" tone={score === 0 ? 'muted' : score <= 2 ? 'warning' : 'positive'}>

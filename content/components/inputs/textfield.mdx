@@ -65,7 +65,7 @@ import { Button, Stack, Textfield } from '@viraui/react';
 <Stack rowGap="l">
   <Textfield
     type="email"
-    autoComplete="email"
+    autoComplete="off"
     fullWidth
     label="Email"
     description="We will send a magic link — no password required."
@@ -148,7 +148,7 @@ const [visible, setVisible] = useState(false);
   <Textfield
     type={visible ? 'text' : 'password'}
     aria-label="Password"
-    autoComplete="current-password"
+    autoComplete="new-password"
     fullWidth
     name="password"
     placeholder="Enter your password"

@@ -46,7 +46,7 @@ export const TextfieldEmailDemo: React.FC = () => (
     <FieldShell>
       <Stack rowGap="l">
         <Textfield
-          autoComplete="email"
+          autoComplete="off"
           description="We will send a magic link — no password required."
           fullWidth
           label="Email"
@@ -102,7 +102,7 @@ export const TextfieldPasswordDemo: React.FC = () => {
           </Stack>
           <Textfield
             aria-label="Password"
-            autoComplete="current-password"
+            autoComplete="new-password"
             defaultValue="synth-horizon-42"
             endAddon={
               <IconButton
