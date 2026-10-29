@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Meter, Stack } from "@viraui/react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
+import { IconButton, Meter, Stack, Text, Textfield } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
 
 type SandboxShellProps = {
@@ -81,3 +82,91 @@ export const MeterHighlightDemo: React.FC = () => (
     </Stack>
   </SandboxShell>
 );
+
+const STRENGTH_LABELS = ["—", "Weak", "Fair", "Good", "Strong"] as const;
+
+const RULES = [
+  {
+    id: "length",
+    label: "At least 8 characters",
+    test: (password: string) => password.length >= 8,
+  },
+  {
+    id: "number",
+    label: "Contains a number",
+    test: (password: string) => /\d/u.test(password),
+  },
+  {
+    id: "symbol",
+    label: "Contains a symbol",
+    test: (password: string) => /[^A-Za-z0-9]/u.test(password),
+  },
+  {
+    id: "mixed-case",
+    label: "Mixed case (upper and lower)",
+    test: (password: string) => /[a-z]/u.test(password) && /[A-Z]/u.test(password),
+  },
+] as const;
+
+/** Password strength score driving Meter `value` / `variant`. */
+export const MeterPasswordStrengthDemo: React.FC = () => {
+  const [password, setPassword] = React.useState("");
+  const [visible, setVisible] = React.useState(false);
+
+  const score = RULES.filter((rule) => rule.test(password)).length;
+
+  let strengthTone: "muted" | "warning" | "positive" = "positive";
+  if (score === 0) {
+    strengthTone = "muted";
+  } else if (score <= 2) {
+    strengthTone = "warning";
+  }
+
+  let variant: "yellow" | "green" | undefined;
+  if (score === 0) {
+    variant = undefined;
+  } else if (score <= 2) {
+    variant = "yellow";
+  } else {
+    variant = "green";
+  }
+
+  return (
+    <SandboxShell label="Password strength Meter">
+      <Stack fullWidth maxWidth="20rem" minWidth="16rem" rowGap="m">
+        <Textfield
+          autoComplete="new-password"
+          endAddon={
+            <IconButton
+              aria-label={visible ? "Hide password" : "Show password"}
+              icon={visible ? <EyeSlash aria-hidden /> : <Eye aria-hidden />}
+              onClick={() => {
+                setVisible((value) => !value);
+              }}
+              size="s"
+              type="button"
+              variant="secondary"
+            />
+          }
+          fullWidth
+          label="New password"
+          name="password"
+          onValueChange={setPassword}
+          type={visible ? "text" : "password"}
+          value={password}
+        />
+        <Stack fullWidth rowGap="s">
+          <Meter
+            aria-label="Password strength"
+            max={RULES.length}
+            value={score}
+            variant={variant}
+          />
+          <Text size="xs" tone={strengthTone}>
+            Strength: {STRENGTH_LABELS[score]}
+          </Text>
+        </Stack>
+      </Stack>
+    </SandboxShell>
+  );
+};

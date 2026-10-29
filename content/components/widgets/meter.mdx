@@ -123,6 +123,38 @@ import { Meter, Stack } from '@viraui/react';
 
 </Example>
 
+### Password strength
+
+A password rule score maps cleanly onto Meter: each passed rule raises `value`, and `variant` shifts from yellow to green once the password is good. Pair the track with a short strength label so people can see what the fill means.
+
+<Example preview={<MeterPasswordStrengthDemo />}>
+
+```tsx
+import { Meter, Stack, Text, Textfield } from '@viraui/react';
+
+const RULES = [
+  { id: 'length', label: 'At least 8 characters', test: (p: string) => p.length >= 8 },
+  { id: 'number', label: 'Contains a number', test: (p: string) => /\d/u.test(p) },
+  { id: 'symbol', label: 'Contains a symbol', test: (p: string) => /[^A-Za-z0-9]/u.test(p) },
+  { id: 'mixed-case', label: 'Mixed case', test: (p: string) => /[a-z]/u.test(p) && /[A-Z]/u.test(p) },
+];
+
+const score = RULES.filter((rule) => rule.test(password)).length;
+const variant = score === 0 ? undefined : score <= 2 ? 'yellow' : 'green';
+
+<Stack rowGap="m">
+  <Textfield label="New password" onValueChange={setPassword} value={password} />
+  <Stack rowGap="s">
+    <Meter aria-label="Password strength" max={RULES.length} value={score} variant={variant} />
+    <Text size="xs" tone={score === 0 ? 'muted' : score <= 2 ? 'warning' : 'positive'}>
+      Strength: {score}
+    </Text>
+  </Stack>
+</Stack>
+```
+
+</Example>
+
 ## Ask your agent
 
 ```text tab="Storage meter"
@@ -135,4 +167,8 @@ Show storage used as "42 GB" beside the label via a custom renderValue formatter
 
 ```text tab="Color-coded metrics"
 Stack three read-only meters for service health, latency, and errors — green, yellow, and red fills — each with a short description of what the fill means.
+```
+
+```text tab="Password strength"
+Add a password strength meter under the new password field: it fills as the password gets longer and mixes cases, numbers, and symbols, turns yellow while the password is still weak and green once it is strong, with a short strength label underneath.
 ```
