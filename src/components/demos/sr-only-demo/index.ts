@@ -1,8 +1,5 @@
 export {
-  SROnlyFieldHintDemo,
-  SROnlyFilterSummaryDemo,
-  SROnlyLabeledControlDemo,
-  SROnlyPaginationDemo,
-  SROnlySortStateDemo,
-  SROnlyStatusDemo,
+  SROnlyAssetToolbarDemo,
+  SROnlyInboxDemo,
+  SROnlyLibraryDemo,
 } from "./sr-only-demo";

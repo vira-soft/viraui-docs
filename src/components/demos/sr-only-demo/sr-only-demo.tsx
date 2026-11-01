@@ -2,19 +2,23 @@
 
 import * as React from "react";
 import {
-  ArrowDown,
   ArrowsClockwise,
+  Bell,
   CaretLeft,
   CaretRight,
+  DownloadSimple,
+  ShareNetwork,
 } from "@phosphor-icons/react";
 import {
+  Avatar,
+  Badge,
   Chip,
   IconButton,
+  Separator,
   SROnly,
   Stack,
   Surface,
   Text,
-  Textfield,
   Title,
 } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
@@ -28,155 +32,260 @@ type SandboxShellProps = {
 const SandboxShell: React.FC<SandboxShellProps> = ({
   children,
   label,
-  height = 200,
+  height = 320,
 }) => (
-  <ViraSandbox dialogShell={false} height={height} label={label}>
+  <ViraSandbox
+    dialogShell={false}
+    height={height}
+    label={label}
+    vAlign="center"
+  >
     {children}
   </ViraSandbox>
 );
 
-const PanelShell: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <Stack
-    expandChildren
-    fullWidth
-    style={{
-      inlineSize: "100%",
-      maxInlineSize: "28rem",
-      marginInline: "auto",
-    }}
-  >
-    {children}
+const PanelShell: React.FC<{
+  children: React.ReactNode;
+  maxWidth?: string;
+}> = ({ children, maxWidth = "26rem" }) => (
+  <Stack fullWidth hAlign="safe center">
+    <Stack expandChildren fullWidth maxWidth={maxWidth}>
+      {children}
+    </Stack>
   </Stack>
 );
 
-/** Visible heading with an AT-only unread count beside it. */
-export const SROnlyStatusDemo: React.FC = () => (
-  <SandboxShell height={160} label="AT-only status beside inbox heading">
+const MESSAGES = [
+  {
+    alt: "Lara Thompson",
+    fallback: "LT",
+    name: "Lara Thompson",
+    preview: "Shared Harbor mark with the studio.",
+    src: "https://mockmind-api.uifaces.co/content/human/80.jpg",
+    time: "2m",
+  },
+  {
+    alt: "Noah Patel",
+    fallback: "NP",
+    name: "Noah Patel",
+    preview: "Invoice #1842 is ready to review.",
+    src: "https://mockmind-api.uifaces.co/content/human/83.jpg",
+    time: "1h",
+  },
+] as const;
+
+const PROJECTS = [
+  {
+    name: "Harbor mark",
+    status: "Active" as const,
+    meta: "Brand · Updated today",
+  },
+  {
+    name: "Northwind billing",
+    status: "Review" as const,
+    meta: "Finance · Due Fri",
+  },
+] as const;
+
+/** Inbox card — visible chrome stays clean; unread count lives in SROnly. */
+export const SROnlyInboxDemo: React.FC = () => (
+  <SandboxShell height={340} label="Inbox panel with AT-only unread count">
     <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack columnGap="s" direction="row" vAlign="center">
-          <Title render={<h2 />} size="3">
-            Inbox
-          </Title>
-          <SROnly>3 unread messages</SROnly>
+      <Surface border="all" color={1} radius="l">
+        <Stack hPadding="m" rowGap="m" vPadding="m">
+          <Stack direction="row" hAlign="space-between" vAlign="center">
+            <Stack columnGap="s" direction="row" vAlign="center">
+              <Title render={<h2 />} size="5">
+                Inbox
+              </Title>
+              <SROnly>3 unread messages</SROnly>
+            </Stack>
+            <Badge color="yellow" show>
+              <IconButton
+                aria-label="Notifications"
+                icon={<Bell />}
+                size="s"
+                variant="flat"
+              />
+            </Badge>
+          </Stack>
+
+          <Separator />
+
+          <Stack rowGap="m">
+            {MESSAGES.map((message) => (
+              <Stack
+                key={message.name}
+                columnGap="m"
+                direction="row"
+                vAlign="center"
+              >
+                <Avatar
+                  alt={message.alt}
+                  fallback={message.fallback}
+                  size="m"
+                  src={message.src}
+                />
+                <Stack expandChildren rowGap="2xs">
+                  <Stack
+                    columnGap="m"
+                    direction="row"
+                    hAlign="space-between"
+                    vAlign="baseline"
+                  >
+                    <Text size="s" weight="semibold">
+                      {message.name}
+                    </Text>
+                    <Text size="xs" tone="muted" whiteSpace="nowrap">
+                      {message.time}
+                    </Text>
+                  </Stack>
+                  <Text size="s" tone="muted">
+                    {message.preview}
+                  </Text>
+                </Stack>
+              </Stack>
+            ))}
+          </Stack>
         </Stack>
       </Surface>
     </PanelShell>
   </SandboxShell>
 );
 
-/** IconButton named by an SROnly sibling via aria-labelledby. */
-export const SROnlyLabeledControlDemo: React.FC = () => (
-  <SandboxShell height={140} label="IconButton named via SROnly aria-labelledby">
-    <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack columnGap="s" direction="row" hAlign="end" vAlign="center">
-          <SROnly id="canvas-refresh-label">Refresh canvas</SROnly>
-          <IconButton
-            aria-labelledby="canvas-refresh-label"
-            icon={<ArrowsClockwise />}
-            variant="flat"
-          />
+/** Asset toolbar only — refresh named via SROnly + aria-labelledby. */
+export const SROnlyAssetToolbarDemo: React.FC = () => (
+  <SandboxShell height={140} label="Asset toolbar with SROnly-named refresh">
+    <PanelShell maxWidth="28rem">
+      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="s">
+        <Stack direction="row" hAlign="space-between" vAlign="center">
+          <Stack rowGap="s">
+            <Text size="s" weight="semibold">
+              Harbor mark
+            </Text>
+            <Text size="xs" tone="muted">
+              SVG · Edited 2m ago
+            </Text>
+          </Stack>
+          <Stack columnGap="s" direction="row" vAlign="center">
+            <SROnly id="asset-refresh-label">Refresh canvas</SROnly>
+            <IconButton
+              aria-labelledby="asset-refresh-label"
+              icon={<ArrowsClockwise />}
+              radius="auto"
+              size="s"
+              variant="flat"
+            />
+            <IconButton
+              aria-label="Download asset"
+              icon={<DownloadSimple />}
+              radius="auto"
+              size="s"
+              variant="flat"
+            />
+            <IconButton
+              aria-label="Share asset"
+              icon={<ShareNetwork />}
+              radius="auto"
+              size="s"
+              variant="flat"
+            />
+          </Stack>
         </Stack>
       </Surface>
     </PanelShell>
   </SandboxShell>
 );
 
-/** Compact visible page fraction with AT-friendly “Page N of M” phrasing. */
-export const SROnlyPaginationDemo: React.FC = () => (
-  <SandboxShell height={140} label="Pagination phrasing for screen readers">
-    <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack
-          columnGap="s"
-          direction="row"
-          hAlign="center"
-          render={<nav aria-label="Pagination" />}
-          vAlign="center"
-        >
-          <IconButton
-            aria-label="Previous page"
-            icon={<CaretLeft />}
-            size="s"
-            variant="flat"
-          />
-          <Text size="s">
-            <SROnly>Page </SROnly>
-            2
-            <SROnly> of </SROnly>
-            <span aria-hidden="true">/</span>
-            12
-          </Text>
-          <IconButton
-            aria-label="Next page"
-            icon={<CaretRight />}
-            size="s"
-            variant="flat"
-          />
-        </Stack>
-      </Surface>
-    </PanelShell>
-  </SandboxShell>
-);
+/** Project library — filter chips, AT-only count, compact page phrasing. */
+export const SROnlyLibraryDemo: React.FC = () => (
+  <SandboxShell
+    height={420}
+    label="Project library with AT-only count and page phrasing"
+  >
+    <PanelShell maxWidth="28rem">
+      <Surface border="all" color={1} radius="l">
+        <Stack hPadding="m" rowGap="m" vPadding="m">
+          <Stack rowGap="xs">
+            <Title render={<h2 />} size="5">
+              Projects
+            </Title>
+            <Text size="s" tone="muted">
+              Active work across design and billing.
+            </Text>
+          </Stack>
 
-/** Visible chips plus an AT-only result count. */
-export const SROnlyFilterSummaryDemo: React.FC = () => (
-  <SandboxShell height={160} label="Filter chips with AT-only result count">
-    <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack columnGap="s" direction="row" vAlign="center" wrap>
-          <Chip>Design</Chip>
-          <Chip>Active</Chip>
-          <SROnly>Showing 12 of 48 projects</SROnly>
-        </Stack>
-      </Surface>
-    </PanelShell>
-  </SandboxShell>
-);
+          <Stack columnGap="s" direction="row" vAlign="center" wrap>
+            <Chip>Design</Chip>
+            <Chip>Active</Chip>
+            <SROnly>Showing 12 of 48 projects</SROnly>
+          </Stack>
 
-/** Password field with AT-only constraints via aria-describedby. */
-export const SROnlyFieldHintDemo: React.FC = () => (
-  <SandboxShell height={220} label="Password rules only for assistive tech">
-    <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack rowGap="m">
-          <Textfield
-            aria-describedby="password-rules"
-            autoComplete="new-password"
-            label="Password"
-            type="password"
-          />
-          <SROnly id="password-rules">
-            Use at least 12 characters and include a number.
-          </SROnly>
-        </Stack>
-      </Surface>
-    </PanelShell>
-  </SandboxShell>
-);
+          <Stack rowGap="m">
+            {PROJECTS.map((project) => (
+              <Surface
+                key={project.name}
+                border="all"
+                color={2}
+                hPadding="m"
+                radius="m"
+                vPadding="m"
+              >
+                <Stack
+                  columnGap="m"
+                  direction="row"
+                  hAlign="space-between"
+                  vAlign="center"
+                >
+                  <Stack rowGap="s">
+                    <Text size="s" weight="semibold">
+                      {project.name}
+                    </Text>
+                    <Text size="xs" tone="muted">
+                      {project.meta}
+                    </Text>
+                  </Stack>
+                  <Chip
+                    variant={
+                      project.status === "Active" ? "green" : "secondary"
+                    }
+                  >
+                    {project.status}
+                  </Chip>
+                </Stack>
+              </Surface>
+            ))}
+          </Stack>
 
-/** Sortable column header with AT-only sort direction. */
-export const SROnlySortStateDemo: React.FC = () => (
-  <SandboxShell height={140} label="Sortable header with AT-only direction">
-    <PanelShell>
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="m">
-        <Stack
-          columnGap="2xs"
-          direction="row"
-          render={<div role="columnheader" />}
-          vAlign="center"
-        >
-          <Text size="s" weight="semibold">
-            Name
-          </Text>
-          <IconButton
-            aria-label="Sort by name"
-            icon={<ArrowDown />}
-            size="s"
-            variant="flat"
-          />
-          <SROnly>sorted ascending</SROnly>
+          <Separator />
+
+          <Stack
+            columnGap="s"
+            direction="row"
+            hAlign="center"
+            render={<nav aria-label="Pagination" />}
+            vAlign="center"
+          >
+            <IconButton
+              aria-label="Previous page"
+              icon={<CaretLeft />}
+              size="s"
+              variant="flat"
+            />
+            <Text size="s">
+              <SROnly>Page </SROnly>
+              2
+              <SROnly> of </SROnly>
+              <span aria-hidden="true"> / </span>
+              12
+            </Text>
+            <IconButton
+              aria-label="Next page"
+              icon={<CaretRight />}
+              size="s"
+              variant="flat"
+            />
+          </Stack>
         </Stack>
       </Surface>
     </PanelShell>

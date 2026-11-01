@@ -13,10 +13,9 @@ Prefer a visible muted [`Text`](/components/typography/text) line when sighted u
 
 ## When to use
 
-- Extra status or count that should not add visual chrome beside a heading or chip row
+- Extra status or count that should not add visual chrome beside a heading
 - Accessible name for an [`IconButton`](/components/actions/icon-button) via `aria-labelledby`
-- Compact visible phrasing that needs fuller wording for screen readers (pagination, sort state)
-- Field constraints linked with `aria-describedby` when a helper line would clutter the form
+- Compact visible phrasing that needs fuller wording for screen readers (pagination, result counts)
 
 ## When not to use
 
@@ -38,158 +37,127 @@ Prefer a visible muted [`Text`](/components/typography/text) line when sighted u
 
 ## Common examples
 
-### AT-only status
+### Inbox status
 
-Keep the visible heading clean and park unread counts (or similar status) in `SROnly` so screen readers still hear them. Useful when a badge elsewhere already covers the visual cue.
+Keep the panel heading clean. Park the unread count in `SROnly` while a badge on the notifications control covers the visual cue.
 
-<Example preview={<SROnlyStatusDemo />}>
+<Example preview={<SROnlyInboxDemo />}>
 
 ```tsx
-import { SROnly, Stack, Title } from '@viraui/react';
+import { Bell } from '@phosphor-icons/react';
+import { Badge, IconButton, Separator, SROnly, Stack, Surface, Title } from '@viraui/react';
 
-<Stack columnGap="s" direction="row" vAlign="center">
-  <Title render={<h2 />} size="3">
-    Inbox
-  </Title>
-  <SROnly>3 unread messages</SROnly>
-</Stack>
+<Surface border="all" color={1} radius="l">
+  <Stack hPadding="m" rowGap="m" vPadding="m">
+    <Stack direction="row" hAlign="space-between" vAlign="center">
+      <Stack columnGap="s" direction="row" vAlign="center">
+        <Title render={<h2 />} size="5">
+          Inbox
+        </Title>
+        <SROnly>3 unread messages</SROnly>
+      </Stack>
+      <Badge color="yellow" show>
+        <IconButton aria-label="Notifications" icon={<Bell />} size="s" variant="flat" />
+      </Badge>
+    </Stack>
+    <Separator />
+    {/* message rows */}
+  </Stack>
+</Surface>
 ```
 
 </Example>
 
-### Named icon control
+### Named toolbar action
 
-Point `aria-labelledby` at an `SROnly` id when the label should not appear next to the glyph. Same contract as a visible label sibling — the name just stays clipped.
+Point `aria-labelledby` at an `SROnly` id when a toolbar glyph should stay unlabeled on screen. Sibling actions can keep a plain `aria-label`. Keep the strip as dense chrome — no empty preview band under it.
 
-<Example preview={<SROnlyLabeledControlDemo />}>
+<Example preview={<SROnlyAssetToolbarDemo />}>
 
 ```tsx
-import { ArrowsClockwise } from '@phosphor-icons/react';
-import { IconButton, SROnly, Stack } from '@viraui/react';
+import { ArrowsClockwise, DownloadSimple, ShareNetwork } from '@phosphor-icons/react';
+import { IconButton, SROnly, Stack, Surface, Text } from '@viraui/react';
 
-<Stack columnGap="s" direction="row" vAlign="center">
-  <SROnly id="canvas-refresh-label">Refresh canvas</SROnly>
-  <IconButton
-    aria-labelledby="canvas-refresh-label"
-    icon={<ArrowsClockwise />}
-    variant="flat"
-  />
-</Stack>
+<Surface border="all" color={1} hPadding="m" radius="m" vPadding="s">
+  <Stack direction="row" hAlign="space-between" vAlign="center">
+    <Stack rowGap="2xs">
+      <Text size="s" weight="semibold" />
+      <Text size="xs" tone="muted" />
+    </Stack>
+    <Stack columnGap="s" direction="row" vAlign="center">
+      <SROnly id="asset-refresh-label">Refresh canvas</SROnly>
+      <IconButton
+        aria-labelledby="asset-refresh-label"
+        icon={<ArrowsClockwise />}
+        radius="auto"
+        size="s"
+        variant="flat"
+      />
+      <IconButton aria-label="Download asset" icon={<DownloadSimple />} radius="auto" size="s" variant="flat" />
+      <IconButton aria-label="Share asset" icon={<ShareNetwork />} radius="auto" size="s" variant="flat" />
+    </Stack>
+  </Stack>
+</Surface>
 ```
 
 </Example>
 
-### Compact pagination phrasing
+### Library results
 
-Sighted UI can stay as `2 / 12` while `SROnly` inserts “Page” and “of”. Hide the decorative slash from AT so it does not fight the spoken sentence.
+Filter chips stay visible. An AT-only result count and compact `2 / 12` pagination with fuller screen-reader phrasing sit in the same library card.
 
-<Example preview={<SROnlyPaginationDemo />}>
+<Example preview={<SROnlyLibraryDemo />}>
 
 ```tsx
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { IconButton, SROnly, Stack, Text } from '@viraui/react';
+import { Chip, IconButton, Separator, SROnly, Stack, Surface, Text, Title } from '@viraui/react';
 
-<Stack
-  columnGap="s"
-  direction="row"
-  render={<nav aria-label="Pagination" />}
-  vAlign="center"
->
-  <IconButton aria-label="Previous page" icon={<CaretLeft />} size="s" variant="flat" />
-  <Text size="s">
-    <SROnly>Page </SROnly>
-    2
-    <SROnly> of </SROnly>
-    <span aria-hidden="true">/</span>
-    12
-  </Text>
-  <IconButton aria-label="Next page" icon={<CaretRight />} size="s" variant="flat" />
-</Stack>
-```
-
-</Example>
-
-### Filter summary
-
-Chips already show active filters. Add an AT-only result count so the list summary is announced without another visible metric chip.
-
-<Example preview={<SROnlyFilterSummaryDemo />}>
-
-```tsx
-import { Chip, SROnly, Stack } from '@viraui/react';
-
-<Stack columnGap="s" direction="row" vAlign="center" wrap>
-  <Chip>Design</Chip>
-  <Chip>Active</Chip>
-  <SROnly>Showing 12 of 48 projects</SROnly>
-</Stack>
-```
-
-</Example>
-
-### Field description
-
-Link constraints with `aria-describedby` when the rules should stay available to AT without a muted helper under the field. Switch to visible Text when everyone needs the guidance.
-
-<Example preview={<SROnlyFieldHintDemo />}>
-
-```tsx
-import { SROnly, Stack, Textfield } from '@viraui/react';
-
-<Stack rowGap="m">
-  <Textfield
-    aria-describedby="password-rules"
-    autoComplete="new-password"
-    label="Password"
-    type="password"
-  />
-  <SROnly id="password-rules">
-    Use at least 12 characters and include a number.
-  </SROnly>
-</Stack>
-```
-
-</Example>
-
-### Sort state
-
-Visible column title plus sort control; `SROnly` announces the active direction without stuffing it into the button label on every render.
-
-<Example preview={<SROnlySortStateDemo />}>
-
-```tsx
-import { ArrowDown } from '@phosphor-icons/react';
-import { IconButton, SROnly, Stack, Text } from '@viraui/react';
-
-<Stack columnGap="2xs" direction="row" vAlign="center">
-  <Text size="s" weight="semibold">
-    Name
-  </Text>
-  <IconButton aria-label="Sort by name" icon={<ArrowDown />} size="s" variant="flat" />
-  <SROnly>sorted ascending</SROnly>
-</Stack>
+<Surface border="all" color={1} radius="l">
+  <Stack hPadding="m" rowGap="m" vPadding="m">
+    <Stack rowGap="xs">
+      <Title render={<h2 />} size="5" />
+      <Text size="s" tone="muted" />
+    </Stack>
+    <Stack columnGap="s" direction="row" vAlign="center" wrap>
+      <Chip>Design</Chip>
+      <Chip>Active</Chip>
+      <SROnly>Showing 12 of 48 projects</SROnly>
+    </Stack>
+    {/* project rows — nested Surface radius="auto", rowGap="m" */}
+    <Separator />
+    <Stack
+      columnGap="s"
+      direction="row"
+      hAlign="center"
+      render={<nav aria-label="Pagination" />}
+      vAlign="center"
+    >
+      <IconButton aria-label="Previous page" icon={<CaretLeft />} size="s" variant="flat" />
+      <Text size="s">
+        <SROnly>Page </SROnly>
+        2
+        <SROnly> of </SROnly>
+        <span aria-hidden="true"> / </span>
+        12
+      </Text>
+      <IconButton aria-label="Next page" icon={<CaretRight />} size="s" variant="flat" />
+    </Stack>
+  </Stack>
+</Surface>
 ```
 
 </Example>
 
 ## Ask your agent
 
-```text tab="Inbox status"
-Add an Inbox heading with an unread count that screen readers hear but sighted users do not see as extra chrome.
+```text tab="Inbox unread"
+Build an inbox card with a clean heading, a badged notifications control, and an unread count that screen readers hear but does not add extra chrome beside the title.
 ```
 
-```text tab="Refresh control"
-Name a flat refresh IconButton with visually hidden text via aria-labelledby instead of a visible label.
+```text tab="Asset toolbar"
+Compose a compact asset toolbar strip with filename meta and flat icon actions — name refresh with visually hidden text via aria-labelledby; download and share can use aria-label. No empty preview area under the strip.
 ```
 
-```text tab="Page fraction"
-Build pagination that shows 2 / 12 on screen but announces “Page 2 of 12” to assistive tech.
-```
-
-```text tab="Filter count"
-Keep Design and Active filter chips visible and announce “Showing 12 of 48 projects” only to screen readers.
-```
-
-```text tab="Password rules"
-Wire password rules through aria-describedby with visually hidden text — no muted helper line under the field.
+```text tab="Project library"
+Build a projects library card with Design and Active filter chips, an AT-only result count, two project rows, and pagination that shows 2 / 12 but announces Page 2 of 12.
 ```

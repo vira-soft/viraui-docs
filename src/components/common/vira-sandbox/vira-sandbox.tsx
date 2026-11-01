@@ -21,13 +21,14 @@ import cinderThemeCssUrl from "@viraui/foundation/cinder.css?url";
 import preflightCssUrl from "@viraui/react/preflight.css?url";
 
 /**
- * Every published component stylesheet under @viraui/react.
- * New components with a `name/name.css` build artifact are picked up automatically.
- * (Glob re-resolve after local file: link — bump when switching package source.)
+ * Every published component stylesheet under @viraui/react (recursive glob).
+ * Nested sheets (e.g. spinner/variants/*.css) must load — iframe ignores
+ * parent-bundled CSS modules. New CSS under dist/components is picked up
+ * automatically. (Re-resolve after local file: link / package bump.)
  */
 const COMPONENT_CSS_URLS = Object.values(
   import.meta.glob(
-    "../../../../node_modules/@viraui/react/dist/components/*/*.css",
+    "../../../../node_modules/@viraui/react/dist/components/**/*.css",
     { eager: true, query: "?url", import: "default" },
   ),
 ) as string[];
