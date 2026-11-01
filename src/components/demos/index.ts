@@ -172,6 +172,14 @@ export {
   BleedFullDemo,
 } from "./bleed-demo";
 export {
+  SROnlyFieldHintDemo,
+  SROnlyFilterSummaryDemo,
+  SROnlyLabeledControlDemo,
+  SROnlyPaginationDemo,
+  SROnlySortStateDemo,
+  SROnlyStatusDemo,
+} from "./sr-only-demo";
+export {
   BreakpointsCustomMapDemo,
   BreakpointsDirectionDemo,
   BreakpointsRecordDemo,

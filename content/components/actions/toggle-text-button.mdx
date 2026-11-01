@@ -138,13 +138,18 @@ import { Surface, ToggleGroup, ToggleTextButton } from '@viraui/react';
 
 <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
   <ToggleGroup aria-label="Text style" defaultValue={['bold']}>
-    <ToggleTextButton value="bold" pressedVariant="secondary">
+    <ToggleTextButton value="bold" pressedVariant="secondary" radius="auto">
       Bold
     </ToggleTextButton>
-    <ToggleTextButton value="italic" pressedVariant="secondary">
+    <ToggleTextButton value="italic" pressedVariant="secondary" radius="auto">
       Italic
     </ToggleTextButton>
-    <ToggleTextButton value="notify" addon={<Bell />} pressedVariant="secondary">
+    <ToggleTextButton
+      value="notify"
+      addon={<Bell />}
+      pressedVariant="secondary"
+      radius="auto"
+    >
       Notify
     </ToggleTextButton>
   </ToggleGroup>
@@ -165,10 +170,15 @@ import { Surface, ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/re
 
 <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
   <ToggleGroup aria-label="Editor options" defaultValue={['bold']}>
-    <ToggleTextButton value="bold" pressedVariant="secondary">
+    <ToggleTextButton value="bold" pressedVariant="secondary" radius="auto">
       Bold
     </ToggleTextButton>
-    <ToggleTextButton value="notify" addon={<Bell />} pressedVariant="secondary">
+    <ToggleTextButton
+      value="notify"
+      addon={<Bell />}
+      pressedVariant="secondary"
+      radius="auto"
+    >
       Notify
     </ToggleTextButton>
     <ToggleButton
@@ -176,6 +186,7 @@ import { Surface, ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/re
       aria-label="Pin"
       restingIcon={<PushPin />}
       pressedVariant="secondary"
+      radius="auto"
     />
     <ToggleButton
       value="dark"
@@ -183,6 +194,7 @@ import { Surface, ToggleButton, ToggleGroup, ToggleTextButton } from '@viraui/re
       restingIcon={<Moon />}
       pressedIcon={<Sun />}
       pressedVariant="secondary"
+      radius="auto"
     />
   </ToggleGroup>
 </Surface>

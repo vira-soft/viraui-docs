@@ -143,18 +143,21 @@ export const ToggleGroupSingleDemo: React.FC = () => (
         <ToggleButton
           aria-label="Align left"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextAlignLeft />}
           value="left"
         />
         <ToggleButton
           aria-label="Align center"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextAlignCenter />}
           value="center"
         />
         <ToggleButton
           aria-label="Align right"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextAlignRight />}
           value="right"
         />
@@ -175,18 +178,21 @@ export const ToggleGroupMultipleDemo: React.FC = () => (
         <ToggleButton
           aria-label="Bold"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextB />}
           value="bold"
         />
         <ToggleButton
           aria-label="Italic"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextItalic />}
           value="italic"
         />
         <ToggleButton
           aria-label="Underline"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<TextUnderline />}
           value="underline"
         />

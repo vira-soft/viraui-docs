@@ -27,6 +27,7 @@ Layout/Elevator
 Layout/Grid
 Layout/Masonry
 Layout/Separator
+Layout/SROnly
 Layout/Stack
 Layout/Surface
 Loading/LinearProgress

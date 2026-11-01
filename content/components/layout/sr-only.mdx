@@ -1,0 +1,195 @@
+---
+title: SROnly
+description: Visually hide copy while keeping it in the accessibility tree — classic clip recipe for AT-only text.
+---
+
+`SROnly` wraps children in a clipped span so the text stays in the accessibility tree without painting on screen. Use it when sighted UI already carries the meaning (heading, chips, compact fraction) and assistive tech still needs an extra phrase, name, or description.
+
+Default root is a `span`. Pass `render` when the accessible text must live on another element while keeping the clip styles. Do not put focusable controls inside it, and do not mark the wrapper `aria-hidden` — that would remove the text from the tree.
+
+Prefer a visible muted [`Text`](/components/typography/text) line when sighted users also need the guidance. Prefer `aria-label` on the control itself when a short name is enough and no shared label node is required.
+
+---
+
+## When to use
+
+- Extra status or count that should not add visual chrome beside a heading or chip row
+- Accessible name for an [`IconButton`](/components/actions/icon-button) via `aria-labelledby`
+- Compact visible phrasing that needs fuller wording for screen readers (pagination, sort state)
+- Field constraints linked with `aria-describedby` when a helper line would clutter the form
+
+## When not to use
+
+- Sighted users also need the copy → [Text](/components/typography/text) `tone="muted"` (or Field helper)
+- A short name belongs on the control → `aria-label` on [IconButton](/components/actions/icon-button) / Button
+- You need to hide something from everyone → remove it from the tree, do not clip it
+- Focusable controls or interactive widgets as children
+
+---
+
+## Related
+
+- [IconButton](/components/actions/icon-button) — icon-only actions that need an accessible name
+- [Text](/components/typography/text) — visible helper copy instead of AT-only text
+- [Stack](/components/layout/stack) — host for heading + SROnly clusters
+- [Chip](/components/widgets/chip) — visible filter state next to an AT-only summary
+
+---
+
+## Common examples
+
+### AT-only status
+
+Keep the visible heading clean and park unread counts (or similar status) in `SROnly` so screen readers still hear them. Useful when a badge elsewhere already covers the visual cue.
+
+<Example preview={<SROnlyStatusDemo />}>
+
+```tsx
+import { SROnly, Stack, Title } from '@viraui/react';
+
+<Stack columnGap="s" direction="row" vAlign="center">
+  <Title render={<h2 />} size="3">
+    Inbox
+  </Title>
+  <SROnly>3 unread messages</SROnly>
+</Stack>
+```
+
+</Example>
+
+### Named icon control
+
+Point `aria-labelledby` at an `SROnly` id when the label should not appear next to the glyph. Same contract as a visible label sibling — the name just stays clipped.
+
+<Example preview={<SROnlyLabeledControlDemo />}>
+
+```tsx
+import { ArrowsClockwise } from '@phosphor-icons/react';
+import { IconButton, SROnly, Stack } from '@viraui/react';
+
+<Stack columnGap="s" direction="row" vAlign="center">
+  <SROnly id="canvas-refresh-label">Refresh canvas</SROnly>
+  <IconButton
+    aria-labelledby="canvas-refresh-label"
+    icon={<ArrowsClockwise />}
+    variant="flat"
+  />
+</Stack>
+```
+
+</Example>
+
+### Compact pagination phrasing
+
+Sighted UI can stay as `2 / 12` while `SROnly` inserts “Page” and “of”. Hide the decorative slash from AT so it does not fight the spoken sentence.
+
+<Example preview={<SROnlyPaginationDemo />}>
+
+```tsx
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { IconButton, SROnly, Stack, Text } from '@viraui/react';
+
+<Stack
+  columnGap="s"
+  direction="row"
+  render={<nav aria-label="Pagination" />}
+  vAlign="center"
+>
+  <IconButton aria-label="Previous page" icon={<CaretLeft />} size="s" variant="flat" />
+  <Text size="s">
+    <SROnly>Page </SROnly>
+    2
+    <SROnly> of </SROnly>
+    <span aria-hidden="true">/</span>
+    12
+  </Text>
+  <IconButton aria-label="Next page" icon={<CaretRight />} size="s" variant="flat" />
+</Stack>
+```
+
+</Example>
+
+### Filter summary
+
+Chips already show active filters. Add an AT-only result count so the list summary is announced without another visible metric chip.
+
+<Example preview={<SROnlyFilterSummaryDemo />}>
+
+```tsx
+import { Chip, SROnly, Stack } from '@viraui/react';
+
+<Stack columnGap="s" direction="row" vAlign="center" wrap>
+  <Chip>Design</Chip>
+  <Chip>Active</Chip>
+  <SROnly>Showing 12 of 48 projects</SROnly>
+</Stack>
+```
+
+</Example>
+
+### Field description
+
+Link constraints with `aria-describedby` when the rules should stay available to AT without a muted helper under the field. Switch to visible Text when everyone needs the guidance.
+
+<Example preview={<SROnlyFieldHintDemo />}>
+
+```tsx
+import { SROnly, Stack, Textfield } from '@viraui/react';
+
+<Stack rowGap="m">
+  <Textfield
+    aria-describedby="password-rules"
+    autoComplete="new-password"
+    label="Password"
+    type="password"
+  />
+  <SROnly id="password-rules">
+    Use at least 12 characters and include a number.
+  </SROnly>
+</Stack>
+```
+
+</Example>
+
+### Sort state
+
+Visible column title plus sort control; `SROnly` announces the active direction without stuffing it into the button label on every render.
+
+<Example preview={<SROnlySortStateDemo />}>
+
+```tsx
+import { ArrowDown } from '@phosphor-icons/react';
+import { IconButton, SROnly, Stack, Text } from '@viraui/react';
+
+<Stack columnGap="2xs" direction="row" vAlign="center">
+  <Text size="s" weight="semibold">
+    Name
+  </Text>
+  <IconButton aria-label="Sort by name" icon={<ArrowDown />} size="s" variant="flat" />
+  <SROnly>sorted ascending</SROnly>
+</Stack>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Inbox status"
+Add an Inbox heading with an unread count that screen readers hear but sighted users do not see as extra chrome.
+```
+
+```text tab="Refresh control"
+Name a flat refresh IconButton with visually hidden text via aria-labelledby instead of a visible label.
+```
+
+```text tab="Page fraction"
+Build pagination that shows 2 / 12 on screen but announces “Page 2 of 12” to assistive tech.
+```
+
+```text tab="Filter count"
+Keep Design and Active filter chips visible and announce “Showing 12 of 48 projects” only to screen readers.
+```
+
+```text tab="Password rules"
+Wire password rules through aria-describedby with visually hidden text — no muted helper line under the field.
+```

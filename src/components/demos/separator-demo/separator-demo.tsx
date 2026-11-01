@@ -88,18 +88,21 @@ export const SeparatorToolbarDemo: React.FC = () => (
         <IconButton
           aria-label="Bold"
           icon={<TextB />}
+          radius="auto"
           size="s"
           variant="flat"
         />
         <IconButton
           aria-label="Italic"
           icon={<TextItalic />}
+          radius="auto"
           size="s"
           variant="flat"
         />
         <IconButton
           aria-label="Align left"
           icon={<TextAlignLeft />}
+          radius="auto"
           size="s"
           variant="flat"
         />
@@ -107,12 +110,14 @@ export const SeparatorToolbarDemo: React.FC = () => (
         <IconButton
           aria-label="Find in document"
           icon={<MagnifyingGlass />}
+          radius="auto"
           size="s"
           variant="flat"
         />
         <IconButton
           aria-label="Save draft"
           icon={<FloppyDisk />}
+          radius="auto"
           size="s"
           variant="flat"
         />

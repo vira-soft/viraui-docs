@@ -109,6 +109,7 @@ const ToolbarTooltip: React.FC<ToolbarTooltipProps> = ({
         <IconButton
           aria-label={action.label}
           icon={action.icon}
+          radius="auto"
           size="s"
           variant="flat"
         />
@@ -190,6 +191,7 @@ export const TooltipHandleDemo: React.FC = () => {
                       <IconButton
                         aria-label={action.label}
                         icon={action.icon}
+                        radius="auto"
                         size="s"
                         variant="flat"
                       />

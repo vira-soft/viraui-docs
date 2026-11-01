@@ -87,11 +87,22 @@ export const IconButtonToolbarDemo: React.FC = () => (
   <SandboxShell label="Icon toolbar: settings, share, and delete">
     <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
       <Stack columnGap="2xs" direction="row" vAlign="center">
-        <IconButton aria-label="Settings" icon={<Gear />} variant="flat" />
-        <IconButton aria-label="Share" icon={<ShareNetwork />} variant="flat" />
+        <IconButton
+          aria-label="Settings"
+          icon={<Gear />}
+          radius="auto"
+          variant="flat"
+        />
+        <IconButton
+          aria-label="Share"
+          icon={<ShareNetwork />}
+          radius="auto"
+          variant="flat"
+        />
         <IconButton
           aria-label="Delete"
           icon={<Trash />}
+          radius="auto"
           variant="destructive"
         />
       </Stack>

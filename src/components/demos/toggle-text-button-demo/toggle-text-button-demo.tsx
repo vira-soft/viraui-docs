@@ -89,15 +89,20 @@ export const ToggleTextButtonGroupDemo: React.FC = () => (
   <SandboxShell label="ToggleTextButton in ToggleGroup">
     <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
       <ToggleGroup aria-label="Text style" defaultValue={["bold"]}>
-        <ToggleTextButton pressedVariant="secondary" value="bold">
+        <ToggleTextButton pressedVariant="secondary" radius="auto" value="bold">
           Bold
         </ToggleTextButton>
-        <ToggleTextButton pressedVariant="secondary" value="italic">
+        <ToggleTextButton
+          pressedVariant="secondary"
+          radius="auto"
+          value="italic"
+        >
           Italic
         </ToggleTextButton>
         <ToggleTextButton
           addon={<Bell />}
           pressedVariant="secondary"
+          radius="auto"
           value="notify"
         >
           Notify
@@ -112,12 +117,13 @@ export const ToggleTextButtonMixedGroupDemo: React.FC = () => (
   <SandboxShell label="Mixed ToggleTextButton and ToggleButton group">
     <Surface border="all" color={1} hPadding="2xs" radius="m" vPadding="2xs">
       <ToggleGroup aria-label="Editor options" defaultValue={["bold"]}>
-        <ToggleTextButton pressedVariant="secondary" value="bold">
+        <ToggleTextButton pressedVariant="secondary" radius="auto" value="bold">
           Bold
         </ToggleTextButton>
         <ToggleTextButton
           addon={<Bell />}
           pressedVariant="secondary"
+          radius="auto"
           value="notify"
         >
           Notify
@@ -125,6 +131,7 @@ export const ToggleTextButtonMixedGroupDemo: React.FC = () => (
         <ToggleButton
           aria-label="Pin"
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<PushPin />}
           value="pin"
         />
@@ -132,6 +139,7 @@ export const ToggleTextButtonMixedGroupDemo: React.FC = () => (
           aria-label="Dark mode"
           pressedIcon={<Sun />}
           pressedVariant="secondary"
+          radius="auto"
           restingIcon={<Moon />}
           value="dark"
         />
