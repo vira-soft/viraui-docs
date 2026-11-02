@@ -157,7 +157,7 @@ export const SROnlyInboxDemo: React.FC = () => (
 export const SROnlyAssetToolbarDemo: React.FC = () => (
   <SandboxShell height={140} label="Asset toolbar with SROnly-named refresh">
     <PanelShell maxWidth="28rem">
-      <Surface border="all" color={1} hPadding="m" radius="m" vPadding="s">
+      <Surface border="all" color={1} hPadding={["m", "s"]} radius="m" vPadding="s">
         <Stack direction="row" hAlign="space-between" vAlign="center">
           <Stack rowGap="s">
             <Text size="s" weight="semibold">
