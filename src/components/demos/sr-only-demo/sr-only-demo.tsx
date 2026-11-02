@@ -2,12 +2,11 @@
 
 import * as React from "react";
 import {
-  ArrowsClockwise,
-  Bell,
-  CaretLeft,
-  CaretRight,
-  DownloadSimple,
-  ShareNetwork,
+  ArrowsClockwiseIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  DownloadSimpleIcon,
+  ShareNetworkIcon,
 } from "@phosphor-icons/react";
 import {
   Avatar,
@@ -22,6 +21,7 @@ import {
   Title,
 } from "@viraui/react";
 import { ViraSandbox } from "../../common/vira-sandbox";
+import { BellIcon } from "lucide-react";
 
 type SandboxShellProps = {
   children: React.ReactNode;
@@ -103,7 +103,7 @@ export const SROnlyInboxDemo: React.FC = () => (
             <Badge color="yellow" show>
               <IconButton
                 aria-label="Notifications"
-                icon={<Bell />}
+                icon={<BellIcon />}
                 size="s"
                 variant="flat"
               />
@@ -171,22 +171,19 @@ export const SROnlyAssetToolbarDemo: React.FC = () => (
             <SROnly id="asset-refresh-label">Refresh canvas</SROnly>
             <IconButton
               aria-labelledby="asset-refresh-label"
-              icon={<ArrowsClockwise />}
-              radius="auto"
+              icon={<ArrowsClockwiseIcon />}
               size="s"
               variant="flat"
             />
             <IconButton
               aria-label="Download asset"
-              icon={<DownloadSimple />}
-              radius="auto"
+              icon={<DownloadSimpleIcon />}
               size="s"
               variant="flat"
             />
             <IconButton
               aria-label="Share asset"
-              icon={<ShareNetwork />}
-              radius="auto"
+              icon={<ShareNetworkIcon />}
               size="s"
               variant="flat"
             />
@@ -268,7 +265,7 @@ export const SROnlyLibraryDemo: React.FC = () => (
           >
             <IconButton
               aria-label="Previous page"
-              icon={<CaretLeft />}
+              icon={<CaretLeftIcon />}
               size="s"
               variant="flat"
             />
@@ -281,7 +278,7 @@ export const SROnlyLibraryDemo: React.FC = () => (
             </Text>
             <IconButton
               aria-label="Next page"
-              icon={<CaretRight />}
+              icon={<CaretRightIcon />}
               size="s"
               variant="flat"
             />
