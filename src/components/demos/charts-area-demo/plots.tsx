@@ -29,6 +29,7 @@ import {
   useTooltip,
 } from '@viraui/charts';
 import { mutedLabel, seriesStroke } from '../../../lib/chart-tokens';
+import { thinDomainTicks } from '../../../lib/chart-ticks';
 import {
   denseDualData as denseData,
   desktopData,
@@ -67,7 +68,6 @@ const margin = { top: 28, right: 24, bottom: 40, left: 24 };
 const axesMargin = { top: 28, right: 24, bottom: 40, left: 48 };
 const denseMargin = { top: 16, right: 16, bottom: 36, left: 16 };
 const denseHeight = 360;
-const denseLabelMinPx = 72;
 const innerWidth = width - margin.left - margin.right;
 const innerHeight = height - margin.top - margin.bottom;
 
@@ -88,19 +88,6 @@ const seriesColorMap: Record<string, string> = {
   desktop: seriesColorAlt,
   mobile: seriesColor,
   other: seriesColorOther,
-};
-
-/** Thin point-domain ticks so labels fit `plotWidth`. */
-const thinPointTicks = (domain: string[], plotWidth: number, minLabelPx = denseLabelMinPx): string[] => {
-  if (domain.length === 0 || plotWidth <= 0) {
-    return [];
-  }
-  const maxTicks = Math.max(2, Math.floor(plotWidth / minLabelPx));
-  if (domain.length <= maxTicks) {
-    return domain.slice();
-  }
-  const step = Math.ceil(domain.length / maxTicks);
-  return domain.filter((_, i) => i % step === 0);
 };
 
 const denseDomain = denseData.map((d) => d.key);
@@ -236,10 +223,16 @@ const AreaShell: React.FC<AreaShellProps> = ({
       onMouseLeave={onLeave}
     >
       <Group left={leftMargin} top={margin.top}>
-        <GridRows scale={yScale} width={plotWidth} numTicks={showYAxis ? 3 : 5} />
+        <GridRows scale={yScale} width={plotWidth} numTicks={3} />
         {children({ xScale, yScale })}
         {showYAxis ? <AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={3} /> : null}
-        <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+        <AxisBottom
+          top={innerHeight}
+          scale={xScale}
+          tickValues={thinDomainTicks(monthDomain, plotWidth)}
+          hideAxisLine
+          hideTicks
+        />
       </Group>
     </svg>
   );
@@ -898,7 +891,7 @@ const DenseAreaPlot: React.FC<{ width: number; height: number }> = ({ width: plo
     range: [plotHeight, 0],
     nice: true,
   });
-  const tickValues = thinPointTicks(denseDomain, plotWidth);
+  const tickValues = thinDomainTicks(denseDomain, plotWidth);
 
   if (plotW < 16 || plotH < 16) {
     return null;
@@ -939,7 +932,7 @@ const DenseAreaPlot: React.FC<{ width: number; height: number }> = ({ width: plo
         }}
       >
         <Group left={denseMargin.left} top={denseMargin.top}>
-          <GridRows scale={yScale} width={plotWidth} numTicks={5} />
+          <GridRows scale={yScale} width={plotWidth} numTicks={3} />
           <AreaClosed
             data={denseData}
             x={(d) => atX(xScale, d.key)}

@@ -22,40 +22,23 @@ import {
   GridRows,
   Group,
   LinePath,
-  curveNatural,
   scaleLinear,
-  scalePoint,
 } from '@viraui/charts';
 
-const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
-const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+const xScale = scaleLinear({ domain: [0, data.length - 1], range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0] });
 
 <svg width={width} height={height}>
   <Group left={margin.left} top={margin.top}>
-    <GridRows scale={yScale} width={innerWidth} numTicks={5} stroke="var(--global-muted)" />
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
     <LinePath
       data={data}
-      x={(d) => xScale(d.month) ?? 0}
-      y={(d) => yScale(d.value)}
-      curve={curveNatural}
+      x={(d) => xScale(d.x) ?? 0}
+      y={(d) => yScale(d.y) ?? 0}
       stroke="var(--highlight-acid)"
-      strokeWidth={2}
     />
-    <AxisLeft
-      scale={yScale}
-      hideAxisLine
-      hideTicks
-      tickStroke="var(--highlight-magenta)"
-      tickLabelProps={() => ({ fill: 'var(--highlight-magenta)' })}
-    />
-    <AxisBottom
-      top={innerHeight}
-      scale={xScale}
-      hideAxisLine
-      hideTicks
-      tickStroke="var(--highlight-magenta)"
-      tickLabelProps={() => ({ fill: 'var(--highlight-magenta)' })}
-    />
+    <AxisLeft scale={yScale} numTicks={3} tickStroke="var(--highlight-magenta)" />
+    <AxisBottom top={innerHeight} scale={xScale} numTicks={3} tickStroke="var(--highlight-magenta)" />
   </Group>
 </svg>
 ```

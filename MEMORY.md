@@ -63,7 +63,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 - ComponentPage rhythm: thematic breaks (`---`) after Base UI Cards, after lead, after Anatomy (compounds + child forced-compose like ToggleGroup), after when/when-not, after Related (before Common examples) — `page-shell.md`; Anatomy = full tree, no `{/* optional */}`; omit prop-driven hosts like AvatarGroup; rule `.cursor/rules/10-docs-anatomy.mdc`
 - Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root; **Charts** = third root (`content/charts/` — get-started + line/area/bar/pie/radar). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
-- Charts demos: `src/components/demos/charts-*-demo/` + minimal `ChartExampleFrame` (width only); one plot per Example; fixtures `src/lib/chart-story-data.ts`; tokens mirror `src/lib/chart-tokens.ts`.
+- Charts demos: `src/components/demos/charts-*-demo/` + minimal `ChartExampleFrame` (width only); one plot per Example; fixtures `src/lib/chart-story-data.ts`; tokens `src/lib/chart-tokens.ts`; width-aware X ticks `src/lib/chart-ticks.ts` (`thinDomainTicks`). Code tabs = full compose shell, no mock data arrays. Sparse `numTicks={3}`; value `AxisLeft` only on Y-axis / horizontal-category / scrub examples.
 - Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
 
 ## Context habits

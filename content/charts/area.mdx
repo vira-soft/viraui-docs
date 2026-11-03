@@ -42,20 +42,19 @@ Monotone fill under the visitors series.
 import {
   AreaClosed,
   AxisBottom,
+  GridRows,
   Group,
   curveMonotoneX,
   scaleLinear,
   scalePoint,
 } from '@viraui/charts';
 
-const xScale = scalePoint({
-  domain: data.map((d) => d.month),
-  range: [0, innerWidth],
-});
-const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
 
 <svg width={width} height={height}>
   <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
     <AreaClosed
       data={data}
       x={(d) => xScale(d.month) ?? 0}
@@ -77,15 +76,32 @@ Straight-edge filled segments.
 <Example preview={<ChartsAreaLinearDemo />}>
 
 ```tsx
-import { AreaClosed, curveLinear } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  GridRows,
+  Group,
+  curveLinear,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
-<AreaClosed
-  data={data}
-  x={(d) => xScale(d.month) ?? 0}
-  y={(d) => yScale(d.value)}
-  yScale={yScale}
-  curve={curveLinear}
-/>
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      yScale={yScale}
+      curve={curveLinear}
+    />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
@@ -97,15 +113,32 @@ Step-filled area between months.
 <Example preview={<ChartsAreaStepDemo />}>
 
 ```tsx
-import { AreaClosed, curveStep } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  GridRows,
+  Group,
+  curveStep,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
-<AreaClosed
-  data={data}
-  x={(d) => xScale(d.month) ?? 0}
-  y={(d) => yScale(d.value)}
-  yScale={yScale}
-  curve={curveStep}
-/>
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      yScale={yScale}
+      curve={curveStep}
+    />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
@@ -117,17 +150,35 @@ Soft fill that fades toward the baseline.
 <Example preview={<ChartsAreaGradientDemo />}>
 
 ```tsx
-import { AreaClosed, LinearGradient, curveMonotoneX } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  GridRows,
+  Group,
+  LinearGradient,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
-<LinearGradient id="area-fill" from="var(--highlight-blue)" to="transparent" toOpacity={0.05} />
-<AreaClosed
-  data={data}
-  x={(d) => xScale(d.month) ?? 0}
-  y={(d) => yScale(d.value)}
-  yScale={yScale}
-  curve={curveMonotoneX}
-  fill="url(#area-fill)"
-/>
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <LinearGradient id="area-fill" from="var(--highlight-blue)" to="transparent" toOpacity={0.05} />
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      yScale={yScale}
+      curve={curveMonotoneX}
+      fill="url(#area-fill)"
+    />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
@@ -139,28 +190,43 @@ Absolute stack of desktop, mobile, and other.
 <Example preview={<ChartsAreaStackedDemo />}>
 
 ```tsx
-import { AreaStack, curveMonotoneX, scaleOrdinal } from '@viraui/charts';
+import {
+  AreaStack,
+  AxisBottom,
+  GridRows,
+  Group,
+  curveMonotoneX,
+  scaleLinear,
+  scaleOrdinal,
+  scalePoint,
+} from '@viraui/charts';
 
-const colorScale = scaleOrdinal({
-  domain: ['desktop', 'mobile', 'other'],
-  range: ['var(--highlight-indigo)', 'var(--highlight-cyan)', 'var(--highlight-purple)'],
-});
+const keys = ['desktop', 'mobile', 'other'];
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+const colorScale = scaleOrdinal({ domain: keys, range: stackColors });
 
-<AreaStack
-  data={stackData}
-  keys={['desktop', 'mobile', 'other']}
-  x={(d) => xScale(d.data.month) ?? 0}
-  y0={(d) => yScale(d[0]) ?? 0}
-  y1={(d) => yScale(d[1]) ?? 0}
-  color={(key) => colorScale(String(key))}
-  curve={curveMonotoneX}
->
-  {({ stacks, path }) =>
-    stacks.map((stack) => (
-      <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
-    ))
-  }
-</AreaStack>
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaStack
+      data={stackData}
+      keys={keys}
+      x={(d) => xScale(d.data.month) ?? 0}
+      y0={(d) => yScale(d[0]) ?? 0}
+      y1={(d) => yScale(d[1]) ?? 0}
+      color={(key) => colorScale(String(key))}
+      curve={curveMonotoneX}
+    >
+      {({ stacks, path }) =>
+        stacks.map((stack) => (
+          <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
+        ))
+      }
+    </AreaStack>
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
@@ -172,30 +238,44 @@ const colorScale = scaleOrdinal({
 <Example preview={<ChartsAreaExpandedDemo />}>
 
 ```tsx
-import { AreaStack, curveMonotoneX, scaleLinear, scaleOrdinal } from '@viraui/charts';
+import {
+  AreaStack,
+  AxisBottom,
+  GridRows,
+  Group,
+  curveMonotoneX,
+  scaleLinear,
+  scaleOrdinal,
+  scalePoint,
+} from '@viraui/charts';
 
+const keys = ['desktop', 'mobile', 'other'];
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
 const yScale = scaleLinear({ domain: [0, 1], range: [innerHeight, 0], nice: true });
-const colorScale = scaleOrdinal({
-  domain: ['desktop', 'mobile', 'other'],
-  range: ['var(--highlight-indigo)', 'var(--highlight-cyan)', 'var(--highlight-purple)'],
-});
+const colorScale = scaleOrdinal({ domain: keys, range: stackColors });
 
-<AreaStack
-  data={stackData}
-  keys={['desktop', 'mobile', 'other']}
-  x={(d) => xScale(d.data.month) ?? 0}
-  y0={(d) => yScale(d[0]) ?? 0}
-  y1={(d) => yScale(d[1]) ?? 0}
-  color={(key) => colorScale(String(key))}
-  curve={curveMonotoneX}
-  offset="expand"
->
-  {({ stacks, path }) =>
-    stacks.map((stack) => (
-      <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
-    ))
-  }
-</AreaStack>
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaStack
+      data={stackData}
+      keys={keys}
+      x={(d) => xScale(d.data.month) ?? 0}
+      y0={(d) => yScale(d[0]) ?? 0}
+      y1={(d) => yScale(d[1]) ?? 0}
+      color={(key) => colorScale(String(key))}
+      curve={curveMonotoneX}
+      offset="expand"
+    >
+      {({ stacks, path }) =>
+        stacks.map((stack) => (
+          <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
+        ))
+      }
+    </AreaStack>
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
@@ -207,43 +287,92 @@ Left and bottom axes framing the series.
 <Example preview={<ChartsAreaAxesDemo />}>
 
 ```tsx
-import { AreaClosed, AxisBottom, AxisLeft, curveMonotoneX } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  AxisLeft,
+  GridRows,
+  Group,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
-<AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={5} />
-<AreaClosed
-  data={data}
-  x={(d) => xScale(d.month) ?? 0}
-  y={(d) => yScale(d.value)}
-  yScale={yScale}
-  curve={curveMonotoneX}
-/>
-<AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      yScale={yScale}
+      curve={curveMonotoneX}
+    />
+    <AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={3} />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 ```
 
 </Example>
 
 ### Dense
 
-Day-level series in a fluid `ParentSize` host.
+Day-level series in a fluid `ParentSize` host with width-aware X ticks.
 
 <Example preview={<ChartsAreaDenseDemo />}>
 
 ```tsx
-import { AreaClosed, ParentSize, curveMonotoneX } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  GridRows,
+  Group,
+  ParentSize,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
 <ParentSize>
   {({ width, height }) => {
-    const xScale = scalePoint({ domain: days.map((d) => d.key), range: [0, width] });
-    const yScale = scaleLinear({ domain: [0, max], range: [height, 0] });
+    const plotWidth = width - margin.left - margin.right;
+    const plotHeight = height - margin.top - margin.bottom;
+    const domain = days.map((d) => d.key);
+    const xScale = scalePoint({ domain, range: [0, plotWidth] });
+    const yScale = scaleLinear({ domain: [0, yMax], range: [plotHeight, 0], nice: true });
+    const tickValues = thinDomainTicks(domain, plotWidth);
+
     return (
       <svg width={width} height={height}>
-        <AreaClosed
-          data={days}
-          x={(d) => xScale(d.key) ?? 0}
-          y={(d) => yScale(d.value)}
-          yScale={yScale}
-          curve={curveMonotoneX}
-        />
+        <Group left={margin.left} top={margin.top}>
+          <GridRows scale={yScale} width={plotWidth} numTicks={3} />
+          <AreaClosed
+            data={days}
+            x={(d) => xScale(d.key) ?? 0}
+            y={(d) => yScale(d.mobile)}
+            yScale={yScale}
+            curve={curveMonotoneX}
+          />
+          <AreaClosed
+            data={days}
+            x={(d) => xScale(d.key) ?? 0}
+            y={(d) => yScale(d.desktop)}
+            yScale={yScale}
+            curve={curveMonotoneX}
+          />
+          <AxisBottom
+            top={plotHeight}
+            scale={xScale}
+            tickValues={tickValues}
+            tickFormat={(value) => shortLabel(value)}
+            hideAxisLine
+            hideTicks
+          />
+        </Group>
       </svg>
     );
   }}

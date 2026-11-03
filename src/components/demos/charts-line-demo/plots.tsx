@@ -25,6 +25,7 @@ import {
   useTooltip,
 } from '@viraui/charts';
 import { mutedLabel, seriesStroke } from '../../../lib/chart-tokens';
+import { thinDomainTicks } from '../../../lib/chart-ticks';
 import { browserData, desktopData, mobileData, monthDomain, monthTitles, multiData } from '../../../lib/chart-story-data';
 
 type TooltipDatum = {
@@ -172,10 +173,16 @@ const LineShell: React.FC<LineShellProps> = ({
       onMouseLeave={onLeave}
     >
       <Group left={margin.left} top={margin.top}>
-        <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+        <GridRows scale={yScale} width={innerWidth} numTicks={3} />
         {children({ xScale, yScale })}
-        <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
-        {showYAxis ? <AxisLeft scale={yScale} hideAxisLine hideTicks /> : null}
+        <AxisBottom
+          top={innerHeight}
+          scale={xScale}
+          tickValues={thinDomainTicks(monthDomain, innerWidth)}
+          hideAxisLine
+          hideTicks
+        />
+        {showYAxis ? <AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={3} /> : null}
       </Group>
     </svg>
   );
@@ -570,7 +577,7 @@ export const CategoryLabelsLine: React.FC = () => {
         }}
       >
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           <LinePath
             data={browserData}
             x={(d) => atX(xScale, d.name)}

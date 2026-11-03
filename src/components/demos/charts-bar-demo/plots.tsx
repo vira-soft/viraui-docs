@@ -24,6 +24,7 @@ import {
   useTooltip,
 } from '@viraui/charts';
 import { hoverFill, mutedLabel } from '../../../lib/chart-tokens';
+import { thinDomainTicks } from '../../../lib/chart-ticks';
 import {
   browserData,
   denseData,
@@ -57,8 +58,6 @@ const innerHeight = height - margin.top - margin.bottom;
 
 const denseHeight = 280;
 const denseMargin = { top: 16, right: 16, bottom: 40, left: 16 };
-/** Min px per X label — drives how many band ticks fit the plot width. */
-const denseLabelMinPx = 72;
 
 const seriesColor = 'var(--highlight-cyan)';
 const seriesColorAlt = 'var(--highlight-indigo)';
@@ -66,19 +65,6 @@ const denseSeriesColor = 'var(--highlight-blue)';
 /** Full-pill override — package default is `radius={8}` + `all`. */
 const barRadiusFull = 999;
 const stackGap = 3;
-
-/** Thin band-domain ticks so labels fit `plotWidth` (more width → more labels). */
-const thinBandTicks = (domain: string[], plotWidth: number, minLabelPx = denseLabelMinPx): string[] => {
-  if (domain.length === 0 || plotWidth <= 0) {
-    return [];
-  }
-  const maxTicks = Math.max(2, Math.floor(plotWidth / minLabelPx));
-  if (domain.length <= maxTicks) {
-    return domain.slice();
-  }
-  const step = Math.ceil(domain.length / maxTicks);
-  return domain.filter((_, i) => i % step === 0);
-};
 
 const denseDomain = denseData.map((d) => d.key);
 const denseByKey = new Map(denseData.map((d) => [d.key, d]));
@@ -204,7 +190,7 @@ const DenseBarPlot: React.FC<{ width: number; height: number }> = ({ width, heig
     nice: true,
   });
   const bandwidth = xScale.bandwidth();
-  const tickValues = thinBandTicks(denseDomain, innerWidth);
+  const tickValues = thinDomainTicks(denseDomain, innerWidth);
   const activeKey = tooltipOpen ? tooltipData?.bandKey : undefined;
   const hoverX = activeKey != null ? asNumber(xScale(activeKey)) : 0;
 
@@ -216,7 +202,7 @@ const DenseBarPlot: React.FC<{ width: number; height: number }> = ({ width, heig
     <div style={{ position: 'relative', inlineSize: width }}>
       <svg width={width} height={height} role="img" aria-label="Dense page views bar chart" onMouseLeave={hideTooltip}>
         <Group left={denseMargin.left} top={denseMargin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {activeKey != null ? (
             <Bar
               x={hoverX}
@@ -304,7 +290,7 @@ export const SimpleBar: React.FC<{ showYAxis?: boolean; ariaLabel?: string }> = 
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label={ariaLabel} onMouseLeave={hideTooltip}>
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {desktopData.map((d) => {
             const barX = asNumber(xScale(d.month));
             const barY = asNumber(yScale(d.value));
@@ -331,8 +317,14 @@ export const SimpleBar: React.FC<{ showYAxis?: boolean; ariaLabel?: string }> = 
               />
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
-          {showYAxis ? <AxisLeft scale={yScale} hideAxisLine hideTicks /> : null}
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(monthDomain, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
+          {showYAxis ? <AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={3} /> : null}
         </Group>
       </svg>
       {tooltipOpen && tooltipData ? (
@@ -422,7 +414,7 @@ export const MultipleBar: React.FC = () => {
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label="Multiple series bar chart" onMouseLeave={hideTooltip}>
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {multiData.map((d) => {
             const groupX = asNumber(xScale(d.month));
             const desktopX = groupX + asNumber(xGroup('desktop'));
@@ -467,7 +459,13 @@ export const MultipleBar: React.FC = () => {
               </Group>
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(monthDomain, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
         </Group>
       </svg>
       {tooltipOpen && tooltipData ? (
@@ -498,7 +496,7 @@ export const StackedBar: React.FC = () => {
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label="Stacked bar chart">
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {multiData.map((d) => {
             const barX = asNumber(xScale(d.month));
             const desktopY = asNumber(yScale(d.desktop));
@@ -520,7 +518,13 @@ export const StackedBar: React.FC = () => {
               </Group>
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(monthDomain, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
         </Group>
       </svg>
       <SeriesLegend />
@@ -546,7 +550,7 @@ export const LabelBar: React.FC = () => {
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label="Bar chart with value labels">
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {desktopData.map((d) => {
             const barX = asNumber(xScale(d.month));
             const barY = asNumber(yScale(d.value));
@@ -565,7 +569,13 @@ export const LabelBar: React.FC = () => {
               </Group>
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(monthDomain, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
         </Group>
       </svg>
     </ChartFrame>
@@ -591,7 +601,7 @@ export const LabelHorizontalBar: React.FC = () => {
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label="Horizontal bar chart with labels">
         <Group left={margin.left} top={margin.top}>
-          <GridColumns scale={xScale} height={innerHeight} numTicks={5} />
+          <GridColumns scale={xScale} height={innerHeight} numTicks={3} />
           {fullMonthData.map((d) => {
             const barY = asNumber(yScale(d.month));
             const barWidth = asNumber(xScale(d.value));
@@ -702,7 +712,7 @@ export const MixedBar: React.FC = () => {
         onMouseLeave={() => setActive(null)}
       >
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {browserData.map((d) => {
             const barX = asNumber(xScale(d.name));
             const barY = asNumber(yScale(d.value));
@@ -728,7 +738,13 @@ export const MixedBar: React.FC = () => {
               </Group>
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(names, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
         </Group>
       </svg>
     </ChartFrame>
@@ -755,7 +771,7 @@ export const NegativeBar: React.FC = () => {
     <ChartFrame>
       <svg width={width} height={height} role="img" aria-label="Positive and negative bar chart">
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           <Bar x={0} y={zeroY} width={innerWidth} height={1} fill="var(--global-contrast)" />
           {signedData.map((d) => {
             const barX = asNumber(xScale(d.month));

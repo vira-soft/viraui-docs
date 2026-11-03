@@ -16,26 +16,58 @@ Tall color swatch beside each stacked row.
 <Example preview={<ChartsTooltipIndicatorLineDemo />}>
 
 ```tsx
-import { TooltipWithBounds, defaultStyles, useTooltip } from '@viraui/charts';
+import {
+  AxisBottom,
+  Bar,
+  BarRounded,
+  Group,
+  TooltipWithBounds,
+  scaleBand,
+  scaleLinear,
+  useTooltip,
+} from '@viraui/charts';
 
-const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen } = useTooltip<{
-  title?: string;
-  rows: Array<{ label: string; value: number; color: string }>;
-}>();
+const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+  useTooltip<ActivityPoint>();
 
+const xScale = scaleBand({ domain: days, range: [0, innerWidth], padding: 0.3 });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height} onMouseLeave={hideTooltip}>
+  <Group left={margin.left} top={margin.top}>
+    {activityData.map((d) => {
+      const barX = xScale(d.day) ?? 0;
+      const runningY = yScale(d.running) ?? 0;
+      const totalY = yScale(d.running + d.swimming) ?? 0;
+      return (
+        <Group
+          key={d.day}
+          onMouseMove={() =>
+            showTooltip({
+              tooltipData: d,
+              tooltipLeft: margin.left + barX + xScale.bandwidth() / 2,
+              tooltipTop: margin.top + totalY,
+            })
+          }
+        >
+          <Bar x={barX} y={runningY} width={xScale.bandwidth()} height={innerHeight - runningY} />
+          <BarRounded
+            x={barX}
+            y={totalY}
+            width={xScale.bandwidth()}
+            height={runningY - totalY}
+            all={false}
+            top
+          />
+        </Group>
+      );
+    })}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 {tooltipOpen && tooltipData ? (
-  <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={defaultStyles}>
-    {tooltipData.title ? <div>{tooltipData.title}</div> : null}
-    {tooltipData.rows.map((row) => (
-      <div key={row.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span
-          aria-hidden
-          style={{ width: 3, height: 28, borderRadius: 999, background: row.color }}
-        />
-        <span>{row.label}</span>
-        <strong>{row.value}</strong>
-      </div>
-    ))}
+  <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
+    {/* title + tall swatch rows for running / swimming */}
   </TooltipWithBounds>
 ) : null}
 ```

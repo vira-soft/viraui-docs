@@ -81,7 +81,7 @@ export const ChartsRadarGridFilledDemo: React.FC = () => (
 );
 
 export const ChartsRadarLabelsDemo: React.FC = () => (
-  <SandboxShell label="Radar with value labels">
+  <SandboxShell height={560} label="Radar with value labels">
     <ChartExampleFrame label="Radar with value labels">
       <RadarChart
         title="Radar Chart - Labels"

@@ -5,7 +5,6 @@ import * as React from 'react';
 import {
   AreaClosed,
   AxisBottom,
-  AxisLeft,
   BarRounded,
   Circle,
   GridRows,
@@ -26,9 +25,10 @@ import {
   useScreenSize,
 } from '@viraui/charts';
 import { contrastStroke, seriesStroke } from '../../../lib/chart-tokens';
+import { thinDomainTicks } from '../../../lib/chart-ticks';
 import { browserData, desktopData, monthDeviceData, xySeries as lineData } from '../../../lib/chart-story-data';
 
-const margin = { top: 16, right: 16, bottom: 32, left: 40 };
+const margin = { top: 16, right: 16, bottom: 32, left: 16 };
 const pieColors = [
   'var(--highlight-cyan)',
   'var(--highlight-blue)',
@@ -83,10 +83,9 @@ const LineChartMarks: React.FC<PlotSize> = ({ width, height }) => {
 
   return (
     <Group left={margin.left} top={margin.top}>
-      <GridRows scale={yScale} width={innerWidth} />
+      <GridRows scale={yScale} width={innerWidth} numTicks={3} />
       <LinePath data={lineData} x={(d) => asNumber(xScale(d.x))} y={(d) => asNumber(yScale(d.y))} />
-      <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
-      <AxisLeft scale={yScale} hideAxisLine hideTicks />
+      <AxisBottom top={innerHeight} scale={xScale} numTicks={3} hideAxisLine hideTicks />
     </Group>
   );
 };
@@ -100,7 +99,7 @@ const BarChartMarks: React.FC<PlotSize> = ({ width, height }) => {
 
   return (
     <Group left={margin.left} top={margin.top}>
-      <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+      <GridRows scale={yScale} width={innerWidth} numTicks={3} />
       {desktopData.map((d) => {
         const barY = asNumber(yScale(d.value));
         return (
@@ -116,8 +115,13 @@ const BarChartMarks: React.FC<PlotSize> = ({ width, height }) => {
           />
         );
       })}
-      <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
-      <AxisLeft scale={yScale} hideAxisLine hideTicks />
+      <AxisBottom
+        top={innerHeight}
+        scale={xScale}
+        tickValues={thinDomainTicks(monthDomain, innerWidth)}
+        hideAxisLine
+        hideTicks
+      />
     </Group>
   );
 };
@@ -130,7 +134,7 @@ const AreaChartMarks: React.FC<PlotSize> = ({ width, height }) => {
 
   return (
     <Group left={margin.left} top={margin.top}>
-      <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+      <GridRows scale={yScale} width={innerWidth} numTicks={3} />
       <AreaClosed
         data={desktopData}
         x={(d) => asNumber(xScale(d.month))}
@@ -138,8 +142,13 @@ const AreaChartMarks: React.FC<PlotSize> = ({ width, height }) => {
         yScale={yScale}
         curve={curveMonotoneX}
       />
-      <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
-      <AxisLeft scale={yScale} hideAxisLine hideTicks />
+      <AxisBottom
+        top={innerHeight}
+        scale={xScale}
+        tickValues={thinDomainTicks(monthDomain, innerWidth)}
+        hideAxisLine
+        hideTicks
+      />
     </Group>
   );
 };

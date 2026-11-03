@@ -178,8 +178,15 @@ export const RadarChart: React.FC<RadarOptions> = ({
   const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } = useTooltip<TooltipDatum>();
   const [hoverIndex, setHoverIndex] = React.useState<number | null>(null);
 
-  const xMax = width - margin.left - margin.right;
-  const yMax = height - margin.top - margin.bottom;
+  // Dual value+month labels sit outside the ring — taller canvas + inset radius so top/bottom glyphs clear the SVG edge.
+  const plotHeight = labels === 'values' ? height + 96 : height;
+  const plotMargin =
+    labels === 'values'
+      ? { top: 96, right: 88, bottom: 96, left: 88 }
+      : margin;
+
+  const xMax = width - plotMargin.left - plotMargin.right;
+  const yMax = plotHeight - plotMargin.top - plotMargin.bottom;
   const radius = Math.min(xMax, yMax) / 2;
   const count = monthDeviceData.length;
 
@@ -221,7 +228,7 @@ export const RadarChart: React.FC<RadarOptions> = ({
         })),
       },
       tooltipLeft: point?.x ?? width / 2 + axisPoints[index]!.x,
-      tooltipTop: point?.y ?? height / 2 - margin.top / 2 + axisPoints[index]!.y,
+      tooltipTop: point?.y ?? plotHeight / 2 + axisPoints[index]!.y,
     });
     setHoverIndex(index);
   };
@@ -235,8 +242,8 @@ export const RadarChart: React.FC<RadarOptions> = ({
     <div style={{ inlineSize: width }}>
       <ChartFrame>
         {/* role=group: hit targets are focusable buttons — role=img nests interactive (axe). */}
-        <svg width={width} height={height} role="group" aria-label={`${title} radar chart`} onMouseLeave={clearHover}>
-          <Group top={height / 2 - margin.top / 4} left={width / 2}>
+        <svg width={width} height={plotHeight} role="group" aria-label={`${title} radar chart`} onMouseLeave={clearHover}>
+          <Group top={plotHeight / 2} left={width / 2}>
             {gridFilled && grid === 'circle' ? (
               <Circle cx={0} cy={0} r={radius} fill="oklab(from var(--highlight-blue) l a b / 10%)" stroke="none" />
             ) : null}

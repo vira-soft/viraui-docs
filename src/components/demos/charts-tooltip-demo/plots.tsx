@@ -15,6 +15,7 @@ import {
   useTooltip,
 } from '@viraui/charts';
 import { mutedLabel } from '../../../lib/chart-tokens';
+import { thinDomainTicks } from '../../../lib/chart-ticks';
 import { activityData, type ActivityPoint } from '../../../lib/chart-story-data';
 
 type TooltipIndicator = 'dot' | 'line' | 'none' | 'icon';
@@ -217,7 +218,13 @@ export const ActivityStackedBar: React.FC<ActivityStackedBarProps> = ({
               </Group>
             );
           })}
-          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(activityDomain, innerWidth)}
+            hideAxisLine
+            hideTicks
+          />
         </Group>
       </svg>
       {tooltipOpen && tooltipData ? (

@@ -22,15 +22,15 @@ export const OverrideComposition: React.FC = () => {
     <div style={{ inlineSize: width }}>
       <svg width={width} height={height} role="img" aria-label="Override demo chart">
         <Group left={margin.left} top={margin.top}>
-          <GridRows scale={yScale} width={innerWidth} />
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           <LinePath
             data={data}
             x={(d) => xScale(d.x) ?? 0}
             y={(d) => yScale(d.y) ?? 0}
             stroke="var(--highlight-acid)"
           />
-          <AxisBottom top={innerHeight} scale={xScale} tickStroke="var(--highlight-magenta)" />
-          <AxisLeft scale={yScale} tickStroke="var(--highlight-magenta)" />
+          <AxisBottom top={innerHeight} scale={xScale} numTicks={3} tickStroke="var(--highlight-magenta)" />
+          <AxisLeft scale={yScale} numTicks={3} tickStroke="var(--highlight-magenta)" />
         </Group>
       </svg>
     </div>

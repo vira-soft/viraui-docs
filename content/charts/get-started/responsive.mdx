@@ -18,21 +18,31 @@ Measure a ref and pass `width` / `height` into marks.
 <Example preview={<ChartsResponsiveUseParentSizeDemo />}>
 
 ```tsx
-import { useParentSize } from '@viraui/charts';
+import {
+  AxisBottom,
+  GridRows,
+  Group,
+  LinePath,
+  useParentSize,
+  scaleLinear,
+} from '@viraui/charts';
 
 function MeasuredChart() {
-  const { parentRef, width, height } = useParentSize({
-    debounceTime: 0,
-    initialSize: { width: 640, height: 280 },
-  });
+  const { parentRef, width, height } = useParentSize({ debounceTime: 0 });
+  const innerWidth = width - margin.left - margin.right;
+  const innerHeight = height - margin.top - margin.bottom;
+  const xScale = scaleLinear({ domain: [0, lineData.length - 1], range: [0, innerWidth] });
+  const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0] });
 
   return (
     <div ref={parentRef} style={{ width: '100%', height: 280 }}>
-      {width > 0 ? (
-        <svg width={width} height={height} role="img" aria-label="useParentSize line chart">
-          <LineChartMarks width={width} height={height} />
-        </svg>
-      ) : null}
+      <svg width={width} height={height}>
+        <Group left={margin.left} top={margin.top}>
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+          <LinePath data={lineData} x={(d) => xScale(d.x) ?? 0} y={(d) => yScale(d.y) ?? 0} />
+          <AxisBottom top={innerHeight} scale={xScale} numTicks={3} hideAxisLine hideTicks />
+        </Group>
+      </svg>
     </div>
   );
 }
@@ -47,17 +57,32 @@ Same measurement with a render prop instead of a ref hook.
 <Example preview={<ChartsResponsiveParentSizeDemo />}>
 
 ```tsx
-import { ParentSize } from '@viraui/charts';
+import {
+  AxisBottom,
+  GridRows,
+  Group,
+  LinePath,
+  ParentSize,
+  scaleLinear,
+} from '@viraui/charts';
 
 <div style={{ width: '100%', height: 280 }}>
-  <ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
-    {({ width, height }) =>
-      width > 0 ? (
-        <svg width={width} height={height} role="img" aria-label="ParentSize line chart">
-          <LineChartMarks width={width} height={height} />
+  <ParentSize debounceTime={0}>
+    {({ width, height }) => {
+      const innerWidth = width - margin.left - margin.right;
+      const innerHeight = height - margin.top - margin.bottom;
+      const xScale = scaleLinear({ domain: [0, lineData.length - 1], range: [0, innerWidth] });
+      const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0] });
+      return (
+        <svg width={width} height={height}>
+          <Group left={margin.left} top={margin.top}>
+            <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+            <LinePath data={lineData} x={(d) => xScale(d.x) ?? 0} y={(d) => yScale(d.y) ?? 0} />
+            <AxisBottom top={innerHeight} scale={xScale} numTicks={3} hideAxisLine hideTicks />
+          </Group>
         </svg>
-      ) : null
-    }
+      );
+    }}
   </ParentSize>
 </div>
 ```
@@ -109,17 +134,26 @@ Rebuild band and linear scales from the measured box.
 <Example preview={<ChartsResponsiveBarDemo />}>
 
 ```tsx
-import { BarRounded, Group, ParentSize, scaleBand, scaleLinear } from '@viraui/charts';
+import {
+  AxisBottom,
+  BarRounded,
+  GridRows,
+  Group,
+  ParentSize,
+  scaleBand,
+  scaleLinear,
+} from '@viraui/charts';
 
-<ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
+<ParentSize debounceTime={0}>
   {({ width, height }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-    const xScale = scaleBand({ domain: monthDomain, range: [0, innerWidth], padding: 0.3 });
+    const xScale = scaleBand({ domain: months, range: [0, innerWidth], padding: 0.3 });
     const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
     return (
-      <svg width={width} height={height} role="img" aria-label="Responsive bar chart">
+      <svg width={width} height={height}>
         <Group left={margin.left} top={margin.top}>
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           {desktopData.map((d) => {
             const barY = yScale(d.value) ?? 0;
             return (
@@ -134,6 +168,7 @@ import { BarRounded, Group, ParentSize, scaleBand, scaleLinear } from '@viraui/c
               />
             );
           })}
+          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
         </Group>
       </svg>
     );
@@ -150,17 +185,27 @@ Same host pattern with `AreaClosed` and point scales.
 <Example preview={<ChartsResponsiveAreaDemo />}>
 
 ```tsx
-import { AreaClosed, Group, ParentSize, curveMonotoneX, scaleLinear, scalePoint } from '@viraui/charts';
+import {
+  AreaClosed,
+  AxisBottom,
+  GridRows,
+  Group,
+  ParentSize,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
-<ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
+<ParentSize debounceTime={0}>
   {({ width, height }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-    const xScale = scalePoint({ domain: monthDomain, range: [0, innerWidth] });
+    const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
     const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
     return (
-      <svg width={width} height={height} role="img" aria-label="Responsive area chart">
+      <svg width={width} height={height}>
         <Group left={margin.left} top={margin.top}>
+          <GridRows scale={yScale} width={innerWidth} numTicks={3} />
           <AreaClosed
             data={desktopData}
             x={(d) => xScale(d.month) ?? 0}
@@ -168,6 +213,7 @@ import { AreaClosed, Group, ParentSize, curveMonotoneX, scaleLinear, scalePoint 
             yScale={yScale}
             curve={curveMonotoneX}
           />
+          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
         </Group>
       </svg>
     );
@@ -249,26 +295,47 @@ For dense day series on a narrow viewport, sticky Y + horizontal scroll + a head
 <Example preview={<ChartsResponsiveMobileScrubDemo />}>
 
 ```tsx
-import { AxisLeft, Group, LinePath, curveMonotoneX, scaleLinear, scalePoint } from '@viraui/charts';
+import {
+  AxisBottom,
+  AxisRight,
+  Circle,
+  GridColumns,
+  GridRows,
+  Group,
+  LinePath,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
 
 const plotWidth = Math.max(days.length * 12, hostWidth);
+const xScale = scalePoint({ domain: days.map((d) => d.key), range: [0, plotWidth] });
+const yScale = scaleLinear({ domain: yDomain, range: [innerHeight, 0] });
 
-<div style={{ display: 'grid', gridTemplateColumns: '48px 1fr' }}>
-  <svg width={48} height={height}>
-    <AxisLeft left={40} scale={yScale} hideAxisLine hideTicks />
-  </svg>
-  <div style={{ overflowX: 'auto' }} tabIndex={0}>
+<div style={{ display: 'flex' }}>
+  <div style={{ overflowX: 'auto', flex: 1 }} tabIndex={0}>
     <svg width={plotWidth} height={height}>
-      <Group left={0} top={margin.top}>
+      <Group top={margin.top}>
+        <GridRows scale={yScale} width={plotWidth} tickValues={yTicks} />
+        <GridColumns scale={xScale} height={innerHeight} tickValues={xTicks} strokeDasharray="3 5" />
         <LinePath
           data={days}
           x={(d) => xScale(d.key) ?? 0}
           y={(d) => yScale(d.bpm)}
           curve={curveMonotoneX}
         />
+        {days.map((d) => (
+          <Circle key={d.key} cx={xScale(d.key) ?? 0} cy={yScale(d.bpm)} r={3.5} />
+        ))}
+        <AxisBottom top={innerHeight} scale={xScale} tickValues={xTicks} hideAxisLine hideTicks />
       </Group>
     </svg>
   </div>
+  <svg width={yAxisWidth} height={height} aria-hidden>
+    <Group top={margin.top}>
+      <AxisRight scale={yScale} tickValues={yTicks} hideAxisLine hideTicks />
+    </Group>
+  </svg>
 </div>
 ```
 
