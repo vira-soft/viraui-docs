@@ -21,14 +21,14 @@ Rules below apply to **every** icon source. `@viraui/icons` is optional; slots o
 
 Hosts already size the SVG:
 
-| Slot                                                                                 | Host                                                  |
-| ------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| Slot                                                                                 | Host                                                                              |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | `Button` / `ButtonLink` `addon`                                                      | CSS `--vui-button-icon-size` (fraction of `--vui-button-height` / control `size`) |
-| `IconButton` / `IconButtonLink` `icon`                                               | same (via Button)                                     |
-| `ToggleButton` `restingIcon` / `pressedIcon`                                         | same                                                  |
-| `Chip` `addon`                                                                       | CSS `--vui-chip-icon-size`                            |
-| `Disclosure.Trigger` icon slots                                                      | CSS fixed glyph box                                   |
-| Other addons (`Menu.Item`, `Select`, Textfield/`Autocomplete` chrome, `Tabs.Tab`, …) | icon-library default (e.g. `@viraui/icons` ≈ 18)      |
+| `IconButton` / `IconButtonLink` `icon`                                               | same (via Button)                                                                 |
+| `ToggleButton` `restingIcon` / `pressedIcon`                                         | same                                                                              |
+| `Chip` `addon`                                                                       | CSS `--vui-chip-icon-size`                                                        |
+| `Disclosure.Trigger` icon slots                                                      | CSS fixed glyph box                                                               |
+| Other addons (`Menu.Item`, `Select`, Textfield/`Autocomplete` chrome, `Tabs.Tab`, …) | icon-library default (e.g. `@viraui/icons` ≈ 18)                                  |
 
 Set glyph `size` / dimensions **only** when the consumer expressly wants a non-default. Prefer the host/library default — omit the prop.
 

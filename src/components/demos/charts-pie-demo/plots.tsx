@@ -36,7 +36,9 @@ const centerX = width / 2;
 const centerY = height / 2 + 8;
 const radius = 130;
 
-const browserTotal = browserData.reduce((sum, d) => sum + d.value, 0);
+/** Drop zero shares — no empty arcs / "0" external labels. */
+const pieBrowserData = browserData.filter((d) => d.value > 0);
+const browserTotal = pieBrowserData.reduce((sum, d) => sum + d.value, 0);
 
 const browserColors = [
   'var(--highlight-cyan)',
@@ -65,7 +67,7 @@ const getMobileValue = (d: MonthDevicePoint) => d.mobile;
 const pieSortNull = null;
 
 const colorScale = scaleOrdinal({
-  domain: browserData.map((d) => d.name),
+  domain: pieBrowserData.map((d) => d.name),
   range: browserColors,
 });
 
@@ -136,7 +138,7 @@ const DonutCenterReadout: React.FC<{ value: number | string; label?: string }> =
       <Text
         textAnchor="middle"
         verticalAnchor="start"
-        y={18}
+        y={28}
         fill={mutedLabel}
         style={{ fontSize: 'var(--font-scale-body-s)', pointerEvents: 'none' }}
       >
@@ -188,7 +190,7 @@ export const SimplePie: React.FC = () => {
         >
           <Group top={centerY} left={centerX}>
             <Pie
-              data={browserData}
+              data={pieBrowserData}
               pieValue={getBrowserValue}
               pieSort={pieSortNull}
               pieSortValues={pieSortNull}
@@ -256,7 +258,7 @@ export const LabelPie: React.FC<{ customTooltip?: boolean }> = ({ customTooltip 
         >
           <Group top={labelCenterY} left={centerX}>
             <Pie
-              data={browserData}
+              data={pieBrowserData}
               pieValue={getBrowserValue}
               pieSort={pieSortNull}
               pieSortValues={pieSortNull}
@@ -339,23 +341,28 @@ export const LabelPie: React.FC<{ customTooltip?: boolean }> = ({ customTooltip 
   );
 };
 
-/** Category names drawn at arc centroids. */
+/** Category names outside the rim, joined with thin leader lines. */
 export const LabelListPie: React.FC = () => {
   const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } = useTooltip<TooltipDatum>();
+  const labelHeight = 400;
+  const labelCenterY = labelHeight / 2;
+  const elbowRadius = radius + 28;
+  const lineEndRadius = radius + 44;
+  const labelRadius = radius + 56;
 
   return (
     <div style={{ inlineSize: width }}>
       <ChartFrame>
         <svg
           width={width}
-          height={height}
+          height={labelHeight}
           role="img"
-          aria-label="Pie chart with in-slice labels"
+          aria-label="Pie chart with external category labels"
           onMouseLeave={hideTooltip}
         >
-          <Group top={centerY} left={centerX}>
+          <Group top={labelCenterY} left={centerX}>
             <Pie
-              data={browserData}
+              data={pieBrowserData}
               pieValue={getBrowserValue}
               pieSort={pieSortNull}
               pieSortValues={pieSortNull}
@@ -365,7 +372,12 @@ export const LabelListPie: React.FC = () => {
               {({ arcs, path }) =>
                 arcs.map((arc) => {
                   const color = colorScale(arc.data.name);
-                  const [cx, cy] = path.centroid(arc);
+                  const angle = midAngle(arc);
+                  const rim = polarOffset(angle, radius);
+                  const elbow = polarOffset(angle, elbowRadius);
+                  const lineEnd = polarOffset(angle, lineEndRadius);
+                  const label = polarOffset(angle, labelRadius);
+                  const anchor = label.x >= 0 ? 'start' : 'end';
                   return (
                     <g key={arc.data.name}>
                       <path
@@ -378,7 +390,7 @@ export const LabelListPie: React.FC = () => {
                           if (!point) return;
                           showTooltip({
                             tooltipData: {
-                              label: 'Visitors',
+                              label: arc.data.name,
                               value: arc.data.value,
                               color,
                             },
@@ -388,13 +400,35 @@ export const LabelListPie: React.FC = () => {
                         }}
                         onMouseLeave={hideTooltip}
                       />
+                      <line
+                        x1={rim.x}
+                        y1={rim.y}
+                        x2={elbow.x}
+                        y2={elbow.y}
+                        stroke={color}
+                        strokeWidth={1}
+                        style={{ pointerEvents: 'none' }}
+                      />
+                      <line
+                        x1={elbow.x}
+                        y1={elbow.y}
+                        x2={lineEnd.x}
+                        y2={lineEnd.y}
+                        stroke={color}
+                        strokeWidth={1}
+                        style={{ pointerEvents: 'none' }}
+                      />
                       <Text
-                        x={cx}
-                        y={cy}
-                        textAnchor="middle"
+                        x={label.x}
+                        y={label.y}
+                        textAnchor={anchor}
                         verticalAnchor="middle"
-                        fill={`contrast-color(${color})`}
-                        style={{ pointerEvents: 'none', fontSize: 'var(--font-scale-body-s)', fontWeight: 600 }}
+                        fill={color}
+                        style={{
+                          pointerEvents: 'none',
+                          fontSize: 'var(--font-scale-body-s)',
+                          fontWeight: 600,
+                        }}
                       >
                         {arc.data.name}
                       </Text>
@@ -422,7 +456,7 @@ export const LegendPie: React.FC = () => (
       <svg width={width} height={height - 40} role="img" aria-label="Pie chart with legend">
         <Group top={(height - 40) / 2 + 4} left={centerX}>
           <Pie
-            data={browserData}
+            data={pieBrowserData}
             pieValue={getBrowserValue}
             pieSort={pieSortNull}
             pieSortValues={pieSortNull}
@@ -473,7 +507,7 @@ export const DonutPie: React.FC<{ withText?: boolean }> = ({ withText }) => {
         >
           <Group top={centerY} left={centerX}>
             <Pie
-              data={browserData}
+              data={pieBrowserData}
               pieValue={getBrowserValue}
               pieSort={pieSortNull}
               pieSortValues={pieSortNull}

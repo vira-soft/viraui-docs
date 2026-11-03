@@ -17,11 +17,11 @@ Confirm props in units. No invented typography CSS on Text/Title.
 
 ## Measure (~10–12 words / line, scaled by size)
 
-| Approach                                                          | Use                                                                         |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `Text` / `Title` `maxWidth`                                       | Cap that block for its `size`                                               |
-| Parent `Stack` `maxWidth` (+ `fullWidth` under `hAlign="center"`) | Shared column — pick width from the **dominant body `size`** in that column |
-| CSS `max-width` on Text/Title                                     | **Forbidden** — public prop covers it                                       |
+| Approach                                                               | Use                                                                         |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `Text` / `Title` `maxWidth`                                            | Cap that block for its `size`                                               |
+| Parent `Stack` `maxWidth` (+ `fullWidth` under `hAlign="safe center"`) | Shared column — pick width from the **dominant body `size`** in that column |
+| CSS `max-width` on Text/Title                                          | **Forbidden** — public prop covers it                                       |
 
 Rough caps in **`ch`** (tune per content; confirm units — not a second API). Ladder = smaller → narrower. Patterns/examples use `ch`, not `rem`.
 
@@ -89,7 +89,7 @@ Both `wrap="nowrap"` and `whiteSpace="nowrap"` can stop wrapping — **prefer `w
 ```
 
 ```tsx
-<Stack hAlign="center" rowGap="s" maxWidth="36ch">
+<Stack hAlign="safe center" rowGap="s" maxWidth="36ch">
   <Title align="center" size="5" render={<h3 />} wrap="balance">
     Empty team
   </Title>

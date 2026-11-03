@@ -8,22 +8,24 @@ Ids below are package folder / index ids (co-located exports share a parent fold
 
 ## Action vs display vs progress
 
-| Need                                | Component                                                                                        | Specs id          |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------- |
-| Labeled click action                | `Button`                                                                                         | `button`          |
-| Navigate looking like `Button`      | `ButtonLink`                                                                                     | `button`          |
-| Icon-only action                    | `IconButton`                                                                                     | `icon-button`     |
-| Icon-only navigation                | `IconButtonLink`                                                                                 | `icon-button`     |
-| Two-state icon toggle               | `ToggleButton`                                                                                   | `toggle-button`   |
-| Two-state labeled toggle            | `ToggleTextButton`                                                                               | `toggle-text-button` |
-| Mutually exclusive toggles          | `ToggleGroup` + `ToggleButton` and/or `ToggleTextButton`                                         | `toggle-group`    |
+| Need                           | Component                                                | Specs id             |
+| ------------------------------ | -------------------------------------------------------- | -------------------- |
+| Labeled click action           | `Button`                                                 | `button`             |
+| Navigate looking like `Button` | `ButtonLink`                                             | `button`             |
+| Icon-only action               | `IconButton`                                             | `icon-button`        |
+| Icon-only navigation           | `IconButtonLink`                                         | `icon-button`        |
+| Two-state icon toggle          | `ToggleButton`                                           | `toggle-button`      |
+| Two-state labeled toggle       | `ToggleTextButton`                                       | `toggle-text-button` |
+| Mutually exclusive toggles     | `ToggleGroup` + `ToggleButton` and/or `ToggleTextButton` | `toggle-group`       |
 
-| Small label/tag                     | `Chip`                                                                                           | `chip`            |
-| Corner status-dot overlay           | `Badge`                                                                                          | `badge`           |
-| In-progress / indeterminate         | `LinearProgress`                                                                                 | `linear-progress` |
-| Determinate metric (storage, score) | `Meter`                                                                                          | `meter`           |
-| Loading placeholder                 | `Skeleton` (block or `Skeleton.Overlay`)                                                         | `skeleton`        |
-| Inline loading indicator            | `Spinner` (29 catalog variants + legacy `bars`/`dot-grid`/`dots`; props → `@viraui/react/specs`) | `spinner`         |
+| Small label/tag | `Chip` | `chip` |
+| Corner status-dot overlay | `Badge` | `badge` |
+| In-progress / indeterminate | `LinearProgress` | `linear-progress` |
+| Determinate metric (storage, score) | `Meter` | `meter` |
+| Discrete icon-row score / level | `IconMeter` | `icon-meter` |
+| Composable round dial / polar gauge | `Gauge` (+ parts); interactive via `GaugeControl` (linear bars → `Slider`) | `gauge` |
+| Loading placeholder | `Skeleton` (block or `Skeleton.Overlay`) | `skeleton` |
+| Inline loading indicator | `Spinner` (29 catalog variants + legacy `bars`/`dot-grid`/`dots`; props → `@viraui/react/specs`) | `spinner` |
 
 ## Overlays and notifications
 
@@ -39,17 +41,18 @@ Ids below are package folder / index ids (co-located exports share a parent fold
 
 ## Layout and structure
 
-| Need                    | Component                                | Specs id                                                                                                     |
-| ----------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Flex row/column         | `Stack`                                  | `stack`                                                                                                      |
-| CSS grid tracks         | `Grid`                                   | `grid`                                                                                                       |
-| Themed panel/card       | `Surface`                                | `surface`                                                                                                    |
-| Break out of padding    | `Bleed`                                  | `bleed`                                                                                                      |
-| Column masonry grid     | `Masonry`                                | `masonry`                                                                                                    |
-| Divider                 | `Separator`                              | `separator`                                                                                                  |
-| Shadow/elevation helper | `Elevator`                               | `elevator`                                                                                                   |
-| Viewport match helper   | `BreakpointsProvider` + `useBreakpoints` | `breakpoints` — [responsive.md](responsive.md)                                                               |
-| RTL / reading direction | `DirectionProvider` + `useDirection`     | `direction-provider` — [responsive.md](responsive.md) (provider + `dir` on `html`; ≠ Stack flex `direction`) |
+| Need                                | Component                                | Specs id                                                                                                     |
+| ----------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Flex row/column                     | `Stack`                                  | `stack`                                                                                                      |
+| CSS grid tracks                     | `Grid`                                   | `grid`                                                                                                       |
+| Themed panel/card                   | `Surface`                                | `surface`                                                                                                    |
+| Break out of padding                | `Bleed`                                  | `bleed`                                                                                                      |
+| Visually hidden, AT-accessible text | `SROnly`                                 | `sr-only`                                                                                                    |
+| Column masonry grid                 | `Masonry`                                | `masonry`                                                                                                    |
+| Divider                             | `Separator`                              | `separator`                                                                                                  |
+| Shadow/elevation helper             | `Elevator`                               | `elevator`                                                                                                   |
+| Viewport match helper               | `BreakpointsProvider` + `useBreakpoints` | `breakpoints` — [responsive.md](responsive.md)                                                               |
+| RTL / reading direction             | `DirectionProvider` + `useDirection`     | `direction-provider` — [responsive.md](responsive.md) (provider + `dir` on `html`; ≠ Stack flex `direction`) |
 
 ## Typography
 
@@ -115,6 +118,10 @@ Use sparingly — `Glow`, `Beam`, `StaticNoise`, `ProgressiveBlur` are GPU/memor
 
 When a public `@viraui/react` component is added/changed/removed, update this intent table and `viraui-a11y/vira-map.md` in the **same change**. Do not reintroduce encyclopedia pages.
 
+## Charts / data viz
+
+Not a `@viraui/react` folder. Intent “line/bar/area chart / data viz” → skill [charts.md](charts.md) → installed `@viraui/charts/specs` (`index.xml` + `patterns/compose-*` / domain units). Compose primitives; no packaged `LineChart` / `AreaChart` / `BarChart`. Collisions: charts `Text`/`Stack`/`Grid` ≠ react layout/type.
+
 ## Gotchas
 
 | Mistake                                            | Use instead                              |
@@ -124,6 +131,7 @@ When a public `@viraui/react` component is added/changed/removed, update this in
 | `Surface elevation={…}`                            | `Elevator` around `Surface`              |
 | Raw html + `display:flex` / `grid` / CSS `columns` | `Stack` / `Grid` / `Masonry`             |
 | Invented props from stories                        | Specs `meta`/`props`/`patterns` + source |
+| Packaged `LineChart` from `@viraui/charts`         | Compose `LinePath` + scales in app code  |
 
 ## Machine catalog
 

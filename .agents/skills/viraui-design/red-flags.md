@@ -9,6 +9,7 @@
 | “rg/ls dist/components or *.d.ts first”                      | Specs index + units first — FORBIDDEN shell-parse                                                                                        |
 | “Story shows this prop — ship it”                            | Specs units + source own API                                                                                                             |
 | “Default prop for clarity”                                   | Omit documented defaults                                                                                                                 |
+| “Set `color` on every part so it’s explicit”                 | Restating a default changes nothing and pins it — omit; paint only for meaning — [styling.md](styling.md)                                |
 | “CSS letter-spacing / text-transform on Text”                | `tracking` / `transform` props — open `props.xml`                                                                                        |
 | “Full-bleed UI paragraph — CSS line-height / max-width”      | Measure ~10–12 words **scaled to size** + `lineHeight` / `maxWidth` / `wrap` — [typography.md](typography.md)                            |
 | “Lists need list-style / custom bullets — preflight bare”    | Preflight already styles `ul`/`ol` — [preflight-baseline.md](preflight-baseline.md) / `modules.xml`                                      |
@@ -18,7 +19,11 @@
 | “Button / IconButton needs width:100% / inline-size class”   | **Never** — Stack `fullWidth` / `expandChildren` or control `fullWidth`; fixed-size controls stay content-sized — [layout.md](layout.md) |
 | “Panels need height:100% / block-size:100% CSS”              | **Never** — Stack `fullHeight` + `expandChildren` + stretch align (Stack `patterns.xml`) — [layout.md](layout.md)                        |
 | “Need bottom padding — style paddingBlockEnd”                | **Never** — `vPadding={[0, 'l']}` / `hPadding` tuples on Stack/Surface/Grid — [layout.md](layout.md)                                     |
+| “Need safe center — style justifyContent/alignItems”         | **Never** — Stack `hAlign`/`vAlign` (`safe center` / `safe end`); prefer `safe` on content-position — [layout.md](layout.md)             |
+| “Import FieldLabel / label CSS for forgot-password row”      | ReactNode `label` + `Text` `size="s"` `weight="semibold"` for title — [composition.md](composition.md)                                   |
+| “Bare center is fine — skip safe”                            | Prefer `safe center` / `safe end` for content-position; keep `stretch` / `space-*` bare — [layout.md](layout.md)                         |
 | “Bare Stack/Grid/Surface is omit-defaults”                   | Unset gap/padding = 0 — [layout.md](layout.md)                                                                                           |
+| “Dense UI → use `xs`/`2xs` gaps and padding”                 | Container floor is `m`; `s` = tight cluster, `xs`/`2xs` = optical micro pair only — [layout.md](layout.md)                               |
 | “Plain `div`/`header` + display:flex”                        | Flex framing = `Stack`; tag via `render`                                                                                                 |
 | “CSS grid / columns instead of Grid/Masonry”                 | Tracks → `Grid`; ragged pack → `Masonry`                                                                                                 |
 | “Desktop-first max-width media”                              | Mobile-first — [responsive.md](responsive.md)                                                                                            |

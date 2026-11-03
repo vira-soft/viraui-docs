@@ -32,6 +32,7 @@ Do **not** guess. Before any custom CSS (or Tailwind utility) that sets a visual
 | `gap` / `padding` on layout                                                          | Stack / Surface / Grid / Masonry / Bleed props                                                                                                                                                                                                                     |
 | `paddingBlock*` / `paddingInline*` / one-side padding `style`                        | **Forbidden** when the root owns `hPadding`/`vPadding`. One side → tuple `[start, end]` with `0` (`vPadding={[0, 'l']}`) — [layout.md](layout.md). Space tokens, not raw `1rem`.                                                                                   |
 | `width` / `height` / `inline-size` / `block-size: 100%` / `w-full` / size-fill class | **Forbidden** on Vira roots. Component `fullWidth` if any; else Stack `fullWidth` / `fullHeight` / `expandChildren` + stretch align (Stack `patterns.xml`) — [layout.md](layout.md). Fixed-size controls (IconButton) stay content-sized — do not “help” with CSS. |
+| `justify-content` / `align-items` / `safe center` via `style` or CSS module on Stack | **Forbidden** — Stack `hAlign`/`vAlign` (prefer `safe center` / `safe end` for content-position) — [layout.md](layout.md)                                                                                                                                          |
 | `font-weight` / size / family                                                        | `weight` / `size` / `family` (and Title equivalents)                                                                                                                                                                                                               |
 | `line-height` / `max-width` / `text-wrap` / `white-space`                            | `lineHeight` / `maxWidth` / `wrap` / `whiteSpace` (+ Stack `maxWidth`) — readable measure → [typography.md](typography.md)                                                                                                                                         |
 | `list-style` / `::marker` / ul-ol padding                                            | Preflight owns lists — [preflight-baseline.md](preflight-baseline.md) / `modules.xml` typography                                                                                                                                                                   |
@@ -46,6 +47,20 @@ Body copy color: prefer `Text` `tone` (`default` | `primary` | `muted` | `intera
 Fluid type: Text locks size by default (`fluid` false); pass `fluid` for viewport clamp on page/body copy. Title still clamps by default — use `fluid={false}` on dense chrome headings. Theme `--effect-fluid-typography: initial` locks all instances.
 
 Layout roots first → [layout.md](layout.md). Then layout/visual props from units. Motion **tokens** → **viraui-motion**. Motion **implementation** → prefer modern CSS below before JS/React.
+
+## Paint: defaults first
+
+The theme is the design. Every Vira surface ships a resolved default paint; **omitting the color prop is a complete composition, not a placeholder.** Pass color only when it carries meaning the surface cannot show otherwise.
+
+| Job                       | Do                                                                                   | Don't                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| Plain reading / chrome    | omit color props entirely                                                            | restate the default (`color="var(--global-foreground)"` on a part whose default is already foreground) |
+| Status / severity / bands | per-zone or per-segment token (`--highlight-*`), plus the arc that follows them      | color every part up front "to match the mock" or "to be safe"                                          |
+| One accent for hierarchy  | the surface's own prop (`Text tone`, `Meter` / `Chip` `variant`, `IconMeter` accent) | raw `--highlight-*` when a prop already names the semantics                                            |
+
+Restating a documented default is the quiet failure: it changes nothing on screen, and it pins that part to a literal token so theme changes stop reaching it. Treat "set color so it's explicit" as a bug, same as passing any other equals-default prop (`discovery.md` → omit equals-default props).
+
+Applies per component family: `Gauge` parts (`color`, `tailColor`, `dimColor`, `haloColor`, `zones[].color`), `Meter` / `Chip` `variant`, `IconMeter` accent, `Text` `tone`. Confirm the default in that surface's `props.xml` before adding paint.
 
 ## Modern CSS motion (prefer over JS)
 
@@ -104,6 +119,7 @@ Still Vira for Dialog / Popover / Menu / Tooltip / Toast — do not replace thos
 
 - `ButtonLink` / `IconButtonLink` share `--vui-button-*`.
 - Compound hooks sit on the documented part root (e.g. `Dialog.Sheet`).
+- Button family inside a padded `Surface`: prefer `radius="auto"` (concentric `--vui-button-radius-*`) over hand-tuning `--vui-button-radius`. `pill` wins over auto.
 
 ```css
 .primaryAction {
@@ -165,7 +181,9 @@ Do not set `z-index` above `4` unless extremely necessary. In-tree exception: th
 - CSS `letter-spacing` / `text-transform` on `Text`/`Title` instead of `tracking` / `transform`.
 - `width` / `height` / `inline-size` / `block-size: 100%` / `w-full` / size-fill `className` on Stack or **any** Vira control (Button, IconButton, …) — including when useless on fixed-size controls. Use Stack fill props (`fullWidth` / `fullHeight` / `expandChildren` + stretch; Stack `patterns.xml`) or the control’s `fullWidth`.
 - `style` / CSS `paddingBlockEnd` (etc.) on Stack/Surface/Grid when `vPadding={[0, 'l']}` / `hPadding` tuples cover it.
+- `style` / CSS `justify-content` / `align-items` / `safe center` on Stack when `hAlign`/`vAlign` cover it — prefer `safe center` / `safe end` ([layout.md](layout.md)).
 - Inline gap/padding/radius/color/sizing before checking props.
+- Part color set to its own default (`color="var(--global-foreground)"` on Gauge ticks/text, `color="var(--global-primary)"` on `GaugeArc`, `variant="primary"` on a `Meter` that already defaults to it) — paint only for meaning — [Paint: defaults first](#paint-defaults-first).
 - Body copy via raw `--global-*` / literal `color` when `Text tone` covers it.
 - `list-style` / marker / ul-ol padding, link underline, or inline `code`/`kbd`/`mark` chrome when preflight already owns it — [preflight-baseline.md](preflight-baseline.md).
 - `Surface elevation={…}` or hand-rolled `box-shadow` instead of `Elevator`.

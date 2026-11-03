@@ -29,7 +29,7 @@ Depth → [discovery.md](discovery.md).
 
 ### API hygiene
 
-- [ ] Every equals-default prop **omitted**.
+- [ ] Every equals-default prop **omitted** — including **color**: no part / `variant` / `tone` / accent set to the value it already defaults to. Paint appears only where it carries a meaning (zone, severity, status) — [styling.md](styling.md).
 - [ ] Icon-only controls use icon slots + accessible name — never `children` on `IconButton` / `IconButtonLink` / `ToggleButton`.
 - [ ] Icons in slots omit `size` / `width` / `height` unless expressly overriding the host/library default ([icons.md](icons.md)).
 - [ ] Imports from `@viraui/react` root (icons: any `ReactNode` in slots — [icons.md](icons.md)).
@@ -40,8 +40,10 @@ Depth → [discovery.md](discovery.md).
 - [ ] Flex framing → `Stack` (semantic tags via `render`). Tracks → `Grid`. Ragged pack → `Masonry`. No raw HTML/`div` + `display:flex` / `display:grid` / CSS columns glue.
 - [ ] No noop `render` that restates the component default root (e.g. Stack `render={<div />}`) — omit unless the host changes ([layout.md](layout.md) / PROTOCOL).
 - [ ] Every used layout root has spacing props set (unset gap/padding = 0 — not “omit defaults”).
+- [ ] **Scale floor:** container gap/padding is `m` or larger (sections `l`/`xl`, fields & cards `m`). `s` only for tight in-row clusters, `xs`/`2xs` only for optical micro pairs — never as a container gap/padding ([layout.md](layout.md)). Scan every `rowGap`/`columnGap`/`hPadding`/`vPadding`/Masonry `gap` in the diff.
 - [ ] No CSS `gap`/`padding` on Stack / Surface / Grid / Masonry / Bleed roots.
 - [ ] **No** `style` / CSS `paddingBlock*` / `paddingInline*` / side paddings on roots that own `hPadding`/`vPadding` — one-sided inset → tuples (`vPadding={[0, 'l']}`, …) with space tokens, not raw `1rem` ([layout.md](layout.md)).
+- [ ] Stack content-position align uses **`safe …`** by default (`hAlign`/`vAlign` e.g. `safe center`, `safe end`) — not bare `center`/`end` when centering/ending. **No** `style`/`justifyContent`/`alignItems` / CSS module whose only job is `safe` flex alignment ([layout.md](layout.md)). `stretch` / `space-*` / `initial` stay bare.
 - [ ] **No** invented `width` / `height` / `inline-size` / `block-size: 100%` / `w-full` / size-fill `className` (`.Social`, `.Submit`, `.fullWidth`, …) on Stack or **any** Vira control — including fixed-size `IconButton` where it would do nothing. Both-axes fill → Stack `fullWidth` / `fullHeight` / `expandChildren` + `hAlign`/`vAlign="stretch"` (Stack `patterns.xml`) or the control’s own `fullWidth` ([layout.md](layout.md)). Scan CSS modules / inline `style` in the diff for this.
 
 Depth → [layout.md](layout.md).

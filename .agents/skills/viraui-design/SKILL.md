@@ -3,9 +3,10 @@ name: viraui-design
 description: >-
   Use when building, editing, debugging, or styling any UI in a ViraUI /
   @viraui/react consumer app — forms, overlays, page or shell layout, spacing,
-  typography, icons, responsive or RTL, compounds, or visual polish — even if
-  the user never names Vira, @viraui/react, or this skill. Also use when tempted
-  to invent CSS modules, Tailwind utilities, raw HTML flex/grid, or restyle
+  typography, icons, charts / data viz (@viraui/charts + @visx/visx peer), responsive
+  or RTL, compounds, or visual polish — even if the user never names Vira,
+  @viraui/react, or this skill. Also use when tempted to invent CSS modules,
+  Tailwind utilities, raw HTML flex/grid, packaged LineChart wrappers, or restyle
   controls instead of public Vira props and parts. Load for login/settings/
   dashboard screens, Dialog/Menu/Toast compose, Stack/Surface/Grid/Masonry,
   icon-only controls, missing or unstyled Vira after bootstrap, or props-vs-CSS
@@ -13,7 +14,7 @@ description: >-
 license: MIT
 metadata:
   author: Vira Software
-  version: '2026.10.16'
+  version: '2026.11.01'
 ---
 
 # viraui-design
@@ -54,24 +55,25 @@ Missing global styles → **viraui-setup** first. Vague intent / anti-pattern ma
 
 ## Action router
 
-| Need                                                            | Read                                                                                         |
-| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Vague intent / which anti-pattern                               | [symptoms.md](symptoms.md)                                                                   |
-| Choose component or inspect API                                 | [discovery.md](discovery.md) → package specs index + units (`props` **and** `usage` do/dont) |
-| Intent → component id shortcut                                  | [component-matrix.md](component-matrix.md) — confirm in specs index/units                    |
-| Forms, Dialog, Popover, Menu, Toast, compounds                  | [composition.md](composition.md) → then specs `patterns`/`usage`/`props`                     |
-| Layout / density / Stack·Grid·Masonry                           | [layout.md](layout.md); prop names in units                                                  |
-| Mobile-first / `@media` / `useBreakpoints` / RTL                | [responsive.md](responsive.md) → specs `breakpoints` + `direction-provider` units            |
-| Props, `--vui-*`, elevation, motion **engine**                  | [styling.md](styling.md)                                                                     |
-| Readable text measure / leading / `wrap` / `whiteSpace` / align | [typography.md](typography.md) → Text / Title / Prose / plain HTML                           |
-| Bare HTML lists / prose / tables / link chrome                  | [preflight-baseline.md](preflight-baseline.md) → `foundation/modules.xml`                    |
-| Compose-time accessibility (not full audit)                     | [accessibility.md](accessibility.md)                                                         |
-| Motion tokens / reduced-motion                                  | **viraui-motion**; engine preference → [styling.md](styling.md) modern CSS                   |
-| APG audit / keyboard or SR debug                                | **viraui-a11y**                                                                              |
-| Consumer `data-*` / vibrancy / elevation attrs                  | [custom-attributes.md](custom-attributes.md) → `specs/foundation/attributes.xml`             |
-| Icons / glyphs / icon slots (any library)                       | [icons.md](icons.md)                                                                         |
-| Excuses / STOP table                                            | [red-flags.md](red-flags.md)                                                                 |
-| End of work / before claiming done                              | [verify.md](verify.md) — ship report required; 0 critical                                    |
+| Need                                                                | Read                                                                                                                    |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Vague intent / which anti-pattern                                   | [symptoms.md](symptoms.md)                                                                                              |
+| Choose component or inspect API                                     | [discovery.md](discovery.md) → package specs index + units (`props` **and** `usage` do/dont)                            |
+| Intent → component id shortcut                                      | [component-matrix.md](component-matrix.md) — confirm in specs index/units                                               |
+| Forms, Dialog, Popover, Menu, Toast, compounds, custom field labels | [composition.md](composition.md) → then specs `patterns`/`usage`/`props`                                                |
+| Layout / density / Stack·Grid·Masonry / prefer-`safe` align         | [layout.md](layout.md) — density + **scale floor** (`m` baseline, `s` cluster, `xs`/`2xs` optical); prop names in units |
+| Mobile-first / `@media` / `useBreakpoints` / RTL                    | [responsive.md](responsive.md) → specs `breakpoints` + `direction-provider` units                                       |
+| Props, `--vui-*`, elevation, motion **engine**                      | [styling.md](styling.md)                                                                                                |
+| Readable text measure / leading / `wrap` / `whiteSpace` / align     | [typography.md](typography.md) → Text / Title / Prose / plain HTML                                                      |
+| Bare HTML lists / prose / tables / link chrome                      | [preflight-baseline.md](preflight-baseline.md) → `foundation/modules.xml`                                               |
+| Compose-time accessibility (not full audit)                         | [accessibility.md](accessibility.md)                                                                                    |
+| Motion tokens / reduced-motion                                      | **viraui-motion**; engine preference → [styling.md](styling.md) modern CSS                                              |
+| APG audit / keyboard or SR debug                                    | **viraui-a11y**                                                                                                         |
+| Consumer `data-*` / vibrancy / elevation attrs                      | [custom-attributes.md](custom-attributes.md) → `specs/foundation/attributes.xml`                                        |
+| Icons / glyphs / icon slots (any library)                           | [icons.md](icons.md)                                                                                                    |
+| Charts / data viz / `@viraui/charts` / `@visx/visx` peer / compose LinePath | [charts.md](charts.md) → `@viraui/charts/specs` index-first; no package `LineChart`                                    |
+| Excuses / STOP table                                                | [red-flags.md](red-flags.md)                                                                                            |
+| End of work / before claiming done                                  | [verify.md](verify.md) — ship report required; 0 critical                                                               |
 
 ## Authority (in order)
 
@@ -93,7 +95,7 @@ Do **not** `ls` / `rg` / `grep` `dist/components/**` or `*.d.ts` trees to discov
 
 1. **Compose with ViraUI** — public parts + props from units. Reshape with custom CSS **only when the consumer expressly asks**.
 2. Import from `@viraui/react`. Icon slots take any `ReactNode`.
-3. Index-first units; omit equals-default props. Base UI: follow `meta` `base_ui` after Vira props.
+3. Index-first units; omit equals-default props — **including color**: a part / `variant` / `tone` set to its own default is a bug, not explicitness. Paint only where it carries a meaning — [styling.md](styling.md). Base UI: follow `meta` `base_ui` after Vira props.
 4. **Props before CSS** — Step 0. No exceptions for “I already know Button.”
 5. Layout → [layout.md](layout.md). Responsive/RTL → [responsive.md](responsive.md). Visual ladder → [styling.md](styling.md). Measure → [typography.md](typography.md).
 6. Icon-only: icon slots + accessible name — never `children` on `IconButton` / `IconButtonLink` / `ToggleButton`. Omit glyph `size` / width / height — [icons.md](icons.md).

@@ -152,22 +152,38 @@ const { showTooltip, hideTooltip, tooltipOpen, tooltipData, tooltipLeft, tooltip
 
 ### Label list
 
-Category names drawn at arc centroids.
+Category names outside the rim, joined with thin leader lines.
 
 <Example preview={<ChartsPieLabelListDemo />}>
 
 ```tsx
-import { Group, Pie, Text, scaleOrdinal } from '@viraui/charts';
+import { Group, Pie, Text } from '@viraui/charts';
+
+const midAngle = (arc: { startAngle: number; endAngle: number }) => (arc.startAngle + arc.endAngle) / 2;
+const polar = (angle: number, distance: number) => ({
+  x: Math.cos(angle - Math.PI / 2) * distance,
+  y: Math.sin(angle - Math.PI / 2) * distance,
+});
 
 <Group top={centerY} left={centerX}>
   <Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} padAngle={0.02}>
     {({ arcs, path }) =>
       arcs.map((arc) => {
-        const [cx, cy] = path.centroid(arc);
+        const color = colorScale(arc.data.name);
+        const angle = midAngle(arc);
+        const rim = polar(angle, radius);
+        const label = polar(angle, radius + 56);
         return (
           <g key={arc.data.name}>
-            <path d={path(arc) ?? undefined} fill={colorScale(arc.data.name)} stroke="var(--global-background)" strokeWidth={2} />
-            <Text x={cx} y={cy} textAnchor="middle" verticalAnchor="middle" fill="var(--global-contrast)" fontSize={12}>
+            <path d={path(arc) ?? undefined} fill={color} stroke="var(--global-background)" strokeWidth={2} />
+            <line x1={rim.x} y1={rim.y} x2={label.x} y2={label.y} stroke={color} strokeWidth={1} />
+            <Text
+              x={label.x}
+              y={label.y}
+              textAnchor={label.x >= 0 ? 'start' : 'end'}
+              verticalAnchor="middle"
+              fill={color}
+            >
               {arc.data.name}
             </Text>
           </g>
@@ -274,7 +290,7 @@ const total = browserData.reduce((sum, d) => sum + d.value, 0);
   <Text textAnchor="middle" verticalAnchor="middle" fill="var(--global-foreground)" style={{ fontWeight: 700 }}>
     {total}
   </Text>
-  <Text textAnchor="middle" verticalAnchor="start" y={18} fill="var(--global-muted)">
+  <Text textAnchor="middle" verticalAnchor="start" y={28} fill="var(--global-muted)">
     Visitors
   </Text>
 </Group>

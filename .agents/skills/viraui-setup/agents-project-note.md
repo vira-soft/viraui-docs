@@ -1,10 +1,10 @@
 # Optional project agent note (portable)
 
-**When to read:** after installing the skills.sh pack, when the consumer wants a thin project-level reminder for **any** agent host (Cursor, Claude Code, Codex, Gemini, …).
+**When to read:** after installing publishable skills from `vira-soft/viraui-skills`, when the consumer wants a thin project-level reminder for **any** agent host (Cursor, Claude Code, Codex, Gemini, …).
 
 This is an **optional belt**. Primary triggers remain skill `description` fields + hub gates. Do **not** invent Cursor-only `.cursor/rules` as the source of truth — mirror this note into a host-native format only if needed.
 
-## Install skills (same pack, all hosts)
+## Install skills (same source, all hosts)
 
 ```bash
 npx skills add vira-soft/viraui-skills

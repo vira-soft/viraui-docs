@@ -31,10 +31,11 @@ On disk: `node_modules/@viraui/react/dist/specs/…`. Package export: `@viraui/r
 | Foundation attrs / vibrancy      | index → `foundation/attributes.xml` (+ toggles / elevation as needed)                                                                    |
 | Layout spacing / density         | [layout.md](layout.md) → specs `patterns/compose-layout-first` (+ related patterns) → confirm props in stack/surface/grid/masonry units  |
 | Mobile-first / breakpoints / RTL | [responsive.md](responsive.md) → specs `breakpoints` + `direction-provider` units                                                        |
+| Charts / data viz                | [charts.md](charts.md) → `@viraui/charts/specs/index.xml` (+ compose patterns / domain units) — not `@viraui/react` folders               |
 
 ## Layout discipline
 
-Full rules + examples → [layout.md](layout.md). Summary: density default **medium**; every used layout root gets spacing props; flex→`Stack`, tracks→`Grid`, ragged→`Masonry`; confirm prop names in units.
+Full rules + examples → [layout.md](layout.md). Summary: density default **medium**; container spacing floor is **`m`** (`s` = tight cluster, `xs`/`2xs` = optical micro pair only — never container gap/padding); every used layout root gets spacing props; flex→`Stack`, tracks→`Grid`, ragged→`Masonry`; confirm prop names in units.
 
 ## Imports
 
@@ -107,6 +108,7 @@ No `base_ui` in meta → Vira-only surface; skip Base UI.
 - Inventing `width` / `height` / `inline-size` / `block-size: 100%` / size-fill `className` on Stack or **any** Vira control (works or not — e.g. square IconButton) instead of Stack fill props (`fullWidth` / `fullHeight` / `expandChildren` + stretch; Stack `patterns.xml`) / control `fullWidth`.
 - Inventing `paddingBlock*` / `paddingInline*` / side padding `style` on Stack/Surface/Grid when `vPadding`/`hPadding` `[start, end]` tuples cover one-sided inset.
 - Passing documented defaults “for clarity.”
+- Setting `color` / accent props to a part's own default value (Gauge parts, `Meter`/`Chip` variant, `IconMeter` accent, `Text` tone) — omit; paint only where a meaning must show — [styling.md](styling.md).
 - `children` on icon-only controls.
 - Inferring `--vui-*` prefix without `shared_contract`.
 - Loading every `props.xml` instead of index-first selective units.

@@ -17,7 +17,7 @@ Do not assume default. Do not install foundation/fonts until answered.
 
 | Need             | Default                                                                           |
 | ---------------- | --------------------------------------------------------------------------------- |
-| Agent skills     | `npx skills add vira-soft/viraui-skills`                             |
+| Agent skills     | `npx skills add vira-soft/viraui-skills`                                          |
 | Theme            | Ask first — foundation preset **or** Studio/custom CSS (`theme-topics` fit)       |
 | Fonts            | After theme choice — `@fontsource-variable/*` matching that theme                 |
 | Preflight        | `@viraui/react/preflight.css` after theme + fonts                                 |

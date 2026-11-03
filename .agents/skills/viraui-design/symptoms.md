@@ -22,6 +22,7 @@ These cues used to live in the hub `description` (≤1024 discovery budget). The
 | Raw HTML `div`/`header` + `display:flex` / `display:grid` / CSS columns      | [layout.md](layout.md) — Stack / Grid / Masonry                                                               |
 | CSS / Tailwind `gap` / `padding` on Stack / Surface / Grid / Masonry / Bleed | [layout.md](layout.md) — public spacing props                                                                 |
 | `style` / CSS `paddingBlock*` / `paddingInline*` / one-side padding          | [layout.md](layout.md) — `hPadding` / `vPadding` `[start, end]` tuples                                        |
+| `style` / CSS `justify-content` / `align-items` / `safe center` on Stack     | [layout.md](layout.md) — `hAlign`/`vAlign` with prefer-`safe` content-position                                |
 | `width:100%` / `w-full` / size-fill `className` on Button or other controls  | [layout.md](layout.md) — Stack `fullWidth` / `expandChildren` or control `fullWidth`                          |
 | `height:100%` / `block-size:100%` on panels / Stack children                 | [layout.md](layout.md) — Stack `fullHeight` + `expandChildren` + stretch                                      |
 | CSS module / Tailwind first “to match the mock” on a Vira root               | [styling.md](styling.md) — props + `usage` before CSS                                                         |
@@ -29,6 +30,7 @@ These cues used to live in the hub `description` (≤1024 discovery budget). The
 | Full-bleed paragraph CSS `line-height` / `max-width` / `text-wrap`           | [typography.md](typography.md) — measure ~10–12 words/line; `lineHeight` / `maxWidth` / `wrap` / `whiteSpace` |
 | Restyle bare `ul`/`ol` / prose / tables already owned by preflight           | [preflight-baseline.md](preflight-baseline.md)                                                                |
 | Always `size={16}` / `size="1rem"` on slot icons                             | [icons.md](icons.md) — omit by default                                                                        |
+| `color` / `variant` / tone set to the part's own default value               | [styling.md](styling.md) — defaults first; paint only for meaning                                             |
 | Icon-only via `children` on IconButton / ToggleButton                        | [icons.md](icons.md) + [accessibility.md](accessibility.md)                                                   |
 | Title `size` as heading level; dates/results as plain Text span              | [accessibility.md](accessibility.md) — `render` hosts (`h*`, `time`/`output`/`p`, …)                          |
 | Stack `direction` for RTL; DirectionProvider without `dir` on `html`         | [responsive.md](responsive.md)                                                                                |

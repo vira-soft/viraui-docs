@@ -53,16 +53,16 @@ Key bootstrap hooks: `data-mode` (`light` \| `dark` \| `inverted`), `data-vibran
 
 ## Gotchas
 
-| Mistake                                              | Fix                                                                                                                                   |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Elevation attrs without preflight                    | Import preflight after theme/fonts                                                                                                    |
-| `data-mode` instead of loading theme CSS             | Mode ≠ theme; load compatible sheet first ([theme.md](theme.md))                                                                      |
-| Expecting preflight to load fonts                    | Consumer font CSS in bootstrap                                                                                                        |
-| Hand-rolled `backdrop-filter` / `box-shadow`         | Use `data-vibrant` / elevation hooks when theme effects are on                                                                        |
-| New consumer `data-*` without skill/XML sync         | Update `core/specs/attributes.xml` + **viraui-design** `custom-attributes.md`                                                         |
-| Expect class on `<a>` to drop link underline         | Opt out only with `data-no-link-style` (prose Text/Title-as-a keep underline)                                                         |
-| Restyle `ul`/`ol` / invent table row borders         | Preflight owns lists + table baseline — compose via **viraui-design** [preflight-baseline.md](../viraui-design/preflight-baseline.md) |
-| Third-party Tailwind/Bootstrap preflight beside Vira | Warn + ask; omit third-party reset — [css-framework-coexistence.md](css-framework-coexistence.md)                                     |
+| Mistake                                              | Fix                                                                                                                                                        |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Elevation attrs without preflight                    | Import preflight after theme/fonts                                                                                                                         |
+| `data-mode` instead of loading theme CSS             | Mode ≠ theme; load compatible sheet first ([theme.md](theme.md))                                                                                           |
+| Expecting preflight to load fonts                    | Consumer font CSS in bootstrap                                                                                                                             |
+| Hand-rolled `backdrop-filter` / `box-shadow`         | Use `data-vibrant` / elevation hooks when theme effects are on                                                                                             |
+| New consumer `data-*` without skill/XML sync         | Update `core/specs/attributes.xml` + **viraui-design** `custom-attributes.md`                                                                              |
+| Expect class on `<a>` to drop link underline         | Opt out only with `data-no-link-style` (prose Text/Title-as-a keep always-visible decoration; theme `--global-link-decoration: none` clears line globally) |
+| Restyle `ul`/`ol` / invent table row borders         | Preflight owns lists + table baseline — compose via **viraui-design** [preflight-baseline.md](../viraui-design/preflight-baseline.md)                      |
+| Third-party Tailwind/Bootstrap preflight beside Vira | Warn + ask; omit third-party reset — [css-framework-coexistence.md](css-framework-coexistence.md)                                                          |
 
 ## Machine paths
 

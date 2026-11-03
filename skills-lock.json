@@ -29,13 +29,13 @@
       "source": "vira-soft/viraui-skills",
       "sourceType": "github",
       "skillPath": "skills/viraui-a11y/SKILL.md",
-      "computedHash": "340ff0e91efa743450ee3b99e3677cd4a1d8aed445ef67c202f47674871114af"
+      "computedHash": "7abce6c0da6447cc952cef68a46acf179783a502234c58d8905bcd923cf8fbf6"
     },
     "viraui-design": {
       "source": "vira-soft/viraui-skills",
       "sourceType": "github",
       "skillPath": "skills/viraui-design/SKILL.md",
-      "computedHash": "8047e809e93d60bcf6749bc16e81081ad22425e13195bd930830d3ce10f3abef"
+      "computedHash": "69cde0e000592905d83b99559981688692ed49e99c1b1b3d7ed41ec424e4918e"
     },
     "viraui-motion": {
       "source": "vira-soft/viraui-skills",
@@ -47,7 +47,7 @@
       "source": "vira-soft/viraui-skills",
       "sourceType": "github",
       "skillPath": "skills/viraui-setup/SKILL.md",
-      "computedHash": "ec3e0a67c9a5e5c96605db61d105c6c90a27745aafdd34283b2ad3ac1903a6cb"
+      "computedHash": "39843229f8398458bf6627a147b45d800a58002214895e230ea38090f8f33ea4"
     }
   }
 }

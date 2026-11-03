@@ -9,7 +9,7 @@ metadata:
 
 # viraui-setup
 
-Consumer bootstrap for `@viraui/react`. Load when setup, theme, preflight, or root-provider symptoms match — **not** for routine UI compose (that is **viraui-design**). Portable across Agent Skills hosts (Cursor, Claude Code, Codex, Gemini, …) via the same skills.sh pack.
+Consumer bootstrap for `@viraui/react`. Load when setup, theme, preflight, or root-provider symptoms match — **not** for routine UI compose (that is **viraui-design**). Portable across Agent Skills hosts (Cursor, Claude Code, Codex, Gemini, …) via `npx skills add vira-soft/viraui-skills`.
 
 Durable bootstrap facts live in `@viraui/react/specs/foundation/bootstrap.xml` (and related foundation units). This hub is a thin checklist + router.
 
