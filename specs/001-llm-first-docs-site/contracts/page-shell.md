@@ -30,11 +30,11 @@ Every **ComponentPage** MDX MUST include, in order:
 5. **Optional decision blocks** (any subset, after Anatomy or lead when Anatomy is omitted, before Common examples) — use when they clarify choice; omit when the lead already covers it:
    - `## When to use`
    - `## When not to use`
-   - `## Related` (sibling / alternative components with links)
 
-   Put a thematic break (`---`) after the when / when-not block (before Related when present) and after Related (before Common examples).
+   Put a thematic break (`---`) after the when / when-not block (before Common examples).
 6. `## Common examples` with at least one live preview (`ViraSandbox` demo component) or `PreviewSlot` stub (“preview pending” allowed until the demo lands). Each `###` under Common examples MUST title the **pattern / use case** (dual thumbs, grouped options, as a link) — not the demo’s product scene (price range, teammate search, equalizer). Demo UI copy stays in the preview and prose. Rule: `.cursor/rules/09-docs-example-titles.mdc`. When a section has both a live demo and a **teaching source fence** (`tsx` / `jsx` / `css` / `html`, …), wrap them in `<Example preview={…}>` — Fumadocs `Tabs` via `src/components/common/example` (`src/mdx-components.ts`). Preview is the default tab; Code holds the fence(s). Each `Example` keeps independent tab state (no shared `groupId`). Tab panels are flush (`p-0`) so sandbox and codeblock fill the chrome. Do not stack demo + teaching fence vertically. Code-only, preview-only, and `PreviewSlot` stubs stay outside `Example`. Agent prompt fences (`text` / `text tab="…"`) stay **outside** `Example` — they are not the Code tab. Ask-your-agent tab labels stay consumer intents; they MUST NOT dictate the `###` pattern titles.
 7. `## Ask your agent` with a titled fenced code block (`text` + `title="…"`) for a copy-ready compose / config prompt seed (TODO prompt text allowed on stubs)
+8. **`## Related` (optional, last body section)** — sibling / alternative components with links. After Ask your agent. Put a thematic break (`---`) before Related.
 
 ## ComponentPage MUST NOT
 

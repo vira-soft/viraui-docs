@@ -7,7 +7,7 @@
 
 1. Frontmatter: `title`, `description` (no leaf `icon` required).
 2. **No** Base UI Card (charts are `@viraui/charts` / visx compose, not Base UI wrappers).
-3. Lead (≈2–3 short paragraphs) → thematic break → optional When to use / When not / Related → `## Common examples` → `## Ask your agent`.
+3. Lead (≈2–3 short paragraphs) → thematic break → optional When to use / When not → `## Common examples` → `## Ask your agent` → optional `## Related` (last).
 4. Omit Anatomy by default (compose-from-primitives, not compound `.` parts).
 5. Each Common example = one demo + one teaching `tsx` fence in the Code tab. Fence = **full chart composition matching the preview** (scales, `svg`/`Group`, marks, axes/grid as shown) — not mark-only fragments. Omit mock data arrays and noisy props; name fixtures (`data`, `months`, `yMax`) as given. Never stack multiple plots in one preview.
 6. Live demos wrap plot in minimal `ChartExampleFrame` (centered width only — no headline / trend / subtitle under the chart). Prefer plot-only chrome inside the sandbox too.
