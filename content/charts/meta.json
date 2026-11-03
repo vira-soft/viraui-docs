@@ -1,6 +1,6 @@
 {
   "title": "Charts",
-  "description": "Token-styled visx charts for ViraUI.",
+  "description": "Styled visx charts for ViraUI.",
   "icon": "Chart3",
   "root": "docs",
   "pages": [
