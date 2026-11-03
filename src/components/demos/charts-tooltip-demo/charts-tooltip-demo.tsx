@@ -6,17 +6,20 @@ import { ViraSandbox } from "../../common/vira-sandbox";
 import {
   ActiveEnergyArea,
   ActivityStackedBar,
+  DistanceLine,
   HeartRateLine,
-  SleepBars,
-  StepsBars,
+  MacroStackedArea,
+  SleepArea,
+  StepsLine,
+  WorkoutPie,
   bpmValue,
-  customLabelTitle,
+  distanceDateTitle,
   heartDateTitle,
   isoTitle,
-  kcalValue,
-  longDateTitle,
+  kmValue,
   sleepTitle,
   stepsDateTitle,
+  workoutTitle,
 } from "./plots";
 
 type SandboxShellProps = {
@@ -35,7 +38,7 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   </ViraSandbox>
 );
 
-/** Activity stacks — tall swatch rows for Move / Exercise. */
+/** Stacked Move / Exercise bars — tall swatch rows. */
 export const ChartsTooltipIndicatorLineDemo: React.FC = () => (
   <SandboxShell label="Activity tooltip with line indicator">
     <ChartExampleFrame label="Activity tooltip with line indicator">
@@ -53,20 +56,20 @@ export const ChartsTooltipIndicatorNoneDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** Sleep bars — fixed "Sleep" title. */
+/** Sleep area — fixed Sleep title. */
 export const ChartsTooltipLabelCustomDemo: React.FC = () => (
   <SandboxShell label="Sleep tooltip with custom title">
     <ChartExampleFrame label="Sleep tooltip with custom title">
-      <SleepBars titleFor={sleepTitle} indicator="line" />
+      <SleepArea titleFor={sleepTitle} indicator="line" />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
-/** Steps — long-form date title. */
+/** Steps line — long-form date title. */
 export const ChartsTooltipLabelLongDateDemo: React.FC = () => (
   <SandboxShell label="Steps tooltip with long date">
     <ChartExampleFrame label="Steps tooltip with long date">
-      <StepsBars titleFor={stepsDateTitle} indicator="dot" defaultOpenIndex={2} />
+      <StepsLine titleFor={stepsDateTitle} indicator="dot" defaultOpenIndex={2} />
     </ChartExampleFrame>
   </SandboxShell>
 );
@@ -80,35 +83,34 @@ export const ChartsTooltipLabelNoneDemo: React.FC = () => (
   </SandboxShell>
 );
 
-/** Heart Rate — bpm unit formatter. */
+/** Walk distance — km unit formatter. */
 export const ChartsTooltipFormatterDemo: React.FC = () => (
-  <SandboxShell label="Heart Rate tooltip value formatter">
-    <ChartExampleFrame label="Heart Rate tooltip value formatter">
-      <HeartRateLine indicator="none" formatValue={bpmValue} defaultOpenIndex={8} />
-    </ChartExampleFrame>
-  </SandboxShell>
-);
-
-/** Activity — series icons instead of swatches. */
-export const ChartsTooltipIconsDemo: React.FC = () => (
-  <SandboxShell label="Activity tooltip with series icons">
-    <ChartExampleFrame label="Activity tooltip with series icons">
-      <ActivityStackedBar titleFor={customLabelTitle} indicator="icon" defaultOpenIndex={2} />
-    </ChartExampleFrame>
-  </SandboxShell>
-);
-
-/** Activity — indicator + kcal formatter + total. */
-export const ChartsTooltipAdvancedDemo: React.FC = () => (
-  <SandboxShell label="Activity tooltip with total">
-    <ChartExampleFrame label="Activity tooltip with total">
-      <ActivityStackedBar
-        titleFor={longDateTitle}
-        indicator="dot"
-        formatValue={kcalValue}
-        showTotal
-        defaultOpenIndex={4}
+  <SandboxShell label="Distance tooltip value formatter">
+    <ChartExampleFrame label="Distance tooltip value formatter">
+      <DistanceLine
+        titleFor={distanceDateTitle}
+        indicator="none"
+        formatValue={kmValue}
+        defaultOpenIndex={6}
       />
+    </ChartExampleFrame>
+  </SandboxShell>
+);
+
+/** Workout pie — series icons instead of swatches. */
+export const ChartsTooltipIconsDemo: React.FC = () => (
+  <SandboxShell label="Workout pie tooltip with series icons">
+    <ChartExampleFrame label="Workout pie tooltip with series icons">
+      <WorkoutPie titleFor={workoutTitle} indicator="icon" defaultOpenIndex={1} />
+    </ChartExampleFrame>
+  </SandboxShell>
+);
+
+/** Macro stack — indicator + gram formatter + total. */
+export const ChartsTooltipAdvancedDemo: React.FC = () => (
+  <SandboxShell label="Macro stack tooltip with total">
+    <ChartExampleFrame label="Macro stack tooltip with total">
+      <MacroStackedArea indicator="dot" showTotal defaultOpenIndex={3} />
     </ChartExampleFrame>
   </SandboxShell>
 );

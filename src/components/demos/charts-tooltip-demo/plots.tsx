@@ -1,22 +1,33 @@
 "use client";
 
-import { Flame, Heart, Moon, PersonSimpleWalk } from '@phosphor-icons/react';
+import {
+  Bicycle,
+  Flame,
+  ForkKnife,
+  Heart,
+  Moon,
+  PersonSimpleSwim,
+  PersonSimpleWalk,
+} from '@phosphor-icons/react';
 import * as React from 'react';
 
 import {
   AreaClosed,
+  AreaStack,
   AxisBottom,
   Bar,
   BarRounded,
   Circle,
   Group,
   LinePath,
+  Pie,
   TooltipWithBounds,
   curveMonotoneX,
   defaultStyles,
   localPoint,
   scaleBand,
   scaleLinear,
+  scaleOrdinal,
   scalePoint,
   useTooltip,
 } from '@viraui/charts';
@@ -66,6 +77,10 @@ const heartColor = 'var(--highlight-red)';
 const sleepColor = 'var(--highlight-indigo)';
 const stepsColor = 'var(--highlight-cyan)';
 const energyColor = 'var(--highlight-yellow)';
+const distanceColor = 'var(--highlight-magenta)';
+const proteinColor = 'var(--color-red-30)';
+const carbsColor = 'var(--color-cyan-30)';
+const fatColor = 'var(--color-yellow-30)';
 
 /** Last 14 resting-HR samples — iOS Health–style line host. */
 const heartSeries = mobileData.slice(-14);
@@ -98,13 +113,62 @@ const energySeries = activityData.map((d) => ({
 }));
 const energyDomain = energySeries.map((d) => d.day);
 
-const activityDomain = activityData.map((d) => d.day);
-const longDateFmt = new Intl.DateTimeFormat('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-  timeZone: 'UTC',
+/** Outdoor walk distance (km) — formatter host, distinct from heart-rate line. */
+const distanceSeries = mobileData.slice(-10).map((d, i) => ({
+  key: d.key,
+  dateLabel: d.dateLabel,
+  km: Math.round((2.4 + (d.bpm - 58) / 20 + i * 0.08) * 10) / 10,
+}));
+const distanceDomain = distanceSeries.map((d) => d.key);
+
+/** Workout mix — pie host for icon tooltips. */
+const workoutSlices = [
+  {
+    key: 'walk',
+    label: 'Walk',
+    value: 42,
+    color: 'var(--highlight-cyan)',
+    icon: <PersonSimpleWalk aria-hidden size={14} />,
+  },
+  {
+    key: 'cycle',
+    label: 'Cycle',
+    value: 28,
+    color: 'var(--highlight-acid)',
+    icon: <Bicycle aria-hidden size={14} />,
+  },
+  {
+    key: 'swim',
+    label: 'Swim',
+    value: 18,
+    color: 'var(--highlight-blue)',
+    icon: <PersonSimpleSwim aria-hidden size={14} />,
+  },
+] as const;
+
+/** Daily macros (g) — stacked-area host for advanced total. */
+type MacroPoint = { day: string; protein: number; carbs: number; fat: number };
+const macroSeries: MacroPoint[] = [
+  { day: 'Mon', protein: 92, carbs: 180, fat: 55 },
+  { day: 'Tue', protein: 110, carbs: 150, fat: 48 },
+  { day: 'Wed', protein: 85, carbs: 210, fat: 62 },
+  { day: 'Thu', protein: 98, carbs: 165, fat: 50 },
+  { day: 'Fri', protein: 120, carbs: 140, fat: 58 },
+  { day: 'Sat', protein: 75, carbs: 230, fat: 70 },
+];
+const macroDomain = macroSeries.map((d) => d.day);
+const macroKeys = ['protein', 'carbs', 'fat'] as const;
+const macroColor = scaleOrdinal<string, string>({
+  domain: [...macroKeys],
+  range: [proteinColor, carbsColor, fatColor],
 });
+const macroLabel: Record<(typeof macroKeys)[number], string> = {
+  protein: 'Protein',
+  carbs: 'Carbs',
+  fat: 'Fat',
+};
+
+const activityDomain = activityData.map((d) => d.day);
 const shortDateFmt = new Intl.DateTimeFormat('en-US', {
   month: 'short',
   day: 'numeric',
@@ -162,6 +226,20 @@ export const stepsValue = (value: number): React.ReactNode => (
   <>
     <span style={{ color: 'var(--global-foreground)', fontWeight: 600 }}>{value.toLocaleString('en-US')}</span>
     <span style={{ color: mutedLabel }}> steps</span>
+  </>
+);
+
+export const kmValue = (value: number): React.ReactNode => (
+  <>
+    <span style={{ color: 'var(--global-foreground)', fontWeight: 600 }}>{value.toFixed(1)}</span>
+    <span style={{ color: mutedLabel }}> km</span>
+  </>
+);
+
+export const gramValue = (value: number): React.ReactNode => (
+  <>
+    <span style={{ color: 'var(--global-foreground)', fontWeight: 600 }}>{value}</span>
+    <span style={{ color: mutedLabel }}> g</span>
   </>
 );
 
@@ -443,8 +521,8 @@ type SleepHostProps = SeedIndexProps & {
   formatValue?: (value: number) => React.ReactNode;
 };
 
-/** Nightly sleep duration bars. */
-export const SleepBars: React.FC<SleepHostProps> = ({
+/** Nightly sleep — indigo area (not another bar chart). */
+export const SleepArea: React.FC<SleepHostProps> = ({
   titleFor = () => 'Sleep',
   indicator = 'line',
   formatValue = hoursValue,
@@ -452,17 +530,14 @@ export const SleepBars: React.FC<SleepHostProps> = ({
 }) => {
   const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
     useTooltip<(typeof sleepSeries)[number]>();
-  const xScale = scaleBand<string>({ domain: sleepDomain, range: [0, innerWidth], padding: 0.28 });
+  const xScale = scalePoint<string>({ domain: sleepDomain, range: [0, innerWidth] });
   const yScale = scaleLinear<number>({ domain: [0, 10], range: [innerHeight, 0], nice: true });
-  const bandwidth = xScale.bandwidth();
 
   const openAt = (d: (typeof sleepSeries)[number]) => {
-    const barX = asNumber(xScale(d.day));
-    const barY = asNumber(yScale(d.hours));
     showTooltip({
       tooltipData: d,
-      tooltipLeft: margin.left + barX + bandwidth / 2,
-      tooltipTop: margin.top + barY,
+      tooltipLeft: margin.left + asNumber(xScale(d.day)),
+      tooltipTop: margin.top + asNumber(yScale(d.hours)),
     });
   };
 
@@ -472,24 +547,54 @@ export const SleepBars: React.FC<SleepHostProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount seed only
   }, [defaultOpenIndex]);
 
+  const onMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const point = localPoint(event);
+    if (!point) return;
+    const x = point.x - margin.left;
+    let best = 0;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (let i = 0; i < sleepDomain.length; i += 1) {
+      const key = sleepDomain[i];
+      if (key == null) continue;
+      const dist = Math.abs(asNumber(xScale(key)) - x);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    const hit = sleepSeries[best];
+    if (hit) openAt(hit);
+  };
+
   return (
     <ChartFrame>
-      <svg width={width} height={height} role="img" aria-label="Sleep duration chart" onMouseLeave={hideTooltip}>
+      <svg
+        width={width}
+        height={height}
+        role="img"
+        aria-label="Sleep duration chart"
+        onMouseLeave={hideTooltip}
+        onMouseMove={onMove}
+      >
         <Group left={margin.left} top={margin.top}>
-          {sleepSeries.map((d) => {
-            const barY = asNumber(yScale(d.hours));
-            return (
-              <BarRounded
-                key={d.key}
-                x={asNumber(xScale(d.day))}
-                y={barY}
-                width={bandwidth}
-                height={Math.max(0, innerHeight - barY)}
-                fill={sleepColor}
-                onMouseMove={() => openAt(d)}
-              />
-            );
-          })}
+          <AreaClosed
+            data={[...sleepSeries]}
+            x={(d) => asNumber(xScale(d.day))}
+            y={(d) => asNumber(yScale(d.hours))}
+            yScale={yScale}
+            stroke={sleepColor}
+            curve={curveMonotoneX}
+            fromOpacity={0.45}
+            toOpacity={0.05}
+          />
+          {tooltipData ? (
+            <Circle
+              cx={asNumber(xScale(tooltipData.day))}
+              cy={asNumber(yScale(tooltipData.hours))}
+              r={4}
+              fill={sleepColor}
+            />
+          ) : null}
           <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
         </Group>
       </svg>
@@ -521,26 +626,23 @@ type StepsHostProps = SeedIndexProps & {
   formatValue?: (value: number) => React.ReactNode;
 };
 
-/** Daily steps columns with long-date titles. */
-export const StepsBars: React.FC<StepsHostProps> = ({
+/** Daily steps — cyan line + dots (not columns). */
+export const StepsLine: React.FC<StepsHostProps> = ({
   titleFor,
   indicator = 'dot',
   formatValue = stepsValue,
   defaultOpenIndex = 4,
 }) => {
   const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } = useTooltip<DenseDayPoint>();
-  const xScale = scaleBand<string>({ domain: stepsDomain, range: [0, innerWidth], padding: 0.2 });
+  const xScale = scalePoint<string>({ domain: stepsDomain, range: [0, innerWidth] });
   const yMax = Math.max(...stepsSeries.map((d) => d.value));
-  const yScale = scaleLinear<number>({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
-  const bandwidth = xScale.bandwidth();
+  const yScale = scaleLinear<number>({ domain: [0, yMax * 1.1], range: [innerHeight, 0], nice: true });
 
   const openAt = (d: DenseDayPoint) => {
-    const barX = asNumber(xScale(d.key));
-    const barY = asNumber(yScale(d.value));
     showTooltip({
       tooltipData: d,
-      tooltipLeft: margin.left + barX + bandwidth / 2,
-      tooltipTop: margin.top + barY,
+      tooltipLeft: margin.left + asNumber(xScale(d.key)),
+      tooltipTop: margin.top + asNumber(yScale(d.value)),
     });
   };
 
@@ -550,24 +652,53 @@ export const StepsBars: React.FC<StepsHostProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount seed only
   }, [defaultOpenIndex]);
 
+  const onMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const point = localPoint(event);
+    if (!point) return;
+    const x = point.x - margin.left;
+    let best = 0;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (let i = 0; i < stepsDomain.length; i += 1) {
+      const key = stepsDomain[i];
+      if (key == null) continue;
+      const dist = Math.abs(asNumber(xScale(key)) - x);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    const hit = stepsSeries[best];
+    if (hit) openAt(hit);
+  };
+
   return (
     <ChartFrame>
-      <svg width={width} height={height} role="img" aria-label="Daily steps chart" onMouseLeave={hideTooltip}>
+      <svg
+        width={width}
+        height={height}
+        role="img"
+        aria-label="Daily steps chart"
+        onMouseLeave={hideTooltip}
+        onMouseMove={onMove}
+      >
         <Group left={margin.left} top={margin.top}>
-          {stepsSeries.map((d) => {
-            const barY = asNumber(yScale(d.value));
-            return (
-              <BarRounded
-                key={d.key}
-                x={asNumber(xScale(d.key))}
-                y={barY}
-                width={bandwidth}
-                height={Math.max(0, innerHeight - barY)}
-                fill={stepsColor}
-                onMouseMove={() => openAt(d)}
-              />
-            );
-          })}
+          <LinePath
+            data={stepsSeries}
+            x={(d) => asNumber(xScale(d.key))}
+            y={(d) => asNumber(yScale(d.value))}
+            stroke={stepsColor}
+            curve={curveMonotoneX}
+            strokeWidth={2}
+          />
+          {stepsSeries.map((d) => (
+            <Circle
+              key={d.key}
+              cx={asNumber(xScale(d.key))}
+              cy={asNumber(yScale(d.value))}
+              r={tooltipData?.key === d.key ? 5 : 3}
+              fill={stepsColor}
+            />
+          ))}
           <AxisBottom
             top={innerHeight}
             scale={xScale}
@@ -595,6 +726,328 @@ export const StepsBars: React.FC<StepsHostProps> = ({
             ]}
             indicator={indicator}
             formatValue={formatValue}
+          />
+        </TooltipWithBounds>
+      ) : null}
+    </ChartFrame>
+  );
+};
+
+type DistanceHostProps = SeedIndexProps & {
+  titleFor?: (d: (typeof distanceSeries)[number]) => string | undefined;
+  indicator?: TooltipIndicator;
+  formatValue?: (value: number) => React.ReactNode;
+};
+
+/** Outdoor walk distance — magenta line + km formatter. */
+export const DistanceLine: React.FC<DistanceHostProps> = ({
+  titleFor,
+  indicator = 'none',
+  formatValue = kmValue,
+  defaultOpenIndex = 6,
+}) => {
+  const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+    useTooltip<(typeof distanceSeries)[number]>();
+  const xScale = scalePoint<string>({ domain: distanceDomain, range: [0, innerWidth] });
+  const yMax = Math.max(...distanceSeries.map((d) => d.km));
+  const yScale = scaleLinear<number>({
+    domain: [0, yMax * 1.15],
+    range: [innerHeight, 0],
+    nice: true,
+  });
+
+  const openAt = (d: (typeof distanceSeries)[number]) => {
+    showTooltip({
+      tooltipData: d,
+      tooltipLeft: margin.left + asNumber(xScale(d.key)),
+      tooltipTop: margin.top + asNumber(yScale(d.km)),
+    });
+  };
+
+  React.useEffect(() => {
+    const seed = distanceSeries[defaultOpenIndex] ?? distanceSeries[distanceSeries.length - 1];
+    if (seed) openAt(seed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount seed only
+  }, [defaultOpenIndex]);
+
+  const onMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const point = localPoint(event);
+    if (!point) return;
+    const x = point.x - margin.left;
+    let best = 0;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (let i = 0; i < distanceDomain.length; i += 1) {
+      const key = distanceDomain[i];
+      if (key == null) continue;
+      const dist = Math.abs(asNumber(xScale(key)) - x);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    const hit = distanceSeries[best];
+    if (hit) openAt(hit);
+  };
+
+  return (
+    <ChartFrame>
+      <svg
+        width={width}
+        height={height}
+        role="img"
+        aria-label="Walk distance chart"
+        onMouseLeave={hideTooltip}
+        onMouseMove={onMove}
+      >
+        <Group left={margin.left} top={margin.top}>
+          <LinePath
+            data={distanceSeries}
+            x={(d) => asNumber(xScale(d.key))}
+            y={(d) => asNumber(yScale(d.km))}
+            stroke={distanceColor}
+            curve={curveMonotoneX}
+            strokeWidth={2}
+          />
+          {tooltipData ? (
+            <Circle
+              cx={asNumber(xScale(tooltipData.key))}
+              cy={asNumber(yScale(tooltipData.km))}
+              r={4}
+              fill={distanceColor}
+            />
+          ) : null}
+          <AxisBottom
+            top={innerHeight}
+            scale={xScale}
+            tickValues={thinDomainTicks(distanceDomain, innerWidth)}
+            tickFormat={(value) => shortDateFmt.format(new Date(`${String(value)}T00:00:00Z`))}
+            hideAxisLine
+            hideTicks
+          />
+        </Group>
+      </svg>
+      {tooltipOpen && tooltipData ? (
+        <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={cardTooltipStyle}>
+          <CardTooltipBody
+            title={titleFor?.(tooltipData)}
+            rows={[
+              {
+                key: 'distance',
+                label: 'Distance',
+                value: tooltipData.km,
+                color: distanceColor,
+                icon: <PersonSimpleWalk aria-hidden size={14} />,
+              },
+            ]}
+            indicator={indicator}
+            formatValue={formatValue}
+          />
+        </TooltipWithBounds>
+      ) : null}
+    </ChartFrame>
+  );
+};
+
+type WorkoutHostProps = SeedIndexProps & {
+  titleFor?: () => string | undefined;
+  indicator?: TooltipIndicator;
+};
+
+/** Workout mix pie — icons instead of swatches. */
+export const WorkoutPie: React.FC<WorkoutHostProps> = ({
+  titleFor = () => 'This week',
+  indicator = 'icon',
+  defaultOpenIndex = 0,
+}) => {
+  const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+    useTooltip<(typeof workoutSlices)[number]>();
+  const radius = Math.min(innerWidth, innerHeight) / 2;
+  const centerX = width / 2;
+  const centerY = height / 2 - 8;
+
+  React.useEffect(() => {
+    const seed = workoutSlices[defaultOpenIndex];
+    if (seed) {
+      showTooltip({
+        tooltipData: seed,
+        tooltipLeft: centerX,
+        tooltipTop: centerY - radius * 0.35,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount seed only
+  }, [defaultOpenIndex]);
+
+  return (
+    <ChartFrame>
+      <svg width={width} height={height} role="img" aria-label="Workout mix pie chart" onMouseLeave={hideTooltip}>
+        <Group top={centerY} left={centerX}>
+          <Pie
+            data={[...workoutSlices]}
+            pieValue={(d) => d.value}
+            outerRadius={radius}
+            padAngle={0.02}
+          >
+            {({ arcs, path }) =>
+              arcs.map((arc) => (
+                <path
+                  key={arc.data.key}
+                  d={path(arc) ?? undefined}
+                  fill={arc.data.color}
+                  stroke="var(--global-background)"
+                  strokeWidth={2}
+                  onMouseMove={() => {
+                    showTooltip({
+                      tooltipData: arc.data,
+                      tooltipLeft: centerX,
+                      tooltipTop: centerY - radius * 0.35,
+                    });
+                  }}
+                />
+              ))
+            }
+          </Pie>
+        </Group>
+      </svg>
+      {tooltipOpen && tooltipData ? (
+        <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={cardTooltipStyle}>
+          <CardTooltipBody
+            title={titleFor?.()}
+            rows={[
+              {
+                key: tooltipData.key,
+                label: tooltipData.label,
+                value: tooltipData.value,
+                color: tooltipData.color,
+                icon: tooltipData.icon,
+              },
+            ]}
+            indicator={indicator}
+            formatValue={(n) => (
+              <>
+                <span style={{ color: 'var(--global-foreground)', fontWeight: 600 }}>{n}</span>
+                <span style={{ color: mutedLabel }}>%</span>
+              </>
+            )}
+          />
+        </TooltipWithBounds>
+      ) : null}
+    </ChartFrame>
+  );
+};
+
+type MacroHostProps = SeedIndexProps & {
+  titleFor?: (d: MacroPoint) => string | undefined;
+  indicator?: TooltipIndicator;
+  formatValue?: (value: number) => React.ReactNode;
+  showTotal?: boolean;
+};
+
+/** Macro stack — literal `--color-*-30` fills (mode-stable) with total row. */
+export const MacroStackedArea: React.FC<MacroHostProps> = ({
+  titleFor = (d) => d.day,
+  indicator = 'dot',
+  formatValue = gramValue,
+  showTotal = true,
+  defaultOpenIndex = 2,
+}) => {
+  const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } = useTooltip<MacroPoint>();
+  const xScale = scalePoint<string>({ domain: macroDomain, range: [0, innerWidth] });
+  const yMax = Math.max(...macroSeries.map((d) => d.protein + d.carbs + d.fat));
+  const yScale = scaleLinear<number>({
+    domain: [0, yMax * 1.1],
+    range: [innerHeight, 0],
+    nice: true,
+  });
+
+  const openAt = (d: MacroPoint) => {
+    showTooltip({
+      tooltipData: d,
+      tooltipLeft: margin.left + asNumber(xScale(d.day)),
+      tooltipTop: margin.top + asNumber(yScale(d.protein + d.carbs + d.fat)),
+    });
+  };
+
+  React.useEffect(() => {
+    const seed = macroSeries[defaultOpenIndex];
+    if (seed) openAt(seed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount seed only
+  }, [defaultOpenIndex]);
+
+  const onMove = (event: React.MouseEvent<SVGSVGElement>) => {
+    const point = localPoint(event);
+    if (!point) return;
+    const x = point.x - margin.left;
+    let best = 0;
+    let bestDist = Number.POSITIVE_INFINITY;
+    for (let i = 0; i < macroDomain.length; i += 1) {
+      const key = macroDomain[i];
+      if (key == null) continue;
+      const dist = Math.abs(asNumber(xScale(key)) - x);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    const hit = macroSeries[best];
+    if (hit) openAt(hit);
+  };
+
+  return (
+    <ChartFrame>
+      <svg
+        width={width}
+        height={height}
+        role="img"
+        aria-label="Macro stacked area chart"
+        onMouseLeave={hideTooltip}
+        onMouseMove={onMove}
+      >
+        <Group left={margin.left} top={margin.top}>
+          <AreaStack
+            data={macroSeries}
+            keys={[...macroKeys]}
+            x={(d) => asNumber(xScale((d.data as MacroPoint).day))}
+            y0={(d) => asNumber(yScale(d[0]))}
+            y1={(d) => asNumber(yScale(d[1]))}
+            color={(key) => macroColor(String(key))}
+            curve={curveMonotoneX}
+          >
+            {({ stacks, path }) =>
+              stacks.map((stack) => (
+                <path
+                  key={`macro-${stack.key}`}
+                  d={path(stack) || ''}
+                  fill={macroColor(String(stack.key))}
+                  fillOpacity={0.55}
+                />
+              ))
+            }
+          </AreaStack>
+          {tooltipData ? (
+            <Circle
+              cx={asNumber(xScale(tooltipData.day))}
+              cy={asNumber(yScale(tooltipData.protein + tooltipData.carbs + tooltipData.fat))}
+              r={4}
+              fill="var(--global-foreground)"
+            />
+          ) : null}
+          <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+        </Group>
+      </svg>
+      {tooltipOpen && tooltipData ? (
+        <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={cardTooltipStyle}>
+          <CardTooltipBody
+            title={titleFor?.(tooltipData)}
+            rows={macroKeys.map((key) => ({
+              key,
+              label: macroLabel[key],
+              value: tooltipData[key],
+              color: macroColor(key),
+              icon: <ForkKnife aria-hidden size={14} />,
+            }))}
+            indicator={indicator}
+            formatValue={formatValue}
+            showTotal={showTotal}
           />
         </TooltipWithBounds>
       ) : null}
@@ -713,8 +1166,9 @@ export const ActiveEnergyArea: React.FC<EnergyHostProps> = ({
 };
 
 export const isoTitle = (d: ActivityPoint) => d.key;
-export const longDateTitle = (d: ActivityPoint) => longDateFmt.format(new Date(`${d.key}T00:00:00Z`));
-export const customLabelTitle = () => 'Activities';
 export const sleepTitle = () => 'Sleep';
 export const heartDateTitle = (d: MobileDayPoint) => d.dateLabel;
 export const stepsDateTitle = (d: DenseDayPoint) => d.title;
+export const distanceDateTitle = (d: (typeof distanceSeries)[number]) => d.dateLabel;
+export const workoutTitle = () => 'This week';
+export const macroDayTitle = (d: MacroPoint) => d.day;
