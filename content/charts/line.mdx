@@ -1,0 +1,291 @@
+---
+title: Line
+icon: ChartLine
+description: Cartesian line series — curves, axes, multi-series, markers, and labels.
+---
+
+Line charts plot values over a shared category or time domain. Compose `LinePath` with scales, grid, and axes from `@viraui/charts`. Curve helpers (`curveNatural`, `curveLinear`, `curveStep`, `curveMonotoneX`) change how segments connect.
+
+Reach for Line when the story is trend over time. Prefer [Area](/charts/area) when fill under the line carries weight, [Bar](/charts/bar) for discrete category comparisons, and the [Responsive](/charts/get-started/responsive) mobile scrub shell for dense day series on small viewports.
+
+---
+
+## When to use
+
+- Trends across months or days with one or more series
+- Markers or value labels that call out individual points
+
+## When not to use
+
+- Part-to-whole share of a total → [Pie](/charts/pie) or stacked [Area](/charts/area)
+- Category magnitude comparison without a continuous path → [Bar](/charts/bar)
+- Multi-axis polar profiles → [Radar](/charts/radar)
+
+---
+
+## Related
+
+- [Area](/charts/area) — filled series and stacks
+- [Responsive](/charts/get-started/responsive) — fluid hosts and mobile scrub
+- [Tooltips](/charts/get-started/tooltips) — hover readout patterns
+
+---
+
+## Common examples
+
+### Natural
+
+Smooth natural spline through monthly visitors.
+
+<Example preview={<ChartsLineNaturalDemo />}>
+
+```tsx
+import {
+  AxisBottom,
+  Group,
+  LinePath,
+  curveNatural,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
+
+const data = [
+  { month: 'Jan', value: 186 },
+  { month: 'Feb', value: 305 },
+  { month: 'Mar', value: 237 },
+  { month: 'Apr', value: 273 },
+  { month: 'May', value: 209 },
+  { month: 'Jun', value: 314 },
+];
+
+const xScale = scalePoint({
+  domain: data.map((d) => d.month),
+  range: [0, innerWidth],
+});
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <LinePath
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      curve={curveNatural}
+    />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Linear
+
+Straight segments between points.
+
+<Example preview={<ChartsLineLinearDemo />}>
+
+```tsx
+import { LinePath, curveLinear } from '@viraui/charts';
+
+<LinePath
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  curve={curveLinear}
+/>
+```
+
+</Example>
+
+### Step
+
+Horizontal then vertical steps between months.
+
+<Example preview={<ChartsLineStepDemo />}>
+
+```tsx
+import { LinePath, curveStep } from '@viraui/charts';
+
+<LinePath
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  curve={curveStep}
+/>
+```
+
+</Example>
+
+### Y axis
+
+Show left-axis ticks when magnitude needs a scale.
+
+<Example preview={<ChartsLineYAxisDemo />}>
+
+```tsx
+import { AxisLeft, LinePath, curveNatural } from '@viraui/charts';
+
+<Group left={margin.left} top={margin.top}>
+  <AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={5} />
+  <LinePath
+    data={data}
+    x={(d) => xScale(d.month) ?? 0}
+    y={(d) => yScale(d.value)}
+    curve={curveNatural}
+  />
+</Group>
+```
+
+</Example>
+
+### Multiple
+
+Desktop and mobile as two stroked series with a card tooltip.
+
+<Example preview={<ChartsLineMultipleDemo />}>
+
+```tsx
+import { LinePath, curveNatural } from '@viraui/charts';
+
+<LinePath
+  data={multiData}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.desktop)}
+  curve={curveNatural}
+  stroke="var(--highlight-blue)"
+/>
+<LinePath
+  data={multiData}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.mobile)}
+  curve={curveNatural}
+  stroke="var(--highlight-acid)"
+/>
+```
+
+</Example>
+
+### Dots
+
+Persistent point markers on every datum.
+
+<Example preview={<ChartsLineDotsDemo />}>
+
+```tsx
+import { Circle, LinePath, curveNatural } from '@viraui/charts';
+
+<LinePath data={data} x={x} y={y} curve={curveNatural} />
+{data.map((d) => (
+  <Circle
+    key={d.month}
+    cx={xScale(d.month) ?? 0}
+    cy={yScale(d.value)}
+    r={4}
+    fill="var(--highlight-blue)"
+  />
+))}
+```
+
+</Example>
+
+### Custom markers
+
+Crosshair ticks at each point.
+
+<Example preview={<ChartsLineMarkersDemo />}>
+
+```tsx
+import { Group, Line, LinePath, curveNatural } from '@viraui/charts';
+
+<LinePath data={data} x={x} y={y} curve={curveNatural} />
+{data.map((d) => {
+  const cx = xScale(d.month) ?? 0;
+  const cy = yScale(d.value);
+  return (
+    <Group key={d.month} left={cx} top={cy}>
+      <Line from={{ x: -6, y: 0 }} to={{ x: 6, y: 0 }} stroke="var(--highlight-blue)" />
+      <Line from={{ x: 0, y: -6 }} to={{ x: 0, y: 6 }} stroke="var(--highlight-blue)" />
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Value labels
+
+Numeric readout above each point on the visitors series.
+
+<Example preview={<ChartsLineValueLabelsDemo />}>
+
+```tsx
+import { Circle, Group, LinePath, Text, curveMonotoneX } from '@viraui/charts';
+
+<LinePath
+  data={desktopData}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  curve={curveMonotoneX}
+/>
+{desktopData.map((d) => {
+  const x = xScale(d.month) ?? 0;
+  const y = yScale(d.value) ?? 0;
+  return (
+    <Group key={d.month}>
+      <Circle cx={x} cy={y} r={4} fill="var(--highlight-blue)" />
+      <Text x={x} y={y - 12} textAnchor="middle" verticalAnchor="end">
+        {d.value}
+      </Text>
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Category labels
+
+Browser names as labels on a category line.
+
+<Example preview={<ChartsLineCategoryLabelsDemo />}>
+
+```tsx
+import { Circle, Group, LinePath, Text, curveMonotoneX, scaleLinear, scalePoint } from '@viraui/charts';
+
+const names = browserData.map((d) => d.name);
+const xScale = scalePoint({ domain: names, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, 320], range: [innerHeight, 0], nice: true });
+
+<LinePath
+  data={browserData}
+  x={(d) => xScale(d.name) ?? 0}
+  y={(d) => yScale(d.value)}
+  curve={curveMonotoneX}
+/>
+{browserData.map((d) => {
+  const x = xScale(d.name) ?? 0;
+  const y = yScale(d.value) ?? 0;
+  return (
+    <Group key={d.name}>
+      <Circle cx={x} cy={y} r={4} fill="var(--highlight-blue)" />
+      <Text x={x} y={y - 12} textAnchor="middle" verticalAnchor="end">
+        {d.name}
+      </Text>
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+Mobile scrub lives on [Responsive](/charts/get-started/responsive).
+
+## Ask your agent
+
+```text tab="Trend"
+Add a ViraUI line chart of monthly visitors with a natural curve and a hover tooltip.
+```
+```text tab="Dual"
+Plot desktop and mobile as two lines on the same months with a card tooltip.
+```

@@ -1,0 +1,286 @@
+---
+title: Responsive
+icon: ArrowsExpand
+description: Size charts from the parent, the viewport, or a fixed ScaleSVG viewBox — plus a mobile scrub shell.
+pageActions: false
+---
+
+Fixed-pixel Storybook widths teach the marks. In an app the plot usually fills a card or panel. `@viraui/charts` re-exports visx sizing helpers so the SVG tracks the host.
+
+Each preview below uses the same horizontally **resizable** sandbox as [fluid typography](/foundation/typography) — drag the iframe edge to watch `ParentSize` / `useParentSize` / `ScaleSVG` reflow.
+
+## Common examples
+
+### useParentSize
+
+Measure a ref and pass `width` / `height` into marks.
+
+<Example preview={<ChartsResponsiveUseParentSizeDemo />}>
+
+```tsx
+import { useParentSize } from '@viraui/charts';
+
+function MeasuredChart() {
+  const { parentRef, width, height } = useParentSize({
+    debounceTime: 0,
+    initialSize: { width: 640, height: 280 },
+  });
+
+  return (
+    <div ref={parentRef} style={{ width: '100%', height: 280 }}>
+      {width > 0 ? (
+        <svg width={width} height={height} role="img" aria-label="useParentSize line chart">
+          <LineChartMarks width={width} height={height} />
+        </svg>
+      ) : null}
+    </div>
+  );
+}
+```
+
+</Example>
+
+### ParentSize
+
+Same measurement with a render prop instead of a ref hook.
+
+<Example preview={<ChartsResponsiveParentSizeDemo />}>
+
+```tsx
+import { ParentSize } from '@viraui/charts';
+
+<div style={{ width: '100%', height: 280 }}>
+  <ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
+    {({ width, height }) =>
+      width > 0 ? (
+        <svg width={width} height={height} role="img" aria-label="ParentSize line chart">
+          <LineChartMarks width={width} height={height} />
+        </svg>
+      ) : null
+    }
+  </ParentSize>
+</div>
+```
+
+</Example>
+
+### useScreenSize
+
+Size from the viewport when the card is not the constraint.
+
+<Example preview={<ChartsResponsiveUseScreenSizeDemo />}>
+
+```tsx
+import { useScreenSize } from '@viraui/charts';
+
+const { width: screenWidth, height: screenHeight } = useScreenSize({ debounceTime: 0 });
+const width = Math.max(0, (screenWidth || 640) - 48);
+const height = Math.min(Math.max((screenHeight || 720) * 0.4, 200), 420);
+
+<svg width={width} height={height} role="img" aria-label="useScreenSize line chart">
+  <LineChartMarks width={width} height={height} />
+</svg>
+```
+
+</Example>
+
+### ScaleSVG
+
+When the composition is authored at a fixed viewBox and should scale into the host, wrap marks in `ScaleSVG` — do not nest another `<svg>` inside.
+
+<Example preview={<ChartsResponsiveScaleSvgDemo />}>
+
+```tsx
+import { ScaleSVG } from '@viraui/charts';
+
+<div style={{ width: '100%', height: 'auto' }} role="img" aria-label="ScaleSVG line chart">
+  <ScaleSVG width={400} height={240}>
+    <LineChartMarks width={400} height={240} />
+  </ScaleSVG>
+</div>
+```
+
+</Example>
+
+### Fluid bar
+
+Rebuild band and linear scales from the measured box.
+
+<Example preview={<ChartsResponsiveBarDemo />}>
+
+```tsx
+import { BarRounded, Group, ParentSize, scaleBand, scaleLinear } from '@viraui/charts';
+
+<ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
+  {({ width, height }) => {
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const xScale = scaleBand({ domain: monthDomain, range: [0, innerWidth], padding: 0.3 });
+    const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+    return (
+      <svg width={width} height={height} role="img" aria-label="Responsive bar chart">
+        <Group left={margin.left} top={margin.top}>
+          {desktopData.map((d) => {
+            const barY = yScale(d.value) ?? 0;
+            return (
+              <BarRounded
+                key={d.month}
+                x={xScale(d.month) ?? 0}
+                y={barY}
+                width={xScale.bandwidth()}
+                height={Math.max(0, innerHeight - barY)}
+                all={false}
+                top
+              />
+            );
+          })}
+        </Group>
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+### Fluid area
+
+Same host pattern with `AreaClosed` and point scales.
+
+<Example preview={<ChartsResponsiveAreaDemo />}>
+
+```tsx
+import { AreaClosed, Group, ParentSize, curveMonotoneX, scaleLinear, scalePoint } from '@viraui/charts';
+
+<ParentSize debounceTime={0} initialSize={{ width: 640, height: 280 }}>
+  {({ width, height }) => {
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const xScale = scalePoint({ domain: monthDomain, range: [0, innerWidth] });
+    const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+    return (
+      <svg width={width} height={height} role="img" aria-label="Responsive area chart">
+        <Group left={margin.left} top={margin.top}>
+          <AreaClosed
+            data={desktopData}
+            x={(d) => xScale(d.month) ?? 0}
+            y={(d) => yScale(d.value)}
+            yScale={yScale}
+            curve={curveMonotoneX}
+          />
+        </Group>
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+### Fluid pie
+
+Center `Pie` using `min(width, height)` for radius.
+
+<Example preview={<ChartsResponsivePieDemo />}>
+
+```tsx
+import { Group, ParentSize, Pie, scaleOrdinal } from '@viraui/charts';
+
+<ParentSize debounceTime={0} initialSize={{ width: 640, height: 320 }}>
+  {({ width, height }) => {
+    const radius = Math.max(0, Math.min(width, height) / 2 - 12);
+    return (
+      <svg width={width} height={height} role="img" aria-label="Responsive pie chart">
+        <Group top={height / 2} left={width / 2}>
+          <Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} padAngle={0.02}>
+            {({ arcs, path }) =>
+              arcs.map((arc) => (
+                <path key={arc.data.name} d={path(arc) ?? undefined} fill={colorScale(arc.data.name)} />
+              ))
+            }
+          </Pie>
+        </Group>
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+### Fluid radar
+
+Polar scales from the smaller of width and height.
+
+<Example preview={<ChartsResponsiveRadarDemo />}>
+
+```tsx
+import { Group, LineRadial, ParentSize, scaleLinear } from '@viraui/charts';
+
+<ParentSize debounceTime={0} initialSize={{ width: 640, height: 360 }}>
+  {({ width, height }) => {
+    const radius = Math.max(0, Math.min(width, height) / 2 - 36);
+    const radialScale = scaleLinear({ range: [0, Math.PI * 2], domain: [360, 0] });
+    const valueScale = scaleLinear({ range: [0, radius], domain: [0, radarMax] });
+    return (
+      <svg width={width} height={height} role="img" aria-label="Responsive radar chart">
+        <Group top={height / 2} left={width / 2}>
+          <LineRadial
+            data={monthDeviceData}
+            angle={(_, i) => radialScale(i * (360 / monthDeviceData.length)) ?? 0}
+            radius={(d) => valueScale(d.desktop) ?? 0}
+            fill="oklab(from var(--highlight-cyan) l a b / 28%)"
+            stroke="var(--highlight-cyan)"
+            strokeWidth={2}
+          />
+        </Group>
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+### Mobile scrub
+
+For dense day series on a narrow viewport, sticky Y + horizontal scroll + a header that reads the scrubbed point beats a floating tooltip. The Line family owns the marks; this page owns the responsive shell.
+
+<Example preview={<ChartsResponsiveMobileScrubDemo />}>
+
+```tsx
+import { AxisLeft, Group, LinePath, curveMonotoneX, scaleLinear, scalePoint } from '@viraui/charts';
+
+const plotWidth = Math.max(days.length * 12, hostWidth);
+
+<div style={{ display: 'grid', gridTemplateColumns: '48px 1fr' }}>
+  <svg width={48} height={height}>
+    <AxisLeft left={40} scale={yScale} hideAxisLine hideTicks />
+  </svg>
+  <div style={{ overflowX: 'auto' }} tabIndex={0}>
+    <svg width={plotWidth} height={height}>
+      <Group left={0} top={margin.top}>
+        <LinePath
+          data={days}
+          x={(d) => xScale(d.key) ?? 0}
+          y={(d) => yScale(d.bpm)}
+          curve={curveMonotoneX}
+        />
+      </Group>
+    </svg>
+  </div>
+</div>
+```
+
+</Example>
+
+Cross-link from [Line](/charts/line) when the product story is the scrub pattern itself.
+
+## Ask your agent
+
+```text tab="Fluid card"
+Make this visitors chart fill the card width and keep a readable height on mobile.
+```
+```text tab="Scrub"
+Add a mobile heart-rate style scrub chart: horizontal scroll, sticky Y ticks, and a header that shows the selected day.
+```

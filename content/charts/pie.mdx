@@ -1,0 +1,331 @@
+---
+title: Pie
+icon: ChartPie
+description: Part-to-whole slices — labels, legend, donut, stacked rings, and interactive selection.
+---
+
+Pie charts map categories to arc angles. Compose `Pie` with an ordinal color scale. Donut variants set inner radius; interactive demos drive a center readout from selection.
+
+Reach for Pie when the story is share of a whole. Prefer [Bar](/charts/bar) for comparing magnitudes across many categories, and [Radar](/charts/radar) for multi-axis profiles.
+
+---
+
+## When to use
+
+- A handful of categories that sum to a whole
+- Donut with a center KPI
+- Click-to-select slices
+
+## When not to use
+
+- Many thin slices that are hard to compare → [Bar](/charts/bar)
+- Trends over time → [Line](/charts/line) / [Area](/charts/area)
+
+---
+
+## Related
+
+- [Bar](/charts/bar) — category magnitudes
+- [Radar](/charts/radar) — multi-axis polar
+
+---
+
+## Common examples
+
+### Simple
+
+Basic pie with hover.
+
+<Example preview={<ChartsPieSimpleDemo />}>
+
+```tsx
+import { Group, Pie, scaleOrdinal } from '@viraui/charts';
+
+const colorScale = scaleOrdinal({
+  domain: browserData.map((d) => d.name),
+  range: ['var(--highlight-blue)', 'var(--highlight-acid)', 'var(--highlight-magenta)', 'var(--highlight-orange)'],
+});
+
+<svg width={width} height={height}>
+  <Group top={centerY} left={centerX}>
+    <Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} padAngle={0.02}>
+      {({ arcs, path }) =>
+        arcs.map((arc) => (
+          <path
+            key={arc.data.name}
+            d={path(arc) ?? undefined}
+            fill={colorScale(arc.data.name)}
+            stroke="var(--global-background)"
+            strokeWidth={2}
+          />
+        ))
+      }
+    </Pie>
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Labels
+
+External value labels with leader lines from each slice.
+
+<Example preview={<ChartsPieLabelsDemo />}>
+
+```tsx
+import { Group, Pie, Text, scaleOrdinal } from '@viraui/charts';
+
+const colorScale = scaleOrdinal({
+  domain: browserData.map((d) => d.name),
+  range: ['var(--highlight-cyan)', 'var(--highlight-blue)', 'var(--highlight-indigo)', 'var(--highlight-purple)', 'var(--highlight-slate)'],
+});
+
+const midAngle = (arc: { startAngle: number; endAngle: number }) => (arc.startAngle + arc.endAngle) / 2;
+const polar = (angle: number, distance: number) => ({
+  x: Math.cos(angle - Math.PI / 2) * distance,
+  y: Math.sin(angle - Math.PI / 2) * distance,
+});
+
+<Group top={centerY} left={centerX}>
+  <Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} padAngle={0.02}>
+    {({ arcs, path }) =>
+      arcs.map((arc) => {
+        const color = colorScale(arc.data.name);
+        const angle = midAngle(arc);
+        const rim = polar(angle, radius);
+        const label = polar(angle, radius + 52);
+        return (
+          <g key={arc.data.name}>
+            <path d={path(arc) ?? undefined} fill={color} stroke="var(--global-background)" strokeWidth={2} />
+            <line x1={rim.x} y1={rim.y} x2={label.x} y2={label.y} stroke={color} strokeWidth={1} />
+            <Text x={label.x} y={label.y} textAnchor={label.x >= 0 ? 'start' : 'end'} verticalAnchor="middle" fill={color}>
+              {arc.data.value}
+            </Text>
+          </g>
+        );
+      })
+    }
+  </Pie>
+</Group>
+```
+
+</Example>
+
+### Custom tooltip
+
+Same external labels — tooltip row uses a fixed metric name instead of the slice name.
+
+<Example preview={<ChartsPieCustomTooltipDemo />}>
+
+```tsx
+import { TooltipWithBounds, localPoint, useTooltip } from '@viraui/charts';
+
+const { showTooltip, hideTooltip, tooltipOpen, tooltipData, tooltipLeft, tooltipTop } = useTooltip<{
+  label: string;
+  value: number;
+  color: string;
+}>();
+
+<path
+  d={path(arc) ?? undefined}
+  fill={color}
+  onMouseMove={(event) => {
+    const point = localPoint(event);
+    if (!point) return;
+    showTooltip({
+      tooltipData: { label: 'Visitors', value: arc.data.value, color },
+      tooltipLeft: point.x,
+      tooltipTop: point.y,
+    });
+  }}
+  onMouseLeave={hideTooltip}
+/>
+{tooltipOpen && tooltipData ? (
+  <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
+    {tooltipData.label}: {tooltipData.value}
+  </TooltipWithBounds>
+) : null}
+```
+
+</Example>
+
+### Label list
+
+Category names drawn at arc centroids.
+
+<Example preview={<ChartsPieLabelListDemo />}>
+
+```tsx
+import { Group, Pie, Text, scaleOrdinal } from '@viraui/charts';
+
+<Group top={centerY} left={centerX}>
+  <Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} padAngle={0.02}>
+    {({ arcs, path }) =>
+      arcs.map((arc) => {
+        const [cx, cy] = path.centroid(arc);
+        return (
+          <g key={arc.data.name}>
+            <path d={path(arc) ?? undefined} fill={colorScale(arc.data.name)} stroke="var(--global-background)" strokeWidth={2} />
+            <Text x={cx} y={cy} textAnchor="middle" verticalAnchor="middle" fill="var(--global-contrast)" fontSize={12}>
+              {arc.data.name}
+            </Text>
+          </g>
+        );
+      })
+    }
+  </Pie>
+</Group>
+```
+
+</Example>
+
+### Legend
+
+Ordinal legend under the pie.
+
+<Example preview={<ChartsPieLegendDemo />}>
+
+```tsx
+import { LegendItem, LegendLabel, LegendOrdinal, Pie, RectShape } from '@viraui/charts';
+
+<Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius}>
+  {({ arcs, path }) =>
+    arcs.map((arc) => (
+      <path key={arc.data.name} d={path(arc) ?? undefined} fill={colorScale(arc.data.name)} />
+    ))
+  }
+</Pie>
+<LegendOrdinal scale={colorScale} direction="row" labelMargin="0 16px 0 4px">
+  {(labels) =>
+    labels.map((label, i) => (
+      <LegendItem key={label.text} margin="0 12px 0 0">
+        <RectShape width={12} height={12} fill={label.value} />
+        <LegendLabel align="left" margin="0 0 0 6px">
+          {label.text}
+        </LegendLabel>
+      </LegendItem>
+    ))
+  }
+</LegendOrdinal>
+```
+
+</Example>
+
+### Donut
+
+Ring slices with an empty center.
+
+<Example preview={<ChartsPieDonutDemo />}>
+
+```tsx
+import { Group, Pie, scaleOrdinal } from '@viraui/charts';
+
+<Group top={centerY} left={centerX}>
+  <Pie
+    data={browserData}
+    pieValue={(d) => d.value}
+    outerRadius={radius}
+    innerRadius={radius * 0.65}
+    padAngle={0.02}
+  >
+    {({ arcs, path }) =>
+      arcs.map((arc) => (
+        <path
+          key={arc.data.name}
+          d={path(arc) ?? undefined}
+          fill={colorScale(arc.data.name)}
+          stroke="var(--global-background)"
+          strokeWidth={2}
+        />
+      ))
+    }
+  </Pie>
+</Group>
+```
+
+</Example>
+
+### Donut with text
+
+Center readout for total visitors plus a metric label.
+
+<Example preview={<ChartsPieDonutTextDemo />}>
+
+```tsx
+import { Group, Pie, Text } from '@viraui/charts';
+
+const total = browserData.reduce((sum, d) => sum + d.value, 0);
+
+<Group top={centerY} left={centerX}>
+  <Pie
+    data={browserData}
+    pieValue={(d) => d.value}
+    outerRadius={radius}
+    innerRadius={radius * 0.65}
+    padAngle={0.02}
+  >
+    {({ arcs, path }) =>
+      arcs.map((arc) => (
+        <path key={arc.data.name} d={path(arc) ?? undefined} fill={colorScale(arc.data.name)} />
+      ))
+    }
+  </Pie>
+  <Text textAnchor="middle" verticalAnchor="middle" fill="var(--global-foreground)" style={{ fontWeight: 700 }}>
+    {total}
+  </Text>
+  <Text textAnchor="middle" verticalAnchor="start" y={18} fill="var(--global-muted)">
+    Visitors
+  </Text>
+</Group>
+```
+
+</Example>
+
+### Stacked
+
+Nested rings for two series.
+
+<Example preview={<ChartsPieStackedDemo />}>
+
+```tsx
+import { Pie } from '@viraui/charts';
+
+<Pie data={outerSeries} pieValue={(d) => d.value} outerRadius={radius} innerRadius={radius * 0.7} />
+<Pie data={innerSeries} pieValue={(d) => d.value} outerRadius={radius * 0.65} innerRadius={radius * 0.35} />
+```
+
+</Example>
+
+### Interactive
+
+Click a slice to drive the center value.
+
+<Example preview={<ChartsPieInteractiveDemo />}>
+
+```tsx
+const [active, setActive] = useState(browserData[0]);
+
+<Pie data={browserData} pieValue={(d) => d.value} outerRadius={radius} innerRadius={radius * 0.65}>
+  {({ arcs, path }) =>
+    arcs.map((arc) => (
+      <path
+        key={arc.data.name}
+        d={path(arc) ?? undefined}
+        fill={colorScale(arc.data.name)}
+        opacity={active?.name === arc.data.name ? 1 : 0.55}
+        onClick={() => setActive(arc.data)}
+      />
+    ))
+  }
+</Pie>
+<text>{active?.name}: {active?.value}</text>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Share"
+Add a donut chart of browser share with a center total and a legend.
+```

@@ -34,6 +34,7 @@ function tabColorVar(node: Folder): string {
   const key = folder.replace(/^\((.+)\)$/, "$1").split("/")[0];
   if (key === "components") return "var(--components-color)";
   if (key === "design-system") return "var(--design-system-color)";
+  if (key === "charts") return "var(--charts-color)";
   return "var(--color-fd-foreground)";
 }
 

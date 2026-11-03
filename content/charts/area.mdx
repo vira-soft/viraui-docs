@@ -1,0 +1,262 @@
+---
+title: Area
+icon: ChartArea
+description: Filled Cartesian series — curves, gradient, stacked, axes, and dense day plots.
+---
+
+Area charts fill under a path so magnitude reads as volume. Compose `AreaClosed` / `AreaStack` with the same scale and axis helpers as Line.
+
+Reach for Area when fill carries the story. Prefer [Line](/charts/line) for thin multi-series trends without fill, and [Bar](/charts/bar) for discrete columns.
+
+---
+
+## When to use
+
+- Single-series volume over time
+- Stacked or expanded stacks that show channel mix
+
+## When not to use
+
+- Many overlapping series without stacking → [Line](/charts/line)
+- Category comparison without a continuous domain → [Bar](/charts/bar)
+
+---
+
+## Related
+
+- [Line](/charts/line) — stroke-only trends
+- [Bar](/charts/bar) — discrete columns
+- [Responsive](/charts/get-started/responsive) — fluid hosts
+
+---
+
+## Common examples
+
+### Natural
+
+Monotone fill under the visitors series.
+
+<Example preview={<ChartsAreaNaturalDemo />}>
+
+```tsx
+import {
+  AreaClosed,
+  AxisBottom,
+  Group,
+  curveMonotoneX,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
+
+const xScale = scalePoint({
+  domain: data.map((d) => d.month),
+  range: [0, innerWidth],
+});
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      yScale={yScale}
+      curve={curveMonotoneX}
+    />
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Linear
+
+Straight-edge filled segments.
+
+<Example preview={<ChartsAreaLinearDemo />}>
+
+```tsx
+import { AreaClosed, curveLinear } from '@viraui/charts';
+
+<AreaClosed
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  yScale={yScale}
+  curve={curveLinear}
+/>
+```
+
+</Example>
+
+### Step
+
+Step-filled area between months.
+
+<Example preview={<ChartsAreaStepDemo />}>
+
+```tsx
+import { AreaClosed, curveStep } from '@viraui/charts';
+
+<AreaClosed
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  yScale={yScale}
+  curve={curveStep}
+/>
+```
+
+</Example>
+
+### Gradient
+
+Soft fill that fades toward the baseline.
+
+<Example preview={<ChartsAreaGradientDemo />}>
+
+```tsx
+import { AreaClosed, LinearGradient, curveMonotoneX } from '@viraui/charts';
+
+<LinearGradient id="area-fill" from="var(--highlight-blue)" to="transparent" toOpacity={0.05} />
+<AreaClosed
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  yScale={yScale}
+  curve={curveMonotoneX}
+  fill="url(#area-fill)"
+/>
+```
+
+</Example>
+
+### Stacked
+
+Absolute stack of desktop, mobile, and other.
+
+<Example preview={<ChartsAreaStackedDemo />}>
+
+```tsx
+import { AreaStack, curveMonotoneX, scaleOrdinal } from '@viraui/charts';
+
+const colorScale = scaleOrdinal({
+  domain: ['desktop', 'mobile', 'other'],
+  range: ['var(--highlight-indigo)', 'var(--highlight-cyan)', 'var(--highlight-purple)'],
+});
+
+<AreaStack
+  data={stackData}
+  keys={['desktop', 'mobile', 'other']}
+  x={(d) => xScale(d.data.month) ?? 0}
+  y0={(d) => yScale(d[0]) ?? 0}
+  y1={(d) => yScale(d[1]) ?? 0}
+  color={(key) => colorScale(String(key))}
+  curve={curveMonotoneX}
+>
+  {({ stacks, path }) =>
+    stacks.map((stack) => (
+      <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
+    ))
+  }
+</AreaStack>
+```
+
+</Example>
+
+### Expanded
+
+100% stack — `offset="expand"` normalizes each month to share of total.
+
+<Example preview={<ChartsAreaExpandedDemo />}>
+
+```tsx
+import { AreaStack, curveMonotoneX, scaleLinear, scaleOrdinal } from '@viraui/charts';
+
+const yScale = scaleLinear({ domain: [0, 1], range: [innerHeight, 0], nice: true });
+const colorScale = scaleOrdinal({
+  domain: ['desktop', 'mobile', 'other'],
+  range: ['var(--highlight-indigo)', 'var(--highlight-cyan)', 'var(--highlight-purple)'],
+});
+
+<AreaStack
+  data={stackData}
+  keys={['desktop', 'mobile', 'other']}
+  x={(d) => xScale(d.data.month) ?? 0}
+  y0={(d) => yScale(d[0]) ?? 0}
+  y1={(d) => yScale(d[1]) ?? 0}
+  color={(key) => colorScale(String(key))}
+  curve={curveMonotoneX}
+  offset="expand"
+>
+  {({ stacks, path }) =>
+    stacks.map((stack) => (
+      <path key={stack.key} d={path(stack) ?? undefined} fill={colorScale(String(stack.key))} />
+    ))
+  }
+</AreaStack>
+```
+
+</Example>
+
+### Axes
+
+Left and bottom axes framing the series.
+
+<Example preview={<ChartsAreaAxesDemo />}>
+
+```tsx
+import { AreaClosed, AxisBottom, AxisLeft, curveMonotoneX } from '@viraui/charts';
+
+<AxisLeft scale={yScale} hideAxisLine hideTicks numTicks={5} />
+<AreaClosed
+  data={data}
+  x={(d) => xScale(d.month) ?? 0}
+  y={(d) => yScale(d.value)}
+  yScale={yScale}
+  curve={curveMonotoneX}
+/>
+<AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+```
+
+</Example>
+
+### Dense
+
+Day-level series in a fluid `ParentSize` host.
+
+<Example preview={<ChartsAreaDenseDemo />}>
+
+```tsx
+import { AreaClosed, ParentSize, curveMonotoneX } from '@viraui/charts';
+
+<ParentSize>
+  {({ width, height }) => {
+    const xScale = scalePoint({ domain: days.map((d) => d.key), range: [0, width] });
+    const yScale = scaleLinear({ domain: [0, max], range: [height, 0] });
+    return (
+      <svg width={width} height={height}>
+        <AreaClosed
+          data={days}
+          x={(d) => xScale(d.key) ?? 0}
+          y={(d) => yScale(d.value)}
+          yScale={yScale}
+          curve={curveMonotoneX}
+        />
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Fill"
+Add a filled area chart for monthly visitors with a soft blue gradient.
+```
+```text tab="Stack"
+Stack desktop, mobile, and other as an area chart for the same months.
+```

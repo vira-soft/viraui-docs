@@ -1,0 +1,32 @@
+---
+title: Overview
+icon: Chart
+description: What @viraui/charts is — token-styled visx primitives that sit beside @viraui/react.
+pageActions: false
+---
+
+`@viraui/charts` wraps [visx](https://airbnb.io/visx/) primitives with Vira theme tokens for stroke, fill, and chrome. You compose scales, marks, axes, and tooltips the same way you would with visx — the package styles the defaults so plots match light and dark mode without a separate chart CSS layer.
+
+It is a peer of `@viraui/react`, not a replacement. Theme, preflight, and overlay roots still come from the design-system [Setup](/get-started/setup). Charts add `@viraui/charts` plus `@visx/visx`.
+
+## When to reach for it
+
+- Dashboards and analytics surfaces that need Cartesian, pie, or radar plots
+- Fluid hosts where the plot should resize with `ParentSize` / `useParentSize`
+- Hover readouts built from visx tooltip helpers, styled with theme tokens
+
+## Chart families
+
+- [Line](/charts/line) — curves, multi-series, markers, labels
+- [Area](/charts/area) — filled series, gradient, stacked
+- [Bar](/charts/bar) — vertical, horizontal, grouped, stacked, negative
+- [Pie](/charts/pie) — slices, donut, legend, interactive
+- [Radar](/charts/radar) — polar series, grid, legend
+
+Sizing patterns live under [Responsive](/charts/get-started/responsive). Tooltip compose lives under [Tooltips](/charts/get-started/tooltips). Series and chrome overrides live under [Overrides](/charts/get-started/overrides).
+
+## Ask your agent
+
+```text tab="Brief"
+Add a ViraUI charts package to this app and explain which chart type fits a monthly visitors trend with desktop and mobile series.
+```

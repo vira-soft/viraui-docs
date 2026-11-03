@@ -1,0 +1,282 @@
+---
+title: Radar
+icon: ChartRadar
+description: Polar multi-axis profiles — series paint, grid variants, labels, multiple series, and legend.
+---
+
+Radar charts map metrics onto spokes around a center. Compose radial scales, polygons, and optional dots or stroke-only paint from `@viraui/charts`.
+
+Reach for Radar when comparing profiles across the same axes. Prefer [Bar](/charts/bar) for single-metric category lists, and [Pie](/charts/pie) for part-to-whole.
+
+---
+
+## When to use
+
+- Multi-metric profiles (desktop vs mobile across months)
+- Grid and fill treatments that teach polar structure
+
+## When not to use
+
+- Simple category magnitudes → [Bar](/charts/bar)
+- Time trends → [Line](/charts/line)
+
+---
+
+## Related
+
+- [Pie](/charts/pie) — part-to-whole arcs
+- [Responsive](/charts/get-started/responsive) — fluid radar host
+
+---
+
+## Common examples
+
+### Default
+
+Filled desktop profile on a polygon grid.
+
+<Example preview={<ChartsRadarDefaultDemo />}>
+
+```tsx
+import { Circle, Group, Line, LineRadial, Point, scaleLinear } from '@viraui/charts';
+
+const count = monthDeviceData.length;
+const radius = Math.min(width, height) / 2 - 48;
+const radialScale = scaleLinear({ range: [0, Math.PI * 2], domain: [360, 0] });
+const valueScale = scaleLinear({ range: [0, radius], domain: [0, maxValue] });
+
+<Group top={height / 2} left={width / 2}>
+  {levels.map((level) => (
+    <Line
+      key={level}
+      from={new Point({ x: 0, y: 0 })}
+      to={new Point({
+        x: valueScale(maxValue * (level / levels.length)) * Math.sin(0),
+        y: valueScale(maxValue * (level / levels.length)) * Math.cos(0),
+      })}
+      stroke="var(--global-muted)"
+    />
+  ))}
+  <LineRadial
+    data={monthDeviceData}
+    angle={(_, i) => radialScale(i * (360 / count)) ?? 0}
+    radius={(d) => valueScale(d.desktop) ?? 0}
+    fill="oklab(from var(--highlight-cyan) l a b / 28%)"
+    stroke="var(--highlight-cyan)"
+    strokeWidth={2}
+  />
+</Group>
+```
+
+</Example>
+
+### Dots
+
+Always-on vertex markers on the default fill.
+
+<Example preview={<ChartsRadarDotsDemo />}>
+
+```tsx
+import { Circle, LineRadial, scaleLinear } from '@viraui/charts';
+
+<LineRadial
+  data={monthDeviceData}
+  angle={(_, i) => radialScale(i * (360 / count)) ?? 0}
+  radius={(d) => valueScale(d.desktop) ?? 0}
+  fill="oklab(from var(--highlight-cyan) l a b / 28%)"
+  stroke="var(--highlight-cyan)"
+  strokeWidth={2}
+/>
+{monthDeviceData.map((d, i) => {
+  const angle = (radialScale(i * (360 / count)) ?? 0) - Math.PI / 2;
+  const r = valueScale(d.desktop) ?? 0;
+  return (
+    <Circle
+      key={d.month}
+      cx={Math.cos(angle) * r}
+      cy={Math.sin(angle) * r}
+      r={3}
+      fill="var(--highlight-cyan)"
+    />
+  );
+})}
+```
+
+</Example>
+
+### Lines
+
+Stroke-only desktop and mobile series without fill.
+
+<Example preview={<ChartsRadarLinesDemo />}>
+
+```tsx
+import { LineRadial, scaleLinear } from '@viraui/charts';
+
+{(['desktop', 'mobile'] as const).map((key) => (
+  <LineRadial
+    key={key}
+    data={monthDeviceData}
+    angle={(_, i) => radialScale(i * (360 / count)) ?? 0}
+    radius={(d) => valueScale(d[key]) ?? 0}
+    fill="none"
+    stroke={key === 'desktop' ? 'var(--highlight-cyan)' : 'var(--highlight-acid)'}
+    strokeWidth={2}
+  />
+))}
+```
+
+</Example>
+
+### Grid polygon
+
+Spokes and polygon rings (default grid).
+
+<Example preview={<ChartsRadarGridPolygonDemo />}>
+
+```tsx
+import { Line, Point, scaleLinear } from '@viraui/charts';
+
+const genAngles = (length: number) =>
+  Array.from({ length: length + 1 }, (_, i) => ({ angle: i * (360 / length) }));
+
+{levels.map((level) => {
+  const r = (radius / levels.length) * level;
+  const points = genAngles(count)
+    .map(({ angle }) => {
+      const rad = (angle * Math.PI) / 180 - Math.PI / 2;
+      return `${Math.cos(rad) * r},${Math.sin(rad) * r}`;
+    })
+    .join(' ');
+  return <polygon key={level} points={points} fill="none" stroke="var(--global-muted)" />;
+})}
+```
+
+</Example>
+
+### Grid circle
+
+Concentric circle rings instead of polygon levels.
+
+<Example preview={<ChartsRadarGridCircleDemo />}>
+
+```tsx
+import { Circle } from '@viraui/charts';
+
+{levels.map((level) => (
+  <Circle
+    key={level}
+    r={(radius / levels.length) * level}
+    fill="none"
+    stroke="var(--global-muted)"
+    strokeWidth={1}
+  />
+))}
+```
+
+</Example>
+
+### Grid filled
+
+Soft fill under the outermost grid band.
+
+<Example preview={<ChartsRadarGridFilledDemo />}>
+
+```tsx
+import { Circle } from '@viraui/charts';
+
+<Circle r={radius} fill="oklab(from var(--global-muted) l a b / 12%)" stroke="var(--global-muted)" />
+{levels.slice(0, -1).map((level) => (
+  <Circle key={level} r={(radius / levels.length) * level} fill="none" stroke="var(--global-muted)" />
+))}
+```
+
+</Example>
+
+### Labels
+
+Value labels on the vertices.
+
+<Example preview={<ChartsRadarLabelsDemo />}>
+
+```tsx
+import { Text } from '@viraui/charts';
+
+{seriesPoints.map((d, i) => {
+  const angle = (radialScale(i) ?? 0) - Math.PI / 2;
+  const r = (yScale(d.value) ?? 0) + 16;
+  return (
+    <Text
+      key={d.month}
+      x={Math.cos(angle) * r}
+      y={Math.sin(angle) * r}
+      textAnchor="middle"
+      verticalAnchor="middle"
+      fill="var(--global-foreground)"
+      fontSize={12}
+    >
+      {d.value}
+    </Text>
+  );
+})}
+```
+
+</Example>
+
+### Multiple
+
+Two series on the same spokes.
+
+<Example preview={<ChartsRadarMultipleDemo />}>
+
+```tsx
+{['desktop', 'mobile'].map((key) => (
+  <LineRadial
+    key={key}
+    data={monthDeviceData}
+    angle={(_, i) => radialScale(i) ?? 0}
+    radius={(d) => yScale(d[key]) ?? 0}
+    fill={key === 'desktop' ? 'oklab(from var(--highlight-blue) l a b / 24%)' : 'none'}
+    stroke={key === 'desktop' ? 'var(--highlight-blue)' : 'var(--highlight-acid)'}
+    strokeWidth={2}
+  />
+))}
+```
+
+</Example>
+
+### Legend
+
+Ordinal legend under the radar.
+
+<Example preview={<ChartsRadarLegendDemo />}>
+
+```tsx
+import { LegendItem, LegendLabel, LegendOrdinal, RectShape, scaleOrdinal } from '@viraui/charts';
+
+const legendScale = scaleOrdinal({
+  domain: ['Desktop', 'Mobile'],
+  range: ['var(--highlight-blue)', 'var(--highlight-acid)'],
+});
+
+<LegendOrdinal scale={legendScale} direction="row" labelMargin="0">
+  {(labels) =>
+    labels.map((label) => (
+      <LegendItem key={label.text} margin="0 12px 0 0">
+        <RectShape width={12} height={12} fill={label.value} />
+        <LegendLabel align="left" margin="0 0 0 6px">
+          {label.text}
+        </LegendLabel>
+      </LegendItem>
+    ))
+  }
+</LegendOrdinal>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Profile"
+Add a radar chart comparing desktop and mobile across months with a legend.
+```

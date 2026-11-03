@@ -1,0 +1,219 @@
+---
+title: Tooltips
+icon: ChatBubble
+description: Compose visx tooltip helpers with theme-colored indicators, labels, formatters, and icons.
+pageActions: false
+---
+
+Tooltips are not a separate `@viraui/charts` component — you compose `useTooltip` / `TooltipWithBounds` with your own body. These examples show the patterns Storybook teaches for stacked activity bars.
+
+## Common examples
+
+### Line indicator
+
+Tall color swatch beside each stacked row.
+
+<Example preview={<ChartsTooltipIndicatorLineDemo />}>
+
+```tsx
+import { TooltipWithBounds, defaultStyles, useTooltip } from '@viraui/charts';
+
+const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen } = useTooltip<{
+  title?: string;
+  rows: Array<{ label: string; value: number; color: string }>;
+}>();
+
+{tooltipOpen && tooltipData ? (
+  <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={defaultStyles}>
+    {tooltipData.title ? <div>{tooltipData.title}</div> : null}
+    {tooltipData.rows.map((row) => (
+      <div key={row.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span
+          aria-hidden
+          style={{ width: 3, height: 28, borderRadius: 999, background: row.color }}
+        />
+        <span>{row.label}</span>
+        <strong>{row.value}</strong>
+      </div>
+    ))}
+  </TooltipWithBounds>
+) : null}
+```
+
+</Example>
+
+### No indicator
+
+Title and values only — no swatch column.
+
+<Example preview={<ChartsTooltipIndicatorNoneDemo />}>
+
+```tsx
+import { TooltipWithBounds, defaultStyles, useTooltip } from '@viraui/charts';
+
+{tooltipOpen && tooltipData ? (
+  <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={defaultStyles}>
+    {tooltipData.title ? <div>{tooltipData.title}</div> : null}
+    {tooltipData.rows.map((row) => (
+      <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+        <span>{row.label}</span>
+        <strong>{row.value}</strong>
+      </div>
+    ))}
+  </TooltipWithBounds>
+) : null}
+```
+
+</Example>
+
+### Custom title
+
+Fixed title row instead of the raw day key.
+
+<Example preview={<ChartsTooltipLabelCustomDemo />}>
+
+```tsx
+type TitleFor = (d: ActivityPoint) => string | undefined;
+
+const customLabelTitle: TitleFor = () => 'Activities';
+
+showTooltip({
+  tooltipData: {
+    title: customLabelTitle(datum),
+    rows: [
+      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
+      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
+    ],
+  },
+  tooltipLeft,
+  tooltipTop,
+});
+```
+
+</Example>
+
+### Long date title
+
+`Intl.DateTimeFormat` for a readable date in the title row.
+
+<Example preview={<ChartsTooltipLabelLongDateDemo />}>
+
+```tsx
+type TitleFor = (d: ActivityPoint) => string | undefined;
+
+const longDateTitle: TitleFor = (d) =>
+  new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(d.day));
+
+showTooltip({
+  tooltipData: {
+    title: longDateTitle(datum),
+    rows: [
+      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
+      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
+    ],
+  },
+  tooltipLeft,
+  tooltipTop,
+});
+```
+
+</Example>
+
+### No title
+
+Omit the title row — body rows only.
+
+<Example preview={<ChartsTooltipLabelNoneDemo />}>
+
+```tsx
+showTooltip({
+  tooltipData: {
+    rows: [
+      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
+      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
+    ],
+  },
+  tooltipLeft,
+  tooltipTop,
+});
+```
+
+</Example>
+
+### Formatter
+
+Append units or custom value nodes in the body.
+
+<Example preview={<ChartsTooltipFormatterDemo />}>
+
+```tsx
+const kcalValue = (n: number) => (
+  <>
+    {n}
+    <span style={{ color: 'var(--global-muted)' }}> kcal</span>
+  </>
+);
+
+{rows.map((row) => (
+  <div key={row.label}>
+    <span>{row.label}</span>
+    <strong>{formatValue ? formatValue(row.value) : row.value}</strong>
+  </div>
+))}
+```
+
+</Example>
+
+### Icons
+
+Series icons instead of color swatches when the metaphor is activity type.
+
+<Example preview={<ChartsTooltipIconsDemo />}>
+
+```tsx
+import { PersonSimpleWalk, Waves } from '@phosphor-icons/react';
+
+const seriesMeta = {
+  running: { label: 'Running', color: 'var(--highlight-blue)', icon: <PersonSimpleWalk size={16} /> },
+  swimming: { label: 'Swimming', color: 'var(--highlight-acid)', icon: <Waves size={16} /> },
+};
+
+{/* render meta.icon instead of a color swatch when indicator="icon" */}
+```
+
+</Example>
+
+### Advanced
+
+Combine indicator, formatter, and a total row.
+
+<Example preview={<ChartsTooltipAdvancedDemo />}>
+
+```tsx
+const total = rows.reduce((sum, row) => sum + row.value, 0);
+
+<TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={cardStyle}>
+  {title ? <div>{title}</div> : null}
+  {rows.map((row) => (
+    <div key={row.label}>
+      <span style={{ background: row.color /* or icon */ }} />
+      <span>{row.label}</span>
+      <strong>{formatValue?.(row.value) ?? row.value}</strong>
+    </div>
+  ))}
+  {showTotal ? (
+    <div>
+      <span>Total</span>
+      <strong>{formatValue?.(total) ?? total}</strong>
+    </div>
+  ) : null}
+</TooltipWithBounds>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Tooltip"
+Add a hover tooltip to this stacked activity chart that shows running and swimming with kcal units and a total.
+```

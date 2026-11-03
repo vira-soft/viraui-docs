@@ -17,6 +17,7 @@ const GLOBAL_PURPOSE = {
   primary: "Brand action color for filled buttons and key accents",
   muted: "Secondary, de-emphasized text",
   "interactive-text": "Links and interactive labels",
+  "link-decoration": "Underline and decoration color for text links",
   "disabled-foreground": "Text on disabled controls",
   "disabled-background": "Fill behind disabled controls",
   contrast: "Subtle separators and reduced-contrast chrome",

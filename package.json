@@ -12,9 +12,11 @@
   "dependencies": {
     "@base-ui/react": "1.8.0",
     "@phosphor-icons/react": "2.1.10",
-    "@viraui/foundation": "2026.12.0",
+    "@viraui/charts": "2026.12.1",
+    "@viraui/foundation": "2026.12.1",
     "@viraui/icons": "2026.1.0",
-    "@viraui/react": "2026.12.0",
+    "@viraui/react": "2026.12.1",
+    "@visx/visx": "4.0.0",
     "fumadocs-core": "16.15.7",
     "fumadocs-mdx": "15.4.0",
     "fumadocs-ui": "npm:@fumadocs/base-ui@16.16.2",

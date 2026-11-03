@@ -20,6 +20,7 @@
   /* Root-tab icon colors (sidebar selector) — fumadocs.dev pattern */
   --design-system-color: var(--highlight-green);
   --components-color: var(--highlight-purple);
+  --charts-color: var(--highlight-salmon);
   --il-canvas: var(--color-fd-muted);
   --il-ghost: color-mix(in oklab, var(--color-fd-muted) 88%, var(--color-fd-foreground) 6%);
   --il-panel: var(--color-fd-secondary);

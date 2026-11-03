@@ -1,0 +1,434 @@
+---
+title: Bar
+icon: ChartBar
+description: Discrete columns — vertical, horizontal, grouped, stacked, labeled, mixed, and negative.
+---
+
+Bar charts compare magnitudes across categories. Compose `Bar` / `BarRounded` / `BarStack` with band scales from `@viraui/charts`.
+
+Reach for Bar when categories are discrete. Prefer [Line](/charts/line) / [Area](/charts/area) for continuous trends, and [Pie](/charts/pie) for part-to-whole without a shared baseline.
+
+---
+
+## When to use
+
+- Monthly or named category magnitudes
+- Grouped or stacked channel comparisons
+- Values that cross zero
+
+## When not to use
+
+- Continuous time trends with many points → [Line](/charts/line)
+- Part-to-whole without categories on an axis → [Pie](/charts/pie)
+
+---
+
+## Related
+
+- [Area](/charts/area) — stacked continuous fill
+- [Tooltips](/charts/get-started/tooltips) — stacked activity hover patterns
+
+---
+
+## Common examples
+
+### Simple
+
+Rounded columns with a month axis and row grid.
+
+<Example preview={<ChartsBarSimpleDemo />}>
+
+```tsx
+import { AxisBottom, BarRounded, GridRows, Group, scaleBand, scaleLinear } from '@viraui/charts';
+
+const xScale = scaleBand({ domain: monthDomain, range: [0, innerWidth], padding: 0.3 });
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+    {desktopData.map((d) => {
+      const barY = yScale(d.value) ?? 0;
+      return (
+        <BarRounded
+          key={d.month}
+          x={xScale(d.month) ?? 0}
+          y={barY}
+          width={xScale.bandwidth()}
+          height={Math.max(0, innerHeight - barY)}
+          fill="var(--highlight-cyan)"
+        />
+      );
+    })}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Y axis
+
+Same plot with left-axis magnitude ticks.
+
+<Example preview={<ChartsBarYAxisDemo />}>
+
+```tsx
+import { AxisBottom, AxisLeft, BarRounded, GridRows, Group, scaleBand, scaleLinear } from '@viraui/charts';
+
+const xScale = scaleBand({ domain: monthDomain, range: [0, innerWidth], padding: 0.3 });
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+<Group left={margin.left} top={margin.top}>
+  <GridRows scale={yScale} width={innerWidth} numTicks={5} />
+  {desktopData.map((d) => {
+    const barY = yScale(d.value) ?? 0;
+    return (
+      <BarRounded
+        key={d.month}
+        x={xScale(d.month) ?? 0}
+        y={barY}
+        width={xScale.bandwidth()}
+        height={Math.max(0, innerHeight - barY)}
+        fill="var(--highlight-cyan)"
+      />
+    );
+  })}
+  <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  <AxisLeft scale={yScale} hideAxisLine hideTicks />
+</Group>
+```
+
+</Example>
+
+### Dense
+
+Day-level columns with hover wash.
+
+<Example preview={<ChartsBarDenseDemo />}>
+
+```tsx
+import { BarRounded, ParentSize, scaleBand, scaleLinear } from '@viraui/charts';
+
+<ParentSize>
+  {({ width, height }) => {
+    const xScale = scaleBand({ domain: days.map((d) => d.key), range: [0, width], padding: 0.2 });
+    const yScale = scaleLinear({ domain: [0, max], range: [height, 0] });
+    return (
+      <svg width={width} height={height}>
+        {days.map((d) => {
+          const barY = yScale(d.value) ?? 0;
+          return (
+            <BarRounded
+              key={d.key}
+              x={xScale(d.key) ?? 0}
+              y={barY}
+              width={xScale.bandwidth()}
+              height={Math.max(0, height - barY)}
+              all={false}
+              top
+              fill="var(--highlight-blue)"
+            />
+          );
+        })}
+      </svg>
+    );
+  }}
+</ParentSize>
+```
+
+</Example>
+
+### Horizontal
+
+Band scale on Y, value on X.
+
+<Example preview={<ChartsBarHorizontalDemo />}>
+
+```tsx
+import { BarRounded, scaleBand, scaleLinear } from '@viraui/charts';
+
+const yScale = scaleBand({ domain: browsers.map((d) => d.name), range: [0, innerHeight], padding: 0.3 });
+const xScale = scaleLinear({ domain: [0, max], range: [0, innerWidth] });
+
+{browsers.map((d) => (
+  <BarRounded
+    key={d.name}
+    x={0}
+    y={yScale(d.name) ?? 0}
+    width={xScale(d.value) ?? 0}
+    height={yScale.bandwidth()}
+    all={false}
+    right
+    fill="var(--highlight-blue)"
+  />
+))}
+```
+
+</Example>
+
+### Multiple
+
+Grouped desktop / mobile columns.
+
+<Example preview={<ChartsBarMultipleDemo />}>
+
+```tsx
+import { BarRounded, scaleBand, scaleLinear } from '@viraui/charts';
+
+const xScale = scaleBand({ domain: months, range: [0, innerWidth], padding: 0.25 });
+const xGroup = scaleBand({
+  domain: ['desktop', 'mobile'],
+  range: [0, xScale.bandwidth()],
+  padding: 0.15,
+});
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+{multiData.map((d) => {
+  const groupX = xScale(d.month) ?? 0;
+  return (
+    <Group key={d.month}>
+      <BarRounded
+        x={groupX + (xGroup('desktop') ?? 0)}
+        y={yScale(d.desktop) ?? 0}
+        width={xGroup.bandwidth()}
+        height={Math.max(0, innerHeight - (yScale(d.desktop) ?? 0))}
+        all={false}
+        top
+        fill="var(--highlight-blue)"
+      />
+      <BarRounded
+        x={groupX + (xGroup('mobile') ?? 0)}
+        y={yScale(d.mobile) ?? 0}
+        width={xGroup.bandwidth()}
+        height={Math.max(0, innerHeight - (yScale(d.mobile) ?? 0))}
+        all={false}
+        top
+        fill="var(--highlight-acid)"
+      />
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Stacked
+
+Stacked channel columns.
+
+<Example preview={<ChartsBarStackedDemo />}>
+
+```tsx
+import { BarRounded, scaleBand, scaleLinear } from '@viraui/charts';
+
+const xScale = scaleBand({ domain: months, range: [0, innerWidth], padding: 0.3 });
+const yScale = scaleLinear({
+  domain: [0, Math.max(...multiData.map((d) => d.desktop + d.mobile))],
+  range: [innerHeight, 0],
+  nice: true,
+});
+
+{multiData.map((d) => {
+  const x = xScale(d.month) ?? 0;
+  const mobileY = yScale(d.mobile) ?? 0;
+  const desktopY = yScale(d.desktop + d.mobile) ?? 0;
+  return (
+    <Group key={d.month}>
+      <BarRounded
+        x={x}
+        y={mobileY}
+        width={xScale.bandwidth()}
+        height={Math.max(0, innerHeight - mobileY)}
+        fill="var(--highlight-acid)"
+      />
+      <BarRounded
+        x={x}
+        y={desktopY}
+        width={xScale.bandwidth()}
+        height={Math.max(0, mobileY - desktopY)}
+        all={false}
+        top
+        fill="var(--highlight-blue)"
+      />
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Labels
+
+Value labels centered above vertical columns.
+
+<Example preview={<ChartsBarLabelsDemo />}>
+
+```tsx
+import { BarRounded, Group, Text } from '@viraui/charts';
+
+{desktopData.map((d) => {
+  const barX = xScale(d.month) ?? 0;
+  const barY = yScale(d.value) ?? 0;
+  return (
+    <Group key={d.month}>
+      <BarRounded
+        x={barX}
+        y={barY}
+        width={xScale.bandwidth()}
+        height={Math.max(0, innerHeight - barY)}
+        fill="var(--highlight-cyan)"
+      />
+      <Text x={barX + xScale.bandwidth() / 2} y={barY - 8} textAnchor="middle" verticalAnchor="end">
+        {d.value}
+      </Text>
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Horizontal labels
+
+Values at the end of horizontal bars.
+
+<Example preview={<ChartsBarHorizontalLabelsDemo />}>
+
+```tsx
+import { BarRounded, Group, Text, scaleBand, scaleLinear } from '@viraui/charts';
+
+const yScale = scaleBand({ domain: browsers.map((d) => d.name), range: [0, innerHeight], padding: 0.3 });
+const xScale = scaleLinear({ domain: [0, max], range: [0, innerWidth] });
+
+{browsers.map((d) => {
+  const barY = yScale(d.name) ?? 0;
+  const barWidth = xScale(d.value) ?? 0;
+  return (
+    <Group key={d.name}>
+      <BarRounded
+        x={0}
+        y={barY}
+        width={barWidth}
+        height={yScale.bandwidth()}
+        all={false}
+        right
+        fill="var(--highlight-cyan)"
+      />
+      <Text x={barWidth + 8} y={barY + yScale.bandwidth() / 2} verticalAnchor="middle">
+        {d.value}
+      </Text>
+    </Group>
+  );
+})}
+```
+
+</Example>
+
+### Mixed
+
+One active category highlighted.
+
+<Example preview={<ChartsBarMixedDemo />}>
+
+```tsx
+import { BarRounded } from '@viraui/charts';
+
+{data.map((d) => {
+  const active = d.month === 'May';
+  const barY = yScale(d.value) ?? 0;
+  return (
+    <BarRounded
+      key={d.month}
+      x={xScale(d.month) ?? 0}
+      y={barY}
+      width={xScale.bandwidth()}
+      height={Math.max(0, innerHeight - barY)}
+      all={false}
+      top
+      fill={active ? 'var(--highlight-blue)' : 'var(--global-muted)'}
+      opacity={active ? 1 : 0.4}
+    />
+  );
+})}
+```
+
+</Example>
+
+### Mixed horizontal
+
+One highlighted row in a horizontal bar list.
+
+<Example preview={<ChartsBarMixedHorizontalDemo />}>
+
+```tsx
+import { BarRounded, scaleBand, scaleLinear } from '@viraui/charts';
+
+const yScale = scaleBand({ domain: browsers.map((d) => d.name), range: [0, innerHeight], padding: 0.3 });
+const xScale = scaleLinear({ domain: [0, max], range: [0, innerWidth] });
+
+{browsers.map((d) => {
+  const active = d.name === 'Chrome';
+  const barY = yScale(d.name) ?? 0;
+  return (
+    <BarRounded
+      key={d.name}
+      x={0}
+      y={barY}
+      width={xScale(d.value) ?? 0}
+      height={yScale.bandwidth()}
+      all={false}
+      right
+      fill={active ? 'var(--highlight-cyan)' : 'var(--global-muted)'}
+      opacity={active ? 1 : 0.4}
+    />
+  );
+})}
+```
+
+</Example>
+
+### Negative
+
+Columns that cross zero.
+
+<Example preview={<ChartsBarNegativeDemo />}>
+
+```tsx
+import { BarRounded, Line, scaleBand, scaleLinear } from '@viraui/charts';
+
+const yScale = scaleLinear({
+  domain: [minValue, maxValue],
+  range: [innerHeight, 0],
+  nice: true,
+});
+const zeroY = yScale(0) ?? 0;
+
+{signedData.map((d) => {
+  const valueY = yScale(d.value) ?? 0;
+  const y = Math.min(valueY, zeroY);
+  const height = Math.abs(zeroY - valueY);
+  return (
+    <BarRounded
+      key={d.month}
+      x={xScale(d.month) ?? 0}
+      y={y}
+      width={xScale.bandwidth()}
+      height={height}
+      fill={d.value >= 0 ? 'var(--highlight-blue)' : 'var(--highlight-magenta)'}
+    />
+  );
+})}
+<Line from={{ x: 0, y: zeroY }} to={{ x: innerWidth, y: zeroY }} stroke="var(--global-muted)" />
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Columns"
+Add a ViraUI bar chart of monthly visitors with hover tooltips.
+```
+```text tab="Negative"
+Show monthly gains and losses as a bar chart that crosses zero.
+```

@@ -1,0 +1,10 @@
+{
+  "title": "Get started",
+  "pages": [
+    "overview",
+    "setup",
+    "responsive",
+    "tooltips",
+    "overrides"
+  ]
+}

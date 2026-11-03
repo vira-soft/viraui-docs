@@ -308,3 +308,82 @@ export {
   BuiltInThemeViraCondensedDemo,
   BuiltInThemeViraDemo,
 } from "./built-in-themes-demo";
+
+export {
+  ChartsLineNaturalDemo,
+  ChartsLineLinearDemo,
+  ChartsLineStepDemo,
+  ChartsLineYAxisDemo,
+  ChartsLineMultipleDemo,
+  ChartsLineDotsDemo,
+  ChartsLineMarkersDemo,
+  ChartsLineValueLabelsDemo,
+  ChartsLineCategoryLabelsDemo,
+} from "./charts-line-demo";
+export {
+  ChartsAreaNaturalDemo,
+  ChartsAreaLinearDemo,
+  ChartsAreaStepDemo,
+  ChartsAreaGradientDemo,
+  ChartsAreaStackedDemo,
+  ChartsAreaExpandedDemo,
+  ChartsAreaAxesDemo,
+  ChartsAreaDenseDemo,
+} from "./charts-area-demo";
+export {
+  ChartsBarSimpleDemo,
+  ChartsBarYAxisDemo,
+  ChartsBarDenseDemo,
+  ChartsBarHorizontalDemo,
+  ChartsBarMultipleDemo,
+  ChartsBarStackedDemo,
+  ChartsBarLabelsDemo,
+  ChartsBarHorizontalLabelsDemo,
+  ChartsBarMixedDemo,
+  ChartsBarMixedHorizontalDemo,
+  ChartsBarNegativeDemo,
+} from "./charts-bar-demo";
+export {
+  ChartsPieSimpleDemo,
+  ChartsPieLabelsDemo,
+  ChartsPieCustomTooltipDemo,
+  ChartsPieLabelListDemo,
+  ChartsPieLegendDemo,
+  ChartsPieDonutDemo,
+  ChartsPieDonutTextDemo,
+  ChartsPieStackedDemo,
+  ChartsPieInteractiveDemo,
+} from "./charts-pie-demo";
+export {
+  ChartsRadarDefaultDemo,
+  ChartsRadarDotsDemo,
+  ChartsRadarLinesDemo,
+  ChartsRadarGridPolygonDemo,
+  ChartsRadarGridCircleDemo,
+  ChartsRadarGridFilledDemo,
+  ChartsRadarLabelsDemo,
+  ChartsRadarMultipleDemo,
+  ChartsRadarLegendDemo,
+} from "./charts-radar-demo";
+export {
+  ChartsResponsiveUseParentSizeDemo,
+  ChartsResponsiveParentSizeDemo,
+  ChartsResponsiveUseScreenSizeDemo,
+  ChartsResponsiveScaleSvgDemo,
+  ChartsResponsiveBarDemo,
+  ChartsResponsiveAreaDemo,
+  ChartsResponsivePieDemo,
+  ChartsResponsiveRadarDemo,
+  ChartsResponsiveMobileScrubDemo,
+} from "./charts-responsive-demo";
+export {
+  ChartsTooltipIndicatorLineDemo,
+  ChartsTooltipIndicatorNoneDemo,
+  ChartsTooltipLabelCustomDemo,
+  ChartsTooltipLabelLongDateDemo,
+  ChartsTooltipLabelNoneDemo,
+  ChartsTooltipFormatterDemo,
+  ChartsTooltipIconsDemo,
+  ChartsTooltipAdvancedDemo,
+} from "./charts-tooltip-demo";
+export { ChartsOverridesDemo } from "./charts-overrides-demo";

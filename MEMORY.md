@@ -31,6 +31,7 @@ Update when durable map/gotchas change. No WIP, no contract copies, no page inve
 | Get started Skills page | `specs/005-skills-docs/` (+ `contracts/skills-page.md`) |
 | Get started Utilities group | `specs/006-utilities-docs/` (+ `contracts/utilities-page.md`) |
 | Foundation overview hub | `specs/007-foundation-docs/` (+ `contracts/foundation-page.md`) |
+| Charts docs root | `specs/008-charts-docs/` (+ `contracts/charts-ia.md`, `chart-page.md`, `charts-get-started.md`) |
 | Spec Kit skills | `.agents/skills/speckit-*` |
 
 Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`. Specs win. Constitution stub in `.specify/memory/` — not filled.
@@ -39,14 +40,14 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 
 | What | Where |
 | ---- | ----- |
-| MDX pages + nav meta | `content/` (`meta.json` trees; DS under `(design-system)/` folder group; categories under `content/components/{category}/`) |
+| MDX pages + nav meta | `content/` (`meta.json` trees; DS under `(design-system)/` folder group; categories under `content/components/{category}/`; Charts root under `content/charts/`) |
 | Site config / plugins / MDX components | `press.config.tsx` |
 | Local React helpers | `src/components/{common,demos}/`, `src/lib/`, `src/hooks/` |
 | MDX custom tags | `src/mdx-components.ts` (+ `demos/index.ts`) → spread in `press.config` `getMdxComponents` |
 | Spot SVGs | `src/illustrations/` |
 | Vira icon loaders + nav plugin | `src/lib/vira-icon-loaders.ts`, `src/lib/vira-icons-plugin.tsx` |
 | Shared cover | `public/cover.jpg` → OG / Twitter |
-| Feature specs | `specs/001-llm-first-docs-site/` … `specs/007-foundation-docs/` |
+| Feature specs | `specs/001-llm-first-docs-site/` … `specs/008-charts-docs/` |
 | Deploy workflow | `.github/workflows/` (`release.yml` prod on `main`; `pr-quality.yml`) |
 | Issue templates | `.github/ISSUE_TEMPLATE/` — bug only; blank issues off; Q&A / Ideas / General → Discussions |
 | Discussion forms | `.github/DISCUSSION_TEMPLATE/{q-a,ideas}.yml` — match category slugs `q-a`, `ideas` |
@@ -61,7 +62,8 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Setup order: `npx skills add vira-soft/viraui-skills` → reload editor → bootstrap prompt → verify prompt. Skills install is never nested inside the bootstrap prompt. Brand/theme = user choice; font import follows (built-in theme fonts vs custom) — not a hard “theme gate” that blocks foundation/font install.
 - Component categories = Storybook-aligned: actions, dialogs, effects, inputs, layout, loading, navigation, overlays, typography, widgets.
 - ComponentPage rhythm: thematic breaks (`---`) after Base UI Cards, after lead, after Anatomy (compounds + child forced-compose like ToggleGroup), after when/when-not, after Related (before Common examples) — `page-shell.md`; Anatomy = full tree, no `{/* optional */}`; omit prop-driven hosts like AvatarGroup; rule `.cursor/rules/10-docs-anatomy.mdc`
-- Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root (`root: "docs"` dropdown under search). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Intro top-level: `/`, `/principles`, `/layers` (no `/why` page); separators Get started / Foundation under **Design System** root. **Components** = second root; **Charts** = third root (`content/charts/` — get-started + line/area/bar/pie/radar). Folder group `content/(design-system)/` keeps DS URLs unprefixed.
+- Charts demos: `src/components/demos/charts-*-demo/` + minimal `ChartExampleFrame` (width only); one plot per Example; fixtures `src/lib/chart-story-data.ts`; tokens mirror `src/lib/chart-tokens.ts`.
 - Content rewrite landed on `docs/human-llm-prose-rewrite` (PR #1): page-shell + voice, drop `/why`, all DS + component MDX task/product-story rewrite; 1 commit per group.
 
 ## Context habits
@@ -88,7 +90,8 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Site cover: static `https://docs.viraui.dev/cover.jpg`; plugin `{ name: "core:takumi" }` skips per-page generated OG
 - Banner: docs under construction (in `press.config.tsx` `renderRoot`)
 - Sidebar CTA: `sidebar.footer` in `renderLayout` — "Get ViraUI Pro" → `https://viraui.dev/#pro` (both roots, below page tree)
-- MDX paths: Design System pages live under `content/(design-system)/` (folder group); Components under `content/components/`. Root `meta.json` lists both roots only.
+- MDX paths: Design System under `content/(design-system)/`; Components under `content/components/`; Charts under `content/charts/`. Root `meta.json` lists all three roots.
+- Charts deps: `@viraui/react` + `@viraui/foundation` `@2026.12.1` from npm; `@viraui/charts` still unpublished → `file:../vira-ui/packages/charts` (+ `@visx/visx` `4`). Swap to npm when published.
 - Principles (`002`): no product/timeline claim for “browser as canvas”; Figma OK as disposable low-fi only; a11y → generic skills + link `/get-started/skills`; next links `/layers` + `/get-started/skills` only
 - Layers (`003`): Cards use `layers-*` spotkit stack (one slab lit); intro Core Cards keep `foundation`/`components`/`motion`/`ai`
 - Intro Spotkit (`core-*` / `pro-*`): **no fade mask**; contained panels; composition centered in 160 (same treatment as `foundation-*`)

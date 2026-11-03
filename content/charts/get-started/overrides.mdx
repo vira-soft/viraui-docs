@@ -1,0 +1,69 @@
+---
+title: Overrides
+icon: Sliders
+description: Override series stroke and axis chrome with theme highlight tokens.
+pageActions: false
+---
+
+Default chart marks pick up Vira theme tokens. Pass stroke and tick colors when a plot needs a different highlight — any valid CSS color or `var(--*)` works.
+
+## Common examples
+
+### Series and chrome
+
+Acid series stroke with magenta tick strokes on the axes.
+
+<Example preview={<ChartsOverridesDemo />}>
+
+```tsx
+import {
+  AxisBottom,
+  AxisLeft,
+  GridRows,
+  Group,
+  LinePath,
+  curveNatural,
+  scaleLinear,
+  scalePoint,
+} from '@viraui/charts';
+
+const xScale = scalePoint({ domain: months, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [0, 360], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={5} stroke="var(--global-muted)" />
+    <LinePath
+      data={data}
+      x={(d) => xScale(d.month) ?? 0}
+      y={(d) => yScale(d.value)}
+      curve={curveNatural}
+      stroke="var(--highlight-acid)"
+      strokeWidth={2}
+    />
+    <AxisLeft
+      scale={yScale}
+      hideAxisLine
+      hideTicks
+      tickStroke="var(--highlight-magenta)"
+      tickLabelProps={() => ({ fill: 'var(--highlight-magenta)' })}
+    />
+    <AxisBottom
+      top={innerHeight}
+      scale={xScale}
+      hideAxisLine
+      hideTicks
+      tickStroke="var(--highlight-magenta)"
+      tickLabelProps={() => ({ fill: 'var(--highlight-magenta)' })}
+    />
+  </Group>
+</svg>
+```
+
+</Example>
+
+## Ask your agent
+
+```text tab="Override"
+Restyle this line chart so the series uses the acid highlight and the axis ticks use magenta.
+```

@@ -1,0 +1,60 @@
+---
+title: Setup
+icon: CubeSettings
+description: Add @viraui/charts and @visx/visx to a themed ViraUI React app.
+pageActions: false
+---
+
+Charts are an optional add-on. Theme CSS, fonts, preflight, and overlay roots stay with the design-system [Setup](/get-started/setup). This page only adds `@viraui/charts` and its `@visx/visx` peer, then a sample plot that picks up the theme.
+
+The agent composes charts through `viraui-design` once those skills are already loaded from the design-system Setup. If the app is not themed yet, finish that Setup first, then come back here.
+
+## Requirements
+
+- A React app already bootstrapped with `@viraui/react` (theme + preflight + overlay roots)
+- A Node-capable package manager
+- A coding agent that can edit the repo and run installs
+- `@visx/visx` as the only charts peer beyond React / React DOM
+
+## Setup
+
+<Steps>
+<Step>
+
+### Install the charts packages
+
+Add the charts package and the visx peer. Keep the versions in the range the charts package declares.
+
+```sh title="Install @viraui/charts"
+pnpm add @viraui/charts @visx/visx
+```
+
+</Step>
+<Step>
+
+### Add a sample chart with your agent
+
+Paste the Setup prompt after the packages are installed. Point the agent at the already-themed app so it only wires a plot — not a second design-system bootstrap.
+
+Use Verify when the sample renders so the agent smoke-checks theme colors and a fluid host.
+
+```text tab="Setup"
+This app already uses ViraUI. Add a simple line chart with the charts package so it picks up theme colors for strokes and fills, and show it in a fluid host that resizes with its container.
+```
+```text tab="Verify"
+Check that charts work in this ViraUI app: a sample line or bar chart renders with theme strokes and fills (not unstyled SVG), a fluid host resizes the plot, and light/dark still look correct. Report anything broken and fix it.
+```
+
+</Step>
+</Steps>
+
+## Manual fallback
+
+Only when you must wire by hand. Prefer the prompts above.
+
+1. Install `@viraui/charts` and `@visx/visx` (same major as the charts peer range).
+2. Keep theme CSS → fonts → `@viraui/react/preflight.css` from design-system Setup. Charts ship no extra CSS entry.
+3. Import primitives from `@viraui/charts` (not deep package paths).
+4. Compose scales, marks, and axes in a client component; wrap fluid hosts with `ParentSize` or `useParentSize` when the plot should fill its container.
+
+**Verify by hand:** a sample chart uses theme colors, light/dark still resolve, and the plot is not clipped to zero width in a fluid host.
