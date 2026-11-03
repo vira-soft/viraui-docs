@@ -18,7 +18,7 @@ Compose-time loops in sibling refs stay in place. This file = **ship-time** gate
 
 ### Discovery / authority
 
-- [ ] Specs **index-first** for every Vira surface touched (`index.xml` / `@viraui/react/specs` → scoped units). No first discovery via `ls` / `rg` / `grep` on `dist/components/**` or `*.d.ts` trees.
+- [ ] Specs **index-first** for every Vira surface touched (`index.xml` / `@viraui/react/specs` → scoped units). Charts / data viz → `@viraui/charts/specs` via [charts.md](charts.md) (install `@viraui/charts` + `@visx/visx` first if missing). No first discovery via `ls` / `rg` / `grep` on `dist/components/**` or `*.d.ts` trees.
 - [ ] **Compose-with:** `props.xml` + `usage.xml` opened **before** any CSS module / utility / size-fill `className` on those Vira roots. No “I already know this control — style first.” Unsolicited reshape CSS forbidden; consumer-requested overrides still need units first.
 - [ ] No invented props, parts, hooks, or CSS prefixes. Stories are examples only — never API authority.
 - [ ] Surfaces with `meta.xml` `<base_ui>`: Base UI API checked after Vira `props` — no invented pass-through; no assumed 1:1 wrap/regroup; ask if still unsure.
@@ -98,6 +98,16 @@ Depth → [accessibility.md](accessibility.md).
 - [ ] Field ownership correct; overlays have required titles/names.
 
 Depth → [composition.md](composition.md).
+
+### Charts (if graph / plot / data viz / `@viraui/charts`)
+
+- [ ] [charts.md](charts.md) loaded; `@viraui/charts` + `@visx/visx` present (installed this task if missing).
+- [ ] Authority = installed `@viraui/charts/specs` index → activity-hints → units — not skill encyclopedia / monorepo clone / `*.d.ts` first.
+- [ ] No packaged `LineChart` / `BarChart` / `PieChart` / `DonutChart` / `RadarChart` / `ResponsiveChart`; no `--vui-charts-*` / `ChartRoot`.
+- [ ] Name collisions (`Text` / `Stack` / `Grid`) aliased vs `@viraui/react` when both appear.
+- [ ] Parent-fill charts use `ParentSize` / `useParentSize` when the brief requires resize — not hard-coded svg only.
+
+Depth → [charts.md](charts.md).
 
 ## Ship report (required in final reply)
 

@@ -2,26 +2,57 @@
 
 Compose data viz in **app code** from token-styled visx primitives. Package ships **no** `LineChart` / `BarChart` / `PieChart` / `DonutChart` / `RadarChart` / `ResponsiveChart`.
 
-**Authority:** installed `@viraui/charts/specs/*` (index-first). This file is a router + install cheat sheet — not a second API encyclopedia.
+**Authority:** installed `@viraui/charts/specs/*` (index-first) — same publish model as `@viraui/react/specs`. This file is a router + install gate — not a second API encyclopedia.
+
+## When to load (mandatory)
+
+Load this ref when **any** of these fit — even if the user never names `@viraui/charts`, visx, or this skill:
+
+- Chart / graph / plot / series / sparklines
+- Data visualization / “visualize metrics” / “represent data as …”
+- Dashboard / analytics / KPI widgets that need a chart
+- Pie / donut / radar / spider / bar / line / area / stacked / cartesian viz
+- Temptation to ship a packaged `*Chart` wrapper or invent `--vui-charts-*`
+
+Hub already listed? Still open this file before inventing SVG structure.
+
+## Missing package gate (before specs)
+
+1. Check consumer `package.json` / `node_modules` for `@viraui/charts`.
+2. **Missing** → install defaults unless the consumer named another chart stack:
+
+```bash
+pnpm add @viraui/charts @visx/visx
+```
+
+(`react` / `react-dom` already required by ViraUI.) Single visx peer = **`@visx/visx`** (meta). Do **not** install every `@visx/<pkg>` as separate peers.
+
+3. Theme + `@viraui/react/preflight.css` must already exist (**viraui-setup**). Charts does **not** ship theme CSS or `--vui-charts-*`.
+4. **Then** open installed specs (next section). Do not compose from memory or monorepo source.
+
+First-time app bootstrap asking “will you use charts?” → **viraui-setup** [bootstrap.md](../viraui-setup/bootstrap.md) (same default install on yes).
 
 ## Specs first (mandatory)
 
-1. Open `node_modules/@viraui/charts/dist/specs/index.xml` (export `@viraui/charts/specs/index.xml`).
+Resolve from the **installed** package — co-versioned with the code in use. Prefer package exports; on disk under a typical install:
+
+| Export / path                             | Role                                       |
+| ----------------------------------------- | ------------------------------------------ |
+| `@viraui/charts/specs/PROTOCOL.md`        | Authority order                            |
+| `@viraui/charts/specs/index.xml`          | Navigation index                           |
+| `@viraui/charts/specs/activity-hints.xml` | Activity → unit load lists                 |
+| `@viraui/charts/specs/*`                  | Foundation + domain + `patterns/compose-*` |
+
+On disk: `node_modules/@viraui/charts/dist/specs/…`.
+
+1. Open `index.xml` before any domain unit.
 2. Follow `activity-hints.xml` (`bootstrap`, `compose-chart`, `implement-domain`, `responsive-size`).
 3. Load only named units (`foundation/*`, `components/<id>/*`, `patterns/compose-*.xml`).
 4. Verify types / upstream visx docs **after** units. Stories = examples only.
 
 Package `PROTOCOL.md` wins on discovery order. Skills must not restate prop tables that live in units.
 
-## Install
-
-```bash
-pnpm add @viraui/charts react react-dom @visx/visx
-```
-
-Theme + `@viraui/react/preflight.css` via **viraui-setup**. Charts does **not** ship `--vui-charts-*` or theme CSS. Single visx peer = **`@visx/visx`** (meta). Do not install every `@visx/<pkg>` as separate peers.
-
-Detail → specs `foundation/bootstrap.xml` + `foundation/exports.xml`.
+**FORBIDDEN:** `ls` / `rg` / `grep` charts `dist/**` or `*.d.ts` before index + target units; using a `vira-ui` clone or this skill as API authority when `node_modules/@viraui/charts` is present.
 
 ## Import
 
@@ -126,5 +157,6 @@ Specs `foundation/a11y.xml` + domain `a11y`. Name the chart; token contrast for 
 
 ## Related
 
-- Maintainer inventory: `vira-ui` `specs/017-charts-package/contracts/`
 - Layout around chart → `@viraui/react/specs` (`Stack` / `Surface`)
+- First-time bootstrap charts ask → **viraui-setup** [bootstrap.md](../viraui-setup/bootstrap.md)
+- Maintainer inventory: `vira-ui` `specs/017-charts-package/contracts/`

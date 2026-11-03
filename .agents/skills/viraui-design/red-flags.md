@@ -40,3 +40,7 @@
 | “Title size = heading level; skip h3 for style”              | `size` visual; `render={<h*/>}` = outline; no skipped levels — [accessibility.md](accessibility.md)                                      |
 | “Date/result as plain Text span” / “only listed tags matter” | Most-correct semantic host via `render` (table = examples) — [accessibility.md](accessibility.md)                                        |
 | “Ship now — verify later” / “Looks fine — skip adversarial”  | Hard gate — [verify.md](verify.md) before done; emit ship report                                                                         |
+| “Just a graph — skip charts.md / invent LineChart”           | [charts.md](charts.md) → install if missing → `@viraui/charts/specs` index-first; compose primitives                                     |
+| “Charts missing — guess from visx memory / monorepo”         | Install `@viraui/charts` + `@visx/visx`; authority = installed specs, not clone or skill encyclopedia                                    |
+| “Install every `@visx/<pkg>` for charts”                     | One peer: `@visx/visx` — [charts.md](charts.md)                                                                                          |
+| “Override series with `--vui-charts-*` / ChartRoot”          | Token strings on styled props only — no charts CSS token layer                                                                           |

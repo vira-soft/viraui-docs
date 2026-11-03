@@ -12,6 +12,7 @@ These cues used to live in the hub `description` (≤1024 discovery budget). The
 - Spacing, density, typography, icons, elevation, Surface vibrancy
 - Responsive (mobile-first, `useBreakpoints`, `@media`) or RTL
 - Public props, `--vui-*`, consumer `data-*`
+- Charts / graphs / plots / data visualization / KPI series / “visualize metrics” / “represent data” — even without naming `@viraui/charts` → [charts.md](charts.md)
 - Missing / unstyled Vira after bootstrap → route **viraui-setup**, do not invent per-component CSS
 - User never named “viraui-design” / Vira / `@viraui` — still this skill when the app is ViraUI
 
@@ -36,7 +37,10 @@ These cues used to live in the hub `description` (≤1024 discovery budget). The
 | Stack `direction` for RTL; DirectionProvider without `dir` on `html`         | [responsive.md](responsive.md)                                                                                |
 | Desktop-first `max-width` media / ad-hoc `matchMedia`                        | [responsive.md](responsive.md)                                                                                |
 | Hover / overlay / press CSS without motion tokens                            | **viraui-motion**                                                                                             |
+| Packaged `LineChart` / `BarChart` / `PieChart` / invent `--vui-charts-*`     | [charts.md](charts.md) → `@viraui/charts/specs`; compose primitives                                           |
+| Chart / graph / data viz without opening charts specs                        | [charts.md](charts.md) — install `@viraui/charts` + `@visx/visx` if missing, then index-first                 |
+| Discover charts API via `rg`/`ls` on `dist` or monorepo source first         | [charts.md](charts.md) → installed `@viraui/charts/specs` only                                                |
 
 ## Depth
 
-Hub action router → sibling refs → `@viraui/react/specs` units. End of work → [verify.md](verify.md).
+Hub action router → sibling refs → `@viraui/react/specs` (UI) / `@viraui/charts/specs` (charts). End of work → [verify.md](verify.md).

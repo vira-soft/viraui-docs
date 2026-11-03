@@ -31,7 +31,7 @@ On disk: `node_modules/@viraui/react/dist/specs/…`. Package export: `@viraui/r
 | Foundation attrs / vibrancy      | index → `foundation/attributes.xml` (+ toggles / elevation as needed)                                                                    |
 | Layout spacing / density         | [layout.md](layout.md) → specs `patterns/compose-layout-first` (+ related patterns) → confirm props in stack/surface/grid/masonry units  |
 | Mobile-first / breakpoints / RTL | [responsive.md](responsive.md) → specs `breakpoints` + `direction-provider` units                                                        |
-| Charts / data viz                | [charts.md](charts.md) → `@viraui/charts/specs/index.xml` (+ compose patterns / domain units) — not `@viraui/react` folders               |
+| Charts / graph / plot / data viz | [charts.md](charts.md) → install if missing → `@viraui/charts/specs/index.xml` (+ compose patterns) — not `@viraui/react` folders        |
 
 ## Layout discipline
 

@@ -35,7 +35,7 @@
       "source": "vira-soft/viraui-skills",
       "sourceType": "github",
       "skillPath": "skills/viraui-design/SKILL.md",
-      "computedHash": "69cde0e000592905d83b99559981688692ed49e99c1b1b3d7ed41ec424e4918e"
+      "computedHash": "ba4bbebf8ad2e1924415a77fa2e7f5e03d444dd142ac11944a87b0310d9f4e16"
     },
     "viraui-motion": {
       "source": "vira-soft/viraui-skills",
@@ -47,7 +47,7 @@
       "source": "vira-soft/viraui-skills",
       "sourceType": "github",
       "skillPath": "skills/viraui-setup/SKILL.md",
-      "computedHash": "39843229f8398458bf6627a147b45d800a58002214895e230ea38090f8f33ea4"
+      "computedHash": "00f237705c74b9aa8cdccaabdca75d0ef3d856e93803d915062dfda1b321dcb6"
     }
   }
 }

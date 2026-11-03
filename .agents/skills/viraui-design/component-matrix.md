@@ -120,7 +120,7 @@ When a public `@viraui/react` component is added/changed/removed, update this in
 
 ## Charts / data viz
 
-Not a `@viraui/react` folder. Intent “line/bar/area chart / data viz” → skill [charts.md](charts.md) → installed `@viraui/charts/specs` (`index.xml` + `patterns/compose-*` / domain units). Compose primitives; no packaged `LineChart` / `AreaChart` / `BarChart`. Collisions: charts `Text`/`Stack`/`Grid` ≠ react layout/type.
+Not a `@viraui/react` folder. Intent “line/bar/area/pie/radar chart / graph / plot / data viz / visualize metrics” (even without naming the package) → skill [charts.md](charts.md). Missing `@viraui/charts` → install + `@visx/visx` first. Authority = installed `@viraui/charts/specs` (`index.xml` + `patterns/compose-*` / domain units). Compose primitives; no packaged `LineChart` / `AreaChart` / `BarChart`. Collisions: charts `Text`/`Stack`/`Grid` ≠ react layout/type.
 
 ## Gotchas
 
