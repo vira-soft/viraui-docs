@@ -4,11 +4,19 @@ import * as React from "react";
 import { ChartExampleFrame } from "../../common/chart-example-frame";
 import { ViraSandbox } from "../../common/vira-sandbox";
 import {
+  ActiveEnergyArea,
   ActivityStackedBar,
+  HeartRateLine,
+  SleepBars,
+  StepsBars,
+  bpmValue,
   customLabelTitle,
+  heartDateTitle,
   isoTitle,
   kcalValue,
   longDateTitle,
+  sleepTitle,
+  stepsDateTitle,
 } from "./plots";
 
 type SandboxShellProps = {
@@ -22,71 +30,80 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   label,
   height = 400,
 }) => (
-  <ViraSandbox dialogShell={false} height={height} label={label} vAlign="start">
+  <ViraSandbox dialogShell={false} height={height} label={label}>
     {children}
   </ViraSandbox>
 );
 
+/** Activity stacks — tall swatch rows for Move / Exercise. */
 export const ChartsTooltipIndicatorLineDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with line indicator">
-    <ChartExampleFrame label="Tooltip with line indicator">
+  <SandboxShell label="Activity tooltip with line indicator">
+    <ChartExampleFrame label="Activity tooltip with line indicator">
       <ActivityStackedBar titleFor={isoTitle} indicator="line" />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Heart Rate line — value rows only, no swatch. */
 export const ChartsTooltipIndicatorNoneDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with no indicator">
-    <ChartExampleFrame label="Tooltip with no indicator">
-      <ActivityStackedBar titleFor={isoTitle} indicator="none" />
+  <SandboxShell label="Heart Rate tooltip with no indicator">
+    <ChartExampleFrame label="Heart Rate tooltip with no indicator">
+      <HeartRateLine titleFor={heartDateTitle} indicator="none" formatValue={bpmValue} />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Sleep bars — fixed "Sleep" title. */
 export const ChartsTooltipLabelCustomDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with custom label">
-    <ChartExampleFrame label="Tooltip with custom label">
-      <ActivityStackedBar titleFor={customLabelTitle} indicator="line" />
+  <SandboxShell label="Sleep tooltip with custom title">
+    <ChartExampleFrame label="Sleep tooltip with custom title">
+      <SleepBars titleFor={sleepTitle} indicator="line" />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Steps — long-form date title. */
 export const ChartsTooltipLabelLongDateDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with long date label">
-    <ChartExampleFrame label="Tooltip with long date label">
-      <ActivityStackedBar titleFor={longDateTitle} indicator="dot" defaultOpenIndex={2} />
+  <SandboxShell label="Steps tooltip with long date">
+    <ChartExampleFrame label="Steps tooltip with long date">
+      <StepsBars titleFor={stepsDateTitle} indicator="dot" defaultOpenIndex={2} />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Active Energy area — body rows only. */
 export const ChartsTooltipLabelNoneDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with no label">
-    <ChartExampleFrame label="Tooltip with no label">
-      <ActivityStackedBar indicator="none" defaultOpenIndex={2} />
+  <SandboxShell label="Active Energy tooltip with no title">
+    <ChartExampleFrame label="Active Energy tooltip with no title">
+      <ActiveEnergyArea indicator="none" defaultOpenIndex={2} />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Heart Rate — bpm unit formatter. */
 export const ChartsTooltipFormatterDemo: React.FC = () => (
-  <SandboxShell label="Tooltip value formatter">
-    <ChartExampleFrame label="Tooltip value formatter">
-      <ActivityStackedBar indicator="none" formatValue={kcalValue} defaultOpenIndex={3} />
+  <SandboxShell label="Heart Rate tooltip value formatter">
+    <ChartExampleFrame label="Heart Rate tooltip value formatter">
+      <HeartRateLine indicator="none" formatValue={bpmValue} defaultOpenIndex={8} />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Activity — series icons instead of swatches. */
 export const ChartsTooltipIconsDemo: React.FC = () => (
-  <SandboxShell label="Tooltip with series icons">
-    <ChartExampleFrame label="Tooltip with series icons">
-      <ActivityStackedBar indicator="icon" defaultOpenIndex={2} />
+  <SandboxShell label="Activity tooltip with series icons">
+    <ChartExampleFrame label="Activity tooltip with series icons">
+      <ActivityStackedBar titleFor={customLabelTitle} indicator="icon" defaultOpenIndex={2} />
     </ChartExampleFrame>
   </SandboxShell>
 );
 
+/** Activity — indicator + kcal formatter + total. */
 export const ChartsTooltipAdvancedDemo: React.FC = () => (
-  <SandboxShell label="Advanced tooltip with total">
-    <ChartExampleFrame label="Advanced tooltip with total">
+  <SandboxShell label="Activity tooltip with total">
+    <ChartExampleFrame label="Activity tooltip with total">
       <ActivityStackedBar
+        titleFor={longDateTitle}
         indicator="dot"
         formatValue={kcalValue}
         showTotal

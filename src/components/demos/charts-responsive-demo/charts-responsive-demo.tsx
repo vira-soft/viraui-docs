@@ -28,13 +28,7 @@ const SandboxShell: React.FC<SandboxShellProps> = ({
   label,
   height = 400,
 }) => (
-  <ViraSandbox
-    dialogShell={false}
-    height={height}
-    label={label}
-    resizable
-    vAlign="start"
-  >
+  <ViraSandbox dialogShell={false} height={height} label={label} resizable>
     {children}
   </ViraSandbox>
 );

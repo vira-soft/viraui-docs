@@ -24,13 +24,25 @@ export function ChartExampleFrame({
       aria-label={label}
       style={
         fluid
-          ? { inlineSize: "100%" }
-          : { inlineSize: "100%", maxInlineSize: 480, marginInline: "auto" }
+          ? {
+              // Stretch cross-axis when sandbox `vAlign="center"` shrink-wraps children.
+              alignSelf: "stretch",
+              inlineSize: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }
+          : {
+              inlineSize: "100%",
+              maxInlineSize: 480,
+              marginInline: "auto",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }
       }
     >
-      <div style={{ inlineSize: "100%", display: "flex", justifyContent: "center" }}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

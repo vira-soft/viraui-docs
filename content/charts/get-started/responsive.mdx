@@ -302,31 +302,75 @@ import {
   GridColumns,
   GridRows,
   Group,
+  Line,
   LinePath,
   curveMonotoneX,
+  localPoint,
   scaleLinear,
   scalePoint,
 } from '@viraui/charts';
 
-const plotWidth = Math.max(days.length * 12, hostWidth);
-const xScale = scalePoint({ domain: days.map((d) => d.key), range: [0, plotWidth] });
+const [selectedKey, setSelectedKey] = useState<string | null>(null);
+const selected = selectedKey == null ? null : days.find((d) => d.key === selectedKey) ?? null;
+
+const plotWidth = Math.max(days.length * daySlotPx, hostWidth);
+const xScale = scalePoint({ domain: days.map((d) => d.key), range: [0, innerWidth] });
 const yScale = scaleLinear({ domain: yDomain, range: [innerHeight, 0] });
+
+const selectNearest = (event: React.PointerEvent<SVGSVGElement>) => {
+  const point = localPoint(event);
+  if (!point) return;
+  const index = nearestIndex(point.x - margin.left, days.map((d) => d.key), xScale);
+  const hit = days[index];
+  if (hit) setSelectedKey(hit.key);
+};
+
+{/* Header reads scrub selection — AVERAGE until hover */}
+<div>
+  <div>{selected ? 'RESTING HEART RATE' : 'AVERAGE'}</div>
+  <div>
+    <strong>{selected?.bpm ?? averageBpm}</strong> BPM
+  </div>
+  <div>{selected?.dateLabel ?? 'Last 30 sessions'}</div>
+</div>
 
 <div style={{ display: 'flex' }}>
   <div style={{ overflowX: 'auto', flex: 1 }} tabIndex={0}>
-    <svg width={plotWidth} height={height}>
-      <Group top={margin.top}>
-        <GridRows scale={yScale} width={plotWidth} tickValues={yTicks} />
+    <svg
+      width={plotWidth}
+      height={height}
+      onPointerMove={(event) => {
+        if (event.pointerType === 'mouse') selectNearest(event);
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType === 'mouse') setSelectedKey(null);
+      }}
+    >
+      {/* Transparent hit target — SVG empty space ignores pointers by default */}
+      <rect width={plotWidth} height={height} fill="transparent" />
+      <Group left={margin.left} top={margin.top}>
+        <GridRows scale={yScale} width={innerWidth} tickValues={yTicks} />
         <GridColumns scale={xScale} height={innerHeight} tickValues={xTicks} strokeDasharray="3 5" />
         <LinePath
           data={days}
           x={(d) => xScale(d.key) ?? 0}
-          y={(d) => yScale(d.bpm)}
+          y={(d) => yScale(d.bpm) ?? 0}
           curve={curveMonotoneX}
         />
         {days.map((d) => (
-          <Circle key={d.key} cx={xScale(d.key) ?? 0} cy={yScale(d.bpm)} r={3.5} />
+          <Circle
+            key={d.key}
+            cx={xScale(d.key) ?? 0}
+            cy={yScale(d.bpm) ?? 0}
+            r={selectedKey === d.key ? 6 : 3.5}
+          />
         ))}
+        {selected ? (
+          <Line
+            from={{ x: xScale(selected.key) ?? 0, y: 0 }}
+            to={{ x: xScale(selected.key) ?? 0, y: innerHeight }}
+          />
+        ) : null}
         <AxisBottom top={innerHeight} scale={xScale} tickValues={xTicks} hideAxisLine hideTicks />
       </Group>
     </svg>

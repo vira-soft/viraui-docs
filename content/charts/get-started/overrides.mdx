@@ -1,11 +1,11 @@
 ---
 title: Overrides
 icon: Sliders
-description: Override series stroke and axis chrome with theme highlight tokens.
+description: Override series stroke, fills, and axis chrome with theme tokens.
 pageActions: false
 ---
 
-Default chart marks pick up Vira theme tokens. Pass stroke and tick colors when a plot needs a different highlight — any valid CSS color or `var(--*)` works.
+Default chart marks pick up Vira theme tokens. Pass stroke and fill when a plot needs a different highlight — any valid CSS color or `var(--*)` works. Reach for `--highlight-*` when the series should pop, `--base-*` into `--global-foreground` when the ranking should stay neutral, or `oklab(from …)` when one hue needs a weight ladder.
 
 ## Common examples
 
@@ -45,8 +45,152 @@ const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0] });
 
 </Example>
 
+### Same-hue highlight scale
+
+Category bars along one cool family — cyan through slate — so rank stays related without mixing status hues.
+
+<Example preview={<ChartsOverridesHueScaleDemo />}>
+
+```tsx
+import { AxisBottom, BarRounded, GridRows, Group, scaleBand, scaleLinear, scaleOrdinal } from '@viraui/charts';
+
+const colorScale = scaleOrdinal({
+  domain: browserData.map((d) => d.name),
+  range: [
+    'var(--highlight-cyan)',
+    'var(--highlight-blue)',
+    'var(--highlight-indigo)',
+    'var(--highlight-purple)',
+    'var(--highlight-slate)',
+  ],
+});
+
+const xScale = scaleBand({ domain: browserData.map((d) => d.name), range: [0, innerWidth], padding: 0.28 });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    {browserData.map((d) => {
+      const barY = yScale(d.value) ?? 0;
+      return (
+        <BarRounded
+          key={d.name}
+          x={xScale(d.name) ?? 0}
+          y={barY}
+          width={xScale.bandwidth()}
+          height={Math.max(0, innerHeight - barY)}
+          fill={colorScale(d.name)}
+        />
+      );
+    })}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Neutral base ramp
+
+Climb mid `--base-*` steps into `--global-foreground` when categories should read as ink weight, not brand color. Prefer mid-to-ink steps on a light canvas — early `--base-1`…`--base-3` are surface washes and disappear as fills.
+
+<Example preview={<ChartsOverridesBaseRampDemo />}>
+
+```tsx
+import { AxisBottom, BarRounded, GridRows, Group, scaleBand, scaleLinear, scaleOrdinal } from '@viraui/charts';
+
+const categories = browserData.slice(0, 4);
+
+const colorScale = scaleOrdinal({
+  domain: categories.map((d) => d.name),
+  range: ['var(--base-4)', 'var(--base-5)', 'var(--base-6)', 'var(--global-foreground)'],
+});
+
+const xScale = scaleBand({ domain: categories.map((d) => d.name), range: [0, innerWidth], padding: 0.28 });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    {categories.map((d) => {
+      const barY = yScale(d.value) ?? 0;
+      return (
+        <BarRounded
+          key={d.name}
+          x={xScale(d.name) ?? 0}
+          y={barY}
+          width={xScale.bandwidth()}
+          height={Math.max(0, innerHeight - barY)}
+          fill={colorScale(d.name)}
+        />
+      );
+    })}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
+```
+
+</Example>
+
+### Single-hue opacity ramp
+
+One `--highlight-*` with rising `oklab(from …)` alpha — same tone, clearer weight from soft wash to solid.
+
+<Example preview={<ChartsOverridesOpacityRampDemo />}>
+
+```tsx
+import { AxisBottom, BarRounded, GridRows, Group, scaleBand, scaleLinear } from '@viraui/charts';
+
+const fills = [
+  'oklab(from var(--highlight-blue) l a b / 24%)',
+  'oklab(from var(--highlight-blue) l a b / 38%)',
+  'oklab(from var(--highlight-blue) l a b / 52%)',
+  'oklab(from var(--highlight-blue) l a b / 66%)',
+  'oklab(from var(--highlight-blue) l a b / 82%)',
+  'var(--highlight-blue)',
+];
+
+const xScale = scaleBand({ domain: months, range: [0, innerWidth], padding: 0.3 });
+const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height}>
+  <Group left={margin.left} top={margin.top}>
+    <GridRows scale={yScale} width={innerWidth} numTicks={3} />
+    {desktopData.map((d, i) => {
+      const barY = yScale(d.value) ?? 0;
+      return (
+        <BarRounded
+          key={d.month}
+          x={xScale(d.month) ?? 0}
+          y={barY}
+          width={xScale.bandwidth()}
+          height={Math.max(0, innerHeight - barY)}
+          fill={fills[i] ?? 'var(--highlight-blue)'}
+        />
+      );
+    })}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks numTicks={3} />
+  </Group>
+</svg>
+```
+
+</Example>
+
 ## Ask your agent
 
-```text tab="Override"
+```text tab="Series"
 Restyle this line chart so the series uses the acid highlight and the axis ticks use magenta.
+```
+
+```text tab="Hue scale"
+Color these category bars with a cool same-hue scale — cyan through slate — instead of mixed status colors.
+```
+
+```text tab="Base ramp"
+Paint the bars with a neutral base ramp into the foreground ink so the chart stays quiet.
+```
+
+```text tab="Opacity"
+Use one blue highlight and step the bar fills with rising opacity so weight reads without a second hue.
 ```

@@ -5,13 +5,13 @@ description: Compose visx tooltip helpers with theme-colored indicators, labels,
 pageActions: false
 ---
 
-Tooltips are not a separate `@viraui/charts` component — you compose `useTooltip` / `TooltipWithBounds` with your own body. These examples show the patterns Storybook teaches for stacked activity bars.
+Tooltips are not a separate `@viraui/charts` component — you compose `useTooltip` / `TooltipWithBounds` with your own body. These examples borrow Health and Fitness metaphors (heart rate, sleep, steps, activity, energy) so each tooltip pattern sits on a realistic host chart.
 
 ## Common examples
 
 ### Line indicator
 
-Tall color swatch beside each stacked row.
+Weekly **Activity** stacks (Move + Exercise). Tall color swatches beside each series row.
 
 <Example preview={<ChartsTooltipIndicatorLineDemo />}>
 
@@ -37,8 +37,8 @@ const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: t
   <Group left={margin.left} top={margin.top}>
     {activityData.map((d) => {
       const barX = xScale(d.day) ?? 0;
-      const runningY = yScale(d.running) ?? 0;
-      const totalY = yScale(d.running + d.swimming) ?? 0;
+      const moveY = yScale(d.move) ?? 0;
+      const totalY = yScale(d.move + d.exercise) ?? 0;
       return (
         <Group
           key={d.day}
@@ -50,12 +50,12 @@ const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: t
             })
           }
         >
-          <Bar x={barX} y={runningY} width={xScale.bandwidth()} height={innerHeight - runningY} />
+          <Bar x={barX} y={moveY} width={xScale.bandwidth()} height={innerHeight - moveY} />
           <BarRounded
             x={barX}
             y={totalY}
             width={xScale.bandwidth()}
-            height={runningY - totalY}
+            height={moveY - totalY}
             all={false}
             top
           />
@@ -67,7 +67,7 @@ const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: t
 </svg>
 {tooltipOpen && tooltipData ? (
   <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
-    {/* title + tall swatch rows for running / swimming */}
+    {/* title + tall swatch rows for Move / Exercise */}
   </TooltipWithBounds>
 ) : null}
 ```
@@ -76,22 +76,55 @@ const yScale = scaleLinear({ domain: [0, yMax], range: [innerHeight, 0], nice: t
 
 ### No indicator
 
-Title and values only — no swatch column.
+**Heart Rate** line — date title and bpm value, no swatch column.
 
 <Example preview={<ChartsTooltipIndicatorNoneDemo />}>
 
 ```tsx
-import { TooltipWithBounds, defaultStyles, useTooltip } from '@viraui/charts';
+import {
+  AxisBottom,
+  Circle,
+  Group,
+  LinePath,
+  TooltipWithBounds,
+  curveMonotoneX,
+  localPoint,
+  scaleLinear,
+  scalePoint,
+  useTooltip,
+} from '@viraui/charts';
 
+const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+  useTooltip<HeartPoint>();
+
+const xScale = scalePoint({ domain: days, range: [0, innerWidth] });
+const yScale = scaleLinear({ domain: [50, 110], range: [innerHeight, 0], nice: true });
+
+<svg width={width} height={height} onMouseLeave={hideTooltip} onMouseMove={onMove}>
+  <Group left={margin.left} top={margin.top}>
+    <LinePath
+      data={heartSeries}
+      x={(d) => xScale(d.key) ?? 0}
+      y={(d) => yScale(d.bpm) ?? 0}
+      stroke="var(--highlight-red)"
+      curve={curveMonotoneX}
+    />
+    {tooltipData ? (
+      <Circle cx={xScale(tooltipData.key)} cy={yScale(tooltipData.bpm)} r={4} fill="var(--highlight-red)" />
+    ) : null}
+    <AxisBottom top={innerHeight} scale={xScale} hideAxisLine hideTicks />
+  </Group>
+</svg>
 {tooltipOpen && tooltipData ? (
-  <TooltipWithBounds top={tooltipTop} left={tooltipLeft} style={defaultStyles}>
-    {tooltipData.title ? <div>{tooltipData.title}</div> : null}
-    {tooltipData.rows.map((row) => (
-      <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-        <span>{row.label}</span>
-        <strong>{row.value}</strong>
-      </div>
-    ))}
+  <TooltipWithBounds top={tooltipTop} left={tooltipLeft}>
+    <div>{tooltipData.dateLabel}</div>
+    <div>
+      <span>Heart Rate</span>
+      <strong>
+        {tooltipData.bpm}
+        <span> bpm</span>
+      </strong>
+    </div>
   </TooltipWithBounds>
 ) : null}
 ```
@@ -100,22 +133,15 @@ import { TooltipWithBounds, defaultStyles, useTooltip } from '@viraui/charts';
 
 ### Custom title
 
-Fixed title row instead of the raw day key.
+**Sleep** duration bars with a fixed `Sleep` title row.
 
 <Example preview={<ChartsTooltipLabelCustomDemo />}>
 
 ```tsx
-type TitleFor = (d: ActivityPoint) => string | undefined;
-
-const customLabelTitle: TitleFor = () => 'Activities';
-
 showTooltip({
   tooltipData: {
-    title: customLabelTitle(datum),
-    rows: [
-      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
-      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
-    ],
+    title: 'Sleep',
+    rows: [{ label: 'Time Asleep', value: datum.hours, color: 'var(--highlight-indigo)' }],
   },
   tooltipLeft,
   tooltipTop,
@@ -126,23 +152,15 @@ showTooltip({
 
 ### Long date title
 
-`Intl.DateTimeFormat` for a readable date in the title row.
+**Steps** columns — `Intl`-style long date in the title row.
 
 <Example preview={<ChartsTooltipLabelLongDateDemo />}>
 
 ```tsx
-type TitleFor = (d: ActivityPoint) => string | undefined;
-
-const longDateTitle: TitleFor = (d) =>
-  new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(d.day));
-
 showTooltip({
   tooltipData: {
-    title: longDateTitle(datum),
-    rows: [
-      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
-      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
-    ],
+    title: datum.title, // e.g. "Jan 12, 2024"
+    rows: [{ label: 'Steps', value: datum.value, color: 'var(--highlight-cyan)' }],
   },
   tooltipLeft,
   tooltipTop,
@@ -153,17 +171,14 @@ showTooltip({
 
 ### No title
 
-Omit the title row — body rows only.
+**Active Energy** area — body row only, no title.
 
 <Example preview={<ChartsTooltipLabelNoneDemo />}>
 
 ```tsx
 showTooltip({
   tooltipData: {
-    rows: [
-      { label: 'Running', value: datum.running, color: 'var(--highlight-blue)' },
-      { label: 'Swimming', value: datum.swimming, color: 'var(--highlight-acid)' },
-    ],
+    rows: [{ label: 'Active Energy', value: datum.kcal, color: 'var(--highlight-yellow)' }],
   },
   tooltipLeft,
   tooltipTop,
@@ -174,15 +189,15 @@ showTooltip({
 
 ### Formatter
 
-Append units or custom value nodes in the body.
+Same **Heart Rate** host — append a `bpm` unit beside the value.
 
 <Example preview={<ChartsTooltipFormatterDemo />}>
 
 ```tsx
-const kcalValue = (n: number) => (
+const bpmValue = (n: number) => (
   <>
     {n}
-    <span style={{ color: 'var(--global-muted)' }}> kcal</span>
+    <span style={{ color: 'var(--global-muted)' }}> bpm</span>
   </>
 );
 
@@ -198,16 +213,16 @@ const kcalValue = (n: number) => (
 
 ### Icons
 
-Series icons instead of color swatches when the metaphor is activity type.
+**Activity** stacks again — series icons instead of color swatches.
 
 <Example preview={<ChartsTooltipIconsDemo />}>
 
 ```tsx
-import { PersonSimpleWalk, Waves } from '@phosphor-icons/react';
+import { Flame, PersonSimpleWalk } from '@phosphor-icons/react';
 
 const seriesMeta = {
-  running: { label: 'Running', color: 'var(--highlight-blue)', icon: <PersonSimpleWalk size={16} /> },
-  swimming: { label: 'Swimming', color: 'var(--highlight-acid)', icon: <Waves size={16} /> },
+  move: { label: 'Move', color: 'var(--highlight-salmon)', icon: <Flame size={16} /> },
+  exercise: { label: 'Exercise', color: 'var(--highlight-green)', icon: <PersonSimpleWalk size={16} /> },
 };
 
 {/* render meta.icon instead of a color swatch when indicator="icon" */}
@@ -217,7 +232,7 @@ const seriesMeta = {
 
 ### Advanced
 
-Combine indicator, formatter, and a total row.
+**Activity** with indicator, kcal formatter, and a total row.
 
 <Example preview={<ChartsTooltipAdvancedDemo />}>
 
@@ -246,6 +261,14 @@ const total = rows.reduce((sum, row) => sum + row.value, 0);
 
 ## Ask your agent
 
-```text tab="Tooltip"
-Add a hover tooltip to this stacked activity chart that shows running and swimming with kcal units and a total.
+```text tab="Activity"
+Add a hover tooltip to this stacked activity chart that shows Move and Exercise with kcal units and a total.
+```
+
+```text tab="Heart Rate"
+Add a hover tooltip to this heart rate line that shows the date and bpm — no color swatch.
+```
+
+```text tab="Sleep"
+Add a Sleep title and hours unit to the tooltip on these nightly duration bars.
 ```

@@ -727,7 +727,7 @@ export const MobileScrubLine: React.FC = () => {
             height={mobilePlotHeight}
             role="img"
             aria-label="Resting heart rate, scrub to select a day"
-            style={{ display: 'block' }}
+            style={{ display: 'block', touchAction: 'pan-x' }}
             onPointerDown={(event) => {
               pointerStartRef.current = { x: event.clientX, y: event.clientY };
               if (event.pointerType === 'mouse') {
@@ -760,6 +760,8 @@ export const MobileScrubLine: React.FC = () => {
               }
             }}
           >
+            {/* SVG default pointer-events is visiblePainted — empty plot space never fires hover. */}
+            <rect width={plotWidth} height={mobilePlotHeight} fill="transparent" />
             <Group left={mobileMargin.left} top={mobileMargin.top}>
               <GridRows scale={yScale} width={innerWidth} tickValues={[60, 80, 100]} />
               <GridColumns scale={xScale} height={innerHeight} tickValues={mobileTickKeys} strokeDasharray="3 5" />
@@ -770,38 +772,31 @@ export const MobileScrubLine: React.FC = () => {
                 curve={curveMonotoneX}
                 stroke={mobileSeriesColor}
                 strokeWidth={2}
+                style={{ pointerEvents: 'none' }}
               />
-              {mobileData.map((d) => (
-                <Circle
-                  key={d.key}
-                  cx={atX(xScale, d.key)}
-                  cy={atY(yScale, d.bpm)}
-                  r={3.5}
-                  fill="var(--global-background)"
-                  stroke={mobileSeriesColor}
-                  strokeWidth={1.5}
-                  style={{ pointerEvents: 'none' }}
-                />
-              ))}
-              {selected ? (
-                <>
-                  <Line
-                    from={{ x: atX(xScale, selected.key), y: 0 }}
-                    to={{ x: atX(xScale, selected.key), y: innerHeight }}
-                    stroke="var(--global-foreground)"
-                    strokeWidth={1}
-                    style={{ pointerEvents: 'none' }}
-                  />
+              {mobileData.map((d) => {
+                const active = selectedKey === d.key;
+                return (
                   <Circle
-                    cx={atX(xScale, selected.key)}
-                    cy={atY(yScale, selected.bpm)}
-                    r={6}
+                    key={d.key}
+                    cx={atX(xScale, d.key)}
+                    cy={atY(yScale, d.bpm)}
+                    r={active ? 6 : 3.5}
                     fill="var(--global-background)"
                     stroke={mobileSeriesColor}
-                    strokeWidth={2.5}
+                    strokeWidth={active ? 2.5 : 1.5}
                     style={{ pointerEvents: 'none' }}
                   />
-                </>
+                );
+              })}
+              {selected ? (
+                <Line
+                  from={{ x: atX(xScale, selected.key), y: 0 }}
+                  to={{ x: atX(xScale, selected.key), y: innerHeight }}
+                  stroke="var(--global-foreground)"
+                  strokeWidth={1}
+                  style={{ pointerEvents: 'none' }}
+                />
               ) : null}
               <AxisBottom
                 top={innerHeight}
