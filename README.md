@@ -12,7 +12,7 @@
     <small>A full-featured and AI-native design system built on BaseUI and modern CSS.
 Makes design engineers and agents move fast without the bloat.</small>
     <br /><br />
-<img src="https://docs.viraui.dev/cover.jpg" alt="Vira Theme preview" />
+<img src="https://docs.viraui.dev/cover.jpg" alt="ViraUI preview" />
     <br /><br />
     <hr />
     <a href="https://docs.viraui.dev">Read the docs</a>
