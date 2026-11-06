@@ -15,6 +15,7 @@ For progress along a track, use [LinearProgress](/components/loading/linear-prog
 
 - Short opaque waits where layout does not need reserved structure
 - Busy chrome inside a chip (small Spinner as `addon`) when the label already names the state
+- Trailing chrome on Autocomplete while a slower remote search runs (`endAddon`)
 - A panel status row with muted helper copy under the indicator
 
 ## When not to use
@@ -26,6 +27,29 @@ For progress along a track, use [LinearProgress](/components/loading/linear-prog
 ---
 
 ## Common examples
+
+### Variants
+
+Pick the motion that fits the wait. A bare Spinner already uses the default treatment; reach for another `variant` when the chrome needs a different rhythm.
+
+<Example preview={<SpinnerVariantsDemo />}>
+
+```tsx
+import { Grid, Spinner, Stack, Text } from '@viraui/react';
+
+<Grid colMinWidth="7.5rem" columnGap="l" filling="fill" rowGap="l">
+  {['wave', 'blocks', 'eclipse' /* … */].map((variant) => (
+    <Stack key={variant} hAlign="center" rowGap="s">
+      <Spinner aria-hidden variant={variant} />
+      <Text align="center" size="xs" tone="muted">
+        {variant}
+      </Text>
+    </Stack>
+  ))}
+</Grid>
+```
+
+</Example>
 
 ### Centered status
 
@@ -62,6 +86,37 @@ import { Chip, Spinner } from '@viraui/react';
 
 </Example>
 
+### Search field addon
+
+For slower directory or remote searches, put a small Spinner in [Autocomplete](/components/inputs/autocomplete) `endAddon` while the request runs. Drive `items` yourself with `filter={null}`, omit `empty` while pending, and keep the popup closed with `open={false}` so an empty list does not flash chrome. Drop the Spinner and reopen when results land. Prefer root `status` when you also need muted copy in the popup.
+
+<Example preview={<SpinnerAutocompleteAddonDemo />}>
+
+```tsx
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Autocomplete, Spinner } from '@viraui/react';
+
+<Autocomplete
+  label="Find vendor"
+  filter={null}
+  items={results}
+  itemToStringValue={(vendor) => vendor.label}
+  open={pending ? false : open}
+  onOpenChange={setOpen}
+  startAddon={<MagnifyingGlass aria-hidden size={16} />}
+  endAddon={pending ? <Spinner aria-hidden size="s" /> : undefined}
+  empty={pending ? undefined : 'No vendors match that query.'}
+>
+  {(vendor) => (
+    <Autocomplete.Item key={vendor.id} value={vendor}>
+      {vendor.label}
+    </Autocomplete.Item>
+  )}
+</Autocomplete>
+```
+
+</Example>
+
 ### Button loading
 
 For in-flight actions, set `loading` on the Button. The control owns the Spinner overlay, width lock, and busy semantics — do not nest a separate Spinner inside the label.
@@ -93,6 +148,10 @@ While this form submits, show a spinner on the Save button and disable it until 
 Show a non-interactive Deploying status chip with a small spinner at the end of the label.
 ```
 
+```text tab="Search field spinner"
+While this vendor Autocomplete searches a remote directory, show a small spinner at the end of the field and hide it when results arrive. Keep typing to filter again.
+```
+
 ---
 
 ## Related
@@ -100,3 +159,4 @@ Show a non-interactive Deploying status chip with a small spinner at the end of 
 - [Skeleton](/components/loading/skeleton) — layout-preserving placeholders
 - [LinearProgress](/components/loading/linear-progress) — track progress with percent or indeterminate state
 - [Button](/components/actions/button) — `loading` owns in-flight chrome on labeled actions
+- [Autocomplete](/components/inputs/autocomplete) — `endAddon` / `status` for async search chrome
