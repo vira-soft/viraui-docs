@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import {
   Autocomplete,
   Button,
@@ -246,7 +246,7 @@ export const SpinnerAutocompleteAddonDemo: React.FC = () => {
               }}
               open={pending ? false : open}
               placeholder="Name or region…"
-              startAddon={<MagnifyingGlass aria-hidden size={16} />}
+              startAddon={<MagnifyingGlassIcon aria-hidden size={16} />}
               value={query}
             >
               {(vendor: Vendor) => (
