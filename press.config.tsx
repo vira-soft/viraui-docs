@@ -59,7 +59,7 @@ const DocsLayout = createDocsLayoutPage<typeof config.$context>({
         ...props.sidebar,
         footer: (
           <a
-            href="https://viraui.dev"
+            href="https://pro.viraui.dev"
             target="_blank"
             rel="noreferrer"
             className={buttonVariants({ color: "primary", className: "w-full mt-4" })}
