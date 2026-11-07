@@ -64,7 +64,7 @@ const DocsLayout = createDocsLayoutPage<typeof config.$context>({
             rel="noreferrer"
             className={buttonVariants({ color: "primary", className: "w-full mt-4" })}
           >
-            Get ViraUI Pro
+            Explore ViraUI Pro
           </a>
         ),
       },

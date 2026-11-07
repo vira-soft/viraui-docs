@@ -43,7 +43,7 @@ Sidebar roots (Fumadocs root type `"docs"` — dropdown under search, not versio
 | Components | `content/components/` | `/components` |
 | Charts | `content/charts/` | `/charts` |
 
-Sidebar footer (all roots, below the page tree): **Get ViraUI Pro** → `https://viraui.dev/#pro`. Not a content page.
+Sidebar footer (all roots, below the page tree): **Explore ViraUI Pro** → `https://viraui.dev/#pro`. Not a content page.
 
 **Design System** sidebar: intro pages at first level; **Get started** and **Foundation** separator titles with extracted children (Get started order: setup → Theming group → skills → Utilities group). No Components separator here. Docs MCP page/route removed (static deploy).
 

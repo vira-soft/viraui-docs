@@ -89,7 +89,7 @@ Consumer `README.md` = face + docs link. Contributor how-to = `CONTRIBUTING.md`.
 - Do **not** link Vercel project to GitHub — deploy via GH Actions secrets `VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID`
 - Site cover: static `https://docs.viraui.dev/cover.jpg`; plugin `{ name: "core:takumi" }` skips per-page generated OG
 - Banner: docs under construction (in `press.config.tsx` `renderRoot`)
-- Sidebar CTA: `sidebar.footer` in `renderLayout` — "Get ViraUI Pro" → `https://viraui.dev/#pro` (both roots, below page tree)
+- Sidebar CTA: `sidebar.footer` in `renderLayout` — "Explore ViraUI Pro" → `https://viraui.dev/#pro` (both roots, below page tree)
 - MDX paths: Design System under `content/(design-system)/`; Components under `content/components/`; Charts under `content/charts/`. Root `meta.json` lists all three roots.
 - Charts deps: `@viraui/react` + `@viraui/foundation` `@2026.12.1` from npm; `@viraui/charts` still unpublished → `file:../vira-ui/packages/charts` (+ `@visx/visx` `4`). Swap to npm when published.
 - Principles (`002`): no product/timeline claim for “browser as canvas”; Figma OK as disposable low-fi only; a11y → generic skills + link `/get-started/skills`; next links `/layers` + `/get-started/skills` only
